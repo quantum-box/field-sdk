@@ -27,15 +27,23 @@ Two things travel with every authenticated request:
   `field` helpers below fold them into the HTTP client instead. Requests
   without them are rejected even with a valid token.
 
-To obtain a token, sign in against the public Cognito pool:
+The token is exactly the one the app itself uses. Three ways to get one:
 
 ```bash
+# Already signed in to the app: hand over the refresh token the browser keeps
+# under localStorage['tachyon.field.auth.refresh'].
+export FIELD_API_TOKEN="$(FIELD_REFRESH_TOKEN='…' node scripts/login.mjs)"
+
+# Or sign in from scratch.
 export FIELD_API_TOKEN="$(FIELD_USERNAME=you@example.com FIELD_PASSWORD='…' node scripts/login.mjs)"
 ```
 
-`scripts/login.mjs` performs the same `USER_PASSWORD_AUTH` call as the client
-app, reads the credentials from the environment only, and prints nothing but
-the access token. Tokens are short-lived — re-run it when calls start returning
+Or copy the `Authorization: Bearer …` header straight off any API request in
+the browser's network panel.
+
+`scripts/login.mjs` makes the same `InitiateAuth` calls as the client app,
+reads secrets from the environment only, and prints nothing but the access
+token. Access tokens are short-lived — re-run it when calls start returning
 401.
 
 ## Rust
