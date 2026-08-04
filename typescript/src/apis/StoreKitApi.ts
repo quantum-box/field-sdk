@@ -93,7 +93,7 @@ export interface GetCustomerRequest {
 
 export interface GetOrderReceiptRequest {
     orderId: string;
-    format: string;
+    format?: string;
 }
 
 export interface GetProductRequest {
@@ -810,13 +810,6 @@ export class StoreKitApi extends runtime.BaseAPI {
             throw new runtime.RequiredError(
                 'orderId',
                 'Required parameter "orderId" was null or undefined when calling getOrderReceipt().'
-            );
-        }
-
-        if (requestParameters['format'] == null) {
-            throw new runtime.RequiredError(
-                'format',
-                'Required parameter "format" was null or undefined when calling getOrderReceipt().'
             );
         }
 

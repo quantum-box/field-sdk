@@ -776,7 +776,7 @@ async function example() {
   const api = new ReservationsApi(config);
 
   const body = {
-    // string
+    // string | Reservation ID
     id: id_example,
   } satisfies GetReservationRequest;
 
@@ -797,7 +797,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Reservation ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -2226,7 +2226,7 @@ async function example() {
   const api = new ReservationsApi(config);
 
   const body = {
-    // string
+    // string | Reservation ID
     id: id_example,
     // UpdateReservationRequest
     updateReservationRequest: ...,
@@ -2249,7 +2249,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Reservation ID | [Defaults to `undefined`] |
 | **updateReservationRequest** | [UpdateReservationRequest](UpdateReservationRequest.md) |  | |
 
 ### Return type

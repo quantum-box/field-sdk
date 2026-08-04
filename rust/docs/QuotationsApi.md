@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Quotation ID | [required] |
 
 ### Return type
 
@@ -78,7 +78,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Quotation ID | [required] |
 
 ### Return type
 
@@ -131,7 +131,7 @@ This endpoint does not need any parameter.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Quotation ID | [required] |
 **update_quotation_request** | [**UpdateQuotationRequest**](UpdateQuotationRequest.md) |  | [required] |
 
 ### Return type

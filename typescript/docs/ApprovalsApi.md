@@ -107,7 +107,7 @@ async function example() {
   const api = new ApprovalsApi(config);
 
   const body = {
-    // string
+    // string | Approval flow definition ID
     id: id_example,
   } satisfies DeleteApprovalFlowRequest;
 
@@ -128,7 +128,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Approval flow definition ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -176,7 +176,7 @@ async function example() {
   const api = new ApprovalsApi(config);
 
   const body = {
-    // string
+    // string | Approval flow definition ID
     id: id_example,
   } satisfies GetApprovalFlowRequest;
 
@@ -197,7 +197,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Approval flow definition ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -474,7 +474,7 @@ async function example() {
   const api = new ApprovalsApi(config);
 
   const body = {
-    // string
+    // string | Approval flow definition ID
     id: id_example,
     // UpdateApprovalFlowRequest
     updateApprovalFlowRequest: ...,
@@ -497,7 +497,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Approval flow definition ID | [Defaults to `undefined`] |
 | **updateApprovalFlowRequest** | [UpdateApprovalFlowRequest](UpdateApprovalFlowRequest.md) |  | |
 
 ### Return type

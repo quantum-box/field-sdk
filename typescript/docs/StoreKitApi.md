@@ -831,7 +831,7 @@ async function example() {
   const body = {
     // string
     orderId: orderId_example,
-    // string
+    // string (optional)
     format: format_example,
   } satisfies GetOrderReceiptRequest;
 
@@ -853,7 +853,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orderId** | `string` |  | [Defaults to `undefined`] |
-| **format** | `string` |  | [Defaults to `undefined`] |
+| **format** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

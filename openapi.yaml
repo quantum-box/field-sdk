@@ -9852,6 +9852,11 @@ components:
       - createdAt
       - updatedAt
       type: object
+  securitySchemes:
+    bearerAuth:
+      description: TACHYON Field access token
+      scheme: bearer
+      type: http
 info:
   description: ''
   license:
@@ -9892,6 +9897,13 @@ paths:
   /api/agent/invoices/{id}:
     get:
       operationId: agent_get_invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -9904,6 +9916,13 @@ paths:
   /api/agent/invoices/{id}/send:
     post:
       operationId: agent_send_invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -9945,6 +9964,13 @@ paths:
   /api/agent/quotations/{id}:
     get:
       operationId: agent_get_quotation
+      parameters:
+      - description: Quotation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -9957,6 +9983,13 @@ paths:
   /api/agent/quotations/{id}/send:
     post:
       operationId: agent_send_quotation
+      parameters:
+      - description: Quotation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -10414,6 +10447,13 @@ paths:
   /v1/erp/approval-flows/{id}:
     delete:
       operationId: delete_approval_flow
+      parameters:
+      - description: Approval flow definition ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '204':
           description: Approval flow definition deleted
@@ -10421,6 +10461,13 @@ paths:
       - Approvals
     get:
       operationId: get_approval_flow
+      parameters:
+      - description: Approval flow definition ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -10432,6 +10479,13 @@ paths:
       - Approvals
     put:
       operationId: update_approval_flow
+      parameters:
+      - description: Approval flow definition ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -10525,6 +10579,13 @@ paths:
   /v1/erp/custom-fields/definitions/{id}:
     delete:
       operationId: delete_custom_field_definition
+      parameters:
+      - description: Custom field definition ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '204':
           description: ''
@@ -10532,6 +10593,13 @@ paths:
       - Custom Fields
     put:
       operationId: update_custom_field_definition
+      parameters:
+      - description: Custom field definition ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -10550,6 +10618,19 @@ paths:
   /v1/erp/custom-fields/values/{entity_type}/{entity_id}:
     get:
       operationId: get_custom_field_values
+      parameters:
+      - description: Entity type the custom field values belong to
+        in: path
+        name: entity_type
+        required: true
+        schema:
+          type: string
+      - description: Entity ID the custom field values belong to
+        in: path
+        name: entity_id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -10561,6 +10642,19 @@ paths:
       - Custom Fields
     put:
       operationId: set_custom_field_values
+      parameters:
+      - description: Entity type the custom field values belong to
+        in: path
+        name: entity_type
+        required: true
+        schema:
+          type: string
+      - description: Entity ID the custom field values belong to
+        in: path
+        name: entity_id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -10725,6 +10819,13 @@ paths:
   /v1/erp/expense-categories/{id}:
     patch:
       operationId: update_category
+      parameters:
+      - description: Expense category ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -10819,6 +10920,13 @@ paths:
   /v1/erp/expenses/{id}:
     delete:
       operationId: delete_expense
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '204':
           description: ''
@@ -10826,6 +10934,13 @@ paths:
       - Expenses
     get:
       operationId: get_expense
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -10837,6 +10952,13 @@ paths:
       - Expenses
     patch:
       operationId: update_expense
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -10855,6 +10977,13 @@ paths:
   /v1/erp/expenses/{id}/approve:
     post:
       operationId: approve_expense
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -10867,6 +10996,13 @@ paths:
   /v1/erp/expenses/{id}/reject:
     post:
       operationId: reject_expense
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -12626,6 +12762,13 @@ paths:
   /v1/erp/orders/{id}:
     get:
       operationId: get_order
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -12637,6 +12780,13 @@ paths:
       - Orders
     patch:
       operationId: update_order
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -12655,6 +12805,13 @@ paths:
   /v1/erp/orders/{id}/convert-to-invoice:
     post:
       operationId: convert_order_to_invoice
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -12742,6 +12899,13 @@ paths:
   /v1/erp/purchase-orders/{id}:
     get:
       operationId: get_purchase_order
+      parameters:
+      - description: Purchase order ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -12753,6 +12917,13 @@ paths:
       - Purchase Orders
     patch:
       operationId: update_purchase_order
+      parameters:
+      - description: Purchase order ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -12802,6 +12973,13 @@ paths:
   /v1/erp/quotations/{id}:
     get:
       operationId: get_quotation
+      parameters:
+      - description: Quotation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -12813,6 +12991,13 @@ paths:
       - Quotations
     patch:
       operationId: update_quotation
+      parameters:
+      - description: Quotation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -12831,6 +13016,13 @@ paths:
   /v1/erp/quotations/{id}/convert-to-invoice:
     post:
       operationId: convert_quotation_to_invoice
+      parameters:
+      - description: Quotation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '201':
           content:
@@ -13068,6 +13260,13 @@ paths:
   /v1/erp/reservations/{id}:
     get:
       operationId: get_reservation
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -13079,6 +13278,13 @@ paths:
       - Reservations
     patch:
       operationId: update_reservation
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -13248,23 +13454,23 @@ paths:
     get:
       operationId: list_return_requests
       parameters:
-      - in: path
+      - in: query
         name: status
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: orderRefKind
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: orderRefId
-        required: true
+        required: false
         schema:
           type:
           - string
@@ -14503,6 +14709,13 @@ paths:
   /v1/erp/vendors/{id}:
     get:
       operationId: get_vendor
+      parameters:
+      - description: Vendor ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -14514,6 +14727,13 @@ paths:
       - Vendors
     patch:
       operationId: update_vendor
+      parameters:
+      - description: Vendor ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -15543,13 +15763,13 @@ paths:
       operationId: get_payout_report
       parameters:
       - description: Period start date (inclusive), e.g. `2026-01-01`.
-        in: path
+        in: query
         name: from
         required: true
         schema:
           type: string
       - description: Period end date (inclusive), e.g. `2026-01-31`.
-        in: path
+        in: query
         name: to
         required: true
         schema:
@@ -15581,13 +15801,13 @@ paths:
       operationId: get_payout_report_csv
       parameters:
       - description: Period start date (inclusive), e.g. `2026-01-01`.
-        in: path
+        in: query
         name: from
         required: true
         schema:
           type: string
       - description: Period end date (inclusive), e.g. `2026-01-31`.
-        in: path
+        in: query
         name: to
         required: true
         schema:
@@ -15627,6 +15847,13 @@ paths:
   /v1/invoice-reconciliations/square-payments/{square_payment_id}/reconcile:
     post:
       operationId: reconcile_square_payment
+      parameters:
+      - description: Square payment ID to reconcile
+        in: path
+        name: square_payment_id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -15674,6 +15901,13 @@ paths:
   /v1/invoices/{id}:
     delete:
       operationId: delete_invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -15685,6 +15919,13 @@ paths:
       - Invoices
     get:
       operationId: get_invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -15696,6 +15937,13 @@ paths:
       - Invoices
     patch:
       operationId: update_invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -15714,6 +15962,13 @@ paths:
   /v1/invoices/{id}/follow-up-status:
     post:
       operationId: update_invoice_follow_up_status
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -15732,6 +15987,13 @@ paths:
   /v1/invoices/{id}/fulfill:
     post:
       operationId: fulfill_invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -15744,6 +16006,13 @@ paths:
   /v1/invoices/{id}/payment-link/resend:
     post:
       operationId: resend_invoice_payment_link
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -15908,6 +16177,13 @@ paths:
   /v1/public/invoices/{id}:
     get:
       operationId: get_short_public_invoice
+      parameters:
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -15920,6 +16196,13 @@ paths:
   /v1/public/invoices/{id}/checkout:
     post:
       operationId: create_short_public_invoice_checkout
+      parameters:
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -15932,6 +16215,13 @@ paths:
   /v1/public/invoices/{id}/payment-confirmation:
     post:
       operationId: confirm_short_public_invoice_payment
+      parameters:
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -15951,6 +16241,12 @@ paths:
     post:
       operationId: create_short_public_invoice_payment_intent
       parameters:
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       - description: Optional public API key (legacy)
         in: query
         name: apiKey
@@ -15980,6 +16276,12 @@ paths:
     get:
       operationId: get_short_public_invoice_stripe_publishable_key
       parameters:
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       - description: Optional public API key (legacy)
         in: query
         name: apiKey
@@ -16008,6 +16310,19 @@ paths:
   /v1/public/invoices/{tenant_id}/{id}:
     get:
       operationId: get_public_invoice
+      parameters:
+      - description: Tenant ID that owns the invoice
+        in: path
+        name: tenant_id
+        required: true
+        schema:
+          type: string
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -16020,6 +16335,19 @@ paths:
   /v1/public/invoices/{tenant_id}/{id}/checkout:
     post:
       operationId: create_public_invoice_checkout
+      parameters:
+      - description: Tenant ID that owns the invoice
+        in: path
+        name: tenant_id
+        required: true
+        schema:
+          type: string
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -16032,6 +16360,19 @@ paths:
   /v1/public/invoices/{tenant_id}/{id}/payment-confirmation:
     post:
       operationId: confirm_public_invoice_payment
+      parameters:
+      - description: Tenant ID that owns the invoice
+        in: path
+        name: tenant_id
+        required: true
+        schema:
+          type: string
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -16051,6 +16392,18 @@ paths:
     post:
       operationId: create_public_invoice_payment_intent
       parameters:
+      - description: Tenant ID that owns the invoice
+        in: path
+        name: tenant_id
+        required: true
+        schema:
+          type: string
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       - description: Optional public API key (legacy)
         in: query
         name: apiKey
@@ -16080,6 +16433,18 @@ paths:
     get:
       operationId: get_public_invoice_stripe_publishable_key
       parameters:
+      - description: Tenant ID that owns the invoice
+        in: path
+        name: tenant_id
+        required: true
+        schema:
+          type: string
+      - description: Public invoice ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
       - description: Optional public API key (legacy)
         in: query
         name: apiKey
@@ -16242,7 +16607,7 @@ paths:
       - StoreKit
   /v1/storekit/categories:
     get:
-      operationId: list_categories
+      operationId: storekit_list_categories
       responses:
         '200':
           content:
@@ -16302,9 +16667,9 @@ paths:
         required: true
         schema:
           type: string
-      - in: path
+      - in: query
         name: format
-        required: true
+        required: false
         schema:
           type: string
       responses:
@@ -16336,16 +16701,16 @@ paths:
     get:
       operationId: list_customers
       parameters:
-      - in: path
+      - in: query
         name: email
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: limit
-        required: true
+        required: false
         schema:
           format: int64
           minimum: 0
@@ -16458,48 +16823,48 @@ paths:
       - StoreKit
   /v1/storekit/orders:
     get:
-      operationId: list_orders
+      operationId: storekit_list_orders
       parameters:
-      - in: path
+      - in: query
         name: user_id
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: session_id
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: customer_id
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: status
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: limit
-        required: true
+        required: false
         schema:
           format: int32
           minimum: 0
           type:
           - integer
           - 'null'
-      - in: path
+      - in: query
         name: offset
-        required: true
+        required: false
         schema:
           format: int32
           minimum: 0
@@ -16518,7 +16883,7 @@ paths:
       - StoreKit
   /v1/storekit/orders/{order_id}:
     get:
-      operationId: get_order
+      operationId: storekit_get_order
       parameters:
       - in: path
         name: order_id
@@ -16697,32 +17062,32 @@ paths:
     get:
       operationId: list_products
       parameters:
-      - in: path
+      - in: query
         name: category_id
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: search
-        required: true
+        required: false
         schema:
           type:
           - string
           - 'null'
-      - in: path
+      - in: query
         name: limit
-        required: true
+        required: false
         schema:
           format: int32
           minimum: 0
           type:
           - integer
           - 'null'
-      - in: path
+      - in: query
         name: offset
-        required: true
+        required: false
         schema:
           format: int32
           minimum: 0
@@ -16946,6 +17311,8 @@ paths:
           description: ''
       tags:
       - StoreKit
+security:
+- bearerAuth: []
 tags:
 - description: Health check endpoints
   name: TACHYON field - Health

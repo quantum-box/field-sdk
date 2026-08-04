@@ -110,7 +110,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
   } satisfies DeleteInvoiceRequest;
 
@@ -131,7 +131,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -179,7 +179,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
   } satisfies FulfillInvoiceRequest;
 
@@ -200,7 +200,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -248,7 +248,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
   } satisfies GetInvoiceRequest;
 
@@ -269,7 +269,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -439,7 +439,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Square payment ID to reconcile
     squarePaymentId: squarePaymentId_example,
     // ReconcileSquarePaymentRequest
     reconcileSquarePaymentRequest: ...,
@@ -462,7 +462,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **squarePaymentId** | `string` |  | [Defaults to `undefined`] |
+| **squarePaymentId** | `string` | Square payment ID to reconcile | [Defaults to `undefined`] |
 | **reconcileSquarePaymentRequest** | [ReconcileSquarePaymentRequest](ReconcileSquarePaymentRequest.md) |  | |
 
 ### Return type
@@ -511,7 +511,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
     // ResendPaymentLinkRequest
     resendPaymentLinkRequest: ...,
@@ -534,7 +534,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 | **resendPaymentLinkRequest** | [ResendPaymentLinkRequest](ResendPaymentLinkRequest.md) |  | |
 
 ### Return type
@@ -583,7 +583,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
     // UpdateInvoiceRequest
     updateInvoiceRequest: ...,
@@ -606,7 +606,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 | **updateInvoiceRequest** | [UpdateInvoiceRequest](UpdateInvoiceRequest.md) |  | |
 
 ### Return type
@@ -655,7 +655,7 @@ async function example() {
   const api = new InvoicesApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
     // UpdateInvoiceFollowUpStatusRequest
     updateInvoiceFollowUpStatusRequest: ...,
@@ -678,7 +678,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 | **updateInvoiceFollowUpStatusRequest** | [UpdateInvoiceFollowUpStatusRequest](UpdateInvoiceFollowUpStatusRequest.md) |  | |
 
 ### Return type

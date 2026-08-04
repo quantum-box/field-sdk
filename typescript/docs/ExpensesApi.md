@@ -41,7 +41,7 @@ async function example() {
   const api = new ExpensesApi(config);
 
   const body = {
-    // string
+    // string | Expense ID
     id: id_example,
   } satisfies ApproveExpenseRequest;
 
@@ -62,7 +62,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Expense ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -248,7 +248,7 @@ async function example() {
   const api = new ExpensesApi(config);
 
   const body = {
-    // string
+    // string | Expense ID
     id: id_example,
   } satisfies DeleteExpenseRequest;
 
@@ -269,7 +269,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Expense ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -317,7 +317,7 @@ async function example() {
   const api = new ExpensesApi(config);
 
   const body = {
-    // string
+    // string | Expense ID
     id: id_example,
   } satisfies GetExpenseRequest;
 
@@ -338,7 +338,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Expense ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -531,7 +531,7 @@ async function example() {
   const api = new ExpensesApi(config);
 
   const body = {
-    // string
+    // string | Expense ID
     id: id_example,
     // RejectExpenseRequest
     rejectExpenseRequest: ...,
@@ -554,7 +554,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Expense ID | [Defaults to `undefined`] |
 | **rejectExpenseRequest** | [RejectExpenseRequest](RejectExpenseRequest.md) |  | |
 
 ### Return type
@@ -603,7 +603,7 @@ async function example() {
   const api = new ExpensesApi(config);
 
   const body = {
-    // string
+    // string | Expense category ID
     id: id_example,
     // UpsertCategoryRequest
     upsertCategoryRequest: ...,
@@ -626,7 +626,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Expense category ID | [Defaults to `undefined`] |
 | **upsertCategoryRequest** | [UpsertCategoryRequest](UpsertCategoryRequest.md) |  | |
 
 ### Return type
@@ -675,7 +675,7 @@ async function example() {
   const api = new ExpensesApi(config);
 
   const body = {
-    // string
+    // string | Expense ID
     id: id_example,
     // UpdateExpenseRequest
     updateExpenseRequest: ...,
@@ -698,7 +698,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Expense ID | [Defaults to `undefined`] |
 | **updateExpenseRequest** | [UpdateExpenseRequest](UpdateExpenseRequest.md) |  | |
 
 ### Return type

@@ -177,7 +177,7 @@ async function example() {
   const api = new AgentDocumentsApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
   } satisfies AgentGetInvoiceRequest;
 
@@ -198,7 +198,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -246,7 +246,7 @@ async function example() {
   const api = new AgentDocumentsApi(config);
 
   const body = {
-    // string
+    // string | Quotation ID
     id: id_example,
   } satisfies AgentGetQuotationRequest;
 
@@ -267,7 +267,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Quotation ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -437,7 +437,7 @@ async function example() {
   const api = new AgentDocumentsApi(config);
 
   const body = {
-    // string
+    // string | Invoice ID
     id: id_example,
   } satisfies AgentSendInvoiceRequest;
 
@@ -458,7 +458,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -506,7 +506,7 @@ async function example() {
   const api = new AgentDocumentsApi(config);
 
   const body = {
-    // string
+    // string | Quotation ID
     id: id_example,
   } satisfies AgentSendQuotationRequest;
 
@@ -527,7 +527,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Quotation ID | [Defaults to `undefined`] |
 
 ### Return type
 

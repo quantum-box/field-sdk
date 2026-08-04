@@ -50,7 +50,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Purchase order ID | [required] |
 
 ### Return type
 
@@ -109,7 +109,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Purchase order ID | [required] |
 **update_purchase_order_request** | [**UpdatePurchaseOrderRequest**](UpdatePurchaseOrderRequest.md) |  | [required] |
 
 ### Return type

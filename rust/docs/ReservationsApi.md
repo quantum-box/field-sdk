@@ -338,7 +338,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Reservation ID | [required] |
 
 ### Return type
 
@@ -924,7 +924,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Reservation ID | [required] |
 **update_reservation_request** | [**UpdateReservationRequest**](UpdateReservationRequest.md) |  | [required] |
 
 ### Return type

@@ -41,9 +41,9 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Tenant ID that owns the invoice
     tenantId: tenantId_example,
-    // string
+    // string | Public invoice ID
     id: id_example,
     // PublicInvoicePaymentConfirmationRequest
     publicInvoicePaymentConfirmationRequest: ...,
@@ -66,8 +66,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **tenantId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **tenantId** | `string` | Tenant ID that owns the invoice | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 | **publicInvoicePaymentConfirmationRequest** | [PublicInvoicePaymentConfirmationRequest](PublicInvoicePaymentConfirmationRequest.md) |  | |
 
 ### Return type
@@ -116,7 +116,7 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Public invoice ID
     id: id_example,
     // PublicInvoicePaymentConfirmationRequest
     publicInvoicePaymentConfirmationRequest: ...,
@@ -139,7 +139,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 | **publicInvoicePaymentConfirmationRequest** | [PublicInvoicePaymentConfirmationRequest](PublicInvoicePaymentConfirmationRequest.md) |  | |
 
 ### Return type
@@ -188,9 +188,9 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Tenant ID that owns the invoice
     tenantId: tenantId_example,
-    // string
+    // string | Public invoice ID
     id: id_example,
   } satisfies CreatePublicInvoiceCheckoutRequest;
 
@@ -211,8 +211,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **tenantId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **tenantId** | `string` | Tenant ID that owns the invoice | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -260,9 +260,9 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Tenant ID that owns the invoice
     tenantId: tenantId_example,
-    // string
+    // string | Public invoice ID
     id: id_example,
     // string | Optional public API key (legacy) (optional)
     apiKey: apiKey_example,
@@ -287,8 +287,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **tenantId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **tenantId** | `string` | Tenant ID that owns the invoice | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 | **apiKey** | `string` | Optional public API key (legacy) | [Optional] [Defaults to `undefined`] |
 | **publicApiKey** | `string` | Optional public API key | [Optional] [Defaults to `undefined`] |
 
@@ -338,7 +338,7 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Public invoice ID
     id: id_example,
   } satisfies CreateShortPublicInvoiceCheckoutRequest;
 
@@ -359,7 +359,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -407,7 +407,7 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Public invoice ID
     id: id_example,
     // string | Optional public API key (legacy) (optional)
     apiKey: apiKey_example,
@@ -432,7 +432,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 | **apiKey** | `string` | Optional public API key (legacy) | [Optional] [Defaults to `undefined`] |
 | **publicApiKey** | `string` | Optional public API key | [Optional] [Defaults to `undefined`] |
 
@@ -482,9 +482,9 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Tenant ID that owns the invoice
     tenantId: tenantId_example,
-    // string
+    // string | Public invoice ID
     id: id_example,
   } satisfies GetPublicInvoiceRequest;
 
@@ -505,8 +505,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **tenantId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **tenantId** | `string` | Tenant ID that owns the invoice | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -554,9 +554,9 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Tenant ID that owns the invoice
     tenantId: tenantId_example,
-    // string
+    // string | Public invoice ID
     id: id_example,
     // string | Optional public API key (legacy) (optional)
     apiKey: apiKey_example,
@@ -581,8 +581,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **tenantId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **tenantId** | `string` | Tenant ID that owns the invoice | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 | **apiKey** | `string` | Optional public API key (legacy) | [Optional] [Defaults to `undefined`] |
 | **publicApiKey** | `string` | Optional public API key | [Optional] [Defaults to `undefined`] |
 
@@ -632,7 +632,7 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Public invoice ID
     id: id_example,
   } satisfies GetShortPublicInvoiceRequest;
 
@@ -653,7 +653,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -701,7 +701,7 @@ async function example() {
   const api = new PublicInvoicesApi(config);
 
   const body = {
-    // string
+    // string | Public invoice ID
     id: id_example,
     // string | Optional public API key (legacy) (optional)
     apiKey: apiKey_example,
@@ -726,7 +726,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Public invoice ID | [Defaults to `undefined`] |
 | **apiKey** | `string` | Optional public API key (legacy) | [Optional] [Defaults to `undefined`] |
 | **publicApiKey** | `string` | Optional public API key | [Optional] [Defaults to `undefined`] |
 

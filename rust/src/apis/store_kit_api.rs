@@ -830,7 +830,7 @@ pub async fn get_customer(
 pub async fn get_order_receipt(
     configuration: &configuration::Configuration,
     order_id: &str,
-    format: &str,
+    format: Option<&str>,
 ) -> Result<(), Error<GetOrderReceiptError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_order_id = order_id;
@@ -843,7 +843,9 @@ pub async fn get_order_receipt(
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    req_builder = req_builder.query(&[("format", &p_query_format.to_string())]);
+    if let Some(ref param_value) = p_query_format {
+        req_builder = req_builder.query(&[("format", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }

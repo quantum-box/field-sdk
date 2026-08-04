@@ -27,8 +27,8 @@ Method | HTTP request | Description
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**tenant_id** | **String** |  | [required] |
-**id** | **String** |  | [required] |
+**tenant_id** | **String** | Tenant ID that owns the invoice | [required] |
+**id** | **String** | Public invoice ID | [required] |
 **public_invoice_payment_confirmation_request** | [**PublicInvoicePaymentConfirmationRequest**](PublicInvoicePaymentConfirmationRequest.md) |  | [required] |
 
 ### Return type
@@ -57,7 +57,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Public invoice ID | [required] |
 **public_invoice_payment_confirmation_request** | [**PublicInvoicePaymentConfirmationRequest**](PublicInvoicePaymentConfirmationRequest.md) |  | [required] |
 
 ### Return type
@@ -86,8 +86,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**tenant_id** | **String** |  | [required] |
-**id** | **String** |  | [required] |
+**tenant_id** | **String** | Tenant ID that owns the invoice | [required] |
+**id** | **String** | Public invoice ID | [required] |
 
 ### Return type
 
@@ -115,8 +115,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**tenant_id** | **String** |  | [required] |
-**id** | **String** |  | [required] |
+**tenant_id** | **String** | Tenant ID that owns the invoice | [required] |
+**id** | **String** | Public invoice ID | [required] |
 **api_key** | Option<**String**> | Optional public API key (legacy) |  |
 **public_api_key** | Option<**String**> | Optional public API key |  |
 
@@ -146,7 +146,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Public invoice ID | [required] |
 
 ### Return type
 
@@ -174,7 +174,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Public invoice ID | [required] |
 **api_key** | Option<**String**> | Optional public API key (legacy) |  |
 **public_api_key** | Option<**String**> | Optional public API key |  |
 
@@ -204,8 +204,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**tenant_id** | **String** |  | [required] |
-**id** | **String** |  | [required] |
+**tenant_id** | **String** | Tenant ID that owns the invoice | [required] |
+**id** | **String** | Public invoice ID | [required] |
 
 ### Return type
 
@@ -233,8 +233,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**tenant_id** | **String** |  | [required] |
-**id** | **String** |  | [required] |
+**tenant_id** | **String** | Tenant ID that owns the invoice | [required] |
+**id** | **String** | Public invoice ID | [required] |
 **api_key** | Option<**String**> | Optional public API key (legacy) |  |
 **public_api_key** | Option<**String**> | Optional public API key |  |
 
@@ -264,7 +264,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Public invoice ID | [required] |
 
 ### Return type
 
@@ -292,7 +292,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Public invoice ID | [required] |
 **api_key** | Option<**String**> | Optional public API key (legacy) |  |
 **public_api_key** | Option<**String**> | Optional public API key |  |
 

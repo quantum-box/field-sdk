@@ -451,7 +451,6 @@ src/apis/TACHYONFieldSalesForecastApi.ts
 src/apis/TACHYONFieldSalesTasksApi.ts
 src/apis/VendorsApi.ts
 src/apis/index.ts
-src/index.ts
 src/models/ActivityListResponse.ts
 src/models/ActivityResponse.ts
 src/models/AddCartItemRequest.ts

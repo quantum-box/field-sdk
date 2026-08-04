@@ -52,7 +52,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Approval flow definition ID | [required] |
 
 ### Return type
 
@@ -80,7 +80,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Approval flow definition ID | [required] |
 
 ### Return type
 
@@ -199,7 +199,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Approval flow definition ID | [required] |
 **update_approval_flow_request** | [**UpdateApprovalFlowRequest**](UpdateApprovalFlowRequest.md) |  | [required] |
 
 ### Return type

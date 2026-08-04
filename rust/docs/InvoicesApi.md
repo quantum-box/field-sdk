@@ -55,7 +55,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Invoice ID | [required] |
 
 ### Return type
 
@@ -83,7 +83,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Invoice ID | [required] |
 
 ### Return type
 
@@ -111,7 +111,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Invoice ID | [required] |
 
 ### Return type
 
@@ -189,7 +189,7 @@ This endpoint does not need any parameter.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**square_payment_id** | **String** |  | [required] |
+**square_payment_id** | **String** | Square payment ID to reconcile | [required] |
 **reconcile_square_payment_request** | [**ReconcileSquarePaymentRequest**](ReconcileSquarePaymentRequest.md) |  | [required] |
 
 ### Return type
@@ -218,7 +218,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Invoice ID | [required] |
 **resend_payment_link_request** | [**ResendPaymentLinkRequest**](ResendPaymentLinkRequest.md) |  | [required] |
 
 ### Return type
@@ -247,7 +247,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Invoice ID | [required] |
 **update_invoice_request** | [**UpdateInvoiceRequest**](UpdateInvoiceRequest.md) |  | [required] |
 
 ### Return type
@@ -276,7 +276,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Invoice ID | [required] |
 **update_invoice_follow_up_status_request** | [**UpdateInvoiceFollowUpStatusRequest**](UpdateInvoiceFollowUpStatusRequest.md) |  | [required] |
 
 ### Return type

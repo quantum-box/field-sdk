@@ -363,7 +363,7 @@ Get a printable receipt for a consumer order.
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **order_id** | **String** |  | [required] |
-**format** | **String** |  | [required] |
+**format** | Option<**String**> |  |  |
 
 ### Return type
 
