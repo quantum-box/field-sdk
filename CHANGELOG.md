@@ -17,8 +17,10 @@
   `createFieldConfiguration` (TypeScript) — which attach the `x-operator-id` /
   `x-platform-id` headers the API requires but the contract does not describe.
 - Live smoke tests against production: `cargo test --test smoke -- --ignored`
-  and `npm run smoke`. The authenticated case runs when `FIELD_API_TOKEN` is
-  set and is skipped otherwise.
+  and `npm run smoke`. The authenticated case calls
+  `GET /v1/field/client-capabilities` through the tenant helpers when
+  `FIELD_API_TOKEN` is set, and is skipped otherwise. Verified end to end
+  against production with a real token: 4/4 in both clients.
 - Spec re-synced from tachyonfield main after
   [tachyonfield#914](https://github.com/quantum-box/tachyonfield/pull/914)
   fixed the utoipa annotation gaps. Path/query parameters, unique

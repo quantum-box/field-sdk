@@ -14,6 +14,7 @@ import {
   DefaultApi,
   FIELD_TENANT_ID,
   ResponseError,
+  TACHYONFieldIdentityApi,
   VendorsApi,
   createFieldConfiguration,
 } from '../dist/index.js'
@@ -54,10 +55,17 @@ test('an authenticated endpoint accepts a token', async (t) => {
   }
 
   const operatorId = process.env.FIELD_OPERATOR_ID ?? FIELD_TENANT_ID
-  const api = new VendorsApi(createFieldConfiguration({ accessToken, operatorId }))
+  const api = new TACHYONFieldIdentityApi(
+    createFieldConfiguration({ accessToken, operatorId }),
+  )
 
-  const vendors = await api.listVendors({ limit: 1 })
+  // Identity rather than a business endpoint: it needs a valid token and the
+  // tenant headers, but no ERP policy grant, so the check stays about
+  // connectivity instead of about who is running it.
+  const capabilities = await api.getClientCapabilities()
 
-  assert.ok(Array.isArray(vendors.items), 'expected a vendor list payload')
-  console.error(`listed ${vendors.items.length} vendor(s)`)
+  assert.ok(capabilities.agentDocuments, 'expected a capabilities payload')
+  console.error(
+    `capabilities for ${operatorId}: invoices.list=${capabilities.agentDocuments.invoices.list}`,
+  )
 })
