@@ -11,10 +11,11 @@ import { test } from 'node:test'
 
 import {
   BASE_PATH,
-  Configuration,
   DefaultApi,
+  FIELD_TENANT_ID,
   ResponseError,
   VendorsApi,
+  createFieldConfiguration,
 } from '../dist/index.js'
 
 const PRODUCTION = 'https://tachyon-field-api.txcloud.app'
@@ -52,8 +53,11 @@ test('an authenticated endpoint accepts a token', async (t) => {
     return
   }
 
-  const api = new VendorsApi(new Configuration({ accessToken }))
+  const operatorId = process.env.FIELD_OPERATOR_ID ?? FIELD_TENANT_ID
+  const api = new VendorsApi(createFieldConfiguration({ accessToken, operatorId }))
+
   const vendors = await api.listVendors({ limit: 1 })
 
   assert.ok(Array.isArray(vendors.items), 'expected a vendor list payload')
+  console.error(`listed ${vendors.items.length} vendor(s)`)
 })

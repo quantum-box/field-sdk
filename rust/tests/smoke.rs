@@ -9,6 +9,7 @@
 
 use field_sdk::apis::configuration::Configuration;
 use field_sdk::apis::{default_api, vendors_api, Error};
+use field_sdk::field;
 
 const PRODUCTION: &str = "https://tachyon-field-api.txcloud.app";
 
@@ -60,13 +61,15 @@ async fn smoke_authenticated_endpoint() {
         eprintln!("FIELD_API_TOKEN is not set; skipping the authenticated smoke test");
         return;
     };
+    let operator_id =
+        std::env::var("FIELD_OPERATOR_ID").unwrap_or_else(|_| field::FIELD_TENANT_ID.to_owned());
 
-    let configuration = Configuration {
-        bearer_access_token: Some(token),
-        ..Configuration::default()
-    };
+    let configuration =
+        field::configuration(&token, &operator_id).expect("tenant headers should be valid");
 
-    vendors_api::list_vendors(&configuration, None, None, Some(1), None)
+    let vendors = vendors_api::list_vendors(&configuration, None, None, Some(1), None)
         .await
         .expect("GET /v1/erp/vendors with a token should return 200");
+
+    eprintln!("listed {} vendor(s)", vendors.items.len());
 }

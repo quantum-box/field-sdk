@@ -451,7 +451,6 @@ src/apis/tachyon_field_sales_activities_api.rs
 src/apis/tachyon_field_sales_forecast_api.rs
 src/apis/tachyon_field_sales_tasks_api.rs
 src/apis/vendors_api.rs
-src/lib.rs
 src/models/activity_list_response.rs
 src/models/activity_response.rs
 src/models/add_cart_item_request.rs

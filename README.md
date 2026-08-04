@@ -16,6 +16,28 @@ Bridge, IAM, invoices, quotations, reservations, ...).
 Both clients default to production — `https://tachyon-field-api.txcloud.app` is
 baked into the generated code, so nothing but a token is required to make a call.
 
+## Authentication
+
+Two things travel with every authenticated request:
+
+- `Authorization: Bearer <token>` — a Cognito **access token** for the user,
+  the same one the desktop client sends.
+- `x-operator-id` / `x-platform-id` — the tenant context. These are not part of
+  the OpenAPI contract, so the generated operations cannot set them; the
+  `field` helpers below fold them into the HTTP client instead. Requests
+  without them are rejected even with a valid token.
+
+To obtain a token, sign in against the public Cognito pool:
+
+```bash
+export FIELD_API_TOKEN="$(FIELD_USERNAME=you@example.com FIELD_PASSWORD='…' node scripts/login.mjs)"
+```
+
+`scripts/login.mjs` performs the same `USER_PASSWORD_AUTH` call as the client
+app, reads the credentials from the environment only, and prints nothing but
+the access token. Tokens are short-lived — re-run it when calls start returning
+401.
+
 ## Rust
 
 ```toml
@@ -24,19 +46,17 @@ field-sdk = { git = "https://github.com/quantum-box/field-sdk" }
 ```
 
 ```rust
-use field_sdk::apis::configuration::Configuration;
 use field_sdk::apis::vendors_api;
+use field_sdk::field;
 
-let config = Configuration {
-    bearer_access_token: Some(access_token),
-    ..Configuration::default()
-};
+let config = field::configuration(&access_token, field::FIELD_TENANT_ID)?;
 
 let vendor = vendors_api::get_vendor(&config, "vnd_123").await?;
 ```
 
-Override `config.base_path` to point at a preview deployment or a local API.
-TLS backend: `rustls` by default, `native-tls` via
+`field::configuration_for_platform` takes an explicit platform id; both return
+a `Configuration` you can further adjust (`base_path` for a preview deployment
+or a local API). TLS backend: `rustls` by default, `native-tls` via
 `default-features = false, features = ["native-tls"]`.
 
 ## TypeScript
@@ -46,17 +66,19 @@ npm install @tachyon-sdk/field
 ```
 
 ```ts
-import { Configuration, VendorsApi } from '@tachyon-sdk/field'
+import { FIELD_TENANT_ID, VendorsApi, createFieldConfiguration } from '@tachyon-sdk/field'
 
-const api = new VendorsApi(new Configuration({ accessToken }))
+const api = new VendorsApi(
+  createFieldConfiguration({ accessToken, operatorId: FIELD_TENANT_ID }),
+)
 
 const vendor = await api.getVendor({ id: 'vnd_123' })
 ```
 
-Pass `basePath` to the `Configuration` to target something other than
-production. Operations take a single request object
-(`useSingleRequestParameter`), so optional query parameters stay named at the
-call site.
+`createFieldConfiguration` accepts everything `Configuration` does, so pass
+`basePath` to target something other than production. Operations take a single
+request object (`useSingleRequestParameter`), so optional query parameters stay
+named at the call site.
 
 ## Smoke tests
 
@@ -69,8 +91,9 @@ cargo test --manifest-path rust/Cargo.toml --test smoke -- --ignored
 cd typescript && npm run smoke
 ```
 
-Set `FIELD_API_TOKEN` to also exercise an authenticated request; the test is
-skipped without it. `.github/workflows/smoke.yml` runs both nightly and on
+Set `FIELD_API_TOKEN` (see [Authentication](#authentication)) to also exercise
+an authenticated request; the test is skipped without it. `FIELD_OPERATOR_ID`
+overrides the tenant, which defaults to the TACHYON Field tenant. `.github/workflows/smoke.yml` runs both nightly and on
 demand, reading the token from the `FIELD_API_TOKEN` repository secret.
 
 ## Releasing
@@ -96,8 +119,9 @@ upstream contract; `scripts/sync-spec.sh` reads it from `$TACHYONFIELD_DIR`
 (default: the `tachyonfield` checkout next to this repo).
 
 Hand-maintained files that regeneration must not clobber are listed in each
-client's `.openapi-generator-ignore`: `rust/Cargo.toml` and
-`typescript/package.json`. Everything else under `rust/src` and
+client's `.openapi-generator-ignore`: `rust/Cargo.toml`, `rust/src/lib.rs`,
+`rust/src/field.rs`, `typescript/package.json`, `typescript/src/index.ts`, and
+`typescript/src/field.ts`. Everything else under `rust/src` and
 `typescript/src` is generated — edit the spec or the scripts, not the output.
 
 ## Spec normalization

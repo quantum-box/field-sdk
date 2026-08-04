@@ -27,3 +27,6 @@
 Cargo.toml
 .travis.yml
 git_push.sh
+# Entry point extended with the hand-written `field` module.
+src/lib.rs
+src/field.rs

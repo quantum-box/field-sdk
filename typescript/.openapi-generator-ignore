@@ -25,3 +25,6 @@
 # Hand-maintained in this repo (see scripts/generate.sh):
 # package metadata that the generator would reset on every run.
 package.json
+# Barrel extended with the hand-written ./field module.
+src/index.ts
+src/field.ts
