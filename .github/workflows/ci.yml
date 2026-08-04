@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    name: rust client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - run: cargo check --all-features --manifest-path rust/Cargo.toml
+      - run: cargo fmt --manifest-path rust/Cargo.toml -- --check
+
+  typescript:
+    name: typescript client
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: typescript
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+  generated-up-to-date:
+    name: generated output matches openapi.yaml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # generate.sh runs `cargo fmt` on the Rust output, so the toolchain has
+      # to be present or the regenerated tree would differ from the committed one.
+      - uses: dtolnay/rust-toolchain@stable
+      - run: pip install pyyaml
+      - name: regenerate
+        run: scripts/generate.sh
+      - name: fail on drift
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::rust/ or typescript/ is out of sync with openapi.yaml."
+            echo "Run scripts/generate.sh and commit the result."
+            git diff --stat
+            exit 1
+          fi

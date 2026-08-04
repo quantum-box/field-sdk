@@ -1,0 +1,17 @@
+
+# GolfMonthlySettlementSquare
+
+
+## Properties
+
+Name | Type
+------------ | -------------
+`paymentsTotal` | number
+`refundsTotal` | number
+`unreconciledLines` | number
+`warning` | string
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

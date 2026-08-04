@@ -1,0 +1,12 @@
+# FieldErpMasterCatalog
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**product_categories** | [**Vec<models::FieldErpMasterItem>**](FieldErpMasterItem.md) |  | 
+**resource_types** | [**Vec<models::FieldErpMasterItem>**](FieldErpMasterItem.md) |  | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

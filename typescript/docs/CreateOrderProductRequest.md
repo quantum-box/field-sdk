@@ -1,0 +1,32 @@
+
+# CreateOrderProductRequest
+
+
+## Properties
+
+Name | Type
+------------ | -------------
+`billingCycle` | string
+`category` | string
+`description` | string
+`id` | string
+`idempotencyKey` | string
+`imageStorageKeys` | Array&lt;string&gt;
+`janCode` | string
+`kind` | string
+`listPrice` | number
+`name` | string
+`publicationDescription` | string
+`publicationName` | string
+`publicationStatus` | string
+`skuCode` | string
+`status` | string
+`subcategory` | string
+`tags` | Array&lt;string&gt;
+`upcCode` | string
+`variations` | [Array&lt;OrderProductVariationRequest&gt;](OrderProductVariationRequest.md)
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

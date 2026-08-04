@@ -1,0 +1,10 @@
+# Normalized spec produced by scripts/normalize-spec.py
+build/
+
+# Build artifacts
+target/
+node_modules/
+dist/
+
+# OS
+.DS_Store
