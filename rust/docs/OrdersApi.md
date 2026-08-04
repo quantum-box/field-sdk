@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Order ID | [required] |
 
 ### Return type
 
@@ -78,7 +78,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Order ID | [required] |
 
 ### Return type
 
@@ -137,7 +137,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Order ID | [required] |
 **update_order_request** | [**UpdateOrderRequest**](UpdateOrderRequest.md) |  | [required] |
 
 ### Return type

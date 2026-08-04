@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Normalize openapi.yaml into a build copy the generators can consume.
 
-TACHYON Field's spec is emitted from utoipa annotations, and its path
-parameters are declared inconsistently in two ways that make openapi-generator
-emit a Rust client that does not compile:
+The one patch that always applies is the server URL: utoipa emits no
+``servers``, so the SDK bakes in the production host itself.
+
+The rest are guards. TACHYON Field's spec is emitted from utoipa annotations,
+and the gaps below once broke generation outright; tachyonfield#914 fixed them
+at the source, so these now report nothing. They stay because a dropped
+annotation would otherwise surface as a client that does not compile:
 
 1. Templated but undeclared: ``/v1/erp/vendors/{id}`` has no ``parameters``
    entry for ``id``, so the generated code interpolates ``{id}`` with no such
@@ -13,15 +17,14 @@ emit a Rust client that does not compile:
    generated code passes named format arguments that the URL template never
    uses. We move those to ``in: query`` (optional when the schema is nullable).
 
-It also reuses a few ``operationId`` values across tags (``get_order`` exists
-under both Orders and StoreKit), which OpenAPI requires to be unique. The
-typescript-fetch barrel then re-exports two ``GetOrderRequest`` interfaces and
-fails to compile, so duplicates after the first (ordered by path) are renamed
-to ``<tag>_<operationId>``.
+3. ``operationId`` reused across tags: ``get_order`` existed under both Orders
+   and StoreKit, which OpenAPI forbids. The typescript-fetch barrel then
+   re-exports two ``GetOrderRequest`` interfaces and fails to compile, so
+   duplicates after the first (ordered by path) are renamed to
+   ``<tag>_<operationId>`` — the same ``storekit_*`` names upstream settled on.
+4. No ``securitySchemes``, so no operation carried the bearer token.
 
-Every change is reported on stderr so the gap stays visible; the real fix
-belongs upstream in tachyonfield's ``#[utoipa::path]`` annotations, and this
-script turns into a no-op once those land.
+Every change is reported on stderr so any regression stays visible.
 
 Usage:
     scripts/normalize-spec.py openapi.yaml build/openapi.normalized.yaml

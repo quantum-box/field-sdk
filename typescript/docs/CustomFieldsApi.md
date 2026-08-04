@@ -106,7 +106,7 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string
+    // string | Custom field definition ID
     id: id_example,
   } satisfies DeleteCustomFieldDefinitionRequest;
 
@@ -127,7 +127,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Custom field definition ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -175,9 +175,9 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string
+    // string | Entity type the custom field values belong to
     entityType: entityType_example,
-    // string
+    // string | Entity ID the custom field values belong to
     entityId: entityId_example,
   } satisfies GetCustomFieldValuesRequest;
 
@@ -198,8 +198,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **entityType** | `string` |  | [Defaults to `undefined`] |
-| **entityId** | `string` |  | [Defaults to `undefined`] |
+| **entityType** | `string` | Entity type the custom field values belong to | [Defaults to `undefined`] |
+| **entityId** | `string` | Entity ID the custom field values belong to | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -319,9 +319,9 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string
+    // string | Entity type the custom field values belong to
     entityType: entityType_example,
-    // string
+    // string | Entity ID the custom field values belong to
     entityId: entityId_example,
     // SetCustomFieldValuesRequest
     setCustomFieldValuesRequest: ...,
@@ -344,8 +344,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **entityType** | `string` |  | [Defaults to `undefined`] |
-| **entityId** | `string` |  | [Defaults to `undefined`] |
+| **entityType** | `string` | Entity type the custom field values belong to | [Defaults to `undefined`] |
+| **entityId** | `string` | Entity ID the custom field values belong to | [Defaults to `undefined`] |
 | **setCustomFieldValuesRequest** | [SetCustomFieldValuesRequest](SetCustomFieldValuesRequest.md) |  | |
 
 ### Return type
@@ -394,7 +394,7 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string
+    // string | Custom field definition ID
     id: id_example,
     // UpdateCustomFieldDefinitionRequest
     updateCustomFieldDefinitionRequest: ...,
@@ -417,7 +417,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Custom field definition ID | [Defaults to `undefined`] |
 | **updateCustomFieldDefinitionRequest** | [UpdateCustomFieldDefinitionRequest](UpdateCustomFieldDefinitionRequest.md) |  | |
 
 ### Return type

@@ -27,7 +27,7 @@ Method | HTTP request | Description
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Expense ID | [required] |
 
 ### Return type
 
@@ -111,7 +111,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Expense ID | [required] |
 
 ### Return type
 
@@ -139,7 +139,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Expense ID | [required] |
 
 ### Return type
 
@@ -225,7 +225,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Expense ID | [required] |
 **reject_expense_request** | [**RejectExpenseRequest**](RejectExpenseRequest.md) |  | [required] |
 
 ### Return type
@@ -254,7 +254,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Expense category ID | [required] |
 **upsert_category_request** | [**UpsertCategoryRequest**](UpsertCategoryRequest.md) |  | [required] |
 
 ### Return type
@@ -283,7 +283,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Expense ID | [required] |
 **update_expense_request** | [**UpdateExpenseRequest**](UpdateExpenseRequest.md) |  | [required] |
 
 ### Return type

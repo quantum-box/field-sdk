@@ -104,7 +104,7 @@ async function example() {
   const api = new VendorsApi(config);
 
   const body = {
-    // string
+    // string | Vendor ID
     id: id_example,
   } satisfies GetVendorRequest;
 
@@ -125,7 +125,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Vendor ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -251,7 +251,7 @@ async function example() {
   const api = new VendorsApi(config);
 
   const body = {
-    // string
+    // string | Vendor ID
     id: id_example,
     // UpdateVendorRequest
     updateVendorRequest: ...,
@@ -274,7 +274,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Vendor ID | [Defaults to `undefined`] |
 | **updateVendorRequest** | [UpdateVendorRequest](UpdateVendorRequest.md) |  | |
 
 ### Return type

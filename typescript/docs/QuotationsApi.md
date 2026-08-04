@@ -36,7 +36,7 @@ async function example() {
   const api = new QuotationsApi(config);
 
   const body = {
-    // string
+    // string | Quotation ID
     id: id_example,
   } satisfies ConvertQuotationToInvoiceRequest;
 
@@ -57,7 +57,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Quotation ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -174,7 +174,7 @@ async function example() {
   const api = new QuotationsApi(config);
 
   const body = {
-    // string
+    // string | Quotation ID
     id: id_example,
   } satisfies GetQuotationRequest;
 
@@ -195,7 +195,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Quotation ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -304,7 +304,7 @@ async function example() {
   const api = new QuotationsApi(config);
 
   const body = {
-    // string
+    // string | Quotation ID
     id: id_example,
     // UpdateQuotationRequest
     updateQuotationRequest: ...,
@@ -327,7 +327,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Quotation ID | [Defaults to `undefined`] |
 | **updateQuotationRequest** | [UpdateQuotationRequest](UpdateQuotationRequest.md) |  | |
 
 ### Return type

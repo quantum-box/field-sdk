@@ -109,7 +109,7 @@ async function example() {
   const api = new PurchaseOrdersApi(config);
 
   const body = {
-    // string
+    // string | Purchase order ID
     id: id_example,
   } satisfies GetPurchaseOrderRequest;
 
@@ -130,7 +130,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Purchase order ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -256,7 +256,7 @@ async function example() {
   const api = new PurchaseOrdersApi(config);
 
   const body = {
-    // string
+    // string | Purchase order ID
     id: id_example,
     // UpdatePurchaseOrderRequest
     updatePurchaseOrderRequest: ...,
@@ -279,7 +279,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Purchase order ID | [Defaults to `undefined`] |
 | **updatePurchaseOrderRequest** | [UpdatePurchaseOrderRequest](UpdatePurchaseOrderRequest.md) |  | |
 
 ### Return type

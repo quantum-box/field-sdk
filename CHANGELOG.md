@@ -19,6 +19,12 @@
 - Live smoke tests against production: `cargo test --test smoke -- --ignored`
   and `npm run smoke`. The authenticated case runs when `FIELD_API_TOKEN` is
   set and is skipped otherwise.
+- Spec re-synced from tachyonfield main after
+  [tachyonfield#914](https://github.com/quantum-box/tachyonfield/pull/914)
+  fixed the utoipa annotation gaps. Path/query parameters, unique
+  `operationId`s, and `bearerAuth` now come from the contract itself; only the
+  `servers` patch remains SDK-side. Client method names are unchanged —
+  upstream adopted the same `storekit_*` names.
 - `scripts/sync-spec.sh` (refresh the vendored spec) and `scripts/generate.sh`
   (regenerate both clients), plus `scripts/normalize-spec.py` which patches the
   upstream spec's utoipa gaps into a build copy.

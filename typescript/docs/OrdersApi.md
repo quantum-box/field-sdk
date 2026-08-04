@@ -36,7 +36,7 @@ async function example() {
   const api = new OrdersApi(config);
 
   const body = {
-    // string
+    // string | Order ID
     id: id_example,
   } satisfies ConvertOrderToInvoiceRequest;
 
@@ -57,7 +57,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Order ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -174,7 +174,7 @@ async function example() {
   const api = new OrdersApi(config);
 
   const body = {
-    // string
+    // string | Order ID
     id: id_example,
   } satisfies GetOrderRequest;
 
@@ -195,7 +195,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Order ID | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -321,7 +321,7 @@ async function example() {
   const api = new OrdersApi(config);
 
   const body = {
-    // string
+    // string | Order ID
     id: id_example,
     // UpdateOrderRequest
     updateOrderRequest: ...,
@@ -344,7 +344,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **id** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` | Order ID | [Defaults to `undefined`] |
 | **updateOrderRequest** | [UpdateOrderRequest](UpdateOrderRequest.md) |  | |
 
 ### Return type

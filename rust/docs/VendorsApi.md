@@ -49,7 +49,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Vendor ID | [required] |
 
 ### Return type
 
@@ -108,7 +108,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Vendor ID | [required] |
 **update_vendor_request** | [**UpdateVendorRequest**](UpdateVendorRequest.md) |  | [required] |
 
 ### Return type

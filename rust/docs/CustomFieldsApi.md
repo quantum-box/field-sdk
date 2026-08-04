@@ -51,7 +51,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Custom field definition ID | [required] |
 
 ### Return type
 
@@ -79,8 +79,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**entity_type** | **String** |  | [required] |
-**entity_id** | **String** |  | [required] |
+**entity_type** | **String** | Entity type the custom field values belong to | [required] |
+**entity_id** | **String** | Entity ID the custom field values belong to | [required] |
 
 ### Return type
 
@@ -137,8 +137,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**entity_type** | **String** |  | [required] |
-**entity_id** | **String** |  | [required] |
+**entity_type** | **String** | Entity type the custom field values belong to | [required] |
+**entity_id** | **String** | Entity ID the custom field values belong to | [required] |
 **set_custom_field_values_request** | [**SetCustomFieldValuesRequest**](SetCustomFieldValuesRequest.md) |  | [required] |
 
 ### Return type
@@ -167,7 +167,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **String** |  | [required] |
+**id** | **String** | Custom field definition ID | [required] |
 **update_custom_field_definition_request** | [**UpdateCustomFieldDefinitionRequest**](UpdateCustomFieldDefinitionRequest.md) |  | [required] |
 
 ### Return type
