@@ -8,7 +8,7 @@
 //! unauthenticated half of the contract.
 
 use field_sdk::apis::configuration::Configuration;
-use field_sdk::apis::{default_api, vendors_api, Error};
+use field_sdk::apis::{default_api, tachyon_field_identity_api, vendors_api, Error};
 use field_sdk::field;
 
 const PRODUCTION: &str = "https://tachyon-field-api.txcloud.app";
@@ -67,9 +67,15 @@ async fn smoke_authenticated_endpoint() {
     let configuration =
         field::configuration(&token, &operator_id).expect("tenant headers should be valid");
 
-    let vendors = vendors_api::list_vendors(&configuration, None, None, Some(1), None)
+    // Identity rather than a business endpoint: it needs a valid token and the
+    // tenant headers, but no ERP policy grant, so the check stays about
+    // connectivity instead of about who is running it.
+    let capabilities = tachyon_field_identity_api::get_client_capabilities(&configuration)
         .await
-        .expect("GET /v1/erp/vendors with a token should return 200");
+        .expect("GET /v1/field/client-capabilities with a token should return 200");
 
-    eprintln!("listed {} vendor(s)", vendors.items.len());
+    eprintln!(
+        "capabilities for {operator_id}: invoices.list={}",
+        capabilities.agent_documents.invoices.list
+    );
 }

@@ -41,6 +41,18 @@ export FIELD_API_TOKEN="$(FIELD_USERNAME=you@example.com FIELD_PASSWORD='…' no
 Or copy the `Authorization: Bearer …` header straight off any API request in
 the browser's network panel.
 
+A token from a signed-in [Tachyon CLI](https://github.com/quantum-box/tachyon-sdk)
+profile also works — the API delegates verification to Tachyon auth:
+
+```bash
+export FIELD_API_TOKEN="$(jq -r .access_token ~/Library/Application\ Support/tachyon/profiles/admin.json)"
+export FIELD_OPERATOR_ID="$(jq -r .operator_id ~/Library/Application\ Support/tachyon/profiles/admin.json)"
+```
+
+Whichever route you take, the operator id has to be a tenant that token is
+entitled to. A token that is valid for a different tenant authenticates fine
+and then fails the policy check with `403 PermissionDenied`.
+
 `scripts/login.mjs` makes the same `InitiateAuth` calls as the client app,
 reads secrets from the environment only, and prints nothing but the access
 token. Access tokens are short-lived — re-run it when calls start returning
@@ -91,8 +103,12 @@ named at the call site.
 ## Smoke tests
 
 Both clients ship live tests against production. They cover the health and
-readiness probes, and assert that an authenticated endpoint rejects a missing
-token with `401 UNAUTHORIZED`:
+readiness probes, assert that an authenticated endpoint rejects a missing token
+with `401 UNAUTHORIZED`, and — with a token — call
+`GET /v1/field/client-capabilities` through the `field` helpers. That endpoint
+is deliberate: it needs a valid token and the tenant headers but no ERP policy
+grant, so the check stays about connectivity rather than about who is running
+it.
 
 ```bash
 cargo test --manifest-path rust/Cargo.toml --test smoke -- --ignored
