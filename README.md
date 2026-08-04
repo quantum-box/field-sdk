@@ -108,8 +108,15 @@ demand, reading the token from the `FIELD_API_TOKEN` repository secret.
 
 The npm package publishes from `main` whenever `typescript/package.json`
 carries a version that is not on the registry yet
-(`.github/workflows/publish-typescript.yml`, `NPM_TOKEN` secret). Bump the
-version and record the change in [CHANGELOG.md](CHANGELOG.md).
+(`.github/workflows/publish-typescript.yml`). Bump the version and record the
+change in [CHANGELOG.md](CHANGELOG.md).
+
+Two repository secrets gate this:
+
+| Secret | Used by | Without it |
+|--------|---------|------------|
+| `NPM_TOKEN` | publish workflow | the job logs a notice and skips — nothing is published |
+| `FIELD_API_TOKEN` | nightly smoke workflow | the authenticated case is skipped; the rest still runs |
 
 The Rust crate is consumed as a git dependency and is marked `publish = false`;
 pin a tag or commit on the consumer side when you need reproducibility.

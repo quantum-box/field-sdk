@@ -27,13 +27,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Without the secret there is nothing to publish with, so skip instead of
+      # failing every push to main.
+      - name: Check for the npm token
+        id: token
+        run: |
+          if [ -z "${NPM_TOKEN}" ]; then
+            echo "::notice::NPM_TOKEN is not set; skipping publish."
+            echo "present=false" >> $GITHUB_OUTPUT
+          else
+            echo "present=true" >> $GITHUB_OUTPUT
+          fi
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # Publishing is version-driven: bump typescript/package.json to release.
       - name: Check if already published
         id: check
+        if: steps.token.outputs.present == 'true'
         run: |
           PKG_NAME=$(node -p "require('./package.json').name")
           PKG_VERSION=$(node -p "require('./package.json').version")
           if npm view "${PKG_NAME}@${PKG_VERSION}" version 2>/dev/null; then
+            echo "::notice::${PKG_NAME}@${PKG_VERSION} is already on the registry."
             echo "already_published=true" >> $GITHUB_OUTPUT
           else
             echo "already_published=false" >> $GITHUB_OUTPUT
