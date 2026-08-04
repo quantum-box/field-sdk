@@ -1,6 +1,6 @@
 # CustomFieldsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -25,11 +25,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   CustomFieldsApi,
-} from '@tachyon/field-sdk';
-import type { CreateCustomFieldDefinitionOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateCustomFieldDefinitionOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -94,11 +94,11 @@ example().catch(console.error);
 import {
   Configuration,
   CustomFieldsApi,
-} from '@tachyon/field-sdk';
-import type { DeleteCustomFieldDefinitionRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteCustomFieldDefinitionRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -163,11 +163,11 @@ example().catch(console.error);
 import {
   Configuration,
   CustomFieldsApi,
-} from '@tachyon/field-sdk';
-import type { GetCustomFieldValuesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetCustomFieldValuesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -235,11 +235,11 @@ example().catch(console.error);
 import {
   Configuration,
   CustomFieldsApi,
-} from '@tachyon/field-sdk';
-import type { ListCustomFieldDefinitionsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListCustomFieldDefinitionsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -307,11 +307,11 @@ example().catch(console.error);
 import {
   Configuration,
   CustomFieldsApi,
-} from '@tachyon/field-sdk';
-import type { SetCustomFieldValuesOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { SetCustomFieldValuesOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -382,11 +382,11 @@ example().catch(console.error);
 import {
   Configuration,
   CustomFieldsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateCustomFieldDefinitionOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateCustomFieldDefinitionOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

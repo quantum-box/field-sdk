@@ -1,6 +1,6 @@
 # ReservationsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -53,11 +53,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { AssignReservationStaffRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AssignReservationStaffRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -125,11 +125,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { CancelReservationWithPolicyRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CancelReservationWithPolicyRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -197,11 +197,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { CreateReservationOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateReservationOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -266,11 +266,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffAssignmentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffAssignmentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -335,11 +335,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -404,11 +404,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { DisableExtensionRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DisableExtensionRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -473,11 +473,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { EnableExtensionOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { EnableExtensionOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -545,11 +545,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ExportCancellationFeeReportCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ExportCancellationFeeReportCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -617,11 +617,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ExportReservationsCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ExportReservationsCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -689,11 +689,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { GetExtensionConfigRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetExtensionConfigRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -764,11 +764,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { GetReservationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetReservationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -833,11 +833,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { IssueReservationBillingLinkOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { IssueReservationBillingLinkOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -905,11 +905,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { IssueReservationSquareInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { IssueReservationSquareInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -974,11 +974,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListCancellationFeeReportRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListCancellationFeeReportRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1046,11 +1046,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListExtensionLifecycleAuditEventsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListExtensionLifecycleAuditEventsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1118,11 +1118,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListExtensionsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListExtensionsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1179,11 +1179,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListReservationTypesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListReservationTypesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1240,11 +1240,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListReservationsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListReservationsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1330,11 +1330,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListResourcesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListResourcesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1391,11 +1391,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffAssignmentsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffAssignmentsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1466,11 +1466,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffAvailabilityRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffAvailabilityRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1550,11 +1550,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffProfilesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffProfilesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1611,11 +1611,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListTenantExtensionStatusesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListTenantExtensionStatusesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1672,11 +1672,11 @@ Thin wrapper so the app-store mount (&#x60;/v1/erp/app-store/apps&#x60;) gets it
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListTenantExtensionStatusesAppStoreRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListTenantExtensionStatusesAppStoreRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1733,11 +1733,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ListTenantExtensionsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListTenantExtensionsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1794,11 +1794,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { RegisterExtensionOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { RegisterExtensionOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1863,11 +1863,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ReleaseExpiredPaymentHoldsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReleaseExpiredPaymentHoldsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1932,11 +1932,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { ReleasePaymentIntentHoldOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReleasePaymentIntentHoldOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2001,11 +2001,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { SendReservationNotificationOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { SendReservationNotificationOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2073,11 +2073,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { UnassignReservationStaffRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UnassignReservationStaffRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2142,11 +2142,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateExtensionConfigOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateExtensionConfigOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2214,11 +2214,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateReservationOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateReservationOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2286,11 +2286,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffAssignmentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffAssignmentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2358,11 +2358,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReservationsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

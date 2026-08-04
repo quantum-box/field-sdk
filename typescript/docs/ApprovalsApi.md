@@ -1,6 +1,6 @@
 # ApprovalsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -26,11 +26,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { CreateApprovalFlowOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateApprovalFlowOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -95,11 +95,11 @@ example().catch(console.error);
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { DeleteApprovalFlowRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteApprovalFlowRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -164,11 +164,11 @@ example().catch(console.error);
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { GetApprovalFlowRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetApprovalFlowRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -233,11 +233,11 @@ example().catch(console.error);
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { ListApprovalFlowsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListApprovalFlowsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -311,11 +311,11 @@ example().catch(console.error);
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { ListApprovalsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListApprovalsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -392,11 +392,11 @@ example().catch(console.error);
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { MutateApprovalRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { MutateApprovalRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -462,11 +462,11 @@ example().catch(console.error);
 import {
   Configuration,
   ApprovalsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateApprovalFlowOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateApprovalFlowOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

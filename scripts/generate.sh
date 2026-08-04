@@ -19,7 +19,7 @@ GENERATOR_VERSION="7.20.0"
 
 NORMALIZED_SPEC="$ROOT_DIR/build/openapi.normalized.yaml"
 RUST_PACKAGE_NAME="field-sdk"
-TS_NPM_NAME="@tachyon/field-sdk"
+TS_NPM_NAME="@tachyon-sdk/field"
 PACKAGE_VERSION="0.1.0"
 
 if [[ ! -f "$SPEC_FILE" ]]; then

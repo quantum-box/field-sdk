@@ -1,6 +1,6 @@
 # TACHYONFieldIAMApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -24,11 +24,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   TACHYONFieldIAMApi,
-} from '@tachyon/field-sdk';
-import type { DeleteErpUserRoleRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteErpUserRoleRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -93,11 +93,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldIAMApi,
-} from '@tachyon/field-sdk';
-import type { InviteErpUserOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { InviteErpUserOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -162,11 +162,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldIAMApi,
-} from '@tachyon/field-sdk';
-import type { ListErpUsersRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListErpUsersRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -223,11 +223,11 @@ Replace a member\&#39;s ERP-managed policies with the given flat list.
 import {
   Configuration,
   TACHYONFieldIAMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateErpUserPoliciesOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateErpUserPoliciesOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -295,11 +295,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldIAMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateErpUserRoleOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateErpUserRoleOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

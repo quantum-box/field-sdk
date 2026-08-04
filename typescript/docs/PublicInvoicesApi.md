@@ -1,6 +1,6 @@
 # PublicInvoicesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -29,11 +29,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { ConfirmPublicInvoicePaymentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ConfirmPublicInvoicePaymentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -104,11 +104,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { ConfirmShortPublicInvoicePaymentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ConfirmShortPublicInvoicePaymentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -176,11 +176,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { CreatePublicInvoiceCheckoutRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreatePublicInvoiceCheckoutRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -248,11 +248,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { CreatePublicInvoicePaymentIntentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreatePublicInvoicePaymentIntentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -326,11 +326,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { CreateShortPublicInvoiceCheckoutRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateShortPublicInvoiceCheckoutRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -395,11 +395,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { CreateShortPublicInvoicePaymentIntentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateShortPublicInvoicePaymentIntentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -470,11 +470,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { GetPublicInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetPublicInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -542,11 +542,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { GetPublicInvoiceStripePublishableKeyRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetPublicInvoiceStripePublishableKeyRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -620,11 +620,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { GetShortPublicInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetShortPublicInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -689,11 +689,11 @@ example().catch(console.error);
 import {
   Configuration,
   PublicInvoicesApi,
-} from '@tachyon/field-sdk';
-import type { GetShortPublicInvoiceStripePublishableKeyRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetShortPublicInvoiceStripePublishableKeyRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

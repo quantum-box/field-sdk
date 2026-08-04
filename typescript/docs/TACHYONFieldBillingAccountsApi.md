@@ -1,6 +1,6 @@
 # TACHYONFieldBillingAccountsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -26,11 +26,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { AddOperatorOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AddOperatorOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -100,11 +100,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { CreateBillingAccountOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateBillingAccountOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -170,11 +170,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { GetBillingAccountRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetBillingAccountRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -240,11 +240,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { ListBillingAccountsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListBillingAccountsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -301,11 +301,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { ListOperatorsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListOperatorsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -371,11 +371,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { RemoveOperatorRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { RemoveOperatorRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -444,11 +444,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBillingAccountsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateBillingAccountOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateBillingAccountOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

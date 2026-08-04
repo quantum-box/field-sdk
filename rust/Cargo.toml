@@ -20,6 +20,9 @@ serde_repr = "^0.1"
 url = "^2.5"
 reqwest = { version = "^0.13", default-features = false, features = ["json", "multipart", "query", "form"] }
 
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
 [features]
 default = ["rustls"]
 native-tls = ["reqwest/native-tls"]

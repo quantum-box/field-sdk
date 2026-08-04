@@ -1,6 +1,6 @@
 # GolfCourseApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -61,11 +61,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { AutoAssignGolfCaddiesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AutoAssignGolfCaddiesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -130,11 +130,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { CreateGolfCaddieAssignmentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateGolfCaddieAssignmentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -199,11 +199,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { CreateGolfCaddieProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateGolfCaddieProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -268,11 +268,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { CreateGolfCaddieRatingRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateGolfCaddieRatingRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -337,11 +337,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { CreateGolfCourseRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateGolfCourseRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -406,11 +406,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { CreateGolfCourseResourceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateGolfCourseResourceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -475,11 +475,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { DeleteCaddieAvailabilityRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteCaddieAvailabilityRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -547,11 +547,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { DeleteDailyBudgetRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteDailyBudgetRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -619,11 +619,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { DeleteGolfCourseRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteGolfCourseRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -688,11 +688,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ExportGolfCaddiePayrollCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ExportGolfCaddiePayrollCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -757,11 +757,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ExportGolfMonthlySettlementCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ExportGolfMonthlySettlementCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -826,11 +826,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { GetDailyBudgetAchievementRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetDailyBudgetAchievementRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -901,11 +901,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { GetGolfCourseRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetGolfCourseRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -970,11 +970,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { GetGolfMonthlySettlementRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetGolfMonthlySettlementRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1039,11 +1039,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { GetGolfReservationPolicyRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetGolfReservationPolicyRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1108,11 +1108,11 @@ CSV import: &#x60;golf_course_id,date,target_revenue,target_average_spend,target
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ImportDailyBudgetsCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ImportDailyBudgetsCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1177,11 +1177,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListCaddieAvailabilitiesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListCaddieAvailabilitiesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1252,11 +1252,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListCaddieCourseMembershipsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListCaddieCourseMembershipsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1321,11 +1321,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListDailyBudgetsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListDailyBudgetsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1396,11 +1396,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCaddieAssignmentsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCaddieAssignmentsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1477,11 +1477,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCaddieAttendancePeriodSnapshotsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCaddieAttendancePeriodSnapshotsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1550,11 +1550,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCaddieAttendanceSnapshotRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCaddieAttendanceSnapshotRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1619,11 +1619,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCaddiePayrollSummaryRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCaddiePayrollSummaryRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1688,11 +1688,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCaddieProfilesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCaddieProfilesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1749,11 +1749,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCaddieRatingsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCaddieRatingsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1818,11 +1818,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCourseResourcesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCourseResourcesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1879,11 +1879,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCoursesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCoursesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1940,11 +1940,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfCustomFieldsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfCustomFieldsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2009,11 +2009,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfProductSlotsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfProductSlotsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2078,11 +2078,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ListGolfReservationProductsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListGolfReservationProductsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2139,11 +2139,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { RecommendGolfCaddiesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { RecommendGolfCaddiesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2220,11 +2220,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ReplaceCaddieCourseMembershipsOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReplaceCaddieCourseMembershipsOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2292,11 +2292,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { ReplaceGolfProductSlotsOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReplaceGolfProductSlotsOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2364,11 +2364,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpdateGolfCaddieAssignmentRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateGolfCaddieAssignmentRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2436,11 +2436,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpdateGolfCaddieProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateGolfCaddieProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2508,11 +2508,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpdateGolfCourseRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateGolfCourseRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2580,11 +2580,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpdateGolfCourseResourceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateGolfCourseResourceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2652,11 +2652,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpdateGolfCustomFieldRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateGolfCustomFieldRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2721,11 +2721,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpdateGolfReservationPolicyOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateGolfReservationPolicyOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2790,11 +2790,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpsertCaddieAvailabilityRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpsertCaddieAvailabilityRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2859,11 +2859,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpsertDailyBudgetRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpsertDailyBudgetRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2928,11 +2928,11 @@ example().catch(console.error);
 import {
   Configuration,
   GolfCourseApi,
-} from '@tachyon/field-sdk';
-import type { UpsertGolfReservationProductRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpsertGolfReservationProductRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

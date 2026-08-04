@@ -1,0 +1,41 @@
+name: smoke
+
+# Live checks against https://tachyon-field-api.txcloud.app. Kept out of `ci`
+# so pull requests do not depend on production being up, and so the token is
+# only exposed to a workflow that needs it.
+on:
+  schedule:
+    - cron: "0 22 * * *" # 07:00 JST
+  workflow_dispatch:
+
+jobs:
+  rust:
+    name: rust smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - run: cargo test --manifest-path rust/Cargo.toml --test smoke -- --ignored
+        env:
+          FIELD_API_TOKEN: ${{ secrets.FIELD_API_TOKEN }}
+
+  typescript:
+    name: typescript smoke
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: typescript
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+      - run: npm ci
+      - run: npm run smoke
+        env:
+          FIELD_API_TOKEN: ${{ secrets.FIELD_API_TOKEN }}

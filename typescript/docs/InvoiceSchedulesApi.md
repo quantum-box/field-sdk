@@ -1,6 +1,6 @@
 # InvoiceSchedulesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -23,11 +23,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   InvoiceSchedulesApi,
-} from '@tachyon/field-sdk';
-import type { CreateScheduleOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateScheduleOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -92,11 +92,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoiceSchedulesApi,
-} from '@tachyon/field-sdk';
-import type { DeactivateScheduleRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeactivateScheduleRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -161,11 +161,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoiceSchedulesApi,
-} from '@tachyon/field-sdk';
-import type { ListSchedulesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListSchedulesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -222,11 +222,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   InvoiceSchedulesApi,
-} from '@tachyon/field-sdk';
-import type { UpdateScheduleOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateScheduleOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

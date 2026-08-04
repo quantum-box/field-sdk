@@ -1,6 +1,6 @@
 # ReturnsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -28,11 +28,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { AuthorizeReturnRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AuthorizeReturnRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -97,11 +97,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { CancelReturnRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CancelReturnRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -166,11 +166,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { CompleteReturnRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CompleteReturnRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -235,11 +235,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { CreateReturnRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateReturnRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -304,11 +304,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { GetReturnRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetReturnRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -373,11 +373,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { ListReturnRequestsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListReturnRequestsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -448,11 +448,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { RecordReturnInspectionDispositionRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { RecordReturnInspectionDispositionRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -520,11 +520,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { RejectReturnRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { RejectReturnRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -589,11 +589,11 @@ example().catch(console.error);
 import {
   Configuration,
   ReturnsApi,
-} from '@tachyon/field-sdk';
-import type { StartReturnInspectionRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { StartReturnInspectionRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

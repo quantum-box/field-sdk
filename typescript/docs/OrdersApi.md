@@ -1,6 +1,6 @@
 # OrdersApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -24,11 +24,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   OrdersApi,
-} from '@tachyon/field-sdk';
-import type { ConvertOrderToInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ConvertOrderToInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -93,11 +93,11 @@ example().catch(console.error);
 import {
   Configuration,
   OrdersApi,
-} from '@tachyon/field-sdk';
-import type { CreateOrderOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateOrderOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -162,11 +162,11 @@ example().catch(console.error);
 import {
   Configuration,
   OrdersApi,
-} from '@tachyon/field-sdk';
-import type { GetOrderRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetOrderRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -231,11 +231,11 @@ example().catch(console.error);
 import {
   Configuration,
   OrdersApi,
-} from '@tachyon/field-sdk';
-import type { ListOrdersRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListOrdersRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -309,11 +309,11 @@ example().catch(console.error);
 import {
   Configuration,
   OrdersApi,
-} from '@tachyon/field-sdk';
-import type { UpdateOrderOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateOrderOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

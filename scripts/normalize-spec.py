@@ -167,6 +167,26 @@ def ensure_bearer_security(spec: dict) -> bool:
     return changed
 
 
+PRODUCTION_SERVER = "https://tachyon-field-api.txcloud.app"
+
+
+def ensure_production_server(spec: dict) -> bool:
+    """Point the generated clients at production by default.
+
+    utoipa emits no ``servers``, so openapi-generator falls back to
+    ``http://localhost`` and every caller has to set a base path before the
+    client is usable. TACHYON Field's production API is a single fixed host, so
+    we bake it in; callers can still override ``base_path`` / ``basePath``.
+    """
+    if spec.get("servers"):
+        return False
+
+    spec["servers"] = [
+        {"url": PRODUCTION_SERVER, "description": "Production"},
+    ]
+    return True
+
+
 def main(argv: list[str]) -> int:
     if len(argv) != 3:
         sys.exit(f"usage: {argv[0]} <input.yaml> <output.yaml>")
@@ -177,6 +197,7 @@ def main(argv: list[str]) -> int:
     injected, requalified = normalize(spec)
     renamed = deduplicate_operation_ids(spec)
     security_added = ensure_bearer_security(spec)
+    server_added = ensure_production_server(spec)
 
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(yaml.safe_dump(spec, sort_keys=True, allow_unicode=True))
@@ -211,7 +232,13 @@ def main(argv: list[str]) -> int:
             "(upstream declares none, so clients would send no token)",
             file=sys.stderr,
         )
-    if not injected and not requalified and not renamed and not security_added:
+    if server_added:
+        print(
+            f"==> set the default server to {PRODUCTION_SERVER} "
+            "(upstream declares none, so clients would default to localhost)",
+            file=sys.stderr,
+        )
+    if not injected and not requalified and not renamed and not security_added and not server_added:
         print("==> spec already consistent; nothing to normalize", file=sys.stderr)
 
     print(f"==> wrote {destination}", file=sys.stderr)

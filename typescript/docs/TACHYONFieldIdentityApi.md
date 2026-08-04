@@ -1,6 +1,6 @@
 # TACHYONFieldIdentityApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -21,11 +21,11 @@ Resolve tenant-scoped UI capabilities from the same policy actions enforced by t
 import {
   Configuration,
   TACHYONFieldIdentityApi,
-} from '@tachyon/field-sdk';
-import type { GetClientCapabilitiesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetClientCapabilitiesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -84,11 +84,11 @@ Return the authenticated user\&#39;s Tachyon tenant memberships annotated with o
 import {
   Configuration,
   TACHYONFieldIdentityApi,
-} from '@tachyon/field-sdk';
-import type { GetMeRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetMeRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

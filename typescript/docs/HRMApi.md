@@ -1,6 +1,6 @@
 # HRMApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -55,11 +55,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ClockInStaffRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ClockInStaffRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -127,11 +127,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ClockInStaffLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ClockInStaffLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -199,11 +199,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ClockOutStaffRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ClockOutStaffRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -271,11 +271,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ClockOutStaffLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ClockOutStaffLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -343,11 +343,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffLeaveRequestOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffLeaveRequestOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -415,11 +415,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffLeaveRequestLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffLeaveRequestLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -487,11 +487,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffMemberRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffMemberRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -556,11 +556,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffMemberLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffMemberLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -625,11 +625,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffShiftRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffShiftRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -697,11 +697,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { CreateStaffShiftLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateStaffShiftLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -769,11 +769,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { DecideStaffLeaveRequestOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DecideStaffLeaveRequestOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -841,11 +841,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { DecideStaffLeaveRequestLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DecideStaffLeaveRequestLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -913,11 +913,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffCompensationProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffCompensationProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -982,11 +982,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffCompensationProfileLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffCompensationProfileLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1051,11 +1051,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffPayrollEstimateRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffPayrollEstimateRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1123,11 +1123,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffPayrollEstimateLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffPayrollEstimateLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1195,11 +1195,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffShiftPreferenceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffShiftPreferenceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1264,11 +1264,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffShiftPreferenceLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffShiftPreferenceLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1333,11 +1333,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffSkillProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffSkillProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1402,11 +1402,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffSkillProfileLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffSkillProfileLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1471,11 +1471,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffUtilizationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffUtilizationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1543,11 +1543,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { GetStaffUtilizationLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetStaffUtilizationLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1615,11 +1615,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffLeaveRequestsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffLeaveRequestsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1684,11 +1684,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffLeaveRequestsLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffLeaveRequestsLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1753,11 +1753,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffMembersRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffMembersRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1814,11 +1814,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffMembersLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffMembersLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1875,11 +1875,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffShiftsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffShiftsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -1950,11 +1950,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { ListStaffShiftsLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStaffShiftsLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2025,11 +2025,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffCompensationProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffCompensationProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2097,11 +2097,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffCompensationProfileLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffCompensationProfileLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2169,11 +2169,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffMemberRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffMemberRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2241,11 +2241,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffMemberLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffMemberLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2313,11 +2313,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffShiftPreferenceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffShiftPreferenceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2385,11 +2385,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffShiftPreferenceLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffShiftPreferenceLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2457,11 +2457,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffSkillProfileRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffSkillProfileRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -2529,11 +2529,11 @@ example().catch(console.error);
 import {
   Configuration,
   HRMApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStaffSkillProfileLegacyPrefixRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStaffSkillProfileLegacyPrefixRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

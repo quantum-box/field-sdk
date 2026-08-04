@@ -1,6 +1,6 @@
 # InvoicesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -29,11 +29,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { CreateInvoiceOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateInvoiceOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -98,11 +98,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { DeleteInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -167,11 +167,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { FulfillInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { FulfillInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -236,11 +236,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { GetInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -305,11 +305,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { ListInvoicesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListInvoicesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -366,11 +366,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { ListSquarePaymentReconciliationsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListSquarePaymentReconciliationsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -427,11 +427,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { ReconcileSquarePaymentOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReconcileSquarePaymentOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -499,11 +499,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { ResendInvoicePaymentLinkRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ResendInvoicePaymentLinkRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -571,11 +571,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { UpdateInvoiceOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateInvoiceOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -643,11 +643,11 @@ example().catch(console.error);
 import {
   Configuration,
   InvoicesApi,
-} from '@tachyon/field-sdk';
-import type { UpdateInvoiceFollowUpStatusOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateInvoiceFollowUpStatusOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

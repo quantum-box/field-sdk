@@ -5,50 +5,83 @@ REST API. The contract is `apps/api/tachyon-field.openapi.yaml` in tachyonfield,
 vendored here as [`openapi.yaml`](openapi.yaml) and turned into one client per
 language by [`scripts/generate.sh`](scripts/generate.sh).
 
-| Directory | Package | Status |
-|-----------|---------|--------|
-| [`rust/`](rust) | `field-sdk` (crate) | generated, `cargo check` clean |
-| [`typescript/`](typescript) | `@tachyon/field-sdk` (npm) | generated, `tsc` clean |
+| Directory | Package | Distribution |
+|-----------|---------|--------------|
+| [`rust/`](rust) | `field-sdk` (crate) | git dependency |
+| [`typescript/`](typescript) | `@tachyon-sdk/field` (npm) | npm, published on version bump |
 
 Coverage is the full REST surface: 233 paths across 36 tag groups (ERP, StoreKit,
 Bridge, IAM, invoices, quotations, reservations, ...).
+
+Both clients default to production — `https://tachyon-field-api.txcloud.app` is
+baked into the generated code, so nothing but a token is required to make a call.
 
 ## Rust
 
 ```toml
 [dependencies]
-field-sdk = { git = "https://github.com/quantum-box/field-sdk", package = "field-sdk" }
+field-sdk = { git = "https://github.com/quantum-box/field-sdk" }
 ```
 
 ```rust
 use field_sdk::apis::configuration::Configuration;
 use field_sdk::apis::vendors_api;
 
-let mut config = Configuration::new();
-config.base_path = "https://api.example.com".to_owned();
-config.bearer_access_token = Some(access_token);
+let config = Configuration {
+    bearer_access_token: Some(access_token),
+    ..Configuration::default()
+};
 
 let vendor = vendors_api::get_vendor(&config, "vnd_123").await?;
 ```
 
+Override `config.base_path` to point at a preview deployment or a local API.
 TLS backend: `rustls` by default, `native-tls` via
 `default-features = false, features = ["native-tls"]`.
 
 ## TypeScript
 
-```ts
-import { Configuration, VendorsApi } from '@tachyon/field-sdk'
-
-const config = new Configuration({
-  basePath: 'https://api.example.com',
-  accessToken: () => accessToken,
-})
-
-const vendor = await new VendorsApi(config).getVendor({ id: 'vnd_123' })
+```sh
+npm install @tachyon-sdk/field
 ```
 
-Operations take a single request object (`useSingleRequestParameter`), so
-optional query parameters stay named at the call site.
+```ts
+import { Configuration, VendorsApi } from '@tachyon-sdk/field'
+
+const api = new VendorsApi(new Configuration({ accessToken }))
+
+const vendor = await api.getVendor({ id: 'vnd_123' })
+```
+
+Pass `basePath` to the `Configuration` to target something other than
+production. Operations take a single request object
+(`useSingleRequestParameter`), so optional query parameters stay named at the
+call site.
+
+## Smoke tests
+
+Both clients ship live tests against production. They cover the health and
+readiness probes, and assert that an authenticated endpoint rejects a missing
+token with `401 UNAUTHORIZED`:
+
+```bash
+cargo test --manifest-path rust/Cargo.toml --test smoke -- --ignored
+cd typescript && npm run smoke
+```
+
+Set `FIELD_API_TOKEN` to also exercise an authenticated request; the test is
+skipped without it. `.github/workflows/smoke.yml` runs both nightly and on
+demand, reading the token from the `FIELD_API_TOKEN` repository secret.
+
+## Releasing
+
+The npm package publishes from `main` whenever `typescript/package.json`
+carries a version that is not on the registry yet
+(`.github/workflows/publish-typescript.yml`, `NPM_TOKEN` secret). Bump the
+version and record the change in [CHANGELOG.md](CHANGELOG.md).
+
+The Rust crate is consumed as a git dependency and is marked `publish = false`;
+pin a tag or commit on the consumer side when you need reproducibility.
 
 ## Regenerating
 
@@ -80,6 +113,7 @@ has three defects that make the generated clients fail to compile.
 | Query parameter declared as `in: path` (`/v1/field/reports/payout?from=`) | 20 | move to `in: query`; optional when the schema is nullable |
 | `operationId` reused across tags (`get_order`, `list_orders`, `list_categories`) | 3 | rename the later path to `<tag>_<operationId>` (e.g. `storekit_get_order`) |
 | No `securitySchemes`, so clients would never send a token | 1 | declare `bearerAuth` (`http` / `bearer`) globally, matching the `Authorization: Bearer` the API enforces |
+| No `servers`, so clients would default to `http://localhost` | 1 | declare the production host `https://tachyon-field-api.txcloud.app` |
 
 Two consequences worth knowing:
 

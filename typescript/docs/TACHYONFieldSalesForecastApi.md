@@ -1,6 +1,6 @@
 # TACHYONFieldSalesForecastApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -22,11 +22,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   TACHYONFieldSalesForecastApi,
-} from '@tachyon/field-sdk';
-import type { GetSalesForecastRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetSalesForecastRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -83,11 +83,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   TACHYONFieldSalesForecastApi,
-} from '@tachyon/field-sdk';
-import type { ListStageSettingsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListStageSettingsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -144,11 +144,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   TACHYONFieldSalesForecastApi,
-} from '@tachyon/field-sdk';
-import type { UpdateStageSettingsOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateStageSettingsOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

@@ -1,6 +1,6 @@
 # DefaultApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -21,11 +21,11 @@ Lightweight liveness probe — always returns 200.
 import {
   Configuration,
   DefaultApi,
-} from '@tachyon/field-sdk';
-import type { HealthCheckRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { HealthCheckRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -84,11 +84,11 @@ Returns 200 when all dependencies are healthy, 503 otherwise.
 import {
   Configuration,
   DefaultApi,
-} from '@tachyon/field-sdk';
-import type { ReadinessCheckRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReadinessCheckRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

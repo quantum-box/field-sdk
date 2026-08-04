@@ -1,6 +1,6 @@
 # TACHYONFieldBridgeExportApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -23,11 +23,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   TACHYONFieldBridgeExportApi,
-} from '@tachyon/field-sdk';
-import type { CreateBridgeExportDefinitionRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateBridgeExportDefinitionRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -93,11 +93,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBridgeExportApi,
-} from '@tachyon/field-sdk';
-import type { ExportBridgeCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ExportBridgeCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -164,11 +164,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldBridgeExportApi,
-} from '@tachyon/field-sdk';
-import type { ListBridgeExportDefinitionsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListBridgeExportDefinitionsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -225,11 +225,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   TACHYONFieldBridgeExportApi,
-} from '@tachyon/field-sdk';
-import type { ListBridgeExportObjectsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListBridgeExportObjectsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

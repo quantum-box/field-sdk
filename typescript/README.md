@@ -1,13 +1,13 @@
-# @tachyon/field-sdk@0.1.0
+# @tachyon-sdk/field@0.1.0
 
-A TypeScript SDK client for the localhost API.
+A TypeScript SDK client for the tachyon-field-api.txcloud.app API.
 
 ## Usage
 
 First, install the SDK from npm.
 
 ```bash
-npm install @tachyon/field-sdk --save
+npm install @tachyon-sdk/field --save
 ```
 
 Next, try it out.
@@ -17,11 +17,11 @@ Next, try it out.
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentCreateInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentCreateInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -50,7 +50,7 @@ example().catch(console.error);
 
 ### API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Class | Method | HTTP request | Description
 | ----- | ------ | ------------ | -------------

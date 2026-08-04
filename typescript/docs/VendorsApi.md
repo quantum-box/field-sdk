@@ -1,6 +1,6 @@
 # VendorsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -23,11 +23,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   VendorsApi,
-} from '@tachyon/field-sdk';
-import type { CreateVendorOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateVendorOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -92,11 +92,11 @@ example().catch(console.error);
 import {
   Configuration,
   VendorsApi,
-} from '@tachyon/field-sdk';
-import type { GetVendorRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { GetVendorRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -161,11 +161,11 @@ example().catch(console.error);
 import {
   Configuration,
   VendorsApi,
-} from '@tachyon/field-sdk';
-import type { ListVendorsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListVendorsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -239,11 +239,11 @@ example().catch(console.error);
 import {
   Configuration,
   VendorsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateVendorOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateVendorOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

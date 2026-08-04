@@ -1,6 +1,6 @@
 # AgentDocumentsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -27,11 +27,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentCreateInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentCreateInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -96,11 +96,11 @@ example().catch(console.error);
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentCreateQuotationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentCreateQuotationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -165,11 +165,11 @@ example().catch(console.error);
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentGetInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentGetInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -234,11 +234,11 @@ example().catch(console.error);
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentGetQuotationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentGetQuotationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -303,11 +303,11 @@ example().catch(console.error);
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentListInvoicesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentListInvoicesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -364,11 +364,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentListQuotationsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentListQuotationsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -425,11 +425,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentSendInvoiceRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentSendInvoiceRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -494,11 +494,11 @@ example().catch(console.error);
 import {
   Configuration,
   AgentDocumentsApi,
-} from '@tachyon/field-sdk';
-import type { AgentSendQuotationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { AgentSendQuotationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

@@ -1,6 +1,6 @@
 # SaaSSubscriptionsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -26,11 +26,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { ApproveSaasChangeRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ApproveSaasChangeRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -98,11 +98,11 @@ example().catch(console.error);
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { CreateSaasChangeRequestOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateSaasChangeRequestOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -170,11 +170,11 @@ example().catch(console.error);
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { CreateSaasSubscriptionOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateSaasSubscriptionOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -239,11 +239,11 @@ example().catch(console.error);
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { ListSaasChangeRequestsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListSaasChangeRequestsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -308,11 +308,11 @@ example().catch(console.error);
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { ListSaasSubscriptionsRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListSaasSubscriptionsRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -377,11 +377,11 @@ example().catch(console.error);
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { ReturnSaasChangeRequestRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ReturnSaasChangeRequestRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -449,11 +449,11 @@ example().catch(console.error);
 import {
   Configuration,
   SaaSSubscriptionsApi,
-} from '@tachyon/field-sdk';
-import type { UpdateSaasSubscriptionOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { UpdateSaasSubscriptionOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

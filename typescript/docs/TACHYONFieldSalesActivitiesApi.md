@@ -1,6 +1,6 @@
 # TACHYONFieldSalesActivitiesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -22,11 +22,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   TACHYONFieldSalesActivitiesApi,
-} from '@tachyon/field-sdk';
-import type { CreateActivityOperationRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { CreateActivityOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -91,11 +91,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldSalesActivitiesApi,
-} from '@tachyon/field-sdk';
-import type { DeleteActivityRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { DeleteActivityRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -160,11 +160,11 @@ example().catch(console.error);
 import {
   Configuration,
   TACHYONFieldSalesActivitiesApi,
-} from '@tachyon/field-sdk';
-import type { ListActivitiesRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ListActivitiesRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

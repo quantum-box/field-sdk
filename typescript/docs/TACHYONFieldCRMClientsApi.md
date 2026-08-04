@@ -1,6 +1,6 @@
 # TACHYONFieldCRMClientsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -21,11 +21,11 @@ All URIs are relative to *http://localhost*
 import {
   Configuration,
   TACHYONFieldCRMClientsApi,
-} from '@tachyon/field-sdk';
-import type { ExportClientsCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ExportClientsCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -82,11 +82,11 @@ This endpoint does not need any parameter.
 import {
   Configuration,
   TACHYONFieldCRMClientsApi,
-} from '@tachyon/field-sdk';
-import type { ImportClientsCsvRequest } from '@tachyon/field-sdk';
+} from '@tachyon-sdk/field';
+import type { ImportClientsCsvRequest } from '@tachyon-sdk/field';
 
 async function example() {
-  console.log("🚀 Testing @tachyon/field-sdk SDK...");
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: bearerAuth
     accessToken: "YOUR BEARER TOKEN",

@@ -22,7 +22,7 @@ field-sdk = { path = "./field-sdk" }
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
