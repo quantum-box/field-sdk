@@ -4,9 +4,38 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**evaluate_feature_flags**](TachyonFieldIdentityApi.md#evaluate_feature_flags) | **POST** /v1/feature-flags/evaluate | Evaluate Field-owned feature flags for the authenticated tenant.
 [**get_client_capabilities**](TachyonFieldIdentityApi.md#get_client_capabilities) | **GET** /v1/field/client-capabilities | Resolve tenant-scoped UI capabilities from the same policy actions enforced by the corresponding API handlers.
 [**get_me**](TachyonFieldIdentityApi.md#get_me) | **GET** /v1/erp/me | Return the authenticated user's Tachyon tenant memberships annotated with one Field extension's enabled state.
 
+
+
+## evaluate_feature_flags
+
+> models::EvaluateFeatureFlagsResponse evaluate_feature_flags(evaluate_feature_flags_request)
+Evaluate Field-owned feature flags for the authenticated tenant.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**evaluate_feature_flags_request** | [**EvaluateFeatureFlagsRequest**](EvaluateFeatureFlagsRequest.md) |  | [required] |
+
+### Return type
+
+[**models::EvaluateFeatureFlagsResponse**](EvaluateFeatureFlagsResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## get_client_capabilities

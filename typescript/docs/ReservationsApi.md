@@ -6,21 +6,44 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 |------------- | ------------- | -------------|
 | [**assignReservationStaff**](ReservationsApi.md#assignreservationstaff) | **POST** /v1/erp/reservations/{id}/staff-assignment |  |
 | [**cancelReservationWithPolicy**](ReservationsApi.md#cancelreservationwithpolicy) | **POST** /v1/erp/reservations/{id}/cancel |  |
+| [**closeCustomerClientAffiliation**](ReservationsApi.md#closecustomerclientaffiliationoperation) | **POST** /v1/erp/customer-client-affiliations/{id}/close |  |
+| [**createCustomerClientAffiliation**](ReservationsApi.md#createcustomerclientaffiliationoperation) | **POST** /v1/erp/customer-client-affiliations |  |
 | [**createReservation**](ReservationsApi.md#createreservationoperation) | **POST** /v1/erp/reservations |  |
+| [**createReservationProduct**](ReservationsApi.md#createreservationproduct) | **POST** /v1/erp/reservation-products |  |
+| [**createReservationResource**](ReservationsApi.md#createreservationresourceoperation) | **POST** /v1/erp/reservation-resources |  |
+| [**createReservationType**](ReservationsApi.md#createreservationtypeoperation) | **POST** /v1/erp/reservation-types |  |
 | [**createStaffAssignment**](ReservationsApi.md#createstaffassignment) | **POST** /v1/erp/staff-assignments |  |
 | [**createStaffProfile**](ReservationsApi.md#createstaffprofile) | **POST** /v1/erp/staff-profiles |  |
+| [**deleteReservationProduct**](ReservationsApi.md#deletereservationproduct) | **DELETE** /v1/erp/reservation-products/{id} |  |
+| [**deleteReservationResource**](ReservationsApi.md#deletereservationresource) | **DELETE** /v1/erp/reservation-resources/{id} |  |
+| [**deleteReservationScheduleDateOverride**](ReservationsApi.md#deletereservationscheduledateoverride) | **DELETE** /v1/erp/reservation-resources/{id}/schedule/overrides/{localDate} |  |
+| [**deleteReservationScheduleLocation**](ReservationsApi.md#deletereservationschedulelocation) | **DELETE** /v1/erp/reservation-schedule-location |  |
+| [**deleteReservationType**](ReservationsApi.md#deletereservationtype) | **DELETE** /v1/erp/reservation-types/{id} |  |
 | [**disableExtension**](ReservationsApi.md#disableextension) | **POST** /v1/erp/extensions/{extension_key}/disable |  |
 | [**enableExtension**](ReservationsApi.md#enableextensionoperation) | **POST** /v1/erp/extensions/{extension_key}/enable |  |
 | [**exportCancellationFeeReportCsv**](ReservationsApi.md#exportcancellationfeereportcsv) | **GET** /v1/erp/reservation-reports/cancellation-fees.csv |  |
 | [**exportReservationsCsv**](ReservationsApi.md#exportreservationscsv) | **GET** /v1/erp/reservations/export.csv |  |
+| [**generateReservationResourceTimeSlots**](ReservationsApi.md#generatereservationresourcetimeslots) | **POST** /v1/erp/reservation-resources/{id}/time-slots/generate |  |
 | [**getExtensionConfig**](ReservationsApi.md#getextensionconfig) | **GET** /v1/erp/extensions/{extension_key}/config |  |
 | [**getReservation**](ReservationsApi.md#getreservation) | **GET** /v1/erp/reservations/{id} |  |
+| [**getReservationProduct**](ReservationsApi.md#getreservationproduct) | **GET** /v1/erp/reservation-products/{id} |  |
+| [**getReservationResource**](ReservationsApi.md#getreservationresource) | **GET** /v1/erp/reservation-resources/{id} |  |
+| [**getReservationResourceSchedule**](ReservationsApi.md#getreservationresourceschedule) | **GET** /v1/erp/reservation-resources/{id}/schedule |  |
+| [**getReservationScheduleLocation**](ReservationsApi.md#getreservationschedulelocation) | **GET** /v1/erp/reservation-schedule-location |  |
+| [**importProductSlotsIntoResourceSchedule**](ReservationsApi.md#importproductslotsintoresourceschedule) | **POST** /v1/erp/reservation-resources/{id}/schedule/import-product-slots |  |
 | [**issueReservationBillingLink**](ReservationsApi.md#issuereservationbillinglinkoperation) | **POST** /v1/erp/reservations/{id}/billing-link |  |
 | [**issueReservationSquareInvoice**](ReservationsApi.md#issuereservationsquareinvoice) | **POST** /v1/erp/reservations/{id}/billing-invoice |  |
 | [**listCancellationFeeReport**](ReservationsApi.md#listcancellationfeereport) | **GET** /v1/erp/reservation-reports/cancellation-fees |  |
+| [**listCustomerClientAffiliations**](ReservationsApi.md#listcustomerclientaffiliations) | **GET** /v1/erp/customer-client-affiliations |  |
 | [**listExtensionLifecycleAuditEvents**](ReservationsApi.md#listextensionlifecycleauditevents) | **GET** /v1/erp/extensions/audit |  |
 | [**listExtensions**](ReservationsApi.md#listextensions) | **GET** /v1/erp/extensions |  |
+| [**listReservationCancellations**](ReservationsApi.md#listreservationcancellations) | **GET** /v1/erp/reservations/{id}/cancellations |  |
+| [**listReservationProducts**](ReservationsApi.md#listreservationproducts) | **GET** /v1/erp/reservation-products |  |
+| [**listReservationResourceTimeSlots**](ReservationsApi.md#listreservationresourcetimeslots) | **GET** /v1/erp/reservation-resources/{id}/time-slots |  |
+| [**listReservationResources**](ReservationsApi.md#listreservationresources) | **GET** /v1/erp/reservation-resources |  |
+| [**listReservationScheduleDateOverrides**](ReservationsApi.md#listreservationscheduledateoverrides) | **GET** /v1/erp/reservation-resources/{id}/schedule/overrides |  |
 | [**listReservationTypes**](ReservationsApi.md#listreservationtypes) | **GET** /v1/erp/reservation-types |  |
+| [**listReservationTypesForManagement**](ReservationsApi.md#listreservationtypesformanagement) | **GET** /v1/erp/reservation-types/manage |  |
 | [**listReservations**](ReservationsApi.md#listreservations) | **GET** /v1/erp/reservations |  |
 | [**listResources**](ReservationsApi.md#listresources) | **GET** /v1/erp/resources |  |
 | [**listStaffAssignments**](ReservationsApi.md#liststaffassignments) | **GET** /v1/erp/staff-assignments |  |
@@ -29,13 +52,26 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**listTenantExtensionStatuses**](ReservationsApi.md#listtenantextensionstatuses) | **GET** /v1/erp/extensions/status |  |
 | [**listTenantExtensionStatusesAppStore**](ReservationsApi.md#listtenantextensionstatusesappstore) | **GET** /v1/erp/app-store/apps | Thin wrapper so the app-store mount (&#x60;/v1/erp/app-store/apps&#x60;) gets its own OpenAPI path entry; delegates entirely to &#x60;list_tenant_extension_statuses&#x60;. |
 | [**listTenantExtensions**](ReservationsApi.md#listtenantextensions) | **GET** /v1/erp/extensions/enabled |  |
+| [**listTenantReservationCancellations**](ReservationsApi.md#listtenantreservationcancellations) | **GET** /v1/erp/reservation-cancellations |  |
+| [**lookupReservationStatuses**](ReservationsApi.md#lookupreservationstatuses) | **POST** /v1/erp/reservations/status-lookup | Resolves the current state of reservations the caller already references. |
+| [**purgeManualReservationResourceTimeSlots**](ReservationsApi.md#purgemanualreservationresourcetimeslots) | **DELETE** /v1/erp/reservation-resources/{id}/time-slots/manual |  |
+| [**purgeReservationResourceTimeSlots**](ReservationsApi.md#purgereservationresourcetimeslots) | **DELETE** /v1/erp/reservation-resources/{id}/time-slots |  |
+| [**putReservationScheduleDateOverride**](ReservationsApi.md#putreservationscheduledateoverrideoperation) | **PUT** /v1/erp/reservation-resources/{id}/schedule/overrides/{localDate} |  |
+| [**putReservationScheduleLocation**](ReservationsApi.md#putreservationschedulelocationoperation) | **PUT** /v1/erp/reservation-schedule-location |  |
 | [**registerExtension**](ReservationsApi.md#registerextensionoperation) | **POST** /v1/erp/extensions |  |
 | [**releaseExpiredPaymentHolds**](ReservationsApi.md#releaseexpiredpaymentholds) | **POST** /v1/erp/reservations/payment-holds/release-expired |  |
 | [**releasePaymentIntentHold**](ReservationsApi.md#releasepaymentintentholdoperation) | **POST** /v1/erp/reservations/payment-holds/release |  |
+| [**replaceReservationProduct**](ReservationsApi.md#replacereservationproduct) | **PUT** /v1/erp/reservation-products/{id} |  |
+| [**replaceReservationProductSlots**](ReservationsApi.md#replacereservationproductslotsoperation) | **PUT** /v1/erp/reservation-products/{id}/slots |  |
+| [**replaceReservationResourceSchedule**](ReservationsApi.md#replacereservationresourcescheduleoperation) | **PUT** /v1/erp/reservation-resources/{id}/schedule |  |
+| [**seedReservationProductsFromExtensionConfig**](ReservationsApi.md#seedreservationproductsfromextensionconfig) | **POST** /v1/erp/reservation-products/seed-from-extension-config |  |
 | [**sendReservationNotification**](ReservationsApi.md#sendreservationnotificationoperation) | **POST** /v1/erp/reservations/{id}/notifications |  |
 | [**unassignReservationStaff**](ReservationsApi.md#unassignreservationstaff) | **POST** /v1/erp/reservations/{id}/staff-assignment/unassign |  |
+| [**updateCustomerClientAffiliation**](ReservationsApi.md#updatecustomerclientaffiliationoperation) | **PATCH** /v1/erp/customer-client-affiliations/{id} |  |
 | [**updateExtensionConfig**](ReservationsApi.md#updateextensionconfigoperation) | **PATCH** /v1/erp/extensions/{extension_key}/config |  |
 | [**updateReservation**](ReservationsApi.md#updatereservationoperation) | **PATCH** /v1/erp/reservations/{id} |  |
+| [**updateReservationResource**](ReservationsApi.md#updatereservationresourceoperation) | **PATCH** /v1/erp/reservation-resources/{id} |  |
+| [**updateReservationType**](ReservationsApi.md#updatereservationtypeoperation) | **PATCH** /v1/erp/reservation-types/{id} |  |
 | [**updateStaffAssignment**](ReservationsApi.md#updatestaffassignment) | **PATCH** /v1/erp/staff-assignments/{id} |  |
 | [**updateStaffProfile**](ReservationsApi.md#updatestaffprofile) | **PATCH** /v1/erp/staff-profiles/{id} |  |
 
@@ -115,7 +151,7 @@ example().catch(console.error);
 
 ## cancelReservationWithPolicy
 
-> Reservation cancelReservationWithPolicy(id, cancelReservationRequest)
+> Reservation cancelReservationWithPolicy(id, cancelReservationRequest, idempotencyKey)
 
 
 
@@ -141,6 +177,8 @@ async function example() {
     id: id_example,
     // CancelReservationRequest
     cancelReservationRequest: ...,
+    // string | Retry-safe cancellation key; the same key replays the first outcome instead of refunding twice (optional)
+    idempotencyKey: idempotencyKey_example,
   } satisfies CancelReservationWithPolicyRequest;
 
   try {
@@ -162,6 +200,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` | Reservation ID to cancel | [Defaults to `undefined`] |
 | **cancelReservationRequest** | [CancelReservationRequest](CancelReservationRequest.md) |  | |
+| **idempotencyKey** | `string` | Retry-safe cancellation key; the same key replays the first outcome instead of refunding twice | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -181,6 +220,147 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## closeCustomerClientAffiliation
+
+> CustomerClientAffiliation closeCustomerClientAffiliation(id, closeCustomerClientAffiliationRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CloseCustomerClientAffiliationOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Customer-client affiliation ID
+    id: id_example,
+    // CloseCustomerClientAffiliationRequest
+    closeCustomerClientAffiliationRequest: ...,
+  } satisfies CloseCustomerClientAffiliationOperationRequest;
+
+  try {
+    const data = await api.closeCustomerClientAffiliation(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Customer-client affiliation ID | [Defaults to `undefined`] |
+| **closeCustomerClientAffiliationRequest** | [CloseCustomerClientAffiliationRequest](CloseCustomerClientAffiliationRequest.md) |  | |
+
+### Return type
+
+[**CustomerClientAffiliation**](CustomerClientAffiliation.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createCustomerClientAffiliation
+
+> CustomerClientAffiliation createCustomerClientAffiliation(createCustomerClientAffiliationRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CreateCustomerClientAffiliationOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // CreateCustomerClientAffiliationRequest
+    createCustomerClientAffiliationRequest: ...,
+  } satisfies CreateCustomerClientAffiliationOperationRequest;
+
+  try {
+    const data = await api.createCustomerClientAffiliation(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **createCustomerClientAffiliationRequest** | [CreateCustomerClientAffiliationRequest](CreateCustomerClientAffiliationRequest.md) |  | |
+
+### Return type
+
+[**CustomerClientAffiliation**](CustomerClientAffiliation.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -235,6 +415,213 @@ example().catch(console.error);
 ### Return type
 
 [**CreateReservationResponse**](CreateReservationResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createReservationProduct
+
+> ReservationProductCatalogItem createReservationProduct(saveReservationProductRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CreateReservationProductRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // SaveReservationProductRequest
+    saveReservationProductRequest: ...,
+  } satisfies CreateReservationProductRequest;
+
+  try {
+    const data = await api.createReservationProduct(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **saveReservationProductRequest** | [SaveReservationProductRequest](SaveReservationProductRequest.md) |  | |
+
+### Return type
+
+[**ReservationProductCatalogItem**](ReservationProductCatalogItem.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createReservationResource
+
+> ReservationResourceResponse createReservationResource(createReservationResourceRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CreateReservationResourceOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // CreateReservationResourceRequest
+    createReservationResourceRequest: ...,
+  } satisfies CreateReservationResourceOperationRequest;
+
+  try {
+    const data = await api.createReservationResource(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **createReservationResourceRequest** | [CreateReservationResourceRequest](CreateReservationResourceRequest.md) |  | |
+
+### Return type
+
+[**ReservationResourceResponse**](ReservationResourceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createReservationType
+
+> ReservationType createReservationType(createReservationTypeRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CreateReservationTypeOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // CreateReservationTypeRequest
+    createReservationTypeRequest: ...,
+  } satisfies CreateReservationTypeOperationRequest;
+
+  try {
+    const data = await api.createReservationType(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **createReservationTypeRequest** | [CreateReservationTypeRequest](CreateReservationTypeRequest.md) |  | |
+
+### Return type
+
+[**ReservationType**](ReservationType.md)
 
 ### Authorization
 
@@ -392,6 +779,360 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## deleteReservationProduct
+
+> deleteReservationProduct(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { DeleteReservationProductRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation product ID
+    id: id_example,
+  } satisfies DeleteReservationProductRequest;
+
+  try {
+    const data = await api.deleteReservationProduct(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation product ID | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Product and its child slots removed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteReservationResource
+
+> deleteReservationResource(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { DeleteReservationResourceRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+  } satisfies DeleteReservationResourceRequest;
+
+  try {
+    const data = await api.deleteReservationResource(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Resource, schedule, and generated inventory removed |  -  |
+| **409** | Reservations, committed inventory, or an extension binding still depend on the resource |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteReservationScheduleDateOverride
+
+> deleteReservationScheduleDateOverride(id, localDate, expectedRevision)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { DeleteReservationScheduleDateOverrideRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | Override local date
+    localDate: 2013-10-20,
+    // number
+    expectedRevision: 789,
+  } satisfies DeleteReservationScheduleDateOverrideRequest;
+
+  try {
+    const data = await api.deleteReservationScheduleDateOverride(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **localDate** | `Date` | Override local date | [Defaults to `undefined`] |
+| **expectedRevision** | `number` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Date override disabled |  -  |
+| **409** | Override revision does not match |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteReservationScheduleLocation
+
+> deleteReservationScheduleLocation(expectedRevision)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { DeleteReservationScheduleLocationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // number
+    expectedRevision: 789,
+  } satisfies DeleteReservationScheduleLocationRequest;
+
+  try {
+    const data = await api.deleteReservationScheduleLocation(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **expectedRevision** | `number` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Tenant schedule location deleted |  -  |
+| **409** | Location is stale or used by an active solar rule |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteReservationType
+
+> deleteReservationType(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { DeleteReservationTypeRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation type ID
+    id: id_example,
+  } satisfies DeleteReservationTypeRequest;
+
+  try {
+    const data = await api.deleteReservationType(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation type ID | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## disableExtension
 
 > TenantExtension disableExtension(extensionKey)
@@ -529,6 +1270,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+| **409** | Reservation products are served from the generic product catalog for this tenant; write them through /v1/erp/reservation-products |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -677,6 +1419,79 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## generateReservationResourceTimeSlots
+
+> ResourceTimeSlotGenerationResponse generateReservationResourceTimeSlots(id, generateResourceTimeSlotsRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { GenerateReservationResourceTimeSlotsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // GenerateResourceTimeSlotsRequest
+    generateResourceTimeSlotsRequest: ...,
+  } satisfies GenerateReservationResourceTimeSlotsRequest;
+
+  try {
+    const data = await api.generateReservationResourceTimeSlots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **generateResourceTimeSlotsRequest** | [GenerateResourceTimeSlotsRequest](GenerateResourceTimeSlotsRequest.md) |  | |
+
+### Return type
+
+[**ResourceTimeSlotGenerationResponse**](ResourceTimeSlotGenerationResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **409** | Existing inventory conflicts with the schedule |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getExtensionConfig
 
 > ExtensionConfig getExtensionConfig(extensionKey, scopeType, scopeId)
@@ -810,6 +1625,347 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getReservationProduct
+
+> ReservationProductCatalogItem getReservationProduct(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { GetReservationProductRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation product ID
+    id: id_example,
+  } satisfies GetReservationProductRequest;
+
+  try {
+    const data = await api.getReservationProduct(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation product ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationProductCatalogItem**](ReservationProductCatalogItem.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getReservationResource
+
+> ReservationResourceResponse getReservationResource(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { GetReservationResourceRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+  } satisfies GetReservationResourceRequest;
+
+  try {
+    const data = await api.getReservationResource(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationResourceResponse**](ReservationResourceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getReservationResourceSchedule
+
+> ReservationResourceScheduleResponse getReservationResourceSchedule(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { GetReservationResourceScheduleRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+  } satisfies GetReservationResourceScheduleRequest;
+
+  try {
+    const data = await api.getReservationResourceSchedule(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationResourceScheduleResponse**](ReservationResourceScheduleResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getReservationScheduleLocation
+
+> ReservationScheduleLocationResponse getReservationScheduleLocation()
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { GetReservationScheduleLocationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  try {
+    const data = await api.getReservationScheduleLocation();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ReservationScheduleLocationResponse**](ReservationScheduleLocationResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **404** | Tenant schedule location is not configured |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## importProductSlotsIntoResourceSchedule
+
+> ImportProductSlotsResponse importProductSlotsIntoResourceSchedule(id, importProductSlotsRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ImportProductSlotsIntoResourceScheduleRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // ImportProductSlotsRequest
+    importProductSlotsRequest: ...,
+  } satisfies ImportProductSlotsIntoResourceScheduleRequest;
+
+  try {
+    const data = await api.importProductSlotsIntoResourceSchedule(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **importProductSlotsRequest** | [ImportProductSlotsRequest](ImportProductSlotsRequest.md) |  | |
+
+### Return type
+
+[**ImportProductSlotsResponse**](ImportProductSlotsResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 
@@ -1034,6 +2190,75 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listCustomerClientAffiliations
+
+> CustomerClientAffiliationListResponse listCustomerClientAffiliations(customerId)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListCustomerClientAffiliationsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string
+    customerId: customerId_example,
+  } satisfies ListCustomerClientAffiliationsRequest;
+
+  try {
+    const data = await api.listCustomerClientAffiliations(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **customerId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**CustomerClientAffiliationListResponse**](CustomerClientAffiliationListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listExtensionLifecycleAuditEvents
 
 > ExtensionLifecycleAuditListResponse listExtensionLifecycleAuditEvents(extensionKey, limit)
@@ -1167,6 +2392,369 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listReservationCancellations
+
+> ReservationCancellationListResponse listReservationCancellations(id, limit)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationCancellationsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation ID whose cancellation history is read
+    id: id_example,
+    // number | Maximum number of events to return (default 50, max 200) (optional)
+    limit: 56,
+  } satisfies ListReservationCancellationsRequest;
+
+  try {
+    const data = await api.listReservationCancellations(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation ID whose cancellation history is read | [Defaults to `undefined`] |
+| **limit** | `number` | Maximum number of events to return (default 50, max 200) | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationCancellationListResponse**](ReservationCancellationListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listReservationProducts
+
+> ReservationProductCatalogListResponse listReservationProducts(includeDisabled)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationProductsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // boolean (optional)
+    includeDisabled: true,
+  } satisfies ListReservationProductsRequest;
+
+  try {
+    const data = await api.listReservationProducts(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **includeDisabled** | `boolean` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationProductCatalogListResponse**](ReservationProductCatalogListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listReservationResourceTimeSlots
+
+> ResourceTimeSlotListResponse listReservationResourceTimeSlots(id, from, to, includeInactive)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationResourceTimeSlotsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | Inclusive UTC lower bound on startsAt.
+    from: 2013-10-20T19:20:30+01:00,
+    // Date | Exclusive UTC upper bound on startsAt.
+    to: 2013-10-20T19:20:30+01:00,
+    // boolean (optional)
+    includeInactive: true,
+  } satisfies ListReservationResourceTimeSlotsRequest;
+
+  try {
+    const data = await api.listReservationResourceTimeSlots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **from** | `Date` | Inclusive UTC lower bound on startsAt. | [Defaults to `undefined`] |
+| **to** | `Date` | Exclusive UTC upper bound on startsAt. | [Defaults to `undefined`] |
+| **includeInactive** | `boolean` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ResourceTimeSlotListResponse**](ResourceTimeSlotListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listReservationResources
+
+> ReservationResourceListResponse listReservationResources(includeInactive)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationResourcesRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // boolean | Include inactive resources in the management list. (optional)
+    includeInactive: true,
+  } satisfies ListReservationResourcesRequest;
+
+  try {
+    const data = await api.listReservationResources(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **includeInactive** | `boolean` | Include inactive resources in the management list. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationResourceListResponse**](ReservationResourceListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listReservationScheduleDateOverrides
+
+> ReservationScheduleDateOverrideListResponse listReservationScheduleDateOverrides(id, from, to)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationScheduleDateOverridesRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date
+    from: 2013-10-20,
+    // Date
+    to: 2013-10-20,
+  } satisfies ListReservationScheduleDateOverridesRequest;
+
+  try {
+    const data = await api.listReservationScheduleDateOverrides(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **from** | `Date` |  | [Defaults to `undefined`] |
+| **to** | `Date` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationScheduleDateOverrideListResponse**](ReservationScheduleDateOverrideListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listReservationTypes
 
 > ReservationTypeListResponse listReservationTypes()
@@ -1228,9 +2816,78 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listReservationTypesForManagement
+
+> ReservationTypeListResponse listReservationTypesForManagement(includeInactive)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationTypesForManagementRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // boolean | Include deactivated types. The storefront never sees these. (optional)
+    includeInactive: true,
+  } satisfies ListReservationTypesForManagementRequest;
+
+  try {
+    const data = await api.listReservationTypesForManagement(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **includeInactive** | `boolean` | Include deactivated types. The storefront never sees these. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationTypeListResponse**](ReservationTypeListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listReservations
 
-> ReservationListResponse listReservations(status, paymentStatus, reservationTypeId, resourceId, staffId, customerId, limit, offset)
+> ReservationListResponse listReservations(status, paymentStatus, reservationTypeId, resourceId, staffId, customerId, search, limit, offset)
 
 
 
@@ -1264,6 +2921,8 @@ async function example() {
     staffId: staffId_example,
     // string (optional)
     customerId: customerId_example,
+    // string | Search reservation number or the reservation-held customer snapshot. (optional)
+    search: search_example,
     // number (optional)
     limit: 56,
     // number (optional)
@@ -1293,6 +2952,7 @@ example().catch(console.error);
 | **resourceId** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **staffId** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **search** | `string` | Search reservation number or the reservation-held customer snapshot. | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` |  | [Optional] [Defaults to `undefined`] |
 
@@ -1782,6 +3442,459 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listTenantReservationCancellations
+
+> ReservationCancellationListResponse listTenantReservationCancellations(reservationId, from, to, limit)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListTenantReservationCancellationsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Narrow the tenant-wide trail to one reservation. (optional)
+    reservationId: reservationId_example,
+    // Date (optional)
+    from: 2013-10-20T19:20:30+01:00,
+    // Date (optional)
+    to: 2013-10-20T19:20:30+01:00,
+    // number (optional)
+    limit: 56,
+  } satisfies ListTenantReservationCancellationsRequest;
+
+  try {
+    const data = await api.listTenantReservationCancellations(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **reservationId** | `string` | Narrow the tenant-wide trail to one reservation. | [Optional] [Defaults to `undefined`] |
+| **from** | `Date` |  | [Optional] [Defaults to `undefined`] |
+| **to** | `Date` |  | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationCancellationListResponse**](ReservationCancellationListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## lookupReservationStatuses
+
+> ReservationStatusLookupResponse lookupReservationStatuses(reservationStatusLookupRequest)
+
+Resolves the current state of reservations the caller already references.
+
+An extension that stores its own records against reservation ids (staff assignments, for example) has no way to learn that a reservation was cancelled elsewhere in Field. Re-listing reservations does not answer it either: &#x60;GET /v1/erp/reservations&#x60; is capped at 500 rows ordered by &#x60;startsAt DESC&#x60;, so anything older simply never comes back. This takes the ids the caller holds and answers only \&quot;are these still live\&quot;, which stays correct however old the reservations are.  It is a POST because the id set is a request body rather than a URL-sized parameter; it reads nothing else and is authorized as a read (&#x60;field:ListReservations&#x60;).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { LookupReservationStatusesRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // ReservationStatusLookupRequest
+    reservationStatusLookupRequest: ...,
+  } satisfies LookupReservationStatusesRequest;
+
+  try {
+    const data = await api.lookupReservationStatuses(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **reservationStatusLookupRequest** | [ReservationStatusLookupRequest](ReservationStatusLookupRequest.md) |  | |
+
+### Return type
+
+[**ReservationStatusLookupResponse**](ReservationStatusLookupResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## purgeManualReservationResourceTimeSlots
+
+> PurgeResourceTimeSlotsResponse purgeManualReservationResourceTimeSlots(id, from, to, dryRun)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { PurgeManualReservationResourceTimeSlotsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | Inclusive UTC lower bound on startsAt.
+    from: 2013-10-20T19:20:30+01:00,
+    // Date | Exclusive UTC upper bound on startsAt.
+    to: 2013-10-20T19:20:30+01:00,
+    // boolean | Report the same selection and conflicts without deleting. (optional)
+    dryRun: true,
+  } satisfies PurgeManualReservationResourceTimeSlotsRequest;
+
+  try {
+    const data = await api.purgeManualReservationResourceTimeSlots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **from** | `Date` | Inclusive UTC lower bound on startsAt. | [Defaults to `undefined`] |
+| **to** | `Date` | Exclusive UTC upper bound on startsAt. | [Defaults to `undefined`] |
+| **dryRun** | `boolean` | Report the same selection and conflicts without deleting. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**PurgeResourceTimeSlotsResponse**](PurgeResourceTimeSlotsResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **409** | A manual slot with reserved or held groups is inside the requested range |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## purgeReservationResourceTimeSlots
+
+> PurgeResourceTimeSlotsResponse purgeReservationResourceTimeSlots(id, from, to, dryRun)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { PurgeReservationResourceTimeSlotsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | Inclusive UTC lower bound on startsAt.
+    from: 2013-10-20T19:20:30+01:00,
+    // Date | Exclusive UTC upper bound on startsAt.
+    to: 2013-10-20T19:20:30+01:00,
+    // boolean | Report the same selection and conflicts without deleting. (optional)
+    dryRun: true,
+  } satisfies PurgeReservationResourceTimeSlotsRequest;
+
+  try {
+    const data = await api.purgeReservationResourceTimeSlots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **from** | `Date` | Inclusive UTC lower bound on startsAt. | [Defaults to `undefined`] |
+| **to** | `Date` | Exclusive UTC upper bound on startsAt. | [Defaults to `undefined`] |
+| **dryRun** | `boolean` | Report the same selection and conflicts without deleting. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**PurgeResourceTimeSlotsResponse**](PurgeResourceTimeSlotsResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **409** | A reserved or held slot is inside the requested range |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## putReservationScheduleDateOverride
+
+> ReservationScheduleDateOverride putReservationScheduleDateOverride(id, localDate, putReservationScheduleDateOverrideRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { PutReservationScheduleDateOverrideOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | Override local date
+    localDate: 2013-10-20,
+    // PutReservationScheduleDateOverrideRequest
+    putReservationScheduleDateOverrideRequest: ...,
+  } satisfies PutReservationScheduleDateOverrideOperationRequest;
+
+  try {
+    const data = await api.putReservationScheduleDateOverride(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **localDate** | `Date` | Override local date | [Defaults to `undefined`] |
+| **putReservationScheduleDateOverrideRequest** | [PutReservationScheduleDateOverrideRequest](PutReservationScheduleDateOverrideRequest.md) |  | |
+
+### Return type
+
+[**ReservationScheduleDateOverride**](ReservationScheduleDateOverride.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **409** | Override revision does not match |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## putReservationScheduleLocation
+
+> ReservationScheduleLocationResponse putReservationScheduleLocation(putReservationScheduleLocationRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { PutReservationScheduleLocationOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // PutReservationScheduleLocationRequest
+    putReservationScheduleLocationRequest: ...,
+  } satisfies PutReservationScheduleLocationOperationRequest;
+
+  try {
+    const data = await api.putReservationScheduleLocation(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **putReservationScheduleLocationRequest** | [PutReservationScheduleLocationRequest](PutReservationScheduleLocationRequest.md) |  | |
+
+### Return type
+
+[**ReservationScheduleLocationResponse**](ReservationScheduleLocationResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **409** | Location revision does not match |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## registerExtension
 
 > ExtensionManifest registerExtension(registerExtensionRequest)
@@ -1989,6 +4102,291 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## replaceReservationProduct
+
+> ReservationProductCatalogItem replaceReservationProduct(id, saveReservationProductRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ReplaceReservationProductRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation product ID
+    id: id_example,
+    // SaveReservationProductRequest
+    saveReservationProductRequest: ...,
+  } satisfies ReplaceReservationProductRequest;
+
+  try {
+    const data = await api.replaceReservationProduct(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation product ID | [Defaults to `undefined`] |
+| **saveReservationProductRequest** | [SaveReservationProductRequest](SaveReservationProductRequest.md) |  | |
+
+### Return type
+
+[**ReservationProductCatalogItem**](ReservationProductCatalogItem.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## replaceReservationProductSlots
+
+> ReservationProductSlotListResponse replaceReservationProductSlots(id, replaceReservationProductSlotsRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ReplaceReservationProductSlotsOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation product ID
+    id: id_example,
+    // ReplaceReservationProductSlotsRequest
+    replaceReservationProductSlotsRequest: ...,
+  } satisfies ReplaceReservationProductSlotsOperationRequest;
+
+  try {
+    const data = await api.replaceReservationProductSlots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation product ID | [Defaults to `undefined`] |
+| **replaceReservationProductSlotsRequest** | [ReplaceReservationProductSlotsRequest](ReplaceReservationProductSlotsRequest.md) |  | |
+
+### Return type
+
+[**ReservationProductSlotListResponse**](ReservationProductSlotListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## replaceReservationResourceSchedule
+
+> ReservationResourceScheduleResponse replaceReservationResourceSchedule(id, replaceReservationResourceScheduleRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ReplaceReservationResourceScheduleOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // ReplaceReservationResourceScheduleRequest
+    replaceReservationResourceScheduleRequest: ...,
+  } satisfies ReplaceReservationResourceScheduleOperationRequest;
+
+  try {
+    const data = await api.replaceReservationResourceSchedule(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **replaceReservationResourceScheduleRequest** | [ReplaceReservationResourceScheduleRequest](ReplaceReservationResourceScheduleRequest.md) |  | |
+
+### Return type
+
+[**ReservationResourceScheduleResponse**](ReservationResourceScheduleResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## seedReservationProductsFromExtensionConfig
+
+> SeedReservationProductsResponse seedReservationProductsFromExtensionConfig(seedReservationProductsRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { SeedReservationProductsFromExtensionConfigRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // SeedReservationProductsRequest
+    seedReservationProductsRequest: ...,
+  } satisfies SeedReservationProductsFromExtensionConfigRequest;
+
+  try {
+    const data = await api.seedReservationProductsFromExtensionConfig(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **seedReservationProductsRequest** | [SeedReservationProductsRequest](SeedReservationProductsRequest.md) |  | |
+
+### Return type
+
+[**SeedReservationProductsResponse**](SeedReservationProductsResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## sendReservationNotification
 
 > SendReservationNotificationResponse sendReservationNotification(id, sendReservationNotificationRequest)
@@ -2130,6 +4528,78 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## updateCustomerClientAffiliation
+
+> CustomerClientAffiliation updateCustomerClientAffiliation(id, updateCustomerClientAffiliationRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { UpdateCustomerClientAffiliationOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Customer-client affiliation ID
+    id: id_example,
+    // UpdateCustomerClientAffiliationRequest
+    updateCustomerClientAffiliationRequest: ...,
+  } satisfies UpdateCustomerClientAffiliationOperationRequest;
+
+  try {
+    const data = await api.updateCustomerClientAffiliation(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Customer-client affiliation ID | [Defaults to `undefined`] |
+| **updateCustomerClientAffiliationRequest** | [UpdateCustomerClientAffiliationRequest](UpdateCustomerClientAffiliationRequest.md) |  | |
+
+### Return type
+
+[**CustomerClientAffiliation**](CustomerClientAffiliation.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## updateExtensionConfig
 
 > ExtensionConfig updateExtensionConfig(extensionKey, updateExtensionConfigRequest)
@@ -2198,6 +4668,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+| **409** | Reservation products are served from the generic product catalog for this tenant; write them through /v1/erp/reservation-products |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -2255,6 +4726,150 @@ example().catch(console.error);
 ### Return type
 
 [**Reservation**](Reservation.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateReservationResource
+
+> ReservationResourceResponse updateReservationResource(id, updateReservationResourceRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { UpdateReservationResourceOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // UpdateReservationResourceRequest
+    updateReservationResourceRequest: ...,
+  } satisfies UpdateReservationResourceOperationRequest;
+
+  try {
+    const data = await api.updateReservationResource(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **updateReservationResourceRequest** | [UpdateReservationResourceRequest](UpdateReservationResourceRequest.md) |  | |
+
+### Return type
+
+[**ReservationResourceResponse**](ReservationResourceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateReservationType
+
+> ReservationType updateReservationType(id, updateReservationTypeRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { UpdateReservationTypeOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Reservation type ID
+    id: id_example,
+    // UpdateReservationTypeRequest
+    updateReservationTypeRequest: ...,
+  } satisfies UpdateReservationTypeOperationRequest;
+
+  try {
+    const data = await api.updateReservationType(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation type ID | [Defaults to `undefined`] |
+| **updateReservationTypeRequest** | [UpdateReservationTypeRequest](UpdateReservationTypeRequest.md) |  | |
+
+### Return type
+
+[**ReservationType**](ReservationType.md)
 
 ### Authorization
 

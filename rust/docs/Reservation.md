@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **approved_at** | Option<**String**> |  | [optional]
 **approved_by** | Option<**String**> |  | [optional]
 **assigned_staff_ids** | **Vec<String>** |  | 
+**bill_to** | Option<[**models::ReservationBillTo**](ReservationBillTo.md)> |  | [optional]
+**cancel_reason** | Option<**String**> | Why the reservation currently in `cancelled` was cancelled. `None` both for a live reservation and for one cancelled without a stated reason; `cancelled_at` is what distinguishes those two. | [optional]
 **cancelled_at** | Option<**String**> |  | [optional]
 **checkout_url** | Option<**String**> |  | [optional]
 **completed_at** | Option<**String**> |  | [optional]
@@ -31,7 +33,7 @@ Name | Type | Description | Notes
 **policy_context_json** | Option<**serde_json::Value**> |  | [optional]
 **policy_snapshot_json** | Option<**serde_json::Value**> |  | [optional]
 **price_amount** | **i64** |  | 
-**quantity** | **i32** |  | 
+**quantity** | **i32** | Number of people or subjects in the reservation; not slot inventory groups. | 
 **reservation_number** | **String** |  | 
 **reservation_type_id** | **String** |  | 
 **resource_id** | Option<**String**> |  | [optional]

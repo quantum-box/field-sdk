@@ -18,7 +18,16 @@ serde_with = { version = "^3.8", default-features = false, features = ["base64",
 serde_json = "^1.0"
 serde_repr = "^0.1"
 url = "^2.5"
-reqwest = { version = "^0.12", default-features = false, features = ["json", "multipart"] }
+reqwest = { version = "^0.12", default-features = false, features = ["json", "multipart", "stream"] }
+
+# The spec now carries file-upload endpoints (golf course tabular analysis, the
+# bridge import/export pair), and the generator's multipart template streams the
+# file rather than reading it into memory: it opens a `tokio::fs::File`, wraps it
+# in a `tokio_util::codec::FramedRead`, and hands that to
+# `reqwest::Body::wrap_stream` — hence `stream` on reqwest above. Without these
+# three the generated `src/apis/*.rs` does not compile.
+tokio = { version = "^1", features = ["fs"] }
+tokio-util = { version = "^0.7", features = ["codec"] }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

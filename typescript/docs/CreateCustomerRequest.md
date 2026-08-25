@@ -9,6 +9,7 @@ Name | Type
 `address` | [CustomerAddressRequest](CustomerAddressRequest.md)
 `email` | string
 `name` | string
+`nameKana` | string
 `phone` | string
 
 

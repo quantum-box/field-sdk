@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **billing_cycle** | Option<**String**> |  | [optional]
 **category** | Option<**String**> |  | [optional]
+**category_id** | Option<**String**> | Storefront category (`cat_…`, from `GET /v1/storekit/categories`). | [optional]
 **description** | Option<**String**> |  | [optional]
 **expected_updated_at** | Option<**String**> |  | [optional]
 **image_storage_keys** | Option<**Vec<String>**> |  | [optional]

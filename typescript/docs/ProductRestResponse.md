@@ -1,7 +1,7 @@
 
 # ProductRestResponse
 
-REST-facing mirror of the GraphQL `Product` type (`order_model::Product`).  `Product` derives `async_graphql::SimpleObject` and is reused directly as a REST response body by these handlers. We avoid deriving `utoipa::ToSchema` on the GraphQL type itself (that file is GraphQL-schema-owned) and instead mirror every field here for OpenAPI documentation purposes. The JSON wire format produced by this wrapper is byte-for-byte identical to serializing `Product` directly, since every field is copied verbatim.
+REST response for an order product.  This mirrors the GraphQL `Product` type (`order_model::Product`) field for field, because the two surfaces describe the same row and clients read them interchangeably. It is a separate type because that file is GraphQL-schema-owned and cannot derive `utoipa::ToSchema`.  REST additionally carries `categoryId` and `storefrontProductId` (#1136). Both belong to the storefront projection, which has no GraphQL surface (`/v1/graphql` is quarantined), so REST builds this straight from the `OrderProduct` row.
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `billingCycle` | string
 `category` | string
+`categoryId` | string
 `createdAt` | string
 `description` | string
 `id` | string
@@ -23,6 +24,7 @@ Name | Type
 `publicationStatus` | string
 `skuCode` | string
 `status` | string
+`storefrontProductId` | string
 `subcategory` | string
 `tags` | Array&lt;string&gt;
 `tenantId` | string

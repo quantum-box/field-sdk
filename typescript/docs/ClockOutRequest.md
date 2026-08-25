@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `breakMinutes` | number
+`businessDate` | Date
 `clockOut` | Date
 `notes` | string
 

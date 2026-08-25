@@ -10,6 +10,7 @@ Name | Type
 `email` | string
 `id` | string
 `name` | string
+`nameKana` | string
 `phone` | string
 
 

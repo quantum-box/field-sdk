@@ -3,6 +3,19 @@
 /**
  * 
  * @export
+ * @interface AcceptOrderByQuotationResponse
+ */
+export interface AcceptOrderByQuotationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AcceptOrderByQuotationResponse
+     */
+    orderId: string;
+}
+/**
+ * 
+ * @export
  * @interface ActivityListResponse
  */
 export interface ActivityListResponse {
@@ -528,11 +541,73 @@ export interface ApprovalWorkflowResponse {
 /**
  * 
  * @export
+ * @interface ArtifactDownloadResponse
+ */
+export interface ArtifactDownloadResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactDownloadResponse
+     */
+    contentType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactDownloadResponse
+     */
+    expiresAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ArtifactDownloadResponse
+     */
+    fileSizeBytes: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactDownloadResponse
+     */
+    sha256: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactDownloadResponse
+     */
+    url: string;
+}
+/**
+ * 
+ * @export
+ * @interface AssignMembershipPlanRequest
+ */
+export interface AssignMembershipPlanRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignMembershipPlanRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignMembershipPlanRequest
+     */
+    planId: string;
+    /**
+     * YYYY-MM-DD (default today)
+     * @type {string}
+     * @memberof AssignMembershipPlanRequest
+     */
+    startedOn?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface AutoAssignCaddiesRequest
  */
 export interface AutoAssignCaddiesRequest {
     /**
-     * 対象日（テナントローカル＝JST 基準の日付）
+     * 対象となるテナントローカル日付。
      * @type {Date}
      * @memberof AutoAssignCaddiesRequest
      */
@@ -543,6 +618,12 @@ export interface AutoAssignCaddiesRequest {
      * @memberof AutoAssignCaddiesRequest
      */
     dryRun?: boolean;
+    /**
+     * `date` と午前・午後を定義する IANA timezone。省略時は従来の Asia/Tokyo。
+     * @type {string}
+     * @memberof AutoAssignCaddiesRequest
+     */
+    timezone?: string | null;
 }
 /**
  * 
@@ -1506,7 +1587,9 @@ export interface CancelExpiredResponse {
     cancelledCount: number;
 }
 /**
- * 
+ * `Serialize` is derived so the cancel handler can hash the request under an
+ * `Idempotency-Key`: the hash is what distinguishes a genuine retry from a key
+ * reused for a different cancellation.
  * @export
  * @interface CancelReservationRequest
  */
@@ -1542,6 +1625,22 @@ export interface CancelReservationRequest {
      */
     refundAmount?: number | null;
 }
+
+/**
+ * What kind of principal performed a cancellation.
+ * 
+ * `System` is not a fallback for "we failed to resolve the actor": it names
+ * cancellations that no human requested — an expired payment hold, a provider
+ * webhook — and those legitimately have no `actor_id`.
+ * @export
+ */
+export const CancellationActorType = {
+    User: 'user',
+    ServiceAccount: 'service_account',
+    System: 'system'
+} as const;
+export type CancellationActorType = typeof CancellationActorType[keyof typeof CancellationActorType];
+
 /**
  * 
  * @export
@@ -1968,6 +2067,13 @@ export interface ClientCsvImportResponse {
  */
 export interface ClockInRequest {
     /**
+     * Working day this punch belongs to. Defaults to the UTC calendar date of
+     * `clockIn`, which is only the same day for callers on UTC.
+     * @type {Date}
+     * @memberof ClockInRequest
+     */
+    businessDate?: Date | null;
+    /**
      * 
      * @type {Date}
      * @memberof ClockInRequest
@@ -1993,6 +2099,12 @@ export interface ClockOutRequest {
      */
     breakMinutes?: number | null;
     /**
+     * Working day the matching clock-in was filed under.
+     * @type {Date}
+     * @memberof ClockOutRequest
+     */
+    businessDate?: Date | null;
+    /**
      * 
      * @type {Date}
      * @memberof ClockOutRequest
@@ -2004,6 +2116,63 @@ export interface ClockOutRequest {
      * @memberof ClockOutRequest
      */
     notes?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CloseCustomerClientAffiliationRequest
+ */
+export interface CloseCustomerClientAffiliationRequest {
+    /**
+     * 
+     * @type {Date}
+     * @memberof CloseCustomerClientAffiliationRequest
+     */
+    validTo: Date;
+}
+/**
+ * 
+ * @export
+ * @interface CompletePublicSigningInput
+ */
+export interface CompletePublicSigningInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompletePublicSigningInput
+     */
+    idempotencyKey: string;
+    /**
+     * 
+     * @type {Array<PublicSigningValueInput>}
+     * @memberof CompletePublicSigningInput
+     */
+    values: Array<PublicSigningValueInput>;
+}
+/**
+ * 契約明細 1 行。見積・受注からの引き継ぎ元と同じ形。
+ * @export
+ * @interface ContractLineItem
+ */
+export interface ContractLineItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractLineItem
+     */
+    description: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContractLineItem
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContractLineItem
+     */
+    unitPrice: number;
 }
 /**
  * 
@@ -2566,6 +2735,98 @@ export interface CreateCustomFieldDefinitionRequest {
 /**
  * 
  * @export
+ * @interface CreateCustomerClientAffiliationRequest
+ */
+export interface CreateCustomerClientAffiliationRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateCustomerClientAffiliationRequest
+     */
+    billingAllowed?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerClientAffiliationRequest
+     */
+    clientId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerClientAffiliationRequest
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerClientAffiliationRequest
+     */
+    relationshipType: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateCustomerClientAffiliationRequest
+     */
+    validFrom: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateCustomerClientAffiliationRequest
+     */
+    validTo?: Date | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateCustomerCredentialRequest
+ */
+export interface CreateCustomerCredentialRequest {
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    expiresOn?: string | null;
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    issuedOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    kind: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    label: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    subjectId?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateCustomerCredentialRequest
+     */
+    verified?: boolean | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateCustomerRequest
  */
 export interface CreateCustomerRequest {
@@ -2576,11 +2837,12 @@ export interface CreateCustomerRequest {
      */
     address?: CustomerAddressRequest | null;
     /**
-     * 
+     * Optional: customers taken by phone or at the counter often have
+     * no email address.
      * @type {string}
      * @memberof CreateCustomerRequest
      */
-    email: string;
+    email?: string | null;
     /**
      * 
      * @type {string}
@@ -2588,11 +2850,54 @@ export interface CreateCustomerRequest {
      */
     name: string;
     /**
+     * Name reading in kana. Searched together with `name`.
+     * @type {string}
+     * @memberof CreateCustomerRequest
+     */
+    nameKana?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof CreateCustomerRequest
      */
     phone?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateCustomerSubjectRequest
+ */
+export interface CreateCustomerSubjectRequest {
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof CreateCustomerSubjectRequest
+     */
+    birthDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerSubjectRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerSubjectRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerSubjectRequest
+     */
+    sex?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerSubjectRequest
+     */
+    subjectType: string;
 }
 /**
  * 
@@ -2761,16 +3066,24 @@ export interface CreateInvoiceLineItemRequest {
 export interface CreateInvoiceRequest {
     /**
      * 
-     * @type {string}
+     * @type {InvoiceBillToRequest}
      * @memberof CreateInvoiceRequest
      */
-    clientEmail?: string | null;
+    billTo?: InvoiceBillToRequest | null;
     /**
      * 
      * @type {string}
      * @memberof CreateInvoiceRequest
      */
-    clientId: string;
+    clientEmail?: string | null;
+    /**
+     * Legacy untyped counterparty. Existing callers may continue sending this
+     * without `billTo`; new callers should send typed `billTo` instead.
+     * At least one of `clientId` or `billTo` is required.
+     * @type {string}
+     * @memberof CreateInvoiceRequest
+     */
+    clientId?: string | null;
     /**
      * 
      * @type {string}
@@ -2872,6 +3185,86 @@ export interface CreateInvoiceRequest {
 /**
  * 
  * @export
+ * @interface CreateMembershipConsentItemRequest
+ */
+export interface CreateMembershipConsentItemRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMembershipConsentItemRequest
+     */
+    body?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMembershipConsentItemRequest
+     */
+    consentKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMembershipConsentItemRequest
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateMembershipConsentItemRequest
+     */
+    required?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMembershipConsentItemRequest
+     */
+    sortOrder?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMembershipConsentItemRequest
+     */
+    termsVersion?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateMembershipPlanRequest
+ */
+export interface CreateMembershipPlanRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMembershipPlanRequest
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMembershipPlanRequest
+     */
+    feeJpy?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMembershipPlanRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMembershipPlanRequest
+     */
+    sortOrder?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMembershipPlanRequest
+     */
+    validDays?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateOrderItemRequest
  */
 export interface CreateOrderItemRequest {
@@ -2918,6 +3311,15 @@ export interface CreateOrderProductRequest {
      * @memberof CreateOrderProductRequest
      */
     category?: string | null;
+    /**
+     * Storefront category (`cat_…`, from `GET /v1/storekit/categories`).
+     * 
+     * Distinct from `category`, which is the ERP-side free-text classification
+     * and has no storefront meaning.
+     * @type {string}
+     * @memberof CreateOrderProductRequest
+     */
+    categoryId?: string | null;
     /**
      * 
      * @type {string}
@@ -3398,11 +3800,12 @@ export interface CreateQuotationRequest {
      */
     taxAmount?: number | null;
     /**
-     * 
+     * Omitted by clients that let the server pick the default validity
+     * (30 days from today), so operators cannot skew it via device clock.
      * @type {string}
      * @memberof CreateQuotationRequest
      */
-    validUntil: string;
+    validUntil?: string | null;
 }
 /**
  * 
@@ -3416,6 +3819,12 @@ export interface CreateReservationRequest {
      * @memberof CreateReservationRequest
      */
     assignedStaffIds?: Array<string> | null;
+    /**
+     * 
+     * @type {ReservationBillToRequest}
+     * @memberof CreateReservationRequest
+     */
+    billTo?: ReservationBillToRequest | null;
     /**
      * 
      * @type {string}
@@ -3495,7 +3904,7 @@ export interface CreateReservationRequest {
      */
     priceAmount?: number | null;
     /**
-     * 
+     * Number of people or subjects; one reservation still consumes one inventory group.
      * @type {number}
      * @memberof CreateReservationRequest
      */
@@ -3546,6 +3955,57 @@ export interface CreateReservationRequest {
 /**
  * 
  * @export
+ * @interface CreateReservationResourceRequest
+ */
+export interface CreateReservationResourceRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateReservationResourceRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof CreateReservationResourceRequest
+     */
+    customFieldsJson?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof CreateReservationResourceRequest
+     */
+    metadataJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationResourceRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationResourceRequest
+     */
+    resourceModel?: string | null;
+    /**
+     * 
+     * @type {ReservationResourceType}
+     * @memberof CreateReservationResourceRequest
+     */
+    resourceType: ReservationResourceType;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationResourceRequest
+     */
+    storeId?: string | null;
+}
+
+
+/**
+ * 
+ * @export
  * @interface CreateReservationResponse
  */
 export interface CreateReservationResponse {
@@ -3567,6 +4027,55 @@ export interface CreateReservationResponse {
      * @memberof CreateReservationResponse
      */
     reservation: Reservation;
+}
+/**
+ * 
+ * @export
+ * @interface CreateReservationTypeRequest
+ */
+export interface CreateReservationTypeRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateReservationTypeRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof CreateReservationTypeRequest
+     */
+    cancellationPolicyJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationTypeRequest
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationTypeRequest
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationTypeRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof CreateReservationTypeRequest
+     */
+    paymentPolicyJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationTypeRequest
+     */
+    resourceModel?: string | null;
 }
 /**
  * 
@@ -3902,6 +4411,50 @@ export interface CreateScheduleRequest {
 /**
  * 
  * @export
+ * @interface CreateSigningRequestInput
+ */
+export interface CreateSigningRequestInput {
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateSigningRequestInput
+     */
+    expiresAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSigningRequestInput
+     */
+    issuerName: string;
+    /**
+     * 
+     * @type {CreateSigningSignerInput}
+     * @memberof CreateSigningRequestInput
+     */
+    signer: CreateSigningSignerInput;
+}
+/**
+ * 
+ * @export
+ * @interface CreateSigningSignerInput
+ */
+export interface CreateSigningSignerInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSigningSignerInput
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSigningSignerInput
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateStaffLeaveRequestRequest
  */
 export interface CreateStaffLeaveRequestRequest {
@@ -4058,6 +4611,25 @@ export interface CreateStockTransferRequest {
      * @memberof CreateStockTransferRequest
      */
     transferredAt?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateStripeConnectOnboardingLinkRequest
+ */
+export interface CreateStripeConnectOnboardingLinkRequest {
+    /**
+     * Stripe sends the user here if the link expires before they finish.
+     * @type {string}
+     * @memberof CreateStripeConnectOnboardingLinkRequest
+     */
+    refreshUrl: string;
+    /**
+     * Stripe sends the user here when onboarding finishes.
+     * @type {string}
+     * @memberof CreateStripeConnectOnboardingLinkRequest
+     */
+    returnUrl: string;
 }
 /**
  * 
@@ -4231,10 +4803,12 @@ export interface CustomFieldDefinitionResponse {
  */
 export const CustomFieldEntityType = {
     Client: 'Client',
+    Consumer: 'Consumer',
     Product: 'Product',
     Order: 'Order',
     Invoice: 'Invoice',
-    Reservation: 'Reservation'
+    Reservation: 'Reservation',
+    CustomerSubject: 'CustomerSubject'
 } as const;
 export type CustomFieldEntityType = typeof CustomFieldEntityType[keyof typeof CustomFieldEntityType];
 
@@ -4317,6 +4891,238 @@ export interface CustomerAddressRequest {
 /**
  * 
  * @export
+ * @interface CustomerClientAffiliation
+ */
+export interface CustomerClientAffiliation {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerClientAffiliation
+     */
+    billingAllowed: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    clientId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerClientAffiliation
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    createdBy: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    relationshipType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerClientAffiliation
+     */
+    updatedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerClientAffiliation
+     */
+    updatedBy: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerClientAffiliation
+     */
+    validFrom: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerClientAffiliation
+     */
+    validTo?: Date | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerClientAffiliationListResponse
+ */
+export interface CustomerClientAffiliationListResponse {
+    /**
+     * 
+     * @type {Array<CustomerClientAffiliation>}
+     * @memberof CustomerClientAffiliationListResponse
+     */
+    items: Array<CustomerClientAffiliation>;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerConsentResponse
+ */
+export interface CustomerConsentResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerConsentResponse
+     */
+    accepted: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    acceptedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    channel: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    consentKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    recordedBy?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
+    termsVersion: string;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerCredentialResponse
+ */
+export interface CustomerCredentialResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerCredentialResponse
+     */
+    archived: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    expiresOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    issuedOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    kind: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    label: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    subjectId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    updatedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    verifiedAt?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCredentialResponse
+     */
+    verifiedBy?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CustomerResponse
  */
 export interface CustomerResponse {
@@ -4327,7 +5133,7 @@ export interface CustomerResponse {
      */
     description?: string | null;
     /**
-     * 
+     * Empty string when the customer has no email address.
      * @type {string}
      * @memberof CustomerResponse
      */
@@ -4349,7 +5155,80 @@ export interface CustomerResponse {
      * @type {string}
      * @memberof CustomerResponse
      */
+    nameKana?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerResponse
+     */
     phone?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerSubjectResponse
+ */
+export interface CustomerSubjectResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerSubjectResponse
+     */
+    archived: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    birthDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    sex?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    subjectType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSubjectResponse
+     */
+    updatedAt: string;
 }
 /**
  * 日別予算マスタ
@@ -4768,6 +5647,22 @@ export interface DocumentPdfSettingsResponse {
 }
 
 /**
+ * Where a staff member stands with the employer, independent of industry.
+ * 
+ * This is not the same axis as a leave request: a leave request is one day off
+ * with a decision on it, while `OnLeave` is a months-long absence the roster
+ * has to plan around.
+ * @export
+ */
+export const EmploymentStatus = {
+    Active: 'active',
+    OnLeave: 'on_leave',
+    Retired: 'retired'
+} as const;
+export type EmploymentStatus = typeof EmploymentStatus[keyof typeof EmploymentStatus];
+
+
+/**
  * 
  * @export
  */
@@ -4930,6 +5825,39 @@ export interface ErrorResponse {
      * @memberof ErrorResponse
      */
     message: string;
+    /**
+     * Correlation ID for a server error. It matches the `x-request-id`
+     * response header and the structured server-side error log.
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    requestId?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface EvaluateFeatureFlagsRequest
+ */
+export interface EvaluateFeatureFlagsRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EvaluateFeatureFlagsRequest
+     */
+    keys: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface EvaluateFeatureFlagsResponse
+ */
+export interface EvaluateFeatureFlagsResponse {
+    /**
+     * 
+     * @type {Array<FeatureFlagValue>}
+     * @memberof EvaluateFeatureFlagsResponse
+     */
+    values: Array<FeatureFlagValue>;
 }
 /**
  * 
@@ -5562,6 +6490,25 @@ export type ExternalSyncStatus = typeof ExternalSyncStatus[keyof typeof External
 /**
  * 
  * @export
+ * @interface FeatureFlagValue
+ */
+export interface FeatureFlagValue {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FeatureFlagValue
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureFlagValue
+     */
+    key: string;
+}
+/**
+ * 
+ * @export
  * @interface FieldErpMasterCatalog
  */
 export interface FieldErpMasterCatalog {
@@ -5677,6 +6624,31 @@ export interface FulfillmentMethodResponse {
      * @memberof FulfillmentMethodResponse
      */
     name: string;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateResourceTimeSlotsRequest
+ */
+export interface GenerateResourceTimeSlotsRequest {
+    /**
+     * Run the complete lock, validation, and conflict plan without writes.
+     * @type {boolean}
+     * @memberof GenerateResourceTimeSlotsRequest
+     */
+    dryRun?: boolean;
+    /**
+     * Inclusive local date in each matching schedule rule's timezone.
+     * @type {Date}
+     * @memberof GenerateResourceTimeSlotsRequest
+     */
+    from: Date;
+    /**
+     * Inclusive local date in each matching schedule rule's timezone.
+     * @type {Date}
+     * @memberof GenerateResourceTimeSlotsRequest
+     */
+    to: Date;
 }
 /**
  * 
@@ -6059,6 +7031,13 @@ export interface GolfCaddieProfile {
      * @memberof GolfCaddieProfile
      */
     currency: string;
+    /**
+     * 削除された日時。削除済みは既定の一覧に出ないので、値が入って返るのは
+     * `includeDeleted=true` で索いたときだけ。
+     * @type {Date}
+     * @memberof GolfCaddieProfile
+     */
+    deletedAt?: Date | null;
     /**
      * 
      * @type {number}
@@ -6548,6 +7527,15 @@ export interface GolfCourseResource {
      */
     extensionKey: string;
     /**
+     * どのコースの受付枠か。storefront はこれで「別コースの枠」を落とす。
+     * 
+     * 列が空のときは `attributes_json` / `metadata_json` の `golfCourseId`
+     * から埋める（列が無かった頃に CourseBoard が使っていた規約）。
+     * @type {string}
+     * @memberof GolfCourseResource
+     */
+    golfCourseId?: string | null;
+    /**
      * 
      * @type {number}
      * @memberof GolfCourseResource
@@ -6937,6 +7925,39 @@ export const GolfPlayType = {
 } as const;
 export type GolfPlayType = typeof GolfPlayType[keyof typeof GolfPlayType];
 
+
+/**
+ * 
+ * @export
+ */
+export const GolfPolicyHooksStatus = {
+    Applied: 'applied',
+    PartiallyApplied: 'partially_applied',
+    NotApplied: 'not_applied',
+    Inactive: 'inactive',
+    NotConfigured: 'not_configured'
+} as const;
+export type GolfPolicyHooksStatus = typeof GolfPolicyHooksStatus[keyof typeof GolfPolicyHooksStatus];
+
+/**
+ * 
+ * @export
+ * @interface GolfPolicyWarning
+ */
+export interface GolfPolicyWarning {
+    /**
+     * 
+     * @type {string}
+     * @memberof GolfPolicyWarning
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GolfPolicyWarning
+     */
+    message: string;
+}
 /**
  * ゴルフ予約商品の時間帯×曜日×枠数上限スロット
  * @export
@@ -7128,6 +8149,12 @@ export interface GolfReservationPolicy {
     policyHooksJson?: any | null;
     /**
      * 
+     * @type {GolfPolicyHooksStatus}
+     * @memberof GolfReservationPolicy
+     */
+    policyHooksStatus: GolfPolicyHooksStatus;
+    /**
+     * 
      * @type {string}
      * @memberof GolfReservationPolicy
      */
@@ -7144,7 +8171,15 @@ export interface GolfReservationPolicy {
      * @memberof GolfReservationPolicy
      */
     updatedAt: Date;
+    /**
+     * 
+     * @type {Array<GolfPolicyWarning>}
+     * @memberof GolfReservationPolicy
+     */
+    warnings: Array<GolfPolicyWarning>;
 }
+
+
 /**
  * ゴルフ予約商品の拡張設定（reservation_services のサイドテーブル）
  * @export
@@ -7290,6 +8325,90 @@ export interface GolfUnpaidCancellationItem {
      * @memberof GolfUnpaidCancellationItem
      */
     reservationNumber: string;
+}
+/**
+ * 
+ * @export
+ * @interface ImportProductSlotsRequest
+ */
+export interface ImportProductSlotsRequest {
+    /**
+     * Remove the migrated `slots` arrays from the tenant extension config.
+     * Availability already comes from the schedule at that point, so the
+     * declared list is redundant.
+     * @type {boolean}
+     * @memberof ImportProductSlotsRequest
+     */
+    clearProductSlots?: boolean;
+    /**
+     * Compute the plan without writing rules or touching the config.
+     * @type {boolean}
+     * @memberof ImportProductSlotsRequest
+     */
+    dryRun?: boolean;
+    /**
+     * Import only from this extension. Omit to read every enabled extension.
+     * @type {string}
+     * @memberof ImportProductSlotsRequest
+     */
+    extensionKey?: string | null;
+    /**
+     * Start interval written to each imported rule: how often a booking may
+     * begin inside the declared window. Defaults to each declared slot's own
+     * `durationMinutes`.
+     * @type {number}
+     * @memberof ImportProductSlotsRequest
+     */
+    slotIntervalMinutes?: number | null;
+    /**
+     * IANA timezone the declared local times are expressed in.
+     * @type {string}
+     * @memberof ImportProductSlotsRequest
+     */
+    timezone?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ImportProductSlotsResponse
+ */
+export interface ImportProductSlotsResponse {
+    /**
+     * Products whose declared `slots` list was removed from the config.
+     * @type {number}
+     * @memberof ImportProductSlotsResponse
+     */
+    clearedProducts: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImportProductSlotsResponse
+     */
+    dryRun: boolean;
+    /**
+     * Declared slots turned into a new availability rule.
+     * @type {number}
+     * @memberof ImportProductSlotsResponse
+     */
+    imported: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImportProductSlotsResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {Array<ReservationAvailabilityRuleResponse>}
+     * @memberof ImportProductSlotsResponse
+     */
+    rules: Array<ReservationAvailabilityRuleResponse>;
+    /**
+     * Declared slots an existing rule already covers.
+     * @type {number}
+     * @memberof ImportProductSlotsResponse
+     */
+    skipped: number;
 }
 /**
  * 
@@ -7453,6 +8572,17 @@ export interface InventoryValuationResponse {
      */
     weightedAverageUnitCost: number;
 }
+
+/**
+ * 
+ * @export
+ */
+export const InvitationDeliveryStatus = {
+    Accepted: 'accepted',
+    AcceptanceUnconfirmed: 'acceptance_unconfirmed'
+} as const;
+export type InvitationDeliveryStatus = typeof InvitationDeliveryStatus[keyof typeof InvitationDeliveryStatus];
+
 /**
  * 
  * @export
@@ -7526,6 +8656,251 @@ export interface InviteErpUserResponse {
     user?: ErpUserResponse | null;
 }
 /**
+ * @type InvoiceBillToEvidenceResponse
+ * 
+ * @export
+ */
+export type InvoiceBillToEvidenceResponse = InvoiceBillToEvidenceResponseOneOf | InvoiceBillToEvidenceResponseOneOf1;
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToEvidenceResponseOneOf
+ */
+export interface InvoiceBillToEvidenceResponseOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToEvidenceResponseOneOf
+     */
+    affiliationId: string;
+    /**
+     * 
+     * @type {InvoiceBillToEvidenceResponseOneOfKindEnum}
+     * @memberof InvoiceBillToEvidenceResponseOneOf
+     */
+    kind: InvoiceBillToEvidenceResponseOneOfKindEnum;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToEvidenceResponseOneOfKindEnum = {
+    ReservationAffiliation: 'reservation_affiliation'
+} as const;
+export type InvoiceBillToEvidenceResponseOneOfKindEnum = typeof InvoiceBillToEvidenceResponseOneOfKindEnum[keyof typeof InvoiceBillToEvidenceResponseOneOfKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToEvidenceResponseOneOf1
+ */
+export interface InvoiceBillToEvidenceResponseOneOf1 {
+    /**
+     * 
+     * @type {InvoiceBillToEvidenceResponseOneOf1KindEnum}
+     * @memberof InvoiceBillToEvidenceResponseOneOf1
+     */
+    kind: InvoiceBillToEvidenceResponseOneOf1KindEnum;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToEvidenceResponseOneOf1KindEnum = {
+    Direct: 'direct'
+} as const;
+export type InvoiceBillToEvidenceResponseOneOf1KindEnum = typeof InvoiceBillToEvidenceResponseOneOf1KindEnum[keyof typeof InvoiceBillToEvidenceResponseOneOf1KindEnum];
+
+/**
+ * @type InvoiceBillToRequest
+ * 
+ * @export
+ */
+export type InvoiceBillToRequest = InvoiceBillToRequestOneOf | InvoiceBillToRequestOneOf1;
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToRequestOneOf
+ */
+export interface InvoiceBillToRequestOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToRequestOneOf
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {InvoiceBillToRequestOneOfKindEnum}
+     * @memberof InvoiceBillToRequestOneOf
+     */
+    kind: InvoiceBillToRequestOneOfKindEnum;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToRequestOneOfKindEnum = {
+    Customer: 'customer'
+} as const;
+export type InvoiceBillToRequestOneOfKindEnum = typeof InvoiceBillToRequestOneOfKindEnum[keyof typeof InvoiceBillToRequestOneOfKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToRequestOneOf1
+ */
+export interface InvoiceBillToRequestOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToRequestOneOf1
+     */
+    affiliationId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToRequestOneOf1
+     */
+    clientId: string;
+    /**
+     * 
+     * @type {InvoiceBillToRequestOneOf1KindEnum}
+     * @memberof InvoiceBillToRequestOneOf1
+     */
+    kind: InvoiceBillToRequestOneOf1KindEnum;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToRequestOneOf1KindEnum = {
+    Client: 'client'
+} as const;
+export type InvoiceBillToRequestOneOf1KindEnum = typeof InvoiceBillToRequestOneOf1KindEnum[keyof typeof InvoiceBillToRequestOneOf1KindEnum];
+
+/**
+ * @type InvoiceBillToResponse
+ * 
+ * @export
+ */
+export type InvoiceBillToResponse = InvoiceBillToResponseOneOf | InvoiceBillToResponseOneOf1 | InvoiceBillToResponseOneOf2;
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToResponseOneOf
+ */
+export interface InvoiceBillToResponseOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToResponseOneOf
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {InvoiceBillToResponseOneOfKindEnum}
+     * @memberof InvoiceBillToResponseOneOf
+     */
+    kind: InvoiceBillToResponseOneOfKindEnum;
+    /**
+     * 
+     * @type {any}
+     * @memberof InvoiceBillToResponseOneOf
+     */
+    snapshot: any | null;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToResponseOneOfKindEnum = {
+    Customer: 'customer'
+} as const;
+export type InvoiceBillToResponseOneOfKindEnum = typeof InvoiceBillToResponseOneOfKindEnum[keyof typeof InvoiceBillToResponseOneOfKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToResponseOneOf1
+ */
+export interface InvoiceBillToResponseOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToResponseOneOf1
+     */
+    clientId: string;
+    /**
+     * 
+     * @type {InvoiceBillToEvidenceResponse}
+     * @memberof InvoiceBillToResponseOneOf1
+     */
+    evidence: InvoiceBillToEvidenceResponse;
+    /**
+     * 
+     * @type {InvoiceBillToResponseOneOf1KindEnum}
+     * @memberof InvoiceBillToResponseOneOf1
+     */
+    kind: InvoiceBillToResponseOneOf1KindEnum;
+    /**
+     * 
+     * @type {any}
+     * @memberof InvoiceBillToResponseOneOf1
+     */
+    snapshot: any | null;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToResponseOneOf1KindEnum = {
+    Client: 'client'
+} as const;
+export type InvoiceBillToResponseOneOf1KindEnum = typeof InvoiceBillToResponseOneOf1KindEnum[keyof typeof InvoiceBillToResponseOneOf1KindEnum];
+
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToResponseOneOf2
+ */
+export interface InvoiceBillToResponseOneOf2 {
+    /**
+     * 
+     * @type {InvoiceBillToResponseOneOf2KindEnum}
+     * @memberof InvoiceBillToResponseOneOf2
+     */
+    kind: InvoiceBillToResponseOneOf2KindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToResponseOneOf2
+     */
+    legacyReferenceId: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof InvoiceBillToResponseOneOf2
+     */
+    snapshot: any | null;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToResponseOneOf2KindEnum = {
+    LegacyUnresolved: 'legacy_unresolved'
+} as const;
+export type InvoiceBillToResponseOneOf2KindEnum = typeof InvoiceBillToResponseOneOf2KindEnum[keyof typeof InvoiceBillToResponseOneOf2KindEnum];
+
+/**
  * 
  * @export
  * @interface InvoiceLineItemResponse
@@ -7583,6 +8958,12 @@ export interface InvoiceListResponse {
 export interface InvoiceResponse {
     /**
      * 
+     * @type {InvoiceBillToResponse}
+     * @memberof InvoiceResponse
+     */
+    billTo?: InvoiceBillToResponse | null;
+    /**
+     * 
      * @type {string}
      * @memberof InvoiceResponse
      */
@@ -7599,6 +8980,12 @@ export interface InvoiceResponse {
      * @memberof InvoiceResponse
      */
     clientName?: string | null;
+    /**
+     * Recipient number the invoice SMS is addressed to.
+     * @type {string}
+     * @memberof InvoiceResponse
+     */
+    clientPhone?: string | null;
     /**
      * 
      * @type {string}
@@ -7617,6 +9004,13 @@ export interface InvoiceResponse {
      * @memberof InvoiceResponse
      */
     dueDate: string;
+    /**
+     * Why the last email delivery attempt failed. Present only while
+     * `emailDeliveryStatus` is `Failed`.
+     * @type {string}
+     * @memberof InvoiceResponse
+     */
+    emailDeliveryFailureCode?: string | null;
     /**
      * 
      * @type {string}
@@ -7641,6 +9035,12 @@ export interface InvoiceResponse {
      * @memberof InvoiceResponse
      */
     lineItems: Array<InvoiceLineItemResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceResponse
+     */
+    nonPostingReason?: string | null;
     /**
      * 
      * @type {string}
@@ -7676,7 +9076,20 @@ export interface InvoiceResponse {
      * @type {string}
      * @memberof InvoiceResponse
      */
+    postingDisposition: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceResponse
+     */
     sentAt?: string | null;
+    /**
+     * Why the last SMS delivery attempt failed. Present only while
+     * `smsDeliveryStatus` is `Failed`.
+     * @type {string}
+     * @memberof InvoiceResponse
+     */
+    smsDeliveryFailureCode?: string | null;
     /**
      * 
      * @type {string}
@@ -7731,6 +9144,99 @@ export interface InvoiceResponse {
      * @memberof InvoiceResponse
      */
     updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceVoidEligibilityResponse
+ */
+export interface InvoiceVoidEligibilityResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InvoiceVoidEligibilityResponse
+     */
+    eligible: boolean;
+    /**
+     * 
+     * @type {InvoiceVoidPeriodResponse}
+     * @memberof InvoiceVoidEligibilityResponse
+     */
+    period: InvoiceVoidPeriodResponse | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidEligibilityResponse
+     */
+    plannedReversalOn: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidEligibilityResponse
+     */
+    reasonCode: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof InvoiceVoidEligibilityResponse
+     */
+    reversedJournalCount: number;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceVoidErrorResponse
+ */
+export interface InvoiceVoidErrorResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidErrorResponse
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidErrorResponse
+     */
+    message: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceVoidPeriodResponse
+ */
+export interface InvoiceVoidPeriodResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidPeriodResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidPeriodResponse
+     */
+    periodEnd: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidPeriodResponse
+     */
+    periodStart: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidPeriodResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceVoidPeriodResponse
+     */
+    yearMonth: string;
 }
 /**
  * 
@@ -7985,6 +9491,283 @@ export interface LowStockAlertResponse {
      * @memberof LowStockAlertResponse
      */
     warehouseName: string;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipConsentItemListResponse
+ */
+export interface MembershipConsentItemListResponse {
+    /**
+     * 
+     * @type {Array<MembershipConsentItemResponse>}
+     * @memberof MembershipConsentItemListResponse
+     */
+    items: Array<MembershipConsentItemResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipConsentItemResponse
+ */
+export interface MembershipConsentItemResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MembershipConsentItemResponse
+     */
+    active: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    body?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    consentKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MembershipConsentItemResponse
+     */
+    required: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipConsentItemResponse
+     */
+    sortOrder: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    termsVersion: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipConsentItemResponse
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipCustomerResponse
+ */
+export interface MembershipCustomerResponse {
+    /**
+     * Empty string when the customer has no email address.
+     * @type {string}
+     * @memberof MembershipCustomerResponse
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipCustomerResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipCustomerResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipCustomerResponse
+     */
+    phone?: string | null;
+}
+/**
+ * Aggregated membership view for one customer.
+ * @export
+ * @interface MembershipCustomerViewResponse
+ */
+export interface MembershipCustomerViewResponse {
+    /**
+     * 
+     * @type {MembershipPlanAssignmentResponse}
+     * @memberof MembershipCustomerViewResponse
+     */
+    activeAssignment?: MembershipPlanAssignmentResponse | null;
+    /**
+     * 
+     * @type {MembershipPlanResponse}
+     * @memberof MembershipCustomerViewResponse
+     */
+    activePlan?: MembershipPlanResponse | null;
+    /**
+     * 
+     * @type {Array<CustomerConsentResponse>}
+     * @memberof MembershipCustomerViewResponse
+     */
+    consents: Array<CustomerConsentResponse>;
+    /**
+     * 
+     * @type {Array<CustomerCredentialResponse>}
+     * @memberof MembershipCustomerViewResponse
+     */
+    credentials: Array<CustomerCredentialResponse>;
+    /**
+     * 
+     * @type {MembershipCustomerResponse}
+     * @memberof MembershipCustomerViewResponse
+     */
+    customer: MembershipCustomerResponse;
+    /**
+     * 
+     * @type {Array<CustomerSubjectResponse>}
+     * @memberof MembershipCustomerViewResponse
+     */
+    subjects: Array<CustomerSubjectResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipPlanAssignmentResponse
+ */
+export interface MembershipPlanAssignmentResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    endedOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    planId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    startedOn: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanAssignmentResponse
+     */
+    status: string;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipPlanListResponse
+ */
+export interface MembershipPlanListResponse {
+    /**
+     * 
+     * @type {Array<MembershipPlanResponse>}
+     * @memberof MembershipPlanListResponse
+     */
+    items: Array<MembershipPlanResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipPlanResponse
+ */
+export interface MembershipPlanResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MembershipPlanResponse
+     */
+    active: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanResponse
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipPlanResponse
+     */
+    feeJpy?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipPlanResponse
+     */
+    sortOrder: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipPlanResponse
+     */
+    updatedAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipPlanResponse
+     */
+    validDays?: number | null;
 }
 /**
  * 
@@ -8758,14 +10541,17 @@ export interface ProductResponse {
     weightGrams?: number | null;
 }
 /**
- * REST-facing mirror of the GraphQL `Product` type (`order_model::Product`).
+ * REST response for an order product.
  * 
- * `Product` derives `async_graphql::SimpleObject` and is reused directly as a
- * REST response body by these handlers. We avoid deriving `utoipa::ToSchema`
- * on the GraphQL type itself (that file is GraphQL-schema-owned) and instead
- * mirror every field here for OpenAPI documentation purposes. The JSON wire
- * format produced by this wrapper is byte-for-byte identical to serializing
- * `Product` directly, since every field is copied verbatim.
+ * This mirrors the GraphQL `Product` type (`order_model::Product`) field for
+ * field, because the two surfaces describe the same row and clients read them
+ * interchangeably. It is a separate type because that file is
+ * GraphQL-schema-owned and cannot derive `utoipa::ToSchema`.
+ * 
+ * REST additionally carries `categoryId` and `storefrontProductId` (#1136).
+ * Both belong to the storefront projection, which has no GraphQL surface
+ * (`/v1/graphql` is quarantined), so REST builds this straight from the
+ * `OrderProduct` row.
  * @export
  * @interface ProductRestResponse
  */
@@ -8782,6 +10568,12 @@ export interface ProductRestResponse {
      * @memberof ProductRestResponse
      */
     category?: string | null;
+    /**
+     * Storefront category this product is filed under, when it has one.
+     * @type {string}
+     * @memberof ProductRestResponse
+     */
+    categoryId?: string | null;
     /**
      * 
      * @type {string}
@@ -8866,6 +10658,17 @@ export interface ProductRestResponse {
      * @memberof ProductRestResponse
      */
     status: string;
+    /**
+     * Storefront catalog product this product is published as.
+     * 
+     * `null` until the product is first created or updated with
+     * `publicationStatus: "PUBLIC"`. This is the id `/v1/storekit/products`
+     * lists it under and the id carts take, so consumers can link the two
+     * stores by id instead of matching on name (#1136).
+     * @type {string}
+     * @memberof ProductRestResponse
+     */
+    storefrontProductId?: string | null;
     /**
      * 
      * @type {string}
@@ -9074,6 +10877,62 @@ export interface ProfileUser {
 /**
  * 
  * @export
+ * @interface PublicCustomFieldDefinitionListResponse
+ */
+export interface PublicCustomFieldDefinitionListResponse {
+    /**
+     * 
+     * @type {Array<PublicCustomFieldDefinitionResponse>}
+     * @memberof PublicCustomFieldDefinitionListResponse
+     */
+    items: Array<PublicCustomFieldDefinitionResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicCustomFieldDefinitionResponse
+ */
+export interface PublicCustomFieldDefinitionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    fieldKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    fieldType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    label: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    options?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    required: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    sortOrder: number;
+}
+/**
+ * 
+ * @export
  * @interface PublicInvoiceCheckoutResponse
  */
 export interface PublicInvoiceCheckoutResponse {
@@ -9141,6 +11000,13 @@ export interface PublicInvoicePaymentIntentResponse {
      */
     publishableKey: string;
     /**
+     * Connect connected account to initialise Stripe Elements against.
+     * Absent while the tenant settles on the platform account.
+     * @type {string}
+     * @memberof PublicInvoicePaymentIntentResponse
+     */
+    stripeAccount?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof PublicInvoicePaymentIntentResponse
@@ -9194,6 +11060,12 @@ export interface PublicInvoiceResponse {
      * @type {string}
      * @memberof PublicInvoiceResponse
      */
+    nonPostingReason?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicInvoiceResponse
+     */
     notes?: string | null;
     /**
      * 
@@ -9201,6 +11073,12 @@ export interface PublicInvoiceResponse {
      * @memberof PublicInvoiceResponse
      */
     paymentLinkUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicInvoiceResponse
+     */
+    postingDisposition: string;
     /**
      * 
      * @type {string}
@@ -9245,11 +11123,349 @@ export interface PublicInvoiceStripePublishableKeyResponse {
      */
     publishableKey: string;
     /**
+     * Connect connected account to initialise Stripe Elements against.
+     * Absent while the tenant settles on the platform account.
+     * @type {string}
+     * @memberof PublicInvoiceStripePublishableKeyResponse
+     */
+    stripeAccount?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof PublicInvoiceStripePublishableKeyResponse
      */
     stripeEnvironment: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicMembershipConsentItemResponse
+ */
+export interface PublicMembershipConsentItemResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicMembershipConsentItemResponse
+     */
+    body?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicMembershipConsentItemResponse
+     */
+    consentKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicMembershipConsentItemResponse
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublicMembershipConsentItemResponse
+     */
+    required: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicMembershipConsentItemResponse
+     */
+    termsVersion: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicMembershipRegistrationFormResponse
+ */
+export interface PublicMembershipRegistrationFormResponse {
+    /**
+     * 
+     * @type {Array<PublicMembershipConsentItemResponse>}
+     * @memberof PublicMembershipRegistrationFormResponse
+     */
+    consentItems: Array<PublicMembershipConsentItemResponse>;
+}
+/**
+ * Public input is intentionally closed: credentials, verification flags,
+ * plan assignments, channels, and actor IDs are not accepted.
+ * @export
+ * @interface PublicMembershipRegistrationRequest
+ */
+export interface PublicMembershipRegistrationRequest {
+    /**
+     * 
+     * @type {Array<PublicRegistrationConsentRequest>}
+     * @memberof PublicMembershipRegistrationRequest
+     */
+    consents?: Array<PublicRegistrationConsentRequest>;
+    /**
+     * 
+     * @type {PublicRegistrationCustomerRequest}
+     * @memberof PublicMembershipRegistrationRequest
+     */
+    customer: PublicRegistrationCustomerRequest;
+    /**
+     * 
+     * @type {Array<PublicRegistrationSubjectRequest>}
+     * @memberof PublicMembershipRegistrationRequest
+     */
+    subjects: Array<PublicRegistrationSubjectRequest>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicMembershipRegistrationResponse
+ */
+export interface PublicMembershipRegistrationResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicMembershipRegistrationResponse
+     */
+    consentCount: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicMembershipRegistrationResponse
+     */
+    customerId: string;
+    /**
+     * Public submissions are pre-registrations until staff confirm them in store.
+     * @type {string}
+     * @memberof PublicMembershipRegistrationResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicMembershipRegistrationResponse
+     */
+    subjectCount: number;
+}
+/**
+ * 
+ * @export
+ * @interface PublicRegistrationConsentRequest
+ */
+export interface PublicRegistrationConsentRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublicRegistrationConsentRequest
+     */
+    accepted: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationConsentRequest
+     */
+    consentKey: string;
+}
+/**
+ * Customer input accepted by the public pre-registration endpoint.
+ * @export
+ * @interface PublicRegistrationCustomerRequest
+ */
+export interface PublicRegistrationCustomerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationCustomerRequest
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationCustomerRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationCustomerRequest
+     */
+    phone: string;
+}
+/**
+ * One subject that will use the membership (pet, child, vehicle, etc.).
+ * @export
+ * @interface PublicRegistrationSubjectRequest
+ */
+export interface PublicRegistrationSubjectRequest {
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof PublicRegistrationSubjectRequest
+     */
+    birthDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationSubjectRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationSubjectRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationSubjectRequest
+     */
+    sex?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicRegistrationSubjectRequest
+     */
+    subjectType: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSigningDocumentResponse
+ */
+export interface PublicSigningDocumentResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningDocumentResponse
+     */
+    clientName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningDocumentResponse
+     */
+    contractNumber: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningDocumentResponse
+     */
+    expiresAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningDocumentResponse
+     */
+    issuerName: string;
+    /**
+     * 
+     * @type {Array<ContractLineItem>}
+     * @memberof PublicSigningDocumentResponse
+     */
+    lineItems: Array<ContractLineItem>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicSigningDocumentResponse
+     */
+    renderedBodySegments: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningDocumentResponse
+     */
+    title: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSigningErrorResponse
+ */
+export interface PublicSigningErrorResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningErrorResponse
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningErrorResponse
+     */
+    message: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSigningSessionResponse
+ */
+export interface PublicSigningSessionResponse {
+    /**
+     * 
+     * @type {PublicSigningDocumentResponse}
+     * @memberof PublicSigningSessionResponse
+     */
+    document: PublicSigningDocumentResponse;
+    /**
+     * 
+     * @type {PublicSigningSignerResponse}
+     * @memberof PublicSigningSessionResponse
+     */
+    signer: PublicSigningSignerResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningSessionResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {Array<SigningFieldDefinition>}
+     * @memberof PublicSigningSessionResponse
+     */
+    values: Array<SigningFieldDefinition>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSigningSignerResponse
+ */
+export interface PublicSigningSignerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningSignerResponse
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningSignerResponse
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSigningValueInput
+ */
+export interface PublicSigningValueInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningValueInput
+     */
+    fieldKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSigningValueInput
+     */
+    fieldType: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof PublicSigningValueInput
+     */
+    value: any | null;
 }
 /**
  * 
@@ -9431,6 +11647,120 @@ export interface PurchaseOrderResponse {
 /**
  * 
  * @export
+ * @interface PurgeResourceTimeSlotsResponse
+ */
+export interface PurgeResourceTimeSlotsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof PurgeResourceTimeSlotsResponse
+     */
+    deleted: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PurgeResourceTimeSlotsResponse
+     */
+    dryRun: boolean;
+    /**
+     * 
+     * @type {Date}
+     * @memberof PurgeResourceTimeSlotsResponse
+     */
+    from: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof PurgeResourceTimeSlotsResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof PurgeResourceTimeSlotsResponse
+     */
+    to: Date;
+}
+/**
+ * Outcome of a purge run, in rows.
+ * @export
+ * @interface PurgeResourceTimeSlotsResult
+ */
+export interface PurgeResourceTimeSlotsResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof PurgeResourceTimeSlotsResult
+     */
+    deleted: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PurgeResourceTimeSlotsResult
+     */
+    dryRun: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PutReservationScheduleDateOverrideRequest
+ */
+export interface PutReservationScheduleDateOverrideRequest {
+    /**
+     * Omit on creation or restore; required on an active update.
+     * @type {number}
+     * @memberof PutReservationScheduleDateOverrideRequest
+     */
+    expectedRevision?: number;
+    /**
+     * 
+     * @type {ScheduleDateOverrideKind}
+     * @memberof PutReservationScheduleDateOverrideRequest
+     */
+    kind: ScheduleDateOverrideKind;
+    /**
+     * 
+     * @type {string}
+     * @memberof PutReservationScheduleDateOverrideRequest
+     */
+    timezone: string;
+    /**
+     * Must be omitted for `closed` and non-empty for `replace`.
+     * @type {Array<ScheduleDateOverrideWindowRequest>}
+     * @memberof PutReservationScheduleDateOverrideRequest
+     */
+    windows?: Array<ScheduleDateOverrideWindowRequest>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface PutReservationScheduleLocationRequest
+ */
+export interface PutReservationScheduleLocationRequest {
+    /**
+     * Omit on creation; required and matched optimistically on update.
+     * @type {number}
+     * @memberof PutReservationScheduleLocationRequest
+     */
+    expectedRevision?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PutReservationScheduleLocationRequest
+     */
+    latitude: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PutReservationScheduleLocationRequest
+     */
+    longitude: number;
+}
+/**
+ * 
+ * @export
  * @interface QuotationItemResponse
  */
 export interface QuotationItemResponse {
@@ -9477,6 +11807,25 @@ export interface QuotationListResponse {
      * @memberof QuotationListResponse
      */
     items: Array<QuotationResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface QuotationPdfResponse
+ */
+export interface QuotationPdfResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof QuotationPdfResponse
+     */
+    expiresAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QuotationPdfResponse
+     */
+    signedUrl: string;
 }
 /**
  * 
@@ -9639,6 +11988,25 @@ export interface ReconcileSquarePaymentRequest {
 /**
  * 
  * @export
+ * @interface RecordCustomerConsentsRequest
+ */
+export interface RecordCustomerConsentsRequest {
+    /**
+     * store / web / kiosk (default store)
+     * @type {string}
+     * @memberof RecordCustomerConsentsRequest
+     */
+    channel?: string | null;
+    /**
+     * 
+     * @type {Array<RegistrationConsentRequest>}
+     * @memberof RecordCustomerConsentsRequest
+     */
+    consents: Array<RegistrationConsentRequest>;
+}
+/**
+ * 
+ * @export
  * @interface RegisterExtensionRequest
  */
 export interface RegisterExtensionRequest {
@@ -9714,6 +12082,185 @@ export interface RegisterExtensionRequest {
      * @memberof RegisterExtensionRequest
      */
     version: string;
+}
+/**
+ * 
+ * @export
+ * @interface RegisterMembershipRequest
+ */
+export interface RegisterMembershipRequest {
+    /**
+     * store / web / kiosk (default store)
+     * @type {string}
+     * @memberof RegisterMembershipRequest
+     */
+    channel?: string | null;
+    /**
+     * 
+     * @type {Array<RegistrationConsentRequest>}
+     * @memberof RegisterMembershipRequest
+     */
+    consents?: Array<RegistrationConsentRequest>;
+    /**
+     * 
+     * @type {Array<RegistrationCredentialRequest>}
+     * @memberof RegisterMembershipRequest
+     */
+    credentials?: Array<RegistrationCredentialRequest>;
+    /**
+     * New customer to create. Mutually exclusive with `customerId`.
+     * @type {RegistrationCustomerRequest}
+     * @memberof RegisterMembershipRequest
+     */
+    customer?: RegistrationCustomerRequest | null;
+    /**
+     * Existing customer to register. Mutually exclusive with `customer`.
+     * @type {string}
+     * @memberof RegisterMembershipRequest
+     */
+    customerId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterMembershipRequest
+     */
+    planId?: string | null;
+    /**
+     * 
+     * @type {Array<RegistrationSubjectRequest>}
+     * @memberof RegisterMembershipRequest
+     */
+    subjects?: Array<RegistrationSubjectRequest>;
+}
+/**
+ * 
+ * @export
+ * @interface RegistrationConsentRequest
+ */
+export interface RegistrationConsentRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RegistrationConsentRequest
+     */
+    accepted: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationConsentRequest
+     */
+    consentKey: string;
+}
+/**
+ * 
+ * @export
+ * @interface RegistrationCredentialRequest
+ */
+export interface RegistrationCredentialRequest {
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof RegistrationCredentialRequest
+     */
+    expiresOn?: string | null;
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof RegistrationCredentialRequest
+     */
+    issuedOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCredentialRequest
+     */
+    kind: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCredentialRequest
+     */
+    label: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCredentialRequest
+     */
+    note?: string | null;
+    /**
+     * Index into `subjects` when the credential belongs to a subject.
+     * @type {number}
+     * @memberof RegistrationCredentialRequest
+     */
+    subjectIndex?: number | null;
+    /**
+     * True when staff verified the physical document at reception.
+     * @type {boolean}
+     * @memberof RegistrationCredentialRequest
+     */
+    verified?: boolean | null;
+}
+/**
+ * 
+ * @export
+ * @interface RegistrationCustomerRequest
+ */
+export interface RegistrationCustomerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCustomerRequest
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCustomerRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCustomerRequest
+     */
+    phone?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface RegistrationSubjectRequest
+ */
+export interface RegistrationSubjectRequest {
+    /**
+     * YYYY-MM-DD
+     * @type {string}
+     * @memberof RegistrationSubjectRequest
+     */
+    birthDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationSubjectRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationSubjectRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationSubjectRequest
+     */
+    sex?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationSubjectRequest
+     */
+    subjectType: string;
 }
 /**
  * 
@@ -9816,6 +12363,32 @@ export interface ReplaceGolfProductSlotsRequest {
      * @memberof ReplaceGolfProductSlotsRequest
      */
     slots: Array<GolfProductSlotBody>;
+}
+/**
+ * 
+ * @export
+ * @interface ReplaceReservationProductSlotsRequest
+ */
+export interface ReplaceReservationProductSlotsRequest {
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof ReplaceReservationProductSlotsRequest
+     */
+    slots: Array<any>;
+}
+/**
+ * 
+ * @export
+ * @interface ReplaceReservationResourceScheduleRequest
+ */
+export interface ReplaceReservationResourceScheduleRequest {
+    /**
+     * Complete desired set of active resource-level availability rules.
+     * @type {Array<ReservationAvailabilityRuleRequest>}
+     * @memberof ReplaceReservationResourceScheduleRequest
+     */
+    rules: Array<ReservationAvailabilityRuleRequest>;
 }
 /**
  * 
@@ -9939,6 +12512,20 @@ export interface Reservation {
      * @memberof Reservation
      */
     assignedStaffIds: Array<string>;
+    /**
+     * 
+     * @type {ReservationBillTo}
+     * @memberof Reservation
+     */
+    billTo?: ReservationBillTo | null;
+    /**
+     * Why the reservation currently in `cancelled` was cancelled. `None` both
+     * for a live reservation and for one cancelled without a stated reason;
+     * `cancelled_at` is what distinguishes those two.
+     * @type {string}
+     * @memberof Reservation
+     */
+    cancelReason?: string | null;
     /**
      * 
      * @type {Date}
@@ -10084,7 +12671,7 @@ export interface Reservation {
      */
     priceAmount: number;
     /**
-     * 
+     * Number of people or subjects in the reservation; not slot inventory groups.
      * @type {number}
      * @memberof Reservation
      */
@@ -10167,6 +12754,421 @@ export interface Reservation {
 /**
  * 
  * @export
+ * @interface ReservationAvailabilityRuleRequest
+ */
+export interface ReservationAvailabilityRuleRequest {
+    /**
+     * Number of groups that can start concurrently. This is not party size.
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    capacity: number;
+    /**
+     * Monday is 0 and Sunday is 6.
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    dayOfWeek: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    effectiveFrom?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    effectiveTo?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    endTime: string;
+    /**
+     * Existing rule ID. Omit when adding a new schedule window.
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    id?: string | null;
+    /**
+     * Inclusive end of the annual season, as `MM-DD`. A value earlier than
+     * `seasonStartMonthDay` describes a season that wraps the new year.
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    seasonEndMonthDay?: string | null;
+    /**
+     * Inclusive start of a season that repeats every year, as `MM-DD`.
+     * Set together with `seasonEndMonthDay`; omit both to operate all year.
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    seasonStartMonthDay?: string | null;
+    /**
+     * Start interval in minutes; independent from service duration.
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    slotIntervalMinutes: number;
+    /**
+     * Omit to preserve an existing rule policy; null explicitly clears it.
+     * @type {SolarWindow}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    solarWindow?: SolarWindow | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    startTime: string;
+    /**
+     * IANA timezone such as `Asia/Tokyo`.
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleRequest
+     */
+    timezone: string;
+}
+/**
+ * 
+ * @export
+ * @interface ReservationAvailabilityRuleResponse
+ */
+export interface ReservationAvailabilityRuleResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    active: boolean;
+    /**
+     * Number of groups that can start concurrently. This is not party size.
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    capacity: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    createdAt: Date;
+    /**
+     * Monday is 0 and Sunday is 6.
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    dayOfWeek: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    effectiveFrom?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    effectiveTo?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    endTime: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    revision: number;
+    /**
+     * Inclusive end of the annual operating season as `MM-DD`.
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    seasonEndMonthDay?: string | null;
+    /**
+     * Inclusive start of the annual operating season as `MM-DD`, or null when
+     * the rule operates all year.
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    seasonStartMonthDay?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    slotIntervalMinutes: number;
+    /**
+     * Null means this remains a fixed rule.
+     * @type {SolarWindow}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    solarWindow: SolarWindow | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    startTime: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    timezone: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationAvailabilityRuleResponse
+     */
+    updatedAt: Date;
+}
+/**
+ * @type ReservationBillTo
+ * 
+ * @export
+ */
+export type ReservationBillTo = ReservationBillToOneOf | ReservationBillToOneOf1;
+/**
+ * 
+ * @export
+ * @interface ReservationBillToOneOf
+ */
+export interface ReservationBillToOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToOneOf
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {ReservationBillToOneOfKindEnum}
+     * @memberof ReservationBillToOneOf
+     */
+    kind: ReservationBillToOneOfKindEnum;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationBillToOneOf
+     */
+    selectedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToOneOf
+     */
+    selectedBy: string;
+}
+
+
+/**
+ * @export
+ */
+export const ReservationBillToOneOfKindEnum = {
+    Customer: 'customer'
+} as const;
+export type ReservationBillToOneOfKindEnum = typeof ReservationBillToOneOfKindEnum[keyof typeof ReservationBillToOneOfKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface ReservationBillToOneOf1
+ */
+export interface ReservationBillToOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToOneOf1
+     */
+    affiliationId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToOneOf1
+     */
+    clientId: string;
+    /**
+     * 
+     * @type {ReservationBillToOneOf1KindEnum}
+     * @memberof ReservationBillToOneOf1
+     */
+    kind: ReservationBillToOneOf1KindEnum;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationBillToOneOf1
+     */
+    selectedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToOneOf1
+     */
+    selectedBy: string;
+}
+
+
+/**
+ * @export
+ */
+export const ReservationBillToOneOf1KindEnum = {
+    Client: 'client'
+} as const;
+export type ReservationBillToOneOf1KindEnum = typeof ReservationBillToOneOf1KindEnum[keyof typeof ReservationBillToOneOf1KindEnum];
+
+/**
+ * @type ReservationBillToRequest
+ * 
+ * @export
+ */
+export type ReservationBillToRequest = InvoiceBillToRequestOneOf | ReservationBillToRequestOneOf;
+/**
+ * 
+ * @export
+ * @interface ReservationBillToRequestOneOf
+ */
+export interface ReservationBillToRequestOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToRequestOneOf
+     */
+    affiliationId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToRequestOneOf
+     */
+    clientId: string;
+    /**
+     * 
+     * @type {ReservationBillToRequestOneOfKindEnum}
+     * @memberof ReservationBillToRequestOneOf
+     */
+    kind: ReservationBillToRequestOneOfKindEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ReservationBillToRequestOneOfKindEnum = {
+    Client: 'client'
+} as const;
+export type ReservationBillToRequestOneOfKindEnum = typeof ReservationBillToRequestOneOfKindEnum[keyof typeof ReservationBillToRequestOneOfKindEnum];
+
+/**
+ * One cancellation, as it happened. Rows are never updated or deleted.
+ * @export
+ * @interface ReservationCancellationEvent
+ */
+export interface ReservationCancellationEvent {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    actorId?: string | null;
+    /**
+     * 
+     * @type {CancellationActorType}
+     * @memberof ReservationCancellationEvent
+     */
+    actorType: CancellationActorType;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationCancellationEvent
+     */
+    cancellationFeeAmount?: number | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationCancellationEvent
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    id: string;
+    /**
+     * `Idempotency-Key` this cancellation was claimed under, when the caller
+     * opted in. Exposed so an operator can see which retry won the claim.
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    idempotencyKey?: string | null;
+    /**
+     * Status the reservation held immediately before it was cancelled.
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    previousStatus: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    reason?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationCancellationEvent
+     */
+    refundAmount?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    reservationId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    source: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationCancellationEvent
+     */
+    tenantId: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ReservationCancellationListResponse
+ */
+export interface ReservationCancellationListResponse {
+    /**
+     * 
+     * @type {Array<ReservationCancellationEvent>}
+     * @memberof ReservationCancellationListResponse
+     */
+    items: Array<ReservationCancellationEvent>;
+}
+/**
+ * 
+ * @export
  * @interface ReservationListResponse
  */
 export interface ReservationListResponse {
@@ -10195,6 +13197,117 @@ export const ReservationPaymentStatus = {
 export type ReservationPaymentStatus = typeof ReservationPaymentStatus[keyof typeof ReservationPaymentStatus];
 
 /**
+ * A tenant-owned, industry-neutral reservation product.
+ * 
+ * `attributes_json` is deliberately opaque to Field. Extensions may keep
+ * product-specific fields there while the columns remain the stable contract.
+ * @export
+ * @interface ReservationProductCatalogItem
+ */
+export interface ReservationProductCatalogItem {
+    /**
+     * 
+     * @type {any}
+     * @memberof ReservationProductCatalogItem
+     */
+    attributesJson: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductCatalogItem
+     */
+    bookingMode: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationProductCatalogItem
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationProductCatalogItem
+     */
+    durationMinutes: number;
+    /**
+     * `None` is undeclared; `Some(vec![])` is an explicit empty allowlist.
+     * @type {Array<string>}
+     * @memberof ReservationProductCatalogItem
+     */
+    eligibleResourceIds?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReservationProductCatalogItem
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductCatalogItem
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductCatalogItem
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductCatalogItem
+     */
+    ownerExtensionKey: string;
+    /**
+     * 
+     * @type {Array<ReservationProductSlot>}
+     * @memberof ReservationProductCatalogItem
+     */
+    slots: Array<ReservationProductSlot>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductCatalogItem
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationProductCatalogItem
+     */
+    updatedAt: Date;
+}
+/**
+ * The management view of the catalog.
+ * 
+ * Named apart from the StoreKit `ReservationProductListResponse` on purpose:
+ * utoipa derives schema names from the struct, so two `ToSchema` types sharing
+ * one name collapse into a single OpenAPI component and generated clients get
+ * the wrong shape for whichever route loses.
+ * @export
+ * @interface ReservationProductCatalogListResponse
+ */
+export interface ReservationProductCatalogListResponse {
+    /**
+     * 
+     * @type {Array<ReservationProductCatalogItem>}
+     * @memberof ReservationProductCatalogListResponse
+     */
+    items: Array<ReservationProductCatalogItem>;
+    /**
+     * Whether this tenant has crossed the migration boundary.
+     * 
+     * An empty `items` is ambiguous without it: a tenant that never seeded and
+     * one that seeded and then deleted every product both list nothing, yet
+     * only the first still has the storefront reading extension config. A
+     * writer that cannot tell them apart saves to the side nobody reads.
+     * @type {boolean}
+     * @memberof ReservationProductCatalogListResponse
+     */
+    seeded: boolean;
+}
+/**
  * 
  * @export
  * @interface ReservationProductListResponse
@@ -10206,6 +13319,75 @@ export interface ReservationProductListResponse {
      * @memberof ReservationProductListResponse
      */
     items: Array<any>;
+    /**
+     * IANA timezone attached to the extension config that supplied the
+     * storefront products.
+     * @type {string}
+     * @memberof ReservationProductListResponse
+     */
+    timezone: string;
+}
+/**
+ * One ordered, opaque slot declaration belonging to a reservation product.
+ * @export
+ * @interface ReservationProductSlot
+ */
+export interface ReservationProductSlot {
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationProductSlot
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductSlot
+     */
+    id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationProductSlot
+     */
+    position: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductSlot
+     */
+    reservationProductId: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof ReservationProductSlot
+     */
+    slotJson: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationProductSlot
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationProductSlot
+     */
+    updatedAt: Date;
+}
+/**
+ * 
+ * @export
+ * @interface ReservationProductSlotListResponse
+ */
+export interface ReservationProductSlotListResponse {
+    /**
+     * 
+     * @type {Array<ReservationProductSlot>}
+     * @memberof ReservationProductSlotListResponse
+     */
+    items: Array<ReservationProductSlot>;
 }
 /**
  * 
@@ -10286,6 +13468,269 @@ export interface ReservationResource {
      */
     updatedAt: Date;
 }
+/**
+ * 
+ * @export
+ * @interface ReservationResourceListResponse
+ */
+export interface ReservationResourceListResponse {
+    /**
+     * 
+     * @type {Array<ReservationResourceResponse>}
+     * @memberof ReservationResourceListResponse
+     */
+    items: Array<ReservationResourceResponse>;
+}
+/**
+ * Canonical generic resource representation.
+ * 
+ * The legacy `reservation_resources.capacity` column is deliberately not
+ * exposed. Slot capacity is owned by resource-scoped availability rules.
+ * @export
+ * @interface ReservationResourceResponse
+ */
+export interface ReservationResourceResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReservationResourceResponse
+     */
+    active: boolean;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationResourceResponse
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {any}
+     * @memberof ReservationResourceResponse
+     */
+    customFieldsJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationResourceResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof ReservationResourceResponse
+     */
+    metadataJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationResourceResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationResourceResponse
+     */
+    resourceModel: string;
+    /**
+     * 
+     * @type {ReservationResourceType}
+     * @memberof ReservationResourceResponse
+     */
+    resourceType: ReservationResourceType;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationResourceResponse
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationResourceResponse
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationResourceResponse
+     */
+    updatedAt: Date;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ReservationResourceScheduleResponse
+ */
+export interface ReservationResourceScheduleResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationResourceScheduleResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {Array<ReservationAvailabilityRuleResponse>}
+     * @memberof ReservationResourceScheduleResponse
+     */
+    rules: Array<ReservationAvailabilityRuleResponse>;
+}
+
+/**
+ * 
+ * @export
+ */
+export const ReservationResourceType = {
+    Staff: 'staff',
+    Room: 'room',
+    Equipment: 'equipment',
+    Vehicle: 'vehicle',
+    Other: 'other'
+} as const;
+export type ReservationResourceType = typeof ReservationResourceType[keyof typeof ReservationResourceType];
+
+/**
+ * 
+ * @export
+ * @interface ReservationScheduleDateOverride
+ */
+export interface ReservationScheduleDateOverride {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReservationScheduleDateOverride
+     */
+    active: boolean;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationScheduleDateOverride
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationScheduleDateOverride
+     */
+    id: string;
+    /**
+     * 
+     * @type {ScheduleDateOverrideKind}
+     * @memberof ReservationScheduleDateOverride
+     */
+    kind: ScheduleDateOverrideKind;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationScheduleDateOverride
+     */
+    localDate: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationScheduleDateOverride
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationScheduleDateOverride
+     */
+    revision: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationScheduleDateOverride
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationScheduleDateOverride
+     */
+    timezone: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationScheduleDateOverride
+     */
+    updatedAt: Date;
+    /**
+     * 
+     * @type {Array<ScheduleDateOverrideWindow>}
+     * @memberof ReservationScheduleDateOverride
+     */
+    windows: Array<ScheduleDateOverrideWindow>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ReservationScheduleDateOverrideListResponse
+ */
+export interface ReservationScheduleDateOverrideListResponse {
+    /**
+     * 
+     * @type {Array<ReservationScheduleDateOverride>}
+     * @memberof ReservationScheduleDateOverrideListResponse
+     */
+    overrides: Array<ReservationScheduleDateOverride>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationScheduleDateOverrideListResponse
+     */
+    resourceId: string;
+}
+/**
+ * 
+ * @export
+ * @interface ReservationScheduleLocationResponse
+ */
+export interface ReservationScheduleLocationResponse {
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationScheduleLocationResponse
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationScheduleLocationResponse
+     */
+    latitude: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationScheduleLocationResponse
+     */
+    longitude: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationScheduleLocationResponse
+     */
+    revision: number;
+    /**
+     * 
+     * @type {ScheduleLocationScope}
+     * @memberof ReservationScheduleLocationResponse
+     */
+    scopeType: ScheduleLocationScope;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationScheduleLocationResponse
+     */
+    updatedAt: Date;
+}
+
+
 
 /**
  * 
@@ -10309,6 +13754,80 @@ export type ReservationStatus = typeof ReservationStatus[keyof typeof Reservatio
 
 /**
  * 
+ * @export
+ * @interface ReservationStatusLookupRequest
+ */
+export interface ReservationStatusLookupRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ReservationStatusLookupRequest
+     */
+    reservationIds: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ReservationStatusLookupResponse
+ */
+export interface ReservationStatusLookupResponse {
+    /**
+     * 
+     * @type {Array<ReservationStatusSnapshot>}
+     * @memberof ReservationStatusLookupResponse
+     */
+    items: Array<ReservationStatusSnapshot>;
+    /**
+     * Ids this tenant has no reservation for. A caller referencing one of
+     * these is pointing at something that is gone or was never theirs; it is
+     * reported rather than silently omitted so the caller can tell that case
+     * apart from a reservation that is merely cancelled.
+     * @type {Array<string>}
+     * @memberof ReservationStatusLookupResponse
+     */
+    missingIds: Array<string>;
+}
+/**
+ * The current state of one reservation, without the booking detail around it.
+ * 
+ * This is what a caller that already holds reservation ids needs in order to
+ * reconcile its own records against Field: whether the reservation is still
+ * live, and when it last moved. Keeping it separate from [`Reservation`] is
+ * deliberate — the reconciliation contract stays stable even as the booking
+ * payload grows, and it carries no customer PII.
+ * @export
+ * @interface ReservationStatusSnapshot
+ */
+export interface ReservationStatusSnapshot {
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationStatusSnapshot
+     */
+    cancelledAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationStatusSnapshot
+     */
+    id: string;
+    /**
+     * 
+     * @type {ReservationStatus}
+     * @memberof ReservationStatusSnapshot
+     */
+    status: ReservationStatus;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationStatusSnapshot
+     */
+    updatedAt: Date;
+}
+
+
+/**
+ * A booking menu: what a tenant sells and how it is paid for and cancelled.
  * @export
  * @interface ReservationType
  */
@@ -10423,6 +13942,268 @@ export interface ResourceListResponse {
      * @memberof ResourceListResponse
      */
     items: Array<ReservationResource>;
+}
+/**
+ * One generated resource inventory row. Every numeric counter is a number of
+ * reservation groups, never a party-size/person count.
+ * @export
+ * @interface ResourceTimeSlot
+ */
+export interface ResourceTimeSlot {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResourceTimeSlot
+     */
+    active: boolean;
+    /**
+     * `capacity - reserved_quantity - held_quantity`, in groups.
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    availableQuantity: number;
+    /**
+     * Count of reservation groups used by schedule capacity and slot counters.
+     * 
+     * This is intentionally distinct from reservation party size, which counts
+     * people or subjects.
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    capacity: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    endsAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlot
+     */
+    generationKey: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    generationRangeFrom: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    generationRangeTo: Date;
+    /**
+     * Count of reservation groups used by schedule capacity and slot counters.
+     * 
+     * This is intentionally distinct from reservation party size, which counts
+     * people or subjects.
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    heldQuantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlot
+     */
+    id: string;
+    /**
+     * Count of reservation groups used by schedule capacity and slot counters.
+     * 
+     * This is intentionally distinct from reservation party size, which counts
+     * people or subjects.
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    reservedQuantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlot
+     */
+    resourceId: string;
+    /**
+     * Compatibility alias retained for the v1 Field contract.
+     * @type {string}
+     * @memberof ResourceTimeSlot
+     */
+    sourceAvailabilityRuleId: string;
+    /**
+     * Compatibility alias retained for the v1 Field contract.
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    sourceAvailabilityRuleRevision: number;
+    /**
+     * Local calendar date in the source schedule's timezone.
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    sourceScheduleDate: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlot
+     */
+    sourceScheduleId: string;
+    /**
+     * 
+     * @type {ScheduleSourceKind}
+     * @memberof ResourceTimeSlot
+     */
+    sourceScheduleKind: ScheduleSourceKind;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    sourceScheduleRevision: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlot
+     */
+    sourceSolarAlgorithm?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlot
+     */
+    sourceSolarLocationRevision?: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    startsAt: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlot
+     */
+    updatedAt: Date;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ResourceTimeSlotGenerationResponse
+ */
+export interface ResourceTimeSlotGenerationResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    created: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    deactivated: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    dryRun: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    unchanged: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    updated: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    from: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ResourceTimeSlotGenerationResponse
+     */
+    to: Date;
+}
+/**
+ * Counts of rows in a complete generation plan.
+ * @export
+ * @interface ResourceTimeSlotGenerationResult
+ */
+export interface ResourceTimeSlotGenerationResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResult
+     */
+    created: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResult
+     */
+    deactivated: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResourceTimeSlotGenerationResult
+     */
+    dryRun: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResult
+     */
+    unchanged: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResourceTimeSlotGenerationResult
+     */
+    updated: number;
+}
+/**
+ * 
+ * @export
+ * @interface ResourceTimeSlotListResponse
+ */
+export interface ResourceTimeSlotListResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResourceTimeSlotListResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {Array<ResourceTimeSlot>}
+     * @memberof ResourceTimeSlotListResponse
+     */
+    slots: Array<ResourceTimeSlot>;
 }
 /**
  * 
@@ -11478,6 +15259,12 @@ export interface SaveGolfCourseResourceRequest {
      */
     capacity?: number | null;
     /**
+     * この resource が受け付けるコース（`golf_courses.id`）。
+     * @type {string}
+     * @memberof SaveGolfCourseResourceRequest
+     */
+    golfCourseId?: string | null;
+    /**
      * 
      * @type {number}
      * @memberof SaveGolfCourseResourceRequest
@@ -11605,6 +15392,62 @@ export interface SaveGolfReservationProductRequest {
      * @memberof SaveGolfReservationProductRequest
      */
     playType: string;
+}
+/**
+ * 
+ * @export
+ * @interface SaveReservationProductRequest
+ */
+export interface SaveReservationProductRequest {
+    /**
+     * 
+     * @type {any}
+     * @memberof SaveReservationProductRequest
+     */
+    attributesJson: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveReservationProductRequest
+     */
+    bookingMode: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SaveReservationProductRequest
+     */
+    durationMinutes: number;
+    /**
+     * `null`/missing means unrestricted. An explicit empty array means the
+     * product is offered on no resource.
+     * @type {Array<string>}
+     * @memberof SaveReservationProductRequest
+     */
+    eligibleResourceIds?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SaveReservationProductRequest
+     */
+    enabled: boolean;
+    /**
+     * Stable, tenant-local product id. Omit on create to let Field generate it.
+     * @type {string}
+     * @memberof SaveReservationProductRequest
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveReservationProductRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveReservationProductRequest
+     */
+    ownerExtensionKey: string;
 }
 /**
  * 
@@ -11754,7 +15597,7 @@ export interface SaveStaffCompensationProfileRequest {
  */
 export interface SaveStaffMemberRequest {
     /**
-     * 
+     * Superseded by `employmentStatus`; `false` still means retired.
      * @type {boolean}
      * @memberof SaveStaffMemberRequest
      */
@@ -11777,6 +15620,12 @@ export interface SaveStaffMemberRequest {
      * @memberof SaveStaffMemberRequest
      */
     email?: string | null;
+    /**
+     * active / on_leave / retired. Wins over `active` when both are sent.
+     * @type {string}
+     * @memberof SaveStaffMemberRequest
+     */
+    employmentStatus?: string | null;
     /**
      * 
      * @type {string}
@@ -12074,6 +15923,91 @@ export interface SaveStoreRequest {
 /**
  * 
  * @export
+ * @interface SaveStorefrontProfileRequest
+ */
+export interface SaveStorefrontProfileRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    address?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    contactEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    displayName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    legalName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    legalNotice?: string | null;
+    /**
+     * 
+     * @type {StorefrontLogo}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    logo?: StorefrontLogo | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    phoneNumber?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    representativeName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    subName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    tagline?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    themeColor?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveStorefrontProfileRequest
+     */
+    websiteUrl?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface SaveWarehouseRequest
  */
 export interface SaveWarehouseRequest {
@@ -12089,6 +16023,82 @@ export interface SaveWarehouseRequest {
      * @memberof SaveWarehouseRequest
      */
     name: string;
+}
+
+/**
+ * 
+ * @export
+ */
+export const ScheduleDateOverrideKind = {
+    Closed: 'closed',
+    Replace: 'replace'
+} as const;
+export type ScheduleDateOverrideKind = typeof ScheduleDateOverrideKind[keyof typeof ScheduleDateOverrideKind];
+
+/**
+ * 
+ * @export
+ * @interface ScheduleDateOverrideWindow
+ */
+export interface ScheduleDateOverrideWindow {
+    /**
+     * Count of reservation groups used by schedule capacity and slot counters.
+     * 
+     * This is intentionally distinct from reservation party size, which counts
+     * people or subjects.
+     * @type {number}
+     * @memberof ScheduleDateOverrideWindow
+     */
+    capacity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleDateOverrideWindow
+     */
+    endTime: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ScheduleDateOverrideWindow
+     */
+    slotIntervalMinutes: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleDateOverrideWindow
+     */
+    startTime: string;
+}
+/**
+ * 
+ * @export
+ * @interface ScheduleDateOverrideWindowRequest
+ */
+export interface ScheduleDateOverrideWindowRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ScheduleDateOverrideWindowRequest
+     */
+    capacity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleDateOverrideWindowRequest
+     */
+    endTime: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ScheduleDateOverrideWindowRequest
+     */
+    slotIntervalMinutes: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleDateOverrideWindowRequest
+     */
+    startTime: string;
 }
 /**
  * 
@@ -12134,6 +16144,16 @@ export interface ScheduleListResponse {
      */
     items: Array<ScheduleResponse>;
 }
+
+/**
+ * 
+ * @export
+ */
+export const ScheduleLocationScope = {
+    Tenant: 'tenant'
+} as const;
+export type ScheduleLocationScope = typeof ScheduleLocationScope[keyof typeof ScheduleLocationScope];
+
 /**
  * 
  * @export
@@ -12231,6 +16251,49 @@ export interface ScheduleResponse {
      */
     taxCategory: string;
 }
+
+/**
+ * 
+ * @export
+ */
+export const ScheduleSourceKind = {
+    AvailabilityRule: 'availability_rule',
+    DateOverride: 'date_override'
+} as const;
+export type ScheduleSourceKind = typeof ScheduleSourceKind[keyof typeof ScheduleSourceKind];
+
+/**
+ * 
+ * @export
+ * @interface SeedReservationProductsRequest
+ */
+export interface SeedReservationProductsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SeedReservationProductsRequest
+     */
+    extensionKey: string;
+}
+/**
+ * 
+ * @export
+ * @interface SeedReservationProductsResponse
+ */
+export interface SeedReservationProductsResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SeedReservationProductsResponse
+     */
+    alreadySeeded: boolean;
+    /**
+     * 
+     * @type {Array<ReservationProductCatalogItem>}
+     * @memberof SeedReservationProductsResponse
+     */
+    items: Array<ReservationProductCatalogItem>;
+}
 /**
  * 
  * @export
@@ -12291,6 +16354,45 @@ export interface SendReservationNotificationResponse {
 /**
  * 
  * @export
+ * @interface SendSigningRequestResponse
+ */
+export interface SendSigningRequestResponse {
+    /**
+     * 
+     * @type {InvitationDeliveryStatus}
+     * @memberof SendSigningRequestResponse
+     */
+    deliveryStatus: InvitationDeliveryStatus;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SendSigningRequestResponse
+     */
+    expiresAt: Date;
+    /**
+     * Canonical public URL used for both email delivery and manual copy.
+     * @type {string}
+     * @memberof SendSigningRequestResponse
+     */
+    invitationUrl: string;
+    /**
+     * 
+     * @type {SigningRequestDetailResponse}
+     * @memberof SendSigningRequestResponse
+     */
+    request: SigningRequestDetailResponse;
+    /**
+     * Returned only by this send call. The raw token is never persisted.
+     * @type {string}
+     * @memberof SendSigningRequestResponse
+     */
+    signingToken: string;
+}
+
+
+/**
+ * 
+ * @export
  * @interface SetCustomFieldValuesRequest
  */
 export interface SetCustomFieldValuesRequest {
@@ -12300,6 +16402,488 @@ export interface SetCustomFieldValuesRequest {
      * @memberof SetCustomFieldValuesRequest
      */
     values: object;
+}
+/**
+ * 
+ * @export
+ * @interface SigningArtifactResponse
+ */
+export interface SigningArtifactResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    artifactSlot: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningArtifactResponse
+     */
+    attemptCount: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    contentType?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningArtifactResponse
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    evidenceRecordId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    failureCode?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningArtifactResponse
+     */
+    fileSizeBytes?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    kind: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    sha256?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    signerId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningArtifactResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningArtifactResponse
+     */
+    updatedAt: Date;
+}
+/**
+ * 
+ * @export
+ * @interface SigningEventResponse
+ */
+export interface SigningEventResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    actorId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    actorIp?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    actorType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    eventHash: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    eventType: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningEventResponse
+     */
+    hashVersion: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningEventResponse
+     */
+    occurredAt: Date;
+    /**
+     * 
+     * @type {any}
+     * @memberof SigningEventResponse
+     */
+    payload: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    previousEventHash?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningEventResponse
+     */
+    sequenceNo: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    signerId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningEventResponse
+     */
+    userAgent?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface SigningFieldDefinition
+ */
+export interface SigningFieldDefinition {
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningFieldDefinition
+     */
+    fieldKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningFieldDefinition
+     */
+    fieldType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningFieldDefinition
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SigningFieldDefinition
+     */
+    required: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface SigningRequestDetailResponse
+ */
+export interface SigningRequestDetailResponse {
+    /**
+     * 
+     * @type {Array<SigningArtifactResponse>}
+     * @memberof SigningRequestDetailResponse
+     */
+    artifacts: Array<SigningArtifactResponse>;
+    /**
+     * 
+     * @type {any}
+     * @memberof SigningRequestDetailResponse
+     */
+    documentSnapshot: any | null;
+    /**
+     * 
+     * @type {Array<SigningEventResponse>}
+     * @memberof SigningRequestDetailResponse
+     */
+    events: Array<SigningEventResponse>;
+    /**
+     * 
+     * @type {SigningRequestSummary}
+     * @memberof SigningRequestDetailResponse
+     */
+    request: SigningRequestSummary;
+    /**
+     * 
+     * @type {Array<SigningSignerResponse>}
+     * @memberof SigningRequestDetailResponse
+     */
+    signers: Array<SigningSignerResponse>;
+    /**
+     * 
+     * @type {Array<SigningValueResponse>}
+     * @memberof SigningRequestDetailResponse
+     */
+    values: Array<SigningValueResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface SigningRequestListResponse
+ */
+export interface SigningRequestListResponse {
+    /**
+     * 
+     * @type {Array<SigningRequestSummary>}
+     * @memberof SigningRequestListResponse
+     */
+    items: Array<SigningRequestSummary>;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningRequestListResponse
+     */
+    limit: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningRequestListResponse
+     */
+    offset: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningRequestListResponse
+     */
+    total: number;
+}
+/**
+ * 
+ * @export
+ * @interface SigningRequestSummary
+ */
+export interface SigningRequestSummary {
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningRequestSummary
+     */
+    completedAt?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningRequestSummary
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningRequestSummary
+     */
+    createdBy: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningRequestSummary
+     */
+    expiresAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningRequestSummary
+     */
+    id: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningRequestSummary
+     */
+    revokedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningRequestSummary
+     */
+    salesContractId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningRequestSummary
+     */
+    sentAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningRequestSummary
+     */
+    snapshotSha256: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningRequestSummary
+     */
+    status: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningRequestSummary
+     */
+    updatedAt: Date;
+}
+/**
+ * 
+ * @export
+ * @interface SigningSignerResponse
+ */
+export interface SigningSignerResponse {
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningSignerResponse
+     */
+    completedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningSignerResponse
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningSignerResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningSignerResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningSignerResponse
+     */
+    revokedAt?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningSignerResponse
+     */
+    sentAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningSignerResponse
+     */
+    signerRole: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SigningSignerResponse
+     */
+    signingOrder: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningSignerResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningSignerResponse
+     */
+    tokenExpiresAt?: Date | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningSignerResponse
+     */
+    viewedAt?: Date | null;
+}
+/**
+ * 
+ * @export
+ * @interface SigningValueResponse
+ */
+export interface SigningValueResponse {
+    /**
+     * 
+     * @type {Date}
+     * @memberof SigningValueResponse
+     */
+    completedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningValueResponse
+     */
+    fieldKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningValueResponse
+     */
+    fieldType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningValueResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningValueResponse
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SigningValueResponse
+     */
+    required: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningValueResponse
+     */
+    signerId: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof SigningValueResponse
+     */
+    value?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SigningValueResponse
+     */
+    valueSha256?: string | null;
 }
 
 /**
@@ -12312,6 +16896,65 @@ export const SmsStatus = {
     Failed: 'failed'
 } as const;
 export type SmsStatus = typeof SmsStatus[keyof typeof SmsStatus];
+
+/**
+ * 
+ * @export
+ * @interface SolarBoundary
+ */
+export interface SolarBoundary {
+    /**
+     * 
+     * @type {SolarEventKind}
+     * @memberof SolarBoundary
+     */
+    event: SolarEventKind;
+    /**
+     * 
+     * @type {number}
+     * @memberof SolarBoundary
+     */
+    offsetMinutes: number;
+}
+
+
+
+/**
+ * 
+ * @export
+ */
+export const SolarEventKind = {
+    Sunrise: 'sunrise',
+    Sunset: 'sunset'
+} as const;
+export type SolarEventKind = typeof SolarEventKind[keyof typeof SolarEventKind];
+
+/**
+ * 
+ * @export
+ * @interface SolarWindow
+ */
+export interface SolarWindow {
+    /**
+     * 
+     * @type {SolarBoundary}
+     * @memberof SolarWindow
+     */
+    earliestStart?: SolarBoundary | null;
+    /**
+     * 
+     * @type {SolarBoundary}
+     * @memberof SolarWindow
+     */
+    latestStart?: SolarBoundary | null;
+    /**
+     * 
+     * @type {ScheduleLocationScope}
+     * @memberof SolarWindow
+     */
+    locationScope: ScheduleLocationScope;
+}
+
 
 /**
  * 
@@ -12768,7 +17411,7 @@ export interface StaffCompensationProfileResponse {
 }
 
 /**
- * 
+ * Field v1 compatibility vocabulary: the HRM domain value `contract` is exposed as `contractor` until the CERP-25 migration tracked by PLT-3344.
  * @export
  */
 export const StaffEmploymentType = {
@@ -12879,7 +17522,8 @@ export interface StaffLeaveRequestListResponse {
  */
 export interface StaffMember {
     /**
-     * 
+     * Kept for the clients that predate `employment_status`; always
+     * `employment_status.is_active()`.
      * @type {boolean}
      * @memberof StaffMember
      */
@@ -12908,6 +17552,12 @@ export interface StaffMember {
      * @memberof StaffMember
      */
     email?: string | null;
+    /**
+     * 
+     * @type {EmploymentStatus}
+     * @memberof StaffMember
+     */
+    employmentStatus: EmploymentStatus;
     /**
      * 
      * @type {EmploymentType}
@@ -13490,6 +18140,19 @@ export interface StaffWorkload {
      * @memberof StaffWorkload
      */
     workedMinutes: number;
+}
+/**
+ * 
+ * @export
+ * @interface StaffWorkloadListResponse
+ */
+export interface StaffWorkloadListResponse {
+    /**
+     * 
+     * @type {Array<StaffWorkload>}
+     * @memberof StaffWorkloadListResponse
+     */
+    items: Array<StaffWorkload>;
 }
 /**
  * 
@@ -14150,7 +18813,7 @@ export interface StoreKitListCustomerResponseItemsInner {
      */
     description?: string | null;
     /**
-     * 
+     * Empty string when the customer has no email address.
      * @type {string}
      * @memberof StoreKitListCustomerResponseItemsInner
      */
@@ -14167,6 +18830,12 @@ export interface StoreKitListCustomerResponseItemsInner {
      * @memberof StoreKitListCustomerResponseItemsInner
      */
     name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListCustomerResponseItemsInner
+     */
+    nameKana?: string | null;
     /**
      * 
      * @type {string}
@@ -14603,6 +19272,771 @@ export interface StoreResponse {
 /**
  * 
  * @export
+ * @interface StorefrontAvailabilityCalendarResponse
+ */
+export interface StorefrontAvailabilityCalendarResponse {
+    /**
+     * One entry per date in `[from, to]`, ascending, with no gaps. A month grid
+     * needs every cell; reconstructing gaps from a sparse array is where
+     * off-by-one bugs live.
+     * @type {Array<StorefrontAvailabilityDay>}
+     * @memberof StorefrontAvailabilityCalendarResponse
+     */
+    days: Array<StorefrontAvailabilityDay>;
+    /**
+     * 
+     * @type {number}
+     * @memberof StorefrontAvailabilityCalendarResponse
+     */
+    fewLeftThreshold: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontAvailabilityCalendarResponse
+     */
+    from: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontAvailabilityCalendarResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontAvailabilityCalendarResponse
+     */
+    timezone: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontAvailabilityCalendarResponse
+     */
+    to: Date;
+}
+/**
+ * 
+ * @export
+ * @interface StorefrontAvailabilityDay
+ */
+export interface StorefrontAvailabilityDay {
+    /**
+     * 
+     * @type {number}
+     * @memberof StorefrontAvailabilityDay
+     */
+    capacityGroups: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontAvailabilityDay
+     */
+    date: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontAvailabilityDay
+     */
+    earliestAvailableAt?: Date | null;
+    /**
+     * Slots that still have room.
+     * @type {number}
+     * @memberof StorefrontAvailabilityDay
+     */
+    openSlotCount: number;
+    /**
+     * Remaining groups summed across the day's slots.
+     * @type {number}
+     * @memberof StorefrontAvailabilityDay
+     */
+    remainingGroups: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StorefrontAvailabilityDay
+     */
+    slotCount: number;
+    /**
+     * 
+     * @type {StorefrontDayAvailability}
+     * @memberof StorefrontAvailabilityDay
+     */
+    status: StorefrontDayAvailability;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface StorefrontCreateReservationRequest
+ */
+export interface StorefrontCreateReservationRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    assignedStaffIds?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    cancelUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    currency?: string | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    customFields?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    customerEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    customerId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    customerName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    customerPhone?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    depositAmount?: number | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    endsAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    idempotencyKey?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    notes?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    prepaymentPolicy?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    priceAmount?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    quantity?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    reservationTypeId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    resourceId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    serviceId?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    startsAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    successUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontCreateReservationRequest
+     */
+    timezone?: string | null;
+}
+
+/**
+ * How a day should read on a calendar.
+ * 
+ * The glyphs (〇 / △ / × …) deliberately live in the storefront, not here.
+ * They are locale- and design-specific, and baking them into the wire format
+ * would turn every visual tweak into an API change plus a codegen run.
+ * @export
+ */
+export const StorefrontDayAvailability = {
+    Available: 'available',
+    FewLeft: 'few_left',
+    Full: 'full',
+    Closed: 'closed',
+    NotPublished: 'not_published'
+} as const;
+export type StorefrontDayAvailability = typeof StorefrontDayAvailability[keyof typeof StorefrontDayAvailability];
+
+/**
+ * 
+ * @export
+ * @interface StorefrontLogo
+ */
+export interface StorefrontLogo {
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontLogo
+     */
+    contentType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontLogo
+     */
+    dataBase64: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontLogo
+     */
+    filename: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontLogo
+     */
+    updatedAt: string;
+}
+/**
+ * Deliberately narrower than the staff shape.
+ * 
+ * `feeJpy` and `validDays` are what a member pays to *join*, which has
+ * nothing to do with booking a tee time; publishing them here would put the
+ * tenant's membership pricing on a page that only needed a label.
+ * @export
+ * @interface StorefrontMembershipPlan
+ */
+export interface StorefrontMembershipPlan {
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontMembershipPlan
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontMembershipPlan
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontMembershipPlan
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
+ * @interface StorefrontMembershipPlanListResponse
+ */
+export interface StorefrontMembershipPlanListResponse {
+    /**
+     * 
+     * @type {Array<StorefrontMembershipPlan>}
+     * @memberof StorefrontMembershipPlanListResponse
+     */
+    items: Array<StorefrontMembershipPlan>;
+}
+/**
+ * 
+ * @export
+ * @interface StorefrontProfileResponse
+ */
+export interface StorefrontProfileResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    address?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    contactEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    displayName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    legalName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    legalNotice?: string | null;
+    /**
+     * 
+     * @type {StorefrontLogo}
+     * @memberof StorefrontProfileResponse
+     */
+    logo?: StorefrontLogo | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    phoneNumber?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    representativeName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    subName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    tagline: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    themeColor?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    updatedAt?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontProfileResponse
+     */
+    websiteUrl?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface StorefrontResourceTimeSlotListResponse
+ */
+export interface StorefrontResourceTimeSlotListResponse {
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontResourceTimeSlotListResponse
+     */
+    date: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontResourceTimeSlotListResponse
+     */
+    resourceId: string;
+    /**
+     * 
+     * @type {Array<ResourceTimeSlot>}
+     * @memberof StorefrontResourceTimeSlotListResponse
+     */
+    slots: Array<ResourceTimeSlot>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontResourceTimeSlotListResponse
+     */
+    timezone: string;
+}
+/**
+ * 
+ * @export
+ * @interface StorefrontUpdateReservationRequest
+ */
+export interface StorefrontUpdateReservationRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    assignedStaffIds?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    cancelReason?: string | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    customFields?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    customerEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    customerName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    customerPhone?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    endsAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    internalNotes?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    notes?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    paymentStatus?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    resourceId?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    startsAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StorefrontUpdateReservationRequest
+     */
+    status?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface StripeConnectAccountResponse
+ */
+export interface StripeConnectAccountResponse {
+    /**
+     * `merchant_managed` or `platform_managed`. `null` when no account exists.
+     * @type {string}
+     * @memberof StripeConnectAccountResponse
+     */
+    accountMode?: string | null;
+    /**
+     * Whether Stripe accepts charges on this account right now. This flag —
+     * not the presence of `connectedAccountId` — decides whether direct
+     * charges work.
+     * @type {boolean}
+     * @memberof StripeConnectAccountResponse
+     */
+    chargesEnabled: boolean;
+    /**
+     * `null` while the tenant's charges still settle on the platform account.
+     * @type {string}
+     * @memberof StripeConnectAccountResponse
+     */
+    connectedAccountId?: string | null;
+    /**
+     * Whether the hosted onboarding form was completed. Verification may
+     * still be pending, so this can be true while `chargesEnabled` is false.
+     * @type {boolean}
+     * @memberof StripeConnectAccountResponse
+     */
+    detailsSubmitted: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface StripeConnectOnboardingLinkResponse
+ */
+export interface StripeConnectOnboardingLinkResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof StripeConnectOnboardingLinkResponse
+     */
+    url: string;
+}
+/**
+ * 
+ * @export
+ * @interface TabularAnalyzeResponse
+ */
+export interface TabularAnalyzeResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof TabularAnalyzeResponse
+     */
+    headerRow: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TabularAnalyzeResponse
+     */
+    headers: Array<string>;
+    /**
+     * 
+     * @type {TabularMappingResponse}
+     * @memberof TabularAnalyzeResponse
+     */
+    mapping: TabularMappingResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof TabularAnalyzeResponse
+     */
+    rowCount: number;
+    /**
+     * 
+     * @type {Array<TabularRowResponse>}
+     * @memberof TabularAnalyzeResponse
+     */
+    rows: Array<TabularRowResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularAnalyzeResponse
+     */
+    selectedSheet?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TabularAnalyzeResponse
+     */
+    sheetNames: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularAnalyzeResponse
+     */
+    sourceType: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TabularAnalyzeResponse
+     */
+    warnings: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface TabularMappingFieldResponse
+ */
+export interface TabularMappingFieldResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TabularMappingFieldResponse
+     */
+    approved: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof TabularMappingFieldResponse
+     */
+    confidence: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularMappingFieldResponse
+     */
+    explanation: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TabularMappingFieldResponse
+     */
+    required: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TabularMappingFieldResponse
+     */
+    samples: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularMappingFieldResponse
+     */
+    source: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularMappingFieldResponse
+     */
+    target: string;
+}
+/**
+ * 
+ * @export
+ * @interface TabularMappingResponse
+ */
+export interface TabularMappingResponse {
+    /**
+     * 
+     * @type {Array<TabularMappingFieldResponse>}
+     * @memberof TabularMappingResponse
+     */
+    fields: Array<TabularMappingFieldResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularMappingResponse
+     */
+    mode: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularMappingResponse
+     */
+    notes?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface TabularRowResponse
+ */
+export interface TabularRowResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof TabularRowResponse
+     */
+    sourceRowNumber: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TabularRowResponse
+     */
+    values: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface TabularTargetFieldRequest
+ */
+export interface TabularTargetFieldRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TabularTargetFieldRequest
+     */
+    aliases?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularTargetFieldRequest
+     */
+    description: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TabularTargetFieldRequest
+     */
+    key: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TabularTargetFieldRequest
+     */
+    required?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface TenantExtension
  */
 export interface TenantExtension {
@@ -14920,6 +20354,62 @@ export interface UpdateCustomFieldDefinitionRequest {
 /**
  * 
  * @export
+ * @interface UpdateCustomerClientAffiliationRequest
+ */
+export interface UpdateCustomerClientAffiliationRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateCustomerClientAffiliationRequest
+     */
+    billingAllowed: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateCustomerCredentialRequest
+ */
+export interface UpdateCustomerCredentialRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateCustomerCredentialRequest
+     */
+    archived?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerCredentialRequest
+     */
+    expiresOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerCredentialRequest
+     */
+    issuedOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerCredentialRequest
+     */
+    label?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerCredentialRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateCustomerCredentialRequest
+     */
+    verified?: boolean | null;
+}
+/**
+ * 
+ * @export
  * @interface UpdateCustomerRequest
  */
 export interface UpdateCustomerRequest {
@@ -14946,7 +20436,50 @@ export interface UpdateCustomerRequest {
      * @type {string}
      * @memberof UpdateCustomerRequest
      */
+    nameKana?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerRequest
+     */
     phone?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateCustomerSubjectRequest
+ */
+export interface UpdateCustomerSubjectRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerSubjectRequest
+     */
+    birthDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerSubjectRequest
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerSubjectRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerSubjectRequest
+     */
+    sex?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerSubjectRequest
+     */
+    subjectType?: string | null;
 }
 /**
  * 
@@ -15301,6 +20834,92 @@ export interface UpdateLowStockDecisionRequest {
 /**
  * 
  * @export
+ * @interface UpdateMembershipConsentItemRequest
+ */
+export interface UpdateMembershipConsentItemRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateMembershipConsentItemRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMembershipConsentItemRequest
+     */
+    body?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMembershipConsentItemRequest
+     */
+    label?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateMembershipConsentItemRequest
+     */
+    required?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateMembershipConsentItemRequest
+     */
+    sortOrder?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMembershipConsentItemRequest
+     */
+    termsVersion?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateMembershipPlanRequest
+ */
+export interface UpdateMembershipPlanRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateMembershipPlanRequest
+     */
+    active?: boolean | null;
+    /**
+     * Explicit null clears the stored value.
+     * @type {string}
+     * @memberof UpdateMembershipPlanRequest
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateMembershipPlanRequest
+     */
+    feeJpy?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMembershipPlanRequest
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateMembershipPlanRequest
+     */
+    sortOrder?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateMembershipPlanRequest
+     */
+    validDays?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface UpdateOrderProductRequest
  */
 export interface UpdateOrderProductRequest {
@@ -15316,6 +20935,12 @@ export interface UpdateOrderProductRequest {
      * @memberof UpdateOrderProductRequest
      */
     category?: string | null;
+    /**
+     * Storefront category (`cat_…`, from `GET /v1/storekit/categories`).
+     * @type {string}
+     * @memberof UpdateOrderProductRequest
+     */
+    categoryId?: string | null;
     /**
      * 
      * @type {string}
@@ -15574,6 +21199,12 @@ export interface UpdateQuotationRequest {
     clientEmail?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof UpdateQuotationRequest
+     */
+    clientId?: string | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof UpdateQuotationRequest
      */
@@ -15609,6 +21240,19 @@ export interface UpdateReservationRequest {
      * @memberof UpdateReservationRequest
      */
     assignedStaffIds?: Array<string> | null;
+    /**
+     * 
+     * @type {ReservationBillToRequest}
+     * @memberof UpdateReservationRequest
+     */
+    billTo?: ReservationBillToRequest | null;
+    /**
+     * Reason recorded when this update is what cancels the reservation.
+     * Ignored unless `status` moves the reservation into `cancelled`.
+     * @type {string}
+     * @memberof UpdateReservationRequest
+     */
+    cancelReason?: string | null;
     /**
      * 
      * @type {any}
@@ -15675,6 +21319,106 @@ export interface UpdateReservationRequest {
      * @memberof UpdateReservationRequest
      */
     status?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateReservationResourceRequest
+ */
+export interface UpdateReservationResourceRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateReservationResourceRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof UpdateReservationResourceRequest
+     */
+    customFieldsJson?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof UpdateReservationResourceRequest
+     */
+    metadataJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationResourceRequest
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationResourceRequest
+     */
+    resourceModel?: string | null;
+    /**
+     * 
+     * @type {ReservationResourceType}
+     * @memberof UpdateReservationResourceRequest
+     */
+    resourceType?: ReservationResourceType | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationResourceRequest
+     */
+    storeId?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface UpdateReservationTypeRequest
+ */
+export interface UpdateReservationTypeRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateReservationTypeRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof UpdateReservationTypeRequest
+     */
+    cancellationPolicyJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationTypeRequest
+     */
+    code?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationTypeRequest
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationTypeRequest
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof UpdateReservationTypeRequest
+     */
+    paymentPolicyJson?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReservationTypeRequest
+     */
+    resourceModel?: string | null;
 }
 /**
  * 
@@ -15828,6 +21572,105 @@ export interface UpdateScheduleRequest {
      * @memberof UpdateScheduleRequest
      */
     notes?: string | null;
+}
+/**
+ * A partial update: an omitted field keeps whatever is stored.
+ * 
+ * The nullable fields take an explicit `null` to clear the stored value, which
+ * is why they are `Option<Option<_>>` — the previous shape wrote a default over
+ * every field the caller left out.
+ * @export
+ * @interface UpdateStaffMemberRequest
+ */
+export interface UpdateStaffMemberRequest {
+    /**
+     * Superseded by `employmentStatus`; `false` still means retired.
+     * @type {boolean}
+     * @memberof UpdateStaffMemberRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof UpdateStaffMemberRequest
+     */
+    attributesJson?: any | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof UpdateStaffMemberRequest
+     */
+    contractEndDate?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffMemberRequest
+     */
+    email?: string | null;
+    /**
+     * active / on_leave / retired. Wins over `active` when both are sent.
+     * @type {string}
+     * @memberof UpdateStaffMemberRequest
+     */
+    employmentStatus?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffMemberRequest
+     */
+    employmentType?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof UpdateStaffMemberRequest
+     */
+    hiredAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffMemberRequest
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffMemberRequest
+     */
+    phone?: string | null;
+}
+/**
+ * A partial update of the mutable portion of a planned shift.
+ * 
+ * `staffId` and `date` are intentionally absent: changing either requires a
+ * DELETE followed by a new POST so the nested resource keeps its identity.
+ * @export
+ * @interface UpdateStaffShiftRequest
+ */
+export interface UpdateStaffShiftRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffShiftRequest
+     */
+    endTime?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffShiftRequest
+     */
+    notes?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffShiftRequest
+     */
+    shiftType?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffShiftRequest
+     */
+    startTime?: string | null;
 }
 /**
  * 
@@ -16117,6 +21960,56 @@ export interface VendorResponse {
      * @memberof VendorResponse
      */
     updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface VoidInvoiceRequest
+ */
+export interface VoidInvoiceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VoidInvoiceRequest
+     */
+    reason: string;
+}
+/**
+ * 
+ * @export
+ * @interface VoidInvoiceResponse
+ */
+export interface VoidInvoiceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof VoidInvoiceResponse
+     */
+    correctionId: string;
+    /**
+     * 
+     * @type {InvoiceResponse}
+     * @memberof VoidInvoiceResponse
+     */
+    invoice: InvoiceResponse;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VoidInvoiceResponse
+     */
+    replayed: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoidInvoiceResponse
+     */
+    reversalOn: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoidInvoiceResponse
+     */
+    reversedJournalCount: number;
 }
 /**
  * 

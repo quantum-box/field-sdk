@@ -16,6 +16,10 @@ Method | HTTP request | Description
 [**create_staff_shift_legacy_prefix**](HrmApi.md#create_staff_shift_legacy_prefix) | **POST** /v1/erp/staff/{id}/shifts | 
 [**decide_staff_leave_request**](HrmApi.md#decide_staff_leave_request) | **PATCH** /v1/erp/hrm/leave-requests/{id} | 
 [**decide_staff_leave_request_legacy_prefix**](HrmApi.md#decide_staff_leave_request_legacy_prefix) | **PATCH** /v1/erp/staff/leave-requests/{id} | 
+[**delete_staff_member**](HrmApi.md#delete_staff_member) | **DELETE** /v1/erp/hrm/staff/{id} | 
+[**delete_staff_member_legacy_prefix**](HrmApi.md#delete_staff_member_legacy_prefix) | **DELETE** /v1/erp/staff/{id} | 
+[**delete_staff_shift**](HrmApi.md#delete_staff_shift) | **DELETE** /v1/erp/hrm/staff/{staffId}/shifts/{shiftId} | 
+[**delete_staff_shift_legacy_prefix**](HrmApi.md#delete_staff_shift_legacy_prefix) | **DELETE** /v1/erp/staff/{staffId}/shifts/{shiftId} | 
 [**get_staff_compensation_profile**](HrmApi.md#get_staff_compensation_profile) | **GET** /v1/erp/hrm/staff/{id}/compensation | 
 [**get_staff_compensation_profile_legacy_prefix**](HrmApi.md#get_staff_compensation_profile_legacy_prefix) | **GET** /v1/erp/staff/{id}/compensation | 
 [**get_staff_payroll_estimate**](HrmApi.md#get_staff_payroll_estimate) | **GET** /v1/erp/hrm/staff/{id}/payroll-estimate | 
@@ -32,10 +36,14 @@ Method | HTTP request | Description
 [**list_staff_members_legacy_prefix**](HrmApi.md#list_staff_members_legacy_prefix) | **GET** /v1/erp/staff | 
 [**list_staff_shifts**](HrmApi.md#list_staff_shifts) | **GET** /v1/erp/hrm/staff/{id}/shifts | 
 [**list_staff_shifts_legacy_prefix**](HrmApi.md#list_staff_shifts_legacy_prefix) | **GET** /v1/erp/staff/{id}/shifts | 
+[**list_staff_utilization**](HrmApi.md#list_staff_utilization) | **GET** /v1/erp/hrm/staff-utilization | 
+[**list_staff_utilization_legacy_prefix**](HrmApi.md#list_staff_utilization_legacy_prefix) | **GET** /v1/erp/staff-utilization | 
 [**update_staff_compensation_profile**](HrmApi.md#update_staff_compensation_profile) | **PATCH** /v1/erp/hrm/staff/{id}/compensation | 
 [**update_staff_compensation_profile_legacy_prefix**](HrmApi.md#update_staff_compensation_profile_legacy_prefix) | **PATCH** /v1/erp/staff/{id}/compensation | 
 [**update_staff_member**](HrmApi.md#update_staff_member) | **PATCH** /v1/erp/hrm/staff/{id} | 
 [**update_staff_member_legacy_prefix**](HrmApi.md#update_staff_member_legacy_prefix) | **PATCH** /v1/erp/staff/{id} | 
+[**update_staff_shift**](HrmApi.md#update_staff_shift) | **PATCH** /v1/erp/hrm/staff/{staffId}/shifts/{shiftId} | 
+[**update_staff_shift_legacy_prefix**](HrmApi.md#update_staff_shift_legacy_prefix) | **PATCH** /v1/erp/staff/{staffId}/shifts/{shiftId} | 
 [**update_staff_shift_preference**](HrmApi.md#update_staff_shift_preference) | **PATCH** /v1/erp/hrm/staff/{id}/shift-preference | 
 [**update_staff_shift_preference_legacy_prefix**](HrmApi.md#update_staff_shift_preference_legacy_prefix) | **PATCH** /v1/erp/staff/{id}/shift-preference | 
 [**update_staff_skill_profile**](HrmApi.md#update_staff_skill_profile) | **PATCH** /v1/erp/hrm/staff/{id}/skills | 
@@ -389,6 +397,120 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## delete_staff_member
+
+> delete_staff_member(id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Staff member ID | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_staff_member_legacy_prefix
+
+> delete_staff_member_legacy_prefix(id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Staff member ID | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_staff_shift
+
+> delete_staff_shift(staff_id, shift_id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**staff_id** | **String** | Staff member ID | [required] |
+**shift_id** | **String** | Staff shift ID | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_staff_shift_legacy_prefix
+
+> delete_staff_shift_legacy_prefix(staff_id, shift_id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**staff_id** | **String** | Staff member ID | [required] |
+**shift_id** | **String** | Staff shift ID | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## get_staff_compensation_profile
 
 > models::StaffCompensationProfileResponse get_staff_compensation_profile(id)
@@ -626,7 +748,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** | Staff member ID | [required] |
-**period** | Option<**String**> |  |  |
+**period** | Option<**String**> | `week`, `month`, `all`, or a calendar month as `YYYY-MM`.  The three words are anchored on today, so they can only describe the present. `YYYY-MM` names a month outright, which is what a caller settling a period that has already closed needs. Defaults to `week`. |  |
 
 ### Return type
 
@@ -655,7 +777,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** | Staff member ID | [required] |
-**period** | Option<**String**> |  |  |
+**period** | Option<**String**> | `week`, `month`, `all`, or a calendar month as `YYYY-MM`.  The three words are anchored on today, so they can only describe the present. `YYYY-MM` names a month outright, which is what a caller settling a period that has already closed needs. Defaults to `week`. |  |
 
 ### Return type
 
@@ -839,6 +961,62 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## list_staff_utilization
+
+> models::StaffWorkloadListResponse list_staff_utilization(period)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**period** | Option<**String**> | `week`, `month`, `all`, or a calendar month as `YYYY-MM`.  The three words are anchored on today, so they can only describe the present. `YYYY-MM` names a month outright, which is what a caller settling a period that has already closed needs. Defaults to `week`. |  |
+
+### Return type
+
+[**models::StaffWorkloadListResponse**](StaffWorkloadListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_staff_utilization_legacy_prefix
+
+> models::StaffWorkloadListResponse list_staff_utilization_legacy_prefix(period)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**period** | Option<**String**> | `week`, `month`, `all`, or a calendar month as `YYYY-MM`.  The three words are anchored on today, so they can only describe the present. `YYYY-MM` names a month outright, which is what a caller settling a period that has already closed needs. Defaults to `week`. |  |
+
+### Return type
+
+[**models::StaffWorkloadListResponse**](StaffWorkloadListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## update_staff_compensation_profile
 
 > models::StaffCompensationProfile update_staff_compensation_profile(id, save_staff_compensation_profile_request)
@@ -899,7 +1077,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_staff_member
 
-> models::StaffMember update_staff_member(id, save_staff_member_request)
+> models::StaffMember update_staff_member(id, update_staff_member_request)
 
 
 ### Parameters
@@ -908,7 +1086,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** | Staff member ID | [required] |
-**save_staff_member_request** | [**SaveStaffMemberRequest**](SaveStaffMemberRequest.md) |  | [required] |
+**update_staff_member_request** | [**UpdateStaffMemberRequest**](UpdateStaffMemberRequest.md) |  | [required] |
 
 ### Return type
 
@@ -928,7 +1106,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_staff_member_legacy_prefix
 
-> models::StaffMember update_staff_member_legacy_prefix(id, save_staff_member_request)
+> models::StaffMember update_staff_member_legacy_prefix(id, update_staff_member_request)
 
 
 ### Parameters
@@ -937,11 +1115,71 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** | Staff member ID | [required] |
-**save_staff_member_request** | [**SaveStaffMemberRequest**](SaveStaffMemberRequest.md) |  | [required] |
+**update_staff_member_request** | [**UpdateStaffMemberRequest**](UpdateStaffMemberRequest.md) |  | [required] |
 
 ### Return type
 
 [**models::StaffMember**](StaffMember.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_staff_shift
+
+> models::StaffShift update_staff_shift(staff_id, shift_id, update_staff_shift_request)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**staff_id** | **String** | Staff member ID | [required] |
+**shift_id** | **String** | Staff shift ID | [required] |
+**update_staff_shift_request** | [**UpdateStaffShiftRequest**](UpdateStaffShiftRequest.md) |  | [required] |
+
+### Return type
+
+[**models::StaffShift**](StaffShift.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_staff_shift_legacy_prefix
+
+> models::StaffShift update_staff_shift_legacy_prefix(staff_id, shift_id, update_staff_shift_request)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**staff_id** | **String** | Staff member ID | [required] |
+**shift_id** | **String** | Staff shift ID | [required] |
+**update_staff_shift_request** | [**UpdateStaffShiftRequest**](UpdateStaffShiftRequest.md) |  | [required] |
+
+### Return type
+
+[**models::StaffShift**](StaffShift.md)
 
 ### Authorization
 

@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**create_golf_course_resource**](GolfCourseApi.md#create_golf_course_resource) | **POST** /v1/erp/extensions/golf-course/resources | 
 [**delete_caddie_availability**](GolfCourseApi.md#delete_caddie_availability) | **DELETE** /v1/erp/extensions/golf-course/caddie-availabilities/{caddie_id}/{date} | 
 [**delete_daily_budget**](GolfCourseApi.md#delete_daily_budget) | **DELETE** /v1/erp/extensions/golf-course/daily-budgets/{course_id}/{date} | 
+[**delete_golf_caddie_profile**](GolfCourseApi.md#delete_golf_caddie_profile) | **DELETE** /v1/erp/extensions/golf-course/caddie-profiles/{id} | 
 [**delete_golf_course**](GolfCourseApi.md#delete_golf_course) | **DELETE** /v1/erp/extensions/golf-course/courses/{id} | 
 [**export_golf_caddie_payroll_csv**](GolfCourseApi.md#export_golf_caddie_payroll_csv) | **GET** /v1/erp/extensions/golf-course/caddie-payroll-summary/export.csv | 
 [**export_golf_monthly_settlement_csv**](GolfCourseApi.md#export_golf_monthly_settlement_csv) | **GET** /v1/erp/extensions/golf-course/monthly-settlement/export.csv | 
@@ -32,11 +33,11 @@ Method | HTTP request | Description
 [**list_golf_course_resources**](GolfCourseApi.md#list_golf_course_resources) | **GET** /v1/erp/extensions/golf-course/resources | 
 [**list_golf_courses**](GolfCourseApi.md#list_golf_courses) | **GET** /v1/erp/extensions/golf-course/courses | 
 [**list_golf_custom_fields**](GolfCourseApi.md#list_golf_custom_fields) | **GET** /v1/erp/extensions/golf-course/custom-fields | 
-[**list_golf_product_slots**](GolfCourseApi.md#list_golf_product_slots) | **GET** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots | 
+[**list_golf_product_slots**](GolfCourseApi.md#list_golf_product_slots) | **GET** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots | Deprecated by PLT-3199: availability is the resource's generated inventory, so these product-scoped slots no longer decide what a storefront can book. Migrate with `POST /v1/erp/reservation-resources/{id}/schedule/import-product-slots`. CERP-25 forbids removing a `/v1/` endpoint, so removal waits for `/v2/`.
 [**list_golf_reservation_products**](GolfCourseApi.md#list_golf_reservation_products) | **GET** /v1/erp/extensions/golf-course/reservation-products | 
 [**recommend_golf_caddies**](GolfCourseApi.md#recommend_golf_caddies) | **GET** /v1/erp/extensions/golf-course/caddie-recommendations | 
 [**replace_caddie_course_memberships**](GolfCourseApi.md#replace_caddie_course_memberships) | **PUT** /v1/erp/extensions/golf-course/caddie-profiles/{id}/courses | 
-[**replace_golf_product_slots**](GolfCourseApi.md#replace_golf_product_slots) | **PUT** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots | 
+[**replace_golf_product_slots**](GolfCourseApi.md#replace_golf_product_slots) | **PUT** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots | Deprecated by PLT-3199; see `list_golf_product_slots`. Writing here no longer changes what a storefront offers.
 [**update_golf_caddie_assignment**](GolfCourseApi.md#update_golf_caddie_assignment) | **PATCH** /v1/erp/extensions/golf-course/caddie-assignments/{id} | 
 [**update_golf_caddie_profile**](GolfCourseApi.md#update_golf_caddie_profile) | **PATCH** /v1/erp/extensions/golf-course/caddie-profiles/{id} | 
 [**update_golf_course**](GolfCourseApi.md#update_golf_course) | **PATCH** /v1/erp/extensions/golf-course/courses/{id} | 
@@ -275,6 +276,34 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## delete_golf_caddie_profile
+
+> delete_golf_caddie_profile(id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Golf caddie profile ID | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## delete_golf_course
 
 > delete_golf_course(id)
@@ -305,7 +334,7 @@ Name | Type | Description  | Required | Notes
 
 ## export_golf_caddie_payroll_csv
 
-> export_golf_caddie_payroll_csv(year_month)
+> export_golf_caddie_payroll_csv(year_month, timezone)
 
 
 ### Parameters
@@ -314,6 +343,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **year_month** | **String** |  | [required] |
+**timezone** | Option<**String**> | IANA timezone defining the requested payroll month. Omitted keeps the legacy UTC boundary for existing callers. |  |
 
 ### Return type
 
@@ -333,7 +363,7 @@ Name | Type | Description  | Required | Notes
 
 ## export_golf_monthly_settlement_csv
 
-> export_golf_monthly_settlement_csv(year_month)
+> export_golf_monthly_settlement_csv(year_month, timezone)
 
 
 ### Parameters
@@ -342,6 +372,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **year_month** | **String** |  | [required] |
+**timezone** | Option<**String**> | IANA timezone defining the settlement month. Omitted keeps legacy UTC. |  |
 
 ### Return type
 
@@ -361,7 +392,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_daily_budget_achievement
 
-> models::DailyBudgetAchievementResponse get_daily_budget_achievement(from, to, golf_course_id)
+> models::DailyBudgetAchievementResponse get_daily_budget_achievement(from, to, golf_course_id, timezone)
 
 
 ### Parameters
@@ -372,6 +403,7 @@ Name | Type | Description  | Required | Notes
 **from** | **String** | Range start date (inclusive). | [required] |
 **to** | **String** | Range end date (inclusive). | [required] |
 **golf_course_id** | Option<**String**> | Filter by golf course ID. |  |
+**timezone** | Option<**String**> | IANA timezone defining each aggregation day. Omitted keeps legacy UTC. |  |
 
 ### Return type
 
@@ -419,7 +451,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_golf_monthly_settlement
 
-> models::GolfMonthlySettlementReport get_golf_monthly_settlement(year_month)
+> models::GolfMonthlySettlementReport get_golf_monthly_settlement(year_month, timezone)
 
 
 ### Parameters
@@ -428,6 +460,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **year_month** | **String** |  | [required] |
+**timezone** | Option<**String**> | IANA timezone defining the settlement month. Omitted keeps legacy UTC. |  |
 
 ### Return type
 
@@ -652,7 +685,7 @@ Name | Type | Description  | Required | Notes
 
 ## list_golf_caddie_attendance_snapshot
 
-> models::GolfCaddieAttendanceSnapshotResponse list_golf_caddie_attendance_snapshot(date)
+> models::GolfCaddieAttendanceSnapshotResponse list_golf_caddie_attendance_snapshot(date, timezone)
 
 
 ### Parameters
@@ -661,6 +694,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **date** | Option<**String**> |  |  |
+**timezone** | Option<**String**> | IANA timezone defining the day and the default date. |  |
 
 ### Return type
 
@@ -680,7 +714,7 @@ Name | Type | Description  | Required | Notes
 
 ## list_golf_caddie_payroll_summary
 
-> models::GolfCaddiePayrollSummaryResponse list_golf_caddie_payroll_summary(year_month)
+> models::GolfCaddiePayrollSummaryResponse list_golf_caddie_payroll_summary(year_month, timezone)
 
 
 ### Parameters
@@ -689,6 +723,7 @@ Name | Type | Description  | Required | Notes
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **year_month** | **String** |  | [required] |
+**timezone** | Option<**String**> | IANA timezone defining the requested payroll month. Omitted keeps the legacy UTC boundary for existing callers. |  |
 
 ### Return type
 
@@ -708,12 +743,15 @@ Name | Type | Description  | Required | Notes
 
 ## list_golf_caddie_profiles
 
-> models::GolfCaddieProfileListResponse list_golf_caddie_profiles()
+> models::GolfCaddieProfileListResponse list_golf_caddie_profiles(include_deleted)
 
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**include_deleted** | Option<**bool**> | 削除済みのキャディも含めて返す。既定は false で、復旧・監査のときだけ opt-in する。 |  |
 
 ### Return type
 
@@ -840,7 +878,7 @@ Name | Type | Description  | Required | Notes
 ## list_golf_product_slots
 
 > models::GolfProductSlotListResponse list_golf_product_slots(service_id)
-
+Deprecated by PLT-3199: availability is the resource's generated inventory, so these product-scoped slots no longer decide what a storefront can book. Migrate with `POST /v1/erp/reservation-resources/{id}/schedule/import-product-slots`. CERP-25 forbids removing a `/v1/` endpoint, so removal waits for `/v2/`.
 
 ### Parameters
 
@@ -954,7 +992,7 @@ Name | Type | Description  | Required | Notes
 ## replace_golf_product_slots
 
 > models::GolfProductSlotListResponse replace_golf_product_slots(service_id, replace_golf_product_slots_request)
-
+Deprecated by PLT-3199; see `list_golf_product_slots`. Writing here no longer changes what a storefront offers.
 
 ### Parameters
 

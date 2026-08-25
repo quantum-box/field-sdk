@@ -12,8 +12,10 @@ Name | Type
 `id` | string
 `invoiceNumber` | string
 `lineItems` | [Array&lt;InvoiceLineItemResponse&gt;](InvoiceLineItemResponse.md)
+`nonPostingReason` | string
 `notes` | string
 `paymentLinkUrl` | string
+`postingDisposition` | string
 `status` | string
 `subtotalAmount` | number
 `taxAmount` | number

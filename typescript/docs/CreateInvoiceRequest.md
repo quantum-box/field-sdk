@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`billTo` | [InvoiceBillToRequest](InvoiceBillToRequest.md)
 `clientEmail` | string
 `clientId` | string
 `clientName` | string

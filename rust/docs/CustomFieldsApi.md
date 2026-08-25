@@ -79,7 +79,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**entity_type** | **String** | Entity type the custom field values belong to | [required] |
+**entity_type** | **String** | Entity type the custom field values belong to (client/consumer/product/order/invoice/reservation/customer_subject) | [required] |
 **entity_id** | **String** | Entity ID the custom field values belong to | [required] |
 
 ### Return type
@@ -108,7 +108,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**entity_type** | Option<**String**> | Filter by entity type (client/product/order/invoice/reservation) |  |
+**entity_type** | Option<**String**> | Filter by entity type (client/consumer/product/order/invoice/reservation/customer_subject) |  |
 **include_inactive** | Option<**bool**> | Include soft-deleted definitions (default false) |  |
 
 ### Return type
@@ -137,7 +137,7 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**entity_type** | **String** | Entity type the custom field values belong to | [required] |
+**entity_type** | **String** | Entity type the custom field values belong to (client/consumer/product/order/invoice/reservation/customer_subject) | [required] |
 **entity_id** | **String** | Entity ID the custom field values belong to | [required] |
 **set_custom_field_values_request** | [**SetCustomFieldValuesRequest**](SetCustomFieldValuesRequest.md) |  | [required] |
 

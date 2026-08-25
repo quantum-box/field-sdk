@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `billingCycle` | string
 `category` | string
+`categoryId` | string
 `description` | string
 `id` | string
 `idempotencyKey` | string

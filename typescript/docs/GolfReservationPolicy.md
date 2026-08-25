@@ -16,9 +16,11 @@ Name | Type
 `memberDepositBps` | number
 `metadataJson` | any
 `policyHooksJson` | any
+`policyHooksStatus` | [GolfPolicyHooksStatus](GolfPolicyHooksStatus.md)
 `reservationTypeId` | string
 `tenantId` | string
 `updatedAt` | Date
+`warnings` | [Array&lt;GolfPolicyWarning&gt;](GolfPolicyWarning.md)
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **billing_cycle** | **String** |  | 
 **category** | Option<**String**> |  | [optional]
+**category_id** | Option<**String**> | Storefront category (`cat_…`, from `GET /v1/storekit/categories`).  Distinct from `category`, which is the ERP-side free-text classification and has no storefront meaning. | [optional]
 **description** | Option<**String**> |  | [optional]
 **id** | Option<**String**> |  | [optional]
 **idempotency_key** | Option<**String**> | Optional client-supplied key to make creation idempotent across retries. | [optional]

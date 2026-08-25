@@ -5,6 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **assigned_staff_ids** | Option<**Vec<String>**> |  | [optional]
+**bill_to** | Option<[**models::ReservationBillToRequest**](ReservationBillToRequest.md)> |  | [optional]
+**cancel_reason** | Option<**String**> | Reason recorded when this update is what cancels the reservation. Ignored unless `status` moves the reservation into `cancelled`. | [optional]
 **custom_fields** | Option<**serde_json::Value**> |  | [optional]
 **customer_email** | Option<**String**> |  | [optional]
 **customer_name** | Option<**String**> |  | [optional]

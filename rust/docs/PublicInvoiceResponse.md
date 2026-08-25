@@ -10,8 +10,10 @@ Name | Type | Description | Notes
 **id** | **String** |  | 
 **invoice_number** | **String** |  | 
 **line_items** | [**Vec<models::InvoiceLineItemResponse>**](InvoiceLineItemResponse.md) |  | 
+**non_posting_reason** | Option<**String**> |  | [optional]
 **notes** | Option<**String**> |  | [optional]
 **payment_link_url** | Option<**String**> |  | [optional]
+**posting_disposition** | **String** |  | 
 **status** | **String** |  | 
 **subtotal_amount** | **i64** |  | 
 **tax_amount** | **i64** |  | 

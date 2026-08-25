@@ -7,6 +7,8 @@
 Name | Type
 ------------ | -------------
 `assignedStaffIds` | Array&lt;string&gt;
+`billTo` | [ReservationBillToRequest](ReservationBillToRequest.md)
+`cancelReason` | string
 `customFields` | any
 `customerEmail` | string
 `customerName` | string

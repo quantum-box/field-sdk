@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **client_email** | Option<**String**> |  | [optional]
+**client_id** | Option<**String**> |  | [optional]
 **create_payment_link** | Option<**bool**> |  | [optional]
 **notes** | Option<**String**> |  | [optional]
 **send_email** | Option<**bool**> |  | [optional]
