@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **billing_cycle** | **String** |  | 
 **category** | Option<**String**> |  | [optional]
+**category_id** | Option<**String**> | Storefront category this product is filed under, when it has one. | [optional]
 **created_at** | **String** |  | 
 **description** | Option<**String**> |  | [optional]
 **id** | **String** |  | 
@@ -20,6 +21,7 @@ Name | Type | Description | Notes
 **publication_status** | **String** |  | 
 **sku_code** | Option<**String**> |  | [optional]
 **status** | **String** |  | 
+**storefront_product_id** | Option<**String**> | Storefront catalog product this product is published as.  `null` until the product is first created or updated with `publicationStatus: \"PUBLIC\"`. This is the id `/v1/storekit/products` lists it under and the id carts take, so consumers can link the two stores by id instead of matching on name (#1136). | [optional]
 **subcategory** | Option<**String**> |  | [optional]
 **tags** | **Vec<String>** |  | 
 **tenant_id** | **String** |  | 

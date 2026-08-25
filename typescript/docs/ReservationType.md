@@ -1,6 +1,7 @@
 
 # ReservationType
 
+A booking menu: what a tenant sells and how it is paid for and cancelled.
 
 ## Properties
 

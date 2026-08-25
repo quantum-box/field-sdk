@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `clientEmail` | string
+`clientId` | string
 `createPaymentLink` | boolean
 `notes` | string
 `sendEmail` | boolean

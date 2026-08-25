@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`businessDate` | Date
 `clockIn` | Date
 `notes` | string
 

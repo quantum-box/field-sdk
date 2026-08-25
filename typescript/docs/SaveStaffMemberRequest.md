@@ -10,6 +10,7 @@ Name | Type
 `attributesJson` | any
 `contractEndDate` | Date
 `email` | string
+`employmentStatus` | string
 `employmentType` | string
 `hiredAt` | Date
 `name` | string

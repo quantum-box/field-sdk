@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **active** | Option<**bool**> |  | [optional]
 **attributes_json** | Option<**serde_json::Value**> |  | [optional]
 **capacity** | Option<**i32**> |  | [optional]
+**golf_course_id** | Option<**String**> | この resource が受け付けるコース（`golf_courses.id`）。 | [optional]
 **hole_count** | Option<**i32**> |  | [optional]
 **metadata_json** | Option<**serde_json::Value**> |  | [optional]
 **name** | **String** |  | 

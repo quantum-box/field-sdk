@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **code** | **String** | Error code (e.g., \"BAD_REQUEST\", \"NOT_FOUND\") | 
 **message** | **String** | Error message.  For 4xx this describes the client-side problem. For 500 it is always \"Internal server error\": the underlying detail is withheld from the response and recorded server-side instead, so clients must not parse it. | 
+**request_id** | Option<**String**> | Correlation ID for a server error. It matches the `x-request-id` response header and the structured server-side error log. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

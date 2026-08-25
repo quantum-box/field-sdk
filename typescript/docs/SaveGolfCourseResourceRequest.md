@@ -9,6 +9,7 @@ Name | Type
 `active` | boolean
 `attributesJson` | any
 `capacity` | number
+`golfCourseId` | string
 `holeCount` | number
 `metadataJson` | any
 `name` | string

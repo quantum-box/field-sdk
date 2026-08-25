@@ -9,6 +9,8 @@ Name | Type
 `approvedAt` | Date
 `approvedBy` | string
 `assignedStaffIds` | Array&lt;string&gt;
+`billTo` | [ReservationBillTo](ReservationBillTo.md)
+`cancelReason` | string
 `cancelledAt` | Date
 `checkoutUrl` | string
 `completedAt` | Date

@@ -11,6 +11,7 @@ Name | Type
 `capacity` | number
 `createdAt` | Date
 `extensionKey` | string
+`golfCourseId` | string
 `holeCount` | number
 `id` | string
 `metadataJson` | any

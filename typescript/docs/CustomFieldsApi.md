@@ -175,7 +175,7 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string | Entity type the custom field values belong to
+    // string | Entity type the custom field values belong to (client/consumer/product/order/invoice/reservation/customer_subject)
     entityType: entityType_example,
     // string | Entity ID the custom field values belong to
     entityId: entityId_example,
@@ -198,7 +198,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **entityType** | `string` | Entity type the custom field values belong to | [Defaults to `undefined`] |
+| **entityType** | `string` | Entity type the custom field values belong to (client/consumer/product/order/invoice/reservation/customer_subject) | [Defaults to `undefined`] |
 | **entityId** | `string` | Entity ID the custom field values belong to | [Defaults to `undefined`] |
 
 ### Return type
@@ -247,7 +247,7 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string | Filter by entity type (client/product/order/invoice/reservation) (optional)
+    // string | Filter by entity type (client/consumer/product/order/invoice/reservation/customer_subject) (optional)
     entityType: entityType_example,
     // boolean | Include soft-deleted definitions (default false) (optional)
     includeInactive: true,
@@ -270,7 +270,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **entityType** | `string` | Filter by entity type (client/product/order/invoice/reservation) | [Optional] [Defaults to `undefined`] |
+| **entityType** | `string` | Filter by entity type (client/consumer/product/order/invoice/reservation/customer_subject) | [Optional] [Defaults to `undefined`] |
 | **includeInactive** | `boolean` | Include soft-deleted definitions (default false) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -319,7 +319,7 @@ async function example() {
   const api = new CustomFieldsApi(config);
 
   const body = {
-    // string | Entity type the custom field values belong to
+    // string | Entity type the custom field values belong to (client/consumer/product/order/invoice/reservation/customer_subject)
     entityType: entityType_example,
     // string | Entity ID the custom field values belong to
     entityId: entityId_example,
@@ -344,7 +344,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **entityType** | `string` | Entity type the custom field values belong to | [Defaults to `undefined`] |
+| **entityType** | `string` | Entity type the custom field values belong to (client/consumer/product/order/invoice/reservation/customer_subject) | [Defaults to `undefined`] |
 | **entityId** | `string` | Entity ID the custom field values belong to | [Defaults to `undefined`] |
 | **setCustomFieldValuesRequest** | [SetCustomFieldValuesRequest](SetCustomFieldValuesRequest.md) |  | |
 

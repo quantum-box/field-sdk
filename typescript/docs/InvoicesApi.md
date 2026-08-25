@@ -8,12 +8,14 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**deleteInvoice**](InvoicesApi.md#deleteinvoice) | **DELETE** /v1/invoices/{id} |  |
 | [**fulfillInvoice**](InvoicesApi.md#fulfillinvoice) | **POST** /v1/invoices/{id}/fulfill |  |
 | [**getInvoice**](InvoicesApi.md#getinvoice) | **GET** /v1/invoices/{id} |  |
+| [**getInvoiceVoidEligibility**](InvoicesApi.md#getinvoicevoideligibility) | **GET** /v1/invoices/{invoice_id}/void-eligibility |  |
 | [**listInvoices**](InvoicesApi.md#listinvoices) | **GET** /v1/invoices |  |
 | [**listSquarePaymentReconciliations**](InvoicesApi.md#listsquarepaymentreconciliations) | **GET** /v1/invoice-reconciliations/square-payments |  |
 | [**reconcileSquarePayment**](InvoicesApi.md#reconcilesquarepaymentoperation) | **POST** /v1/invoice-reconciliations/square-payments/{square_payment_id}/reconcile |  |
 | [**resendInvoicePaymentLink**](InvoicesApi.md#resendinvoicepaymentlink) | **POST** /v1/invoices/{id}/payment-link/resend |  |
 | [**updateInvoice**](InvoicesApi.md#updateinvoiceoperation) | **PATCH** /v1/invoices/{id} |  |
 | [**updateInvoiceFollowUpStatus**](InvoicesApi.md#updateinvoicefollowupstatusoperation) | **POST** /v1/invoices/{id}/follow-up-status |  |
+| [**voidInvoice**](InvoicesApi.md#voidinvoiceoperation) | **POST** /v1/invoices/{invoice_id}/void |  |
 
 
 
@@ -88,7 +90,7 @@ example().catch(console.error);
 
 ## deleteInvoice
 
-> DeleteInvoiceResponse deleteInvoice(id)
+> deleteInvoice(id)
 
 
 
@@ -135,7 +137,7 @@ example().catch(console.error);
 
 ### Return type
 
-[**DeleteInvoiceResponse**](DeleteInvoiceResponse.md)
+`void` (Empty response body)
 
 ### Authorization
 
@@ -144,13 +146,14 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: Not defined
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** |  |  -  |
+| **400** | Invoice deletion is disabled; use a void or reversal workflow |  -  |
+| **404** | Invoice not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -293,9 +296,79 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getInvoiceVoidEligibility
+
+> InvoiceVoidEligibilityResponse getInvoiceVoidEligibility(invoiceId)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  InvoicesApi,
+} from '@tachyon-sdk/field';
+import type { GetInvoiceVoidEligibilityRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new InvoicesApi(config);
+
+  const body = {
+    // string | Invoice ID
+    invoiceId: invoiceId_example,
+  } satisfies GetInvoiceVoidEligibilityRequest;
+
+  try {
+    const data = await api.getInvoiceVoidEligibility(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **invoiceId** | `string` | Invoice ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**InvoiceVoidEligibilityResponse**](InvoiceVoidEligibilityResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **404** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listInvoices
 
-> InvoiceListResponse listInvoices()
+> InvoiceListResponse listInvoices(status, clientId, limit, offset)
 
 
 
@@ -316,8 +389,19 @@ async function example() {
   });
   const api = new InvoicesApi(config);
 
+  const body = {
+    // string | Filter by invoice status. (optional)
+    status: status_example,
+    // string | Filter by client ID. (optional)
+    clientId: clientId_example,
+    // number | Maximum number of invoices to return. (optional)
+    limit: 56,
+    // number | Number of invoices to skip. (optional)
+    offset: 56,
+  } satisfies ListInvoicesRequest;
+
   try {
-    const data = await api.listInvoices();
+    const data = await api.listInvoices(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -330,7 +414,13 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **status** | `string` | Filter by invoice status. | [Optional] [Defaults to `undefined`] |
+| **clientId** | `string` | Filter by client ID. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Maximum number of invoices to return. | [Optional] [Defaults to `undefined`] |
+| **offset** | `number` | Number of invoices to skip. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -356,7 +446,7 @@ This endpoint does not need any parameter.
 
 ## listSquarePaymentReconciliations
 
-> SquarePaymentReconciliationListResponse listSquarePaymentReconciliations()
+> SquarePaymentReconciliationListResponse listSquarePaymentReconciliations(status, limit, offset)
 
 
 
@@ -377,8 +467,17 @@ async function example() {
   });
   const api = new InvoicesApi(config);
 
+  const body = {
+    // string | Filter by reconciliation status. (optional)
+    status: status_example,
+    // number | Maximum number of reconciliations to return. (optional)
+    limit: 56,
+    // number | Number of reconciliations to skip. (optional)
+    offset: 56,
+  } satisfies ListSquarePaymentReconciliationsRequest;
+
   try {
-    const data = await api.listSquarePaymentReconciliations();
+    const data = await api.listSquarePaymentReconciliations(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -391,7 +490,12 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **status** | `string` | Filter by reconciliation status. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Maximum number of reconciliations to return. | [Optional] [Defaults to `undefined`] |
+| **offset** | `number` | Number of reconciliations to skip. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -699,6 +803,85 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## voidInvoice
+
+> VoidInvoiceResponse voidInvoice(invoiceId, idempotencyKey, voidInvoiceRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  InvoicesApi,
+} from '@tachyon-sdk/field';
+import type { VoidInvoiceOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new InvoicesApi(config);
+
+  const body = {
+    // string | Invoice ID
+    invoiceId: invoiceId_example,
+    // string | Required retry key (1-128 bytes after trimming)
+    idempotencyKey: idempotencyKey_example,
+    // VoidInvoiceRequest
+    voidInvoiceRequest: ...,
+  } satisfies VoidInvoiceOperationRequest;
+
+  try {
+    const data = await api.voidInvoice(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **invoiceId** | `string` | Invoice ID | [Defaults to `undefined`] |
+| **idempotencyKey** | `string` | Required retry key (1-128 bytes after trimming) | [Defaults to `undefined`] |
+| **voidInvoiceRequest** | [VoidInvoiceRequest](VoidInvoiceRequest.md) |  | |
+
+### Return type
+
+[**VoidInvoiceResponse**](VoidInvoiceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **400** |  |  -  |
+| **404** |  |  -  |
+| **409** |  |  -  |
+| **503** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

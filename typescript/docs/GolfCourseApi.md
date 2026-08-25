@@ -12,6 +12,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**createGolfCourseResource**](GolfCourseApi.md#creategolfcourseresource) | **POST** /v1/erp/extensions/golf-course/resources |  |
 | [**deleteCaddieAvailability**](GolfCourseApi.md#deletecaddieavailability) | **DELETE** /v1/erp/extensions/golf-course/caddie-availabilities/{caddie_id}/{date} |  |
 | [**deleteDailyBudget**](GolfCourseApi.md#deletedailybudget) | **DELETE** /v1/erp/extensions/golf-course/daily-budgets/{course_id}/{date} |  |
+| [**deleteGolfCaddieProfile**](GolfCourseApi.md#deletegolfcaddieprofile) | **DELETE** /v1/erp/extensions/golf-course/caddie-profiles/{id} |  |
 | [**deleteGolfCourse**](GolfCourseApi.md#deletegolfcourse) | **DELETE** /v1/erp/extensions/golf-course/courses/{id} |  |
 | [**exportGolfCaddiePayrollCsv**](GolfCourseApi.md#exportgolfcaddiepayrollcsv) | **GET** /v1/erp/extensions/golf-course/caddie-payroll-summary/export.csv |  |
 | [**exportGolfMonthlySettlementCsv**](GolfCourseApi.md#exportgolfmonthlysettlementcsv) | **GET** /v1/erp/extensions/golf-course/monthly-settlement/export.csv |  |
@@ -32,11 +33,11 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**listGolfCourseResources**](GolfCourseApi.md#listgolfcourseresources) | **GET** /v1/erp/extensions/golf-course/resources |  |
 | [**listGolfCourses**](GolfCourseApi.md#listgolfcourses) | **GET** /v1/erp/extensions/golf-course/courses |  |
 | [**listGolfCustomFields**](GolfCourseApi.md#listgolfcustomfields) | **GET** /v1/erp/extensions/golf-course/custom-fields |  |
-| [**listGolfProductSlots**](GolfCourseApi.md#listgolfproductslots) | **GET** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots |  |
+| [**listGolfProductSlots**](GolfCourseApi.md#listgolfproductslots) | **GET** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots | Deprecated by PLT-3199: availability is the resource\&#39;s generated inventory, so these product-scoped slots no longer decide what a storefront can book. Migrate with &#x60;POST /v1/erp/reservation-resources/{id}/schedule/import-product-slots&#x60;. CERP-25 forbids removing a &#x60;/v1/&#x60; endpoint, so removal waits for &#x60;/v2/&#x60;. |
 | [**listGolfReservationProducts**](GolfCourseApi.md#listgolfreservationproducts) | **GET** /v1/erp/extensions/golf-course/reservation-products |  |
 | [**recommendGolfCaddies**](GolfCourseApi.md#recommendgolfcaddies) | **GET** /v1/erp/extensions/golf-course/caddie-recommendations |  |
 | [**replaceCaddieCourseMemberships**](GolfCourseApi.md#replacecaddiecoursemembershipsoperation) | **PUT** /v1/erp/extensions/golf-course/caddie-profiles/{id}/courses |  |
-| [**replaceGolfProductSlots**](GolfCourseApi.md#replacegolfproductslotsoperation) | **PUT** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots |  |
+| [**replaceGolfProductSlots**](GolfCourseApi.md#replacegolfproductslotsoperation) | **PUT** /v1/erp/extensions/golf-course/reservation-products/{service_id}/slots | Deprecated by PLT-3199; see &#x60;list_golf_product_slots&#x60;. Writing here no longer changes what a storefront offers. |
 | [**updateGolfCaddieAssignment**](GolfCourseApi.md#updategolfcaddieassignment) | **PATCH** /v1/erp/extensions/golf-course/caddie-assignments/{id} |  |
 | [**updateGolfCaddieProfile**](GolfCourseApi.md#updategolfcaddieprofile) | **PATCH** /v1/erp/extensions/golf-course/caddie-profiles/{id} |  |
 | [**updateGolfCourse**](GolfCourseApi.md#updategolfcourse) | **PATCH** /v1/erp/extensions/golf-course/courses/{id} |  |
@@ -607,6 +608,76 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## deleteGolfCaddieProfile
+
+> deleteGolfCaddieProfile(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  GolfCourseApi,
+} from '@tachyon-sdk/field';
+import type { DeleteGolfCaddieProfileRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new GolfCourseApi(config);
+
+  const body = {
+    // string | Golf caddie profile ID
+    id: id_example,
+  } satisfies DeleteGolfCaddieProfileRequest;
+
+  try {
+    const data = await api.deleteGolfCaddieProfile(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Golf caddie profile ID | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Golf caddie profile deleted |  -  |
+| **404** | Golf caddie profile not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## deleteGolfCourse
 
 > deleteGolfCourse(id)
@@ -678,7 +749,7 @@ example().catch(console.error);
 
 ## exportGolfCaddiePayrollCsv
 
-> exportGolfCaddiePayrollCsv(yearMonth)
+> exportGolfCaddiePayrollCsv(yearMonth, timezone)
 
 
 
@@ -702,6 +773,8 @@ async function example() {
   const body = {
     // string
     yearMonth: yearMonth_example,
+    // string | IANA timezone defining the requested payroll month. Omitted keeps the legacy UTC boundary for existing callers. (optional)
+    timezone: timezone_example,
   } satisfies ExportGolfCaddiePayrollCsvRequest;
 
   try {
@@ -722,6 +795,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **yearMonth** | `string` |  | [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining the requested payroll month. Omitted keeps the legacy UTC boundary for existing callers. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -747,7 +821,7 @@ example().catch(console.error);
 
 ## exportGolfMonthlySettlementCsv
 
-> exportGolfMonthlySettlementCsv(yearMonth)
+> exportGolfMonthlySettlementCsv(yearMonth, timezone)
 
 
 
@@ -771,6 +845,8 @@ async function example() {
   const body = {
     // string
     yearMonth: yearMonth_example,
+    // string | IANA timezone defining the settlement month. Omitted keeps legacy UTC. (optional)
+    timezone: timezone_example,
   } satisfies ExportGolfMonthlySettlementCsvRequest;
 
   try {
@@ -791,6 +867,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **yearMonth** | `string` |  | [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining the settlement month. Omitted keeps legacy UTC. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -816,7 +893,7 @@ example().catch(console.error);
 
 ## getDailyBudgetAchievement
 
-> DailyBudgetAchievementResponse getDailyBudgetAchievement(from, to, golfCourseId)
+> DailyBudgetAchievementResponse getDailyBudgetAchievement(from, to, golfCourseId, timezone)
 
 
 
@@ -844,6 +921,8 @@ async function example() {
     to: 2013-10-20,
     // string | Filter by golf course ID. (optional)
     golfCourseId: golfCourseId_example,
+    // string | IANA timezone defining each aggregation day. Omitted keeps legacy UTC. (optional)
+    timezone: timezone_example,
   } satisfies GetDailyBudgetAchievementRequest;
 
   try {
@@ -866,6 +945,7 @@ example().catch(console.error);
 | **from** | `Date` | Range start date (inclusive). | [Defaults to `undefined`] |
 | **to** | `Date` | Range end date (inclusive). | [Defaults to `undefined`] |
 | **golfCourseId** | `string` | Filter by golf course ID. | [Optional] [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining each aggregation day. Omitted keeps legacy UTC. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -960,7 +1040,7 @@ example().catch(console.error);
 
 ## getGolfMonthlySettlement
 
-> GolfMonthlySettlementReport getGolfMonthlySettlement(yearMonth)
+> GolfMonthlySettlementReport getGolfMonthlySettlement(yearMonth, timezone)
 
 
 
@@ -984,6 +1064,8 @@ async function example() {
   const body = {
     // string
     yearMonth: yearMonth_example,
+    // string | IANA timezone defining the settlement month. Omitted keeps legacy UTC. (optional)
+    timezone: timezone_example,
   } satisfies GetGolfMonthlySettlementRequest;
 
   try {
@@ -1004,6 +1086,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **yearMonth** | `string` |  | [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining the settlement month. Omitted keeps legacy UTC. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -1540,7 +1623,7 @@ example().catch(console.error);
 
 ## listGolfCaddieAttendanceSnapshot
 
-> GolfCaddieAttendanceSnapshotResponse listGolfCaddieAttendanceSnapshot(date)
+> GolfCaddieAttendanceSnapshotResponse listGolfCaddieAttendanceSnapshot(date, timezone)
 
 
 
@@ -1564,6 +1647,8 @@ async function example() {
   const body = {
     // Date (optional)
     date: 2013-10-20,
+    // string | IANA timezone defining the day and the default date. (optional)
+    timezone: timezone_example,
   } satisfies ListGolfCaddieAttendanceSnapshotRequest;
 
   try {
@@ -1584,6 +1669,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **date** | `Date` |  | [Optional] [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining the day and the default date. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -1609,7 +1695,7 @@ example().catch(console.error);
 
 ## listGolfCaddiePayrollSummary
 
-> GolfCaddiePayrollSummaryResponse listGolfCaddiePayrollSummary(yearMonth)
+> GolfCaddiePayrollSummaryResponse listGolfCaddiePayrollSummary(yearMonth, timezone)
 
 
 
@@ -1633,6 +1719,8 @@ async function example() {
   const body = {
     // string
     yearMonth: yearMonth_example,
+    // string | IANA timezone defining the requested payroll month. Omitted keeps the legacy UTC boundary for existing callers. (optional)
+    timezone: timezone_example,
   } satisfies ListGolfCaddiePayrollSummaryRequest;
 
   try {
@@ -1653,6 +1741,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **yearMonth** | `string` |  | [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining the requested payroll month. Omitted keeps the legacy UTC boundary for existing callers. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -1678,7 +1767,7 @@ example().catch(console.error);
 
 ## listGolfCaddieProfiles
 
-> GolfCaddieProfileListResponse listGolfCaddieProfiles()
+> GolfCaddieProfileListResponse listGolfCaddieProfiles(includeDeleted)
 
 
 
@@ -1699,8 +1788,13 @@ async function example() {
   });
   const api = new GolfCourseApi(config);
 
+  const body = {
+    // boolean | 削除済みのキャディも含めて返す。既定は false で、復旧・監査のときだけ opt-in する。 (optional)
+    includeDeleted: true,
+  } satisfies ListGolfCaddieProfilesRequest;
+
   try {
-    const data = await api.listGolfCaddieProfiles();
+    const data = await api.listGolfCaddieProfiles(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -1713,7 +1807,10 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **includeDeleted** | `boolean` | 削除済みのキャディも含めて返す。既定は false で、復旧・監査のときだけ opt-in する。 | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -2001,7 +2098,7 @@ example().catch(console.error);
 
 > GolfProductSlotListResponse listGolfProductSlots(serviceId)
 
-
+Deprecated by PLT-3199: availability is the resource\&#39;s generated inventory, so these product-scoped slots no longer decide what a storefront can book. Migrate with &#x60;POST /v1/erp/reservation-resources/{id}/schedule/import-product-slots&#x60;. CERP-25 forbids removing a &#x60;/v1/&#x60; endpoint, so removal waits for &#x60;/v2/&#x60;.
 
 ### Example
 
@@ -2284,7 +2381,7 @@ example().catch(console.error);
 
 > GolfProductSlotListResponse replaceGolfProductSlots(serviceId, replaceGolfProductSlotsRequest)
 
-
+Deprecated by PLT-3199; see &#x60;list_golf_product_slots&#x60;. Writing here no longer changes what a storefront offers.
 
 ### Example
 

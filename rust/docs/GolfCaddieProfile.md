@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **course_knowledge** | Option<**serde_json::Value**> |  | [optional]
 **created_at** | **String** |  | 
 **currency** | **String** |  | 
+**deleted_at** | Option<**String**> | 削除された日時。削除済みは既定の一覧に出ないので、値が入って返るのは `includeDeleted=true` で索いたときだけ。 | [optional]
 **desired_income** | **i32** |  | 
 **display_name** | **String** |  | 
 **employment_status** | **String** |  | 

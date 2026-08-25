@@ -129,12 +129,18 @@ Name | Type | Description  | Required | Notes
 
 ## agent_list_invoices
 
-> models::InvoiceListResponse agent_list_invoices()
+> models::InvoiceListResponse agent_list_invoices(status, client_id, limit, offset)
 
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**status** | Option<**String**> | Filter by invoice status. |  |
+**client_id** | Option<**String**> | Filter by client ID. |  |
+**limit** | Option<**i32**> | Maximum number of invoices to return. |  |
+**offset** | Option<**i32**> | Number of invoices to skip. |  |
 
 ### Return type
 
@@ -154,12 +160,18 @@ This endpoint does not need any parameter.
 
 ## agent_list_quotations
 
-> models::QuotationListResponse agent_list_quotations()
+> models::QuotationListResponse agent_list_quotations(status, client_id, limit, offset)
 
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**status** | Option<**String**> | Filter by quotation status. |  |
+**client_id** | Option<**String**> | Filter by client ID. |  |
+**limit** | Option<**i32**> | Maximum number of quotations to return. |  |
+**offset** | Option<**i32**> | Number of quotations to skip. |  |
 
 ### Return type
 

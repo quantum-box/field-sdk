@@ -4,8 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**bill_to** | Option<[**models::InvoiceBillToRequest**](InvoiceBillToRequest.md)> |  | [optional]
 **client_email** | Option<**String**> |  | [optional]
-**client_id** | **String** |  | 
+**client_id** | Option<**String**> | Legacy untyped counterparty. Existing callers may continue sending this without `billTo`; new callers should send typed `billTo` instead. At least one of `clientId` or `billTo` is required. | [optional]
 **client_name** | Option<**String**> |  | [optional]
 **client_phone** | Option<**String**> |  | [optional]
 **create_payment_link** | Option<**bool**> |  | [optional]

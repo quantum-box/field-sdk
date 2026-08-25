@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `publishableKey` | string
+`stripeAccount` | string
 `stripeEnvironment` | string
 
 

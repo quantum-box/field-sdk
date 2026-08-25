@@ -293,7 +293,7 @@ example().catch(console.error);
 
 ## agentListInvoices
 
-> InvoiceListResponse agentListInvoices()
+> InvoiceListResponse agentListInvoices(status, clientId, limit, offset)
 
 
 
@@ -314,8 +314,19 @@ async function example() {
   });
   const api = new AgentDocumentsApi(config);
 
+  const body = {
+    // string | Filter by invoice status. (optional)
+    status: status_example,
+    // string | Filter by client ID. (optional)
+    clientId: clientId_example,
+    // number | Maximum number of invoices to return. (optional)
+    limit: 56,
+    // number | Number of invoices to skip. (optional)
+    offset: 56,
+  } satisfies AgentListInvoicesRequest;
+
   try {
-    const data = await api.agentListInvoices();
+    const data = await api.agentListInvoices(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -328,7 +339,13 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **status** | `string` | Filter by invoice status. | [Optional] [Defaults to `undefined`] |
+| **clientId** | `string` | Filter by client ID. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Maximum number of invoices to return. | [Optional] [Defaults to `undefined`] |
+| **offset** | `number` | Number of invoices to skip. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -354,7 +371,7 @@ This endpoint does not need any parameter.
 
 ## agentListQuotations
 
-> QuotationListResponse agentListQuotations()
+> QuotationListResponse agentListQuotations(status, clientId, limit, offset)
 
 
 
@@ -375,8 +392,19 @@ async function example() {
   });
   const api = new AgentDocumentsApi(config);
 
+  const body = {
+    // string | Filter by quotation status. (optional)
+    status: status_example,
+    // string | Filter by client ID. (optional)
+    clientId: clientId_example,
+    // number | Maximum number of quotations to return. (optional)
+    limit: 56,
+    // number | Number of quotations to skip. (optional)
+    offset: 56,
+  } satisfies AgentListQuotationsRequest;
+
   try {
-    const data = await api.agentListQuotations();
+    const data = await api.agentListQuotations(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -389,7 +417,13 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **status** | `string` | Filter by quotation status. | [Optional] [Defaults to `undefined`] |
+| **clientId** | `string` | Filter by client ID. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Maximum number of quotations to return. | [Optional] [Defaults to `undefined`] |
+| **offset** | `number` | Number of quotations to skip. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

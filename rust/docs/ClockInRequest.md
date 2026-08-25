@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**business_date** | Option<[**String**](String.md)> | Working day this punch belongs to. Defaults to the UTC calendar date of `clockIn`, which is only the same day for callers on UTC. | [optional]
 **clock_in** | Option<**String**> |  | [optional]
 **notes** | Option<**String**> |  | [optional]
 

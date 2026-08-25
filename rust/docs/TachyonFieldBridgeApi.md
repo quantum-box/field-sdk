@@ -4,14 +4,51 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**analyze_bridge_tabular**](TachyonFieldBridgeApi.md#analyze_bridge_tabular) | **POST** /v1/bridge/tabular/analyze | 
 [**create_bridge_definition**](TachyonFieldBridgeApi.md#create_bridge_definition) | **POST** /v1/bridge/definitions | 
 [**execute_bridge_run**](TachyonFieldBridgeApi.md#execute_bridge_run) | **POST** /v1/bridge/runs/{run_id}/execute | 
 [**get_bridge_run**](TachyonFieldBridgeApi.md#get_bridge_run) | **GET** /v1/bridge/runs/{run_id} | 
 [**invoke_bridge_action**](TachyonFieldBridgeApi.md#invoke_bridge_action) | **POST** /v1/bridge/actions/{action} | 
 [**list_bridge_definitions**](TachyonFieldBridgeApi.md#list_bridge_definitions) | **GET** /v1/bridge/definitions | 
 [**list_bridge_runs**](TachyonFieldBridgeApi.md#list_bridge_runs) | **GET** /v1/bridge/runs | 
+[**preview_bridge_file**](TachyonFieldBridgeApi.md#preview_bridge_file) | **POST** /v1/bridge/definitions/{definition_id}/runs/preview-file | 
 [**preview_bridge_run**](TachyonFieldBridgeApi.md#preview_bridge_run) | **POST** /v1/bridge/definitions/{definition_id}/runs/preview | 
 
+
+
+## analyze_bridge_tabular
+
+> models::TabularAnalyzeResponse analyze_bridge_tabular(file, context, header_row, idempotency_key, mapping_mode, mapping_proposal, sheet_name, target_schema)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**file** | **std::path::PathBuf** |  | [required] |
+**context** | Option<**String**> |  |  |
+**header_row** | Option<**i32**> |  |  |
+**idempotency_key** | Option<**String**> |  |  |
+**mapping_mode** | Option<**String**> |  |  |
+**mapping_proposal** | Option<**String**> |  |  |
+**sheet_name** | Option<**String**> |  |  |
+**target_schema** | Option<**String**> |  |  |
+
+### Return type
+
+[**models::TabularAnalyzeResponse**](TabularAnalyzeResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## create_bridge_definition
@@ -176,6 +213,42 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## preview_bridge_file
+
+> models::BridgeRunResponse preview_bridge_file(definition_id, file, context, header_row, idempotency_key, mapping_mode, mapping_proposal, sheet_name, target_schema)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**definition_id** | **String** | Bridge definition ID | [required] |
+**file** | **std::path::PathBuf** |  | [required] |
+**context** | Option<**String**> |  |  |
+**header_row** | Option<**i32**> |  |  |
+**idempotency_key** | Option<**String**> |  |  |
+**mapping_mode** | Option<**String**> |  |  |
+**mapping_proposal** | Option<**String**> |  |  |
+**sheet_name** | Option<**String**> |  |  |
+**target_schema** | Option<**String**> |  |  |
+
+### Return type
+
+[**models::BridgeRunResponse**](BridgeRunResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

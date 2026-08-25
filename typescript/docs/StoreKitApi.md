@@ -28,12 +28,16 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**removeCartItem**](StoreKitApi.md#removecartitem) | **DELETE** /v1/storekit/carts/{cart_id}/items/{item_id} | Remove a cart item by item ID. |
 | [**selectPickupDatetime**](StoreKitApi.md#selectpickupdatetimeoperation) | **POST** /v1/storekit/orders/{order_id}/select-pickup-datetime | Select pickup date-time. |
 | [**shipOrder**](StoreKitApi.md#shiporder) | **POST** /v1/storekit/orders/{order_id}/ship | Ship order. |
-| [**storefrontCreateReservation**](StoreKitApi.md#storefrontcreatereservation) | **POST** /v1/storekit/reservations |  |
+| [**storefrontCreateReservation**](StoreKitApi.md#storefrontcreatereservationoperation) | **POST** /v1/storekit/reservations |  |
+| [**storefrontGetStorefrontProfile**](StoreKitApi.md#storefrontgetstorefrontprofile) | **GET** /v1/storekit/storefront-profile | Anonymous read for the public storefront. |
+| [**storefrontListMembershipPlans**](StoreKitApi.md#storefrontlistmembershipplans) | **GET** /v1/storekit/membership-plans | The member classes on offer. |
 | [**storefrontListReservationProducts**](StoreKitApi.md#storefrontlistreservationproducts) | **GET** /v1/storekit/reservation-products |  |
 | [**storefrontListReservationTypes**](StoreKitApi.md#storefrontlistreservationtypes) | **GET** /v1/storekit/reservation-types |  |
 | [**storefrontListReservations**](StoreKitApi.md#storefrontlistreservations) | **GET** /v1/storekit/reservations |  |
+| [**storefrontListResourceTimeSlots**](StoreKitApi.md#storefrontlistresourcetimeslots) | **GET** /v1/storekit/resources/{id}/time-slots |  |
 | [**storefrontListResources**](StoreKitApi.md#storefrontlistresources) | **GET** /v1/storekit/resources |  |
-| [**storefrontUpdateReservation**](StoreKitApi.md#storefrontupdatereservation) | **PATCH** /v1/storekit/reservations/{id} |  |
+| [**storefrontResourceAvailabilityCalendar**](StoreKitApi.md#storefrontresourceavailabilitycalendar) | **GET** /v1/storekit/resources/{id}/availability-calendar |  |
+| [**storefrontUpdateReservation**](StoreKitApi.md#storefrontupdatereservationoperation) | **PATCH** /v1/storekit/reservations/{id} |  |
 | [**storekitGetOrder**](StoreKitApi.md#storekitgetorder) | **GET** /v1/storekit/orders/{order_id} | Get order. |
 | [**storekitListCategories**](StoreKitApi.md#storekitlistcategories) | **GET** /v1/storekit/categories | List storefront categories. |
 | [**storekitListOrders**](StoreKitApi.md#storekitlistorders) | **GET** /v1/storekit/orders | List orders. |
@@ -465,6 +469,8 @@ example().catch(console.error);
 > CustomerResponse createCustomer(createCustomerRequest)
 
 Create customer.
+
+&#x60;email&#x60; is optional. Customers taken by phone or at the counter often have none, and they still need a ledger entry so their visit history can be aggregated.
 
 ### Example
 
@@ -1017,9 +1023,11 @@ example().catch(console.error);
 
 ## listCustomers
 
-> StoreKitListCustomerResponse listCustomers(email, limit)
+> StoreKitListCustomerResponse listCustomers(email, name, phone, limit)
 
 List customers.
+
+&#x60;email&#x60; matches exactly; &#x60;name&#x60; (display name or kana reading) and &#x60;phone&#x60; match partially. Results are candidates: customers are never merged or deduplicated, so two people sharing a name or a household phone number stay separate records. Picking the right candidate — or registering a new customer — is the caller\&#39;s decision.
 
 ### Example
 
@@ -1039,8 +1047,12 @@ async function example() {
   const api = new StoreKitApi(config);
 
   const body = {
-    // string (optional)
+    // string | Exact email match. (optional)
     email: email_example,
+    // string | Partial match against the display name or its kana reading. (optional)
+    name: name_example,
+    // string | Partial match against the phone number. Separators are ignored on both sides, so `090-1234-5678` and `09012345678` match. (optional)
+    phone: phone_example,
     // number (optional)
     limit: 789,
   } satisfies ListCustomersRequest;
@@ -1062,7 +1074,9 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **email** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **email** | `string` | Exact email match. | [Optional] [Defaults to `undefined`] |
+| **name** | `string` | Partial match against the display name or its kana reading. | [Optional] [Defaults to `undefined`] |
+| **phone** | `string` | Partial match against the phone number. Separators are ignored on both sides, so &#x60;090-1234-5678&#x60; and &#x60;09012345678&#x60; match. | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -1717,7 +1731,7 @@ example().catch(console.error);
 
 ## storefrontCreateReservation
 
-> CreateReservationResponse storefrontCreateReservation(createReservationRequest)
+> CreateReservationResponse storefrontCreateReservation(storefrontCreateReservationRequest)
 
 
 
@@ -1728,7 +1742,7 @@ import {
   Configuration,
   StoreKitApi,
 } from '@tachyon-sdk/field';
-import type { StorefrontCreateReservationRequest } from '@tachyon-sdk/field';
+import type { StorefrontCreateReservationOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
   console.log("🚀 Testing @tachyon-sdk/field SDK...");
@@ -1739,9 +1753,9 @@ async function example() {
   const api = new StoreKitApi(config);
 
   const body = {
-    // CreateReservationRequest
-    createReservationRequest: ...,
-  } satisfies StorefrontCreateReservationRequest;
+    // StorefrontCreateReservationRequest
+    storefrontCreateReservationRequest: ...,
+  } satisfies StorefrontCreateReservationOperationRequest;
 
   try {
     const data = await api.storefrontCreateReservation(body);
@@ -1760,7 +1774,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **createReservationRequest** | [CreateReservationRequest](CreateReservationRequest.md) |  | |
+| **storefrontCreateReservationRequest** | [StorefrontCreateReservationRequest](StorefrontCreateReservationRequest.md) |  | |
 
 ### Return type
 
@@ -1784,9 +1798,135 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## storefrontGetStorefrontProfile
+
+> StorefrontProfileResponse storefrontGetStorefrontProfile()
+
+Anonymous read for the public storefront.
+
+&#x60;/v1/storekit/_*&#x60; is reachable without a bearer token because &#x60;erp_authz::erp_action_for_request&#x60; has no branch for it and falls through to &#x60;None&#x60;. The tenant comes from &#x60;x-operator-id&#x60;, exactly as it does for the other storefront reads the page already makes.  This handler takes neither an &#x60;Executor&#x60; nor an &#x60;AuthApp&#x60;, so it structurally cannot perform a staff action — the same narrowing the public membership router expresses through a reduced use-case trait.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { StorefrontGetStorefrontProfileRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  try {
+    const data = await api.storefrontGetStorefrontProfile();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**StorefrontProfileResponse**](StorefrontProfileResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## storefrontListMembershipPlans
+
+> StorefrontMembershipPlanListResponse storefrontListMembershipPlans()
+
+The member classes on offer.
+
+Reached anonymously through the public route below. This &#x60;/v1/storekit/&#x60; path is *not* anonymous: fail-closed classification quarantines the whole StoreKit prefix, so it answers only callers that already carry an operator header and a bearer.  This handler takes neither an &#x60;Executor&#x60; nor an &#x60;AuthApp&#x60;, so it structurally cannot perform a staff action, and it only ever asks the repository for active plans.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { StorefrontListMembershipPlansRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  try {
+    const data = await api.storefrontListMembershipPlans();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**StorefrontMembershipPlanListResponse**](StorefrontMembershipPlanListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## storefrontListReservationProducts
 
-> ReservationProductListResponse storefrontListReservationProducts(date)
+> ReservationProductListResponse storefrontListReservationProducts(date, resourceId)
 
 
 
@@ -1810,6 +1950,8 @@ async function example() {
   const body = {
     // Date | Filter/materialize slot-based products for this date (optional)
     date: 2013-10-20,
+    // string | Resource whose generated inventory supplies the bookable slots, and whose membership in a product\'s eligibleResourceIds decides whether that product is offered (optional)
+    resourceId: resourceId_example,
   } satisfies StorefrontListReservationProductsRequest;
 
   try {
@@ -1830,6 +1972,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **date** | `Date` | Filter/materialize slot-based products for this date | [Optional] [Defaults to `undefined`] |
+| **resourceId** | `string` | Resource whose generated inventory supplies the bookable slots, and whose membership in a product\&#39;s eligibleResourceIds decides whether that product is offered | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -2004,6 +2147,84 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## storefrontListResourceTimeSlots
+
+> StorefrontResourceTimeSlotListResponse storefrontListResourceTimeSlots(id, date, timezone, includeSoldOut)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { StorefrontListResourceTimeSlotsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | Tenant-local calendar date to list bookable slots for.
+    date: 2013-10-20,
+    // string | IANA timezone defining `date`. Omitted keeps the legacy Asia/Tokyo day. (optional)
+    timezone: timezone_example,
+    // boolean | Include slots with no remaining groups. Defaults to hiding them. (optional)
+    includeSoldOut: true,
+  } satisfies StorefrontListResourceTimeSlotsRequest;
+
+  try {
+    const data = await api.storefrontListResourceTimeSlots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **date** | `Date` | Tenant-local calendar date to list bookable slots for. | [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining &#x60;date&#x60;. Omitted keeps the legacy Asia/Tokyo day. | [Optional] [Defaults to `undefined`] |
+| **includeSoldOut** | `boolean` | Include slots with no remaining groups. Defaults to hiding them. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**StorefrontResourceTimeSlotListResponse**](StorefrontResourceTimeSlotListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## storefrontListResources
 
 > ResourceListResponse storefrontListResources()
@@ -2065,9 +2286,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## storefrontUpdateReservation
+## storefrontResourceAvailabilityCalendar
 
-> Reservation storefrontUpdateReservation(id, updateReservationRequest)
+> StorefrontAvailabilityCalendarResponse storefrontResourceAvailabilityCalendar(id, from, to, timezone, fewLeftThreshold)
 
 
 
@@ -2078,7 +2299,88 @@ import {
   Configuration,
   StoreKitApi,
 } from '@tachyon-sdk/field';
-import type { StorefrontUpdateReservationRequest } from '@tachyon-sdk/field';
+import type { StorefrontResourceAvailabilityCalendarRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string | Reservation resource ID
+    id: id_example,
+    // Date | First tenant-local calendar date, inclusive.
+    from: 2013-10-20,
+    // Date | Last tenant-local calendar date, inclusive.
+    to: 2013-10-20,
+    // string | IANA timezone defining `from`/`to`. Omitted keeps Asia/Tokyo. (optional)
+    timezone: timezone_example,
+    // number | Remaining groups at or below which a day reads as \"few left\". (optional)
+    fewLeftThreshold: 56,
+  } satisfies StorefrontResourceAvailabilityCalendarRequest;
+
+  try {
+    const data = await api.storefrontResourceAvailabilityCalendar(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Reservation resource ID | [Defaults to `undefined`] |
+| **from** | `Date` | First tenant-local calendar date, inclusive. | [Defaults to `undefined`] |
+| **to** | `Date` | Last tenant-local calendar date, inclusive. | [Defaults to `undefined`] |
+| **timezone** | `string` | IANA timezone defining &#x60;from&#x60;/&#x60;to&#x60;. Omitted keeps Asia/Tokyo. | [Optional] [Defaults to `undefined`] |
+| **fewLeftThreshold** | `number` | Remaining groups at or below which a day reads as \&quot;few left\&quot;. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**StorefrontAvailabilityCalendarResponse**](StorefrontAvailabilityCalendarResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## storefrontUpdateReservation
+
+> Reservation storefrontUpdateReservation(id, storefrontUpdateReservationRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { StorefrontUpdateReservationOperationRequest } from '@tachyon-sdk/field';
 
 async function example() {
   console.log("🚀 Testing @tachyon-sdk/field SDK...");
@@ -2091,9 +2393,9 @@ async function example() {
   const body = {
     // string | Reservation ID to update
     id: id_example,
-    // UpdateReservationRequest
-    updateReservationRequest: ...,
-  } satisfies StorefrontUpdateReservationRequest;
+    // StorefrontUpdateReservationRequest
+    storefrontUpdateReservationRequest: ...,
+  } satisfies StorefrontUpdateReservationOperationRequest;
 
   try {
     const data = await api.storefrontUpdateReservation(body);
@@ -2113,7 +2415,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` | Reservation ID to update | [Defaults to `undefined`] |
-| **updateReservationRequest** | [UpdateReservationRequest](UpdateReservationRequest.md) |  | |
+| **storefrontUpdateReservationRequest** | [StorefrontUpdateReservationRequest](StorefrontUpdateReservationRequest.md) |  | |
 
 ### Return type
 

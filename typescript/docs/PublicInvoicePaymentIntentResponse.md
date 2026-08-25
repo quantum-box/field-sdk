@@ -9,6 +9,7 @@ Name | Type
 `clientSecret` | string
 `paymentIntentId` | string
 `publishableKey` | string
+`stripeAccount` | string
 `stripeEnvironment` | string
 
 

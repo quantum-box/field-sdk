@@ -11,6 +11,7 @@ Name | Type
 `contractEndDate` | Date
 `createdAt` | Date
 `email` | string
+`employmentStatus` | [EmploymentStatus](EmploymentStatus.md)
 `employmentType` | [EmploymentType](EmploymentType.md)
 `hiredAt` | Date
 `id` | string

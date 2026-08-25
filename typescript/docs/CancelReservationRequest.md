@@ -1,6 +1,7 @@
 
 # CancelReservationRequest
 
+`Serialize` is derived so the cancel handler can hash the request under an `Idempotency-Key`: the hash is what distinguishes a genuine retry from a key reused for a different cancellation.
 
 ## Properties
 

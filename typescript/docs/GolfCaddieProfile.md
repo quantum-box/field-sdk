@@ -13,6 +13,7 @@ Name | Type
 `courseKnowledge` | any
 `createdAt` | Date
 `currency` | string
+`deletedAt` | Date
 `desiredIncome` | number
 `displayName` | string
 `employmentStatus` | string

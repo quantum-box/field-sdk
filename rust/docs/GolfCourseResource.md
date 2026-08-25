@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **capacity** | **i32** |  | 
 **created_at** | **String** |  | 
 **extension_key** | **String** |  | 
+**golf_course_id** | Option<**String**> | どのコースの受付枠か。storefront はこれで「別コースの枠」を落とす。  列が空のときは `attributes_json` / `metadata_json` の `golfCourseId` から埋める（列が無かった頃に CourseBoard が使っていた規約）。 | [optional]
 **hole_count** | Option<**i32**> |  | [optional]
 **id** | **String** |  | 
 **metadata_json** | Option<**serde_json::Value**> |  | [optional]
