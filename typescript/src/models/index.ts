@@ -94,6 +94,18 @@ export interface ActivityResponse {
  */
 export interface AddCartItemRequest {
     /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof AddCartItemRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AddCartItemRequest
+     */
+    optionIds?: Array<string> | null;
+    /**
      * 
      * @type {string}
      * @memberof AddCartItemRequest
@@ -105,6 +117,12 @@ export interface AddCartItemRequest {
      * @memberof AddCartItemRequest
      */
     quantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddCartItemRequest
+     */
+    variantId?: string | null;
 }
 /**
  * 
@@ -1410,6 +1428,94 @@ export interface BridgeRunSummaryResponse {
     tenantId: string;
 }
 /**
+ * The wire shape of one target property, shared by the API and the UI so the
+ * browser never keeps its own copy of the field list.
+ * @export
+ * @interface BridgeTargetFieldView
+ */
+export interface BridgeTargetFieldView {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BridgeTargetFieldView
+     */
+    aliases: Array<string>;
+    /**
+     * Accepted spellings for `kind == "enum"`, otherwise empty.
+     * @type {Array<string>}
+     * @memberof BridgeTargetFieldView
+     */
+    allowed: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BridgeTargetFieldView
+     */
+    key: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BridgeTargetFieldView
+     */
+    kind: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BridgeTargetFieldView
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BridgeTargetFieldView
+     */
+    required: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BridgeTargetObjectListResponse
+ */
+export interface BridgeTargetObjectListResponse {
+    /**
+     * 
+     * @type {Array<BridgeTargetObjectView>}
+     * @memberof BridgeTargetObjectListResponse
+     */
+    items: Array<BridgeTargetObjectView>;
+}
+/**
+ * 
+ * @export
+ * @interface BridgeTargetObjectView
+ */
+export interface BridgeTargetObjectView {
+    /**
+     * 
+     * @type {Array<BridgeTargetFieldView>}
+     * @memberof BridgeTargetObjectView
+     */
+    fields: Array<BridgeTargetFieldView>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BridgeTargetObjectView
+     */
+    key: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BridgeTargetObjectView
+     */
+    label: string;
+    /**
+     * Whether a previewed run of this target can be executed.
+     * @type {boolean}
+     * @memberof BridgeTargetObjectView
+     */
+    writable: boolean;
+}
+/**
  * 
  * @export
  * @interface CaddieAvailability
@@ -1760,11 +1866,35 @@ export interface CancellationFeeReportRow {
  */
 export interface CartItemResponse {
     /**
+     * The product's own price, before the variant and option adjustments.
+     * @type {number}
+     * @memberof CartItemResponse
+     */
+    baseUnitPriceNanodollar: number;
+    /**
      * 
      * @type {string}
      * @memberof CartItemResponse
      */
     id: string;
+    /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof CartItemResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<SelectedOptionResponse>}
+     * @memberof CartItemResponse
+     */
+    options: Array<SelectedOptionResponse>;
+    /**
+     * Per-unit sum of the chosen options.
+     * @type {number}
+     * @memberof CartItemResponse
+     */
+    optionsTotalNanodollar: number;
     /**
      * 
      * @type {string}
@@ -1784,11 +1914,29 @@ export interface CartItemResponse {
      */
     reservedUntil?: string | null;
     /**
-     * 
+     * Effective price per unit: base + variant + options.
      * @type {number}
      * @memberof CartItemResponse
      */
     unitPriceNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CartItemResponse
+     */
+    variantId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CartItemResponse
+     */
+    variantName?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CartItemResponse
+     */
+    variantPriceDeltaNanodollar: number;
 }
 /**
  * 
@@ -1937,7 +2085,7 @@ export interface CheckoutRequest {
      */
     customerName?: string | null;
     /**
-     * 
+     * `pickup`, `delivery`, or `dine_in`.
      * @type {string}
      * @memberof CheckoutRequest
      */
@@ -2008,6 +2156,12 @@ export interface CheckoutRequest {
      * @memberof CheckoutRequest
      */
     successUrl?: string | null;
+    /**
+     * Seat or table the dine-in order is served to, as the store labels it.
+     * @type {string}
+     * @memberof CheckoutRequest
+     */
+    tableNumber?: string | null;
 }
 /**
  * 
@@ -2148,6 +2302,44 @@ export interface CompletePublicSigningInput {
      * @memberof CompletePublicSigningInput
      */
     values: Array<PublicSigningValueInput>;
+}
+/**
+ * 
+ * @export
+ * @interface ConsumerCustomerCsvImportError
+ */
+export interface ConsumerCustomerCsvImportError {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumerCustomerCsvImportError
+     */
+    message: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ConsumerCustomerCsvImportError
+     */
+    row: number;
+}
+/**
+ * 
+ * @export
+ * @interface ConsumerCustomerCsvImportResponse
+ */
+export interface ConsumerCustomerCsvImportResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof ConsumerCustomerCsvImportResponse
+     */
+    created: number;
+    /**
+     * 
+     * @type {Array<ConsumerCustomerCsvImportError>}
+     * @memberof ConsumerCustomerCsvImportResponse
+     */
+    errors: Array<ConsumerCustomerCsvImportError>;
 }
 /**
  * 契約明細 1 行。見積・受注からの引き継ぎ元と同じ形。
@@ -3265,6 +3457,61 @@ export interface CreateMembershipPlanRequest {
 /**
  * 
  * @export
+ * @interface CreateOrderEntryPointRequest
+ */
+export interface CreateOrderEntryPointRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    idleTimeoutSecs?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    idleWarningSecs?: number | null;
+    /**
+     * `qr`, `kiosk`, or `staff`.
+     * @type {string}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    mode: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    sessionTtlSecs?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    storeName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    tableName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderEntryPointRequest
+     */
+    tableNumber?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateOrderItemRequest
  */
 export interface CreateOrderItemRequest {
@@ -3368,6 +3615,12 @@ export interface CreateOrderProductRequest {
      * @memberof CreateOrderProductRequest
      */
     name: string;
+    /**
+     * 選択肢 (トッピング等)。省略は「選択肢の話をしていない」。
+     * @type {Array<OrderProductOptionGroupRequest>}
+     * @memberof CreateOrderProductRequest
+     */
+    optionGroups?: Array<OrderProductOptionGroupRequest> | null;
     /**
      * 
      * @type {string}
@@ -9823,15 +10076,179 @@ export interface OperatorBillingAccountResponse {
 /**
  * 
  * @export
+ * @interface OrderEntryPointResponse
+ */
+export interface OrderEntryPointResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderEntryPointResponse
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderEntryPointResponse
+     */
+    idleTimeoutSecs: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderEntryPointResponse
+     */
+    idleWarningSecs: number;
+    /**
+     * `qr`, `kiosk`, or `staff`.
+     * @type {string}
+     * @memberof OrderEntryPointResponse
+     */
+    mode: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderEntryPointResponse
+     */
+    sessionTtlSecs: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointResponse
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointResponse
+     */
+    storeName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointResponse
+     */
+    tableName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointResponse
+     */
+    tableNumber?: string | null;
+}
+/**
+ * The create and rotate responses, and only those, carry the token.
+ * @export
+ * @interface OrderEntryPointWithTokenResponse
+ */
+export interface OrderEntryPointWithTokenResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    idleTimeoutSecs: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    idleWarningSecs: number;
+    /**
+     * `qr`, `kiosk`, or `staff`.
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    mode: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    sessionTtlSecs: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    storeId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    storeName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    tableName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    tableNumber?: string;
+    /**
+     * Printed into the QR. Shown once and never readable again.
+     * @type {string}
+     * @memberof OrderEntryPointWithTokenResponse
+     */
+    publicToken: string;
+}
+/**
+ * 
+ * @export
  * @interface OrderItemResponse
  */
 export interface OrderItemResponse {
+    /**
+     * The product's own price, before the variant and option adjustments.
+     * @type {number}
+     * @memberof OrderItemResponse
+     */
+    baseUnitPriceNanodollar: number;
     /**
      * 
      * @type {string}
      * @memberof OrderItemResponse
      */
     id: string;
+    /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof OrderItemResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<SelectedOptionResponse>}
+     * @memberof OrderItemResponse
+     */
+    options: Array<SelectedOptionResponse>;
+    /**
+     * Per-unit sum of the chosen options.
+     * @type {number}
+     * @memberof OrderItemResponse
+     */
+    optionsTotalNanodollar: number;
     /**
      * 
      * @type {string}
@@ -9857,11 +10274,23 @@ export interface OrderItemResponse {
      */
     subtotalNanodollar: number;
     /**
-     * 
+     * Effective price per unit: base + variant + options.
      * @type {number}
      * @memberof OrderItemResponse
      */
     unitPriceNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderItemResponse
+     */
+    variantId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderItemResponse
+     */
+    variantName?: string | null;
 }
 /**
  * 
@@ -9912,6 +10341,107 @@ export interface OrderProductListResponse {
      * @memberof OrderProductListResponse
      */
     totalCount: number;
+}
+/**
+ * 商品ごとの選択肢のまとまり (#1137)。
+ * 
+ * 変種が「同じ商品の別の姿」なのに対し、こちらは「その姿に足すもの」。
+ * 値段は差分で述べる (「エスプレッソショット +100円」)。
+ * @export
+ * @interface OrderProductOptionGroupRequest
+ */
+export interface OrderProductOptionGroupRequest {
+    /**
+     * 省略すると採番する。更新で既存グループを指すときは必須。
+     * @type {string}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    id?: string | null;
+    /**
+     * 最大選択数。`single` では 1 に丸められる。
+     * @type {number}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    maxSelect?: number | null;
+    /**
+     * 最低選択数。`1` 以上で必須の選択になる。
+     * @type {number}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    minSelect?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {Array<OrderProductOptionRequest>}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    options?: Array<OrderProductOptionRequest> | null;
+    /**
+     * `single` (既定) か `multiple`。
+     * @type {string}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    selectionType?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    sortOrder?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderProductOptionGroupRequest
+     */
+    status?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface OrderProductOptionRequest
+ */
+export interface OrderProductOptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderProductOptionRequest
+     */
+    currency?: string | null;
+    /**
+     * 省略すると採番する。
+     * @type {string}
+     * @memberof OrderProductOptionRequest
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderProductOptionRequest
+     */
+    name: string;
+    /**
+     * 単価に足す額。負値も許す。
+     * @type {number}
+     * @memberof OrderProductOptionRequest
+     */
+    priceDelta?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderProductOptionRequest
+     */
+    sortOrder?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderProductOptionRequest
+     */
+    status?: string | null;
 }
 /**
  * 
@@ -10054,7 +10584,7 @@ export interface OrderResponse {
      */
     discountNanodollar: number;
     /**
-     * 
+     * `pickup`, `delivery`, or `dine_in`.
      * @type {string}
      * @memberof OrderResponse
      */
@@ -10186,6 +10716,12 @@ export interface OrderResponse {
      */
     subtotalNanodollar: number;
     /**
+     * Seat or table the dine-in order is served to.
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    tableNumber?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof OrderResponse
@@ -10209,6 +10745,37 @@ export interface OrderResponse {
      * @memberof OrderResponse
      */
     userId?: string | null;
+}
+/**
+ * What a caller may learn about the session it already holds.
+ * @export
+ * @interface OrderSessionResponse
+ */
+export interface OrderSessionResponse {
+    /**
+     * 
+     * @type {PublicOrderEntryPointResponse}
+     * @memberof OrderSessionResponse
+     */
+    entryPoint: PublicOrderEntryPointResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderSessionResponse
+     */
+    expiresAt: string;
+    /**
+     * Present once this session has placed an order.
+     * @type {string}
+     * @memberof OrderSessionResponse
+     */
+    orderId?: string | null;
+    /**
+     * `active`, `submitting`, `placed`, or `unknown`.
+     * @type {string}
+     * @memberof OrderSessionResponse
+     */
+    state: string;
 }
 /**
  * 
@@ -10468,6 +11035,118 @@ export interface PayoutReportResponse {
     totalSales: number;
 }
 /**
+ * Deliberately tiny.
+ * 
+ * Where the order goes, which seat serves it, how it is handed over and which
+ * channel it belongs to are all resolved from the entry point. `deny_unknown_fields`
+ * is what makes that enforceable: a client that tries to add `table_number`
+ * gets a 400 instead of being quietly ignored, which is the difference
+ * between a contract and a hope.
+ * @export
+ * @interface PlacePublicOrderRequest
+ */
+export interface PlacePublicOrderRequest {
+    /**
+     * The name called out when the order is ready. Optional, and the only
+     * personal data this surface accepts.
+     * @type {string}
+     * @memberof PlacePublicOrderRequest
+     */
+    customerName?: string | null;
+    /**
+     * 
+     * @type {Array<PublicOrderLine>}
+     * @memberof PlacePublicOrderRequest
+     */
+    items: Array<PublicOrderLine>;
+}
+/**
+ * A named set of choices on a product, e.g. "Size" or "Toppings".
+ * @export
+ * @interface ProductOptionGroupResponse
+ */
+export interface ProductOptionGroupResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductOptionGroupResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductOptionGroupResponse
+     */
+    maxSelect: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductOptionGroupResponse
+     */
+    minSelect: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductOptionGroupResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {Array<ProductOptionResponse>}
+     * @memberof ProductOptionGroupResponse
+     */
+    options: Array<ProductOptionResponse>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProductOptionGroupResponse
+     */
+    required: boolean;
+    /**
+     * `single` or `multiple`.
+     * @type {string}
+     * @memberof ProductOptionGroupResponse
+     */
+    selectionType: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductOptionGroupResponse
+     */
+    sortOrder: number;
+}
+/**
+ * One choice within an option group.
+ * @export
+ * @interface ProductOptionResponse
+ */
+export interface ProductOptionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductOptionResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductOptionResponse
+     */
+    name: string;
+    /**
+     * Amount this option adds to the unit price.
+     * @type {number}
+     * @memberof ProductOptionResponse
+     */
+    priceDeltaNanodollar: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductOptionResponse
+     */
+    sortOrder: number;
+}
+/**
  * 
  * @export
  * @interface ProductResponse
@@ -10701,6 +11380,62 @@ export interface ProductRestResponse {
     updatedAt: string;
 }
 /**
+ * Everything a storefront needs to render a product's choices.
+ * @export
+ * @interface ProductSelectionsResponse
+ */
+export interface ProductSelectionsResponse {
+    /**
+     * 
+     * @type {Array<ProductOptionGroupResponse>}
+     * @memberof ProductSelectionsResponse
+     */
+    optionGroups: Array<ProductOptionGroupResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductSelectionsResponse
+     */
+    productId: string;
+    /**
+     * 
+     * @type {Array<ProductVariantOptionResponse>}
+     * @memberof ProductSelectionsResponse
+     */
+    variants: Array<ProductVariantOptionResponse>;
+}
+/**
+ * A variant a customer may pick, e.g. hot or iced.
+ * @export
+ * @interface ProductVariantOptionResponse
+ */
+export interface ProductVariantOptionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductVariantOptionResponse
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductVariantOptionResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductVariantOptionResponse
+     */
+    name: string;
+    /**
+     * Amount this variant adds to the product's list price.
+     * @type {number}
+     * @memberof ProductVariantOptionResponse
+     */
+    priceDeltaNanodollar: number;
+}
+/**
  * REST-facing mirror of the GraphQL `ProductVariant` type
  * (`order_model::ProductVariant`).
  * 
@@ -10873,6 +11608,359 @@ export interface ProfileUser {
      * @memberof ProfileUser
      */
     username: string;
+}
+/**
+ * The variant and options are named by identifier only.
+ * 
+ * This is what makes the selection safe to accept from an anonymous caller:
+ * the amount each choice adds is read from the catalog master server-side, so
+ * a request states *what* was chosen and never *what it costs*.
+ * @export
+ * @interface PublicAddCartItemRequest
+ */
+export interface PublicAddCartItemRequest {
+    /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof PublicAddCartItemRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicAddCartItemRequest
+     */
+    optionIds?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicAddCartItemRequest
+     */
+    productId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicAddCartItemRequest
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicAddCartItemRequest
+     */
+    variantId?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface PublicCartItemResponse
+ */
+export interface PublicCartItemResponse {
+    /**
+     * The product's own price, before the variant and option adjustments.
+     * @type {number}
+     * @memberof PublicCartItemResponse
+     */
+    baseUnitPriceNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartItemResponse
+     */
+    id: string;
+    /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof PublicCartItemResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<PublicSelectedOptionResponse>}
+     * @memberof PublicCartItemResponse
+     */
+    options: Array<PublicSelectedOptionResponse>;
+    /**
+     * Per-unit sum of the chosen options.
+     * @type {number}
+     * @memberof PublicCartItemResponse
+     */
+    optionsTotalNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartItemResponse
+     */
+    productId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCartItemResponse
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCartItemResponse
+     */
+    subtotalNanodollar: number;
+    /**
+     * Effective price per unit: base + variant + options, all resolved from
+     * the catalog. The request never states what a choice costs.
+     * @type {number}
+     * @memberof PublicCartItemResponse
+     */
+    unitPriceNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartItemResponse
+     */
+    variantId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartItemResponse
+     */
+    variantName?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCartItemResponse
+     */
+    variantPriceDeltaNanodollar: number;
+}
+/**
+ * Deliberately narrower than `CartResponse`.
+ * 
+ * `user_id` and `session_id` are omitted: they name the shopper, and the only
+ * thing this route asks of its caller is possession of the cart identifier.
+ * `tenant_id` is omitted because the caller supplied it in the path.
+ * @export
+ * @interface PublicCartResponse
+ */
+export interface PublicCartResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartResponse
+     */
+    expiresAt?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {Array<PublicCartItemResponse>}
+     * @memberof PublicCartResponse
+     */
+    items: Array<PublicCartItemResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCartResponse
+     */
+    subtotalNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCartResponse
+     */
+    updatedAt: string;
+}
+/**
+ * Deliberately narrower than `CheckoutRequest`.
+ * 
+ * - No `customer_id`. The StoreKit field is stamped onto the order without
+ *   being resolved, so an anonymous caller could file its order under
+ *   somebody else's customer record and put it in that customer's history.
+ * 
+ * `coupon_code` is accepted. It is re-validated and re-priced against
+ * `cart_id` server-side, so submitting one here is worth no more to a
+ * guesser than the preview route already allows, and a code that does not
+ * apply fails the checkout rather than quietly going through at full price.
+ * 
+ * `customer_id` remains available on the authenticated StoreKit route, where
+ * the caller is a known operator.
+ * @export
+ * @interface PublicCheckoutRequest
+ */
+export interface PublicCheckoutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    cancelUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    cartId: string;
+    /**
+     * Applied to `cart_id` and re-priced server-side.
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    couponCode?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    customerEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    customerName?: string | null;
+    /**
+     * `pickup`, `delivery`, or `dine_in`.
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    fulfillmentMethod?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    paymentMethod?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    pickupRequestedAt?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    salesChannel?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    salesChannelDetail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    shippingAddress?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    shippingName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    shippingPhone?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    sourceCampaign?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    sourceMedium?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    successUrl?: string | null;
+    /**
+     * Seat or table a dine-in order is served to (#1138). Free text a diner
+     * reads off the table, so it is length-bounded and trimmed rather than
+     * resolved: naming a seat claims nothing and grants nothing.
+     * @type {string}
+     * @memberof PublicCheckoutRequest
+     */
+    tableNumber?: string | null;
+}
+/**
+ * What a shopper types in, checked against the cart they are holding.
+ * @export
+ * @interface PublicCouponPreviewRequest
+ */
+export interface PublicCouponPreviewRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCouponPreviewRequest
+     */
+    code: string;
+}
+/**
+ * Deliberately narrower than `CouponResponse`.
+ * 
+ * The discount table is not published: no coupon id, no discount type or
+ * value, no usage counters, no expiry. What comes back is the arithmetic for
+ * *this* cart — what it costs now, what comes off, what it would cost — which
+ * is what a checkout screen has to show, and not something a caller could
+ * reassemble the table from.
+ * @export
+ * @interface PublicCouponPreviewResponse
+ */
+export interface PublicCouponPreviewResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCouponPreviewResponse
+     */
+    code: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCouponPreviewResponse
+     */
+    discountNanodollar: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCouponPreviewResponse
+     */
+    subtotalNanodollar: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicCouponPreviewResponse
+     */
+    totalNanodollar: number;
 }
 /**
  * 
@@ -11244,6 +12332,421 @@ export interface PublicMembershipRegistrationResponse {
     subjectCount: number;
 }
 /**
+ * What a printed QR is allowed to tell its reader.
+ * 
+ * The店舗 and seat appear as the names a human can check against the printed
+ * sticker. The tenant id, the store id and the entry point id do not appear
+ * at all: the caller has no use for them and publishing them would hand an
+ * anonymous reader the identifiers every other API is keyed by.
+ * @export
+ * @interface PublicOrderEntryPointResponse
+ */
+export interface PublicOrderEntryPointResponse {
+    /**
+     * `qr` or `kiosk`.
+     * @type {string}
+     * @memberof PublicOrderEntryPointResponse
+     */
+    entryMode: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderEntryPointResponse
+     */
+    idleTimeoutSecs: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderEntryPointResponse
+     */
+    idleWarningSecs: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderEntryPointResponse
+     */
+    sessionTtlSecs: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderEntryPointResponse
+     */
+    storeName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderEntryPointResponse
+     */
+    tableName?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface PublicOrderItemResponse
+ */
+export interface PublicOrderItemResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderItemResponse
+     */
+    baseUnitPriceNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderItemResponse
+     */
+    id: string;
+    /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof PublicOrderItemResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<PublicSelectedOptionResponse>}
+     * @memberof PublicOrderItemResponse
+     */
+    options: Array<PublicSelectedOptionResponse>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderItemResponse
+     */
+    optionsTotalNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderItemResponse
+     */
+    productId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderItemResponse
+     */
+    productName: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderItemResponse
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderItemResponse
+     */
+    subtotalNanodollar: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderItemResponse
+     */
+    unitPriceNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderItemResponse
+     */
+    variantId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderItemResponse
+     */
+    variantName?: string | null;
+}
+/**
+ * One line as the diner chose it.
+ * 
+ * Ids and a note only. Every amount on the resulting order is priced from the
+ * catalog, so there is nothing here for a caller to misstate.
+ * @export
+ * @interface PublicOrderLine
+ */
+export interface PublicOrderLine {
+    /**
+     * Free-text note for this line, e.g. a kitchen instruction.
+     * @type {string}
+     * @memberof PublicOrderLine
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicOrderLine
+     */
+    optionIds?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderLine
+     */
+    productId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderLine
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderLine
+     */
+    variantId?: string | null;
+}
+/**
+ * What a customer knows about their own order without holding a token.
+ * 
+ * The pair is the evidence: a phone number alone names a person, and four
+ * digits alone name nothing. Together they are what a shop asks at the
+ * counter, and the budget on this route is what keeps them from being
+ * guessed rather than known.
+ * @export
+ * @interface PublicOrderLookupRequest
+ */
+export interface PublicOrderLookupRequest {
+    /**
+     * Last digits of the order identifier, as printed on the receipt.
+     * @type {string}
+     * @memberof PublicOrderLookupRequest
+     */
+    lastDigits: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderLookupRequest
+     */
+    phone: string;
+}
+/**
+ * The order, plus a short-lived handle for reading it again.
+ * 
+ * The token exists so a confirmation page can refresh without asking for the
+ * phone number a second time. It expires, and it is the only thing that
+ * opens the by-token read, so it is never put in a URL the caller did not
+ * already have to hold.
+ * @export
+ * @interface PublicOrderLookupResponse
+ */
+export interface PublicOrderLookupResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderLookupResponse
+     */
+    expiresAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderLookupResponse
+     */
+    lookupToken: string;
+    /**
+     * 
+     * @type {PublicOrderResponse}
+     * @memberof PublicOrderLookupResponse
+     */
+    order: PublicOrderResponse;
+}
+/**
+ * The menu as one answer, because a diner who opened a QR wants the whole
+ * board and not a page of it plus a second round trip for its groupings.
+ * @export
+ * @interface PublicOrderMenuResponse
+ */
+export interface PublicOrderMenuResponse {
+    /**
+     * 
+     * @type {Array<CategoryResponse>}
+     * @memberof PublicOrderMenuResponse
+     */
+    categories: Array<CategoryResponse>;
+    /**
+     * 
+     * @type {StoreKitListProductResponse}
+     * @memberof PublicOrderMenuResponse
+     */
+    products: StoreKitListProductResponse;
+}
+/**
+ * What the caller needs to show a confirmation screen and, when a payment
+ * session was opened, to go pay. It is not an order read: the customer
+ * contact details the caller just submitted are not echoed back, so nothing
+ * here would help someone who guessed an order identifier.
+ * @export
+ * @interface PublicOrderResponse
+ */
+export interface PublicOrderResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    checkoutUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    createdAt: string;
+    /**
+     * `pickup`, `delivery`, or `dine_in`.
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    fulfillmentMethod?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {Array<PublicOrderItemResponse>}
+     * @memberof PublicOrderResponse
+     */
+    items: Array<PublicOrderItemResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    paymentStatus: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    pickupDeadline?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    pickupRequestedAt?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderResponse
+     */
+    shippingFeeNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderResponse
+     */
+    subtotalNanodollar: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicOrderResponse
+     */
+    tableNumber?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicOrderResponse
+     */
+    totalNanodollar: number;
+}
+/**
+ * A menu row, and whether it can be ordered right now.
+ * 
+ * Wider than `ProductResponse` by exactly one bit, and narrower than the
+ * stock route by everything else: no quantity on hand, no reservation count,
+ * no low-stock threshold. A shopper needs to know an item is unavailable
+ * before adding it to a cart; how much of it exists is the store's business.
+ * @export
+ * @interface PublicProductResponse
+ */
+export interface PublicProductResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    billingCycle: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    categoryId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicProductResponse
+     */
+    imageIds: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    kind: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicProductResponse
+     */
+    listPrice: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    name: string;
+    /**
+     * False only when the product is inventory-tracked and has nothing
+     * available. A product with no stock row is not tracked, and a store
+     * that does not count an item is always willing to sell it.
+     * @type {boolean}
+     * @memberof PublicProductResponse
+     */
+    orderable: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    publicationDescription?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicProductResponse
+     */
+    publicationName?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicProductResponse
+     */
+    weightGrams?: number | null;
+}
+/**
  * 
  * @export
  * @interface PublicRegistrationConsentRequest
@@ -11323,6 +12826,43 @@ export interface PublicRegistrationSubjectRequest {
      * @memberof PublicRegistrationSubjectRequest
      */
     subjectType: string;
+}
+/**
+ * One chosen option, priced from the catalog master rather than the request.
+ * @export
+ * @interface PublicSelectedOptionResponse
+ */
+export interface PublicSelectedOptionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSelectedOptionResponse
+     */
+    groupId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSelectedOptionResponse
+     */
+    groupName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSelectedOptionResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSelectedOptionResponse
+     */
+    optionId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicSelectedOptionResponse
+     */
+    priceDeltaNanodollar: number;
 }
 /**
  * 
@@ -11466,6 +13006,39 @@ export interface PublicSigningValueInput {
      * @memberof PublicSigningValueInput
      */
     value: any | null;
+}
+/**
+ * 
+ * @export
+ * @interface PublicUpdateCartItemRequest
+ */
+export interface PublicUpdateCartItemRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicUpdateCartItemRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicUpdateCartItemRequest
+     */
+    optionIds?: Array<string> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicUpdateCartItemRequest
+     */
+    quantity: number;
+    /**
+     * Omit `variant_id`, `option_ids` and `note` together to change only the
+     * quantity; the line then keeps the selection and the price it was added
+     * with.
+     * @type {string}
+     * @memberof PublicUpdateCartItemRequest
+     */
+    variantId?: string | null;
 }
 /**
  * 
@@ -13178,6 +14751,44 @@ export interface ReservationListResponse {
      * @memberof ReservationListResponse
      */
     items: Array<Reservation>;
+}
+/**
+ * The editable half of a template, as the editor submits it.
+ * @export
+ * @interface ReservationNotificationTemplateContent
+ */
+export interface ReservationNotificationTemplateContent {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationNotificationTemplateContent
+     */
+    body: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReservationNotificationTemplateContent
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationNotificationTemplateContent
+     */
+    subject: string;
+}
+/**
+ * Templates keyed by kind, the shape the editor holds them in.
+ * @export
+ * @interface ReservationNotificationTemplatesResponse
+ */
+export interface ReservationNotificationTemplatesResponse {
+    /**
+     * 
+     * @type {{ [key: string]: ReservationNotificationTemplateContent; }}
+     * @memberof ReservationNotificationTemplatesResponse
+     */
+    items: { [key: string]: ReservationNotificationTemplateContent; };
 }
 
 /**
@@ -15396,6 +17007,19 @@ export interface SaveGolfReservationProductRequest {
 /**
  * 
  * @export
+ * @interface SaveReservationNotificationTemplatesRequest
+ */
+export interface SaveReservationNotificationTemplatesRequest {
+    /**
+     * Every kind the caller wants to write, keyed by kind.
+     * @type {{ [key: string]: ReservationNotificationTemplateContent; }}
+     * @memberof SaveReservationNotificationTemplatesRequest
+     */
+    items: { [key: string]: ReservationNotificationTemplateContent; };
+}
+/**
+ * 
+ * @export
  * @interface SaveReservationProductRequest
  */
 export interface SaveReservationProductRequest {
@@ -16306,6 +17930,43 @@ export interface SelectPickupDatetimeRequest {
      * @memberof SelectPickupDatetimeRequest
      */
     pickupRequestedAt?: string | null;
+}
+/**
+ * One option chosen on a line, as it was priced when the line was written.
+ * @export
+ * @interface SelectedOptionResponse
+ */
+export interface SelectedOptionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectedOptionResponse
+     */
+    groupId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectedOptionResponse
+     */
+    groupName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectedOptionResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectedOptionResponse
+     */
+    optionId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SelectedOptionResponse
+     */
+    priceDeltaNanodollar: number;
 }
 /**
  * 
@@ -18195,6 +19856,51 @@ export interface StageSettingsResponse {
 /**
  * 
  * @export
+ * @interface StartOrderSessionRequest
+ */
+export interface StartOrderSessionRequest {
+    /**
+     * The value printed in the QR. Never logged.
+     * @type {string}
+     * @memberof StartOrderSessionRequest
+     */
+    publicToken: string;
+}
+/**
+ * The session token appears here and nowhere else — not in a later read, not
+ * in a log line. A caller that loses it starts a new session.
+ * @export
+ * @interface StartOrderSessionResponse
+ */
+export interface StartOrderSessionResponse {
+    /**
+     * 
+     * @type {PublicOrderEntryPointResponse}
+     * @memberof StartOrderSessionResponse
+     */
+    entryPoint: PublicOrderEntryPointResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof StartOrderSessionResponse
+     */
+    expiresAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StartOrderSessionResponse
+     */
+    sessionToken: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StartOrderSessionResponse
+     */
+    state: string;
+}
+/**
+ * 
+ * @export
  * @interface StartStockTrackingRequest
  */
 export interface StartStockTrackingRequest {
@@ -18941,7 +20647,7 @@ export interface StoreKitListOrderResponseItemsInner {
      */
     discountNanodollar: number;
     /**
-     * 
+     * `pickup`, `delivery`, or `dine_in`.
      * @type {string}
      * @memberof StoreKitListOrderResponseItemsInner
      */
@@ -19073,6 +20779,12 @@ export interface StoreKitListOrderResponseItemsInner {
      */
     subtotalNanodollar: number;
     /**
+     * Seat or table the dine-in order is served to.
+     * @type {string}
+     * @memberof StoreKitListOrderResponseItemsInner
+     */
+    tableNumber?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof StoreKitListOrderResponseItemsInner
@@ -19198,6 +20910,123 @@ export interface StoreKitListProductResponseItemsInner {
      * 
      * @type {number}
      * @memberof StoreKitListProductResponseItemsInner
+     */
+    weightGrams?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface StoreKitListPublicProductResponse
+ */
+export interface StoreKitListPublicProductResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreKitListPublicProductResponse
+     */
+    hasMore: boolean;
+    /**
+     * 
+     * @type {Array<StoreKitListPublicProductResponseItemsInner>}
+     * @memberof StoreKitListPublicProductResponse
+     */
+    items: Array<StoreKitListPublicProductResponseItemsInner>;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreKitListPublicProductResponse
+     */
+    limit: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreKitListPublicProductResponse
+     */
+    offset: number;
+}
+/**
+ * A menu row, and whether it can be ordered right now.
+ * 
+ * Wider than `ProductResponse` by exactly one bit, and narrower than the
+ * stock route by everything else: no quantity on hand, no reservation count,
+ * no low-stock threshold. A shopper needs to know an item is unavailable
+ * before adding it to a cart; how much of it exists is the store's business.
+ * @export
+ * @interface StoreKitListPublicProductResponseItemsInner
+ */
+export interface StoreKitListPublicProductResponseItemsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    billingCycle: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    categoryId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    id: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    imageIds: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    kind: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    listPrice: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    name: string;
+    /**
+     * False only when the product is inventory-tracked and has nothing
+     * available. A product with no stock row is not tracked, and a store
+     * that does not count an item is always willing to sell it.
+     * @type {boolean}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    orderable: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    publicationDescription?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreKitListPublicProductResponseItemsInner
+     */
+    publicationName?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreKitListPublicProductResponseItemsInner
      */
     weightGrams?: number | null;
 }
@@ -20309,10 +22138,30 @@ export interface UpdateBillingAccountRequest {
 export interface UpdateCartItemRequest {
     /**
      * 
+     * @type {string}
+     * @memberof UpdateCartItemRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateCartItemRequest
+     */
+    optionIds?: Array<string> | null;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateCartItemRequest
      */
     quantity: number;
+    /**
+     * Omit `variant_id`, `option_ids` and `note` together to change only the
+     * quantity; the line then keeps the selection and the price it was added
+     * with.
+     * @type {string}
+     * @memberof UpdateCartItemRequest
+     */
+    variantId?: string | null;
 }
 /**
  * 
@@ -20918,6 +22767,66 @@ export interface UpdateMembershipPlanRequest {
     validDays?: number | null;
 }
 /**
+ * A partial edit.
+ * 
+ * An absent field is left alone. The three optional labels are cleared by
+ * sending an empty string rather than `null`: a `null` that means "clear" and
+ * an absent field that means "leave" are the same value to `Option`, and the
+ * distinction is not worth a wrapper type on a form with three of them.
+ * @export
+ * @interface UpdateOrderEntryPointRequest
+ */
+export interface UpdateOrderEntryPointRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    enabled?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    idleTimeoutSecs?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    idleWarningSecs?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    sessionTtlSecs?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    storeName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    tableName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderEntryPointRequest
+     */
+    tableNumber?: string | null;
+}
+/**
  * 
  * @export
  * @interface UpdateOrderProductRequest
@@ -20983,6 +22892,12 @@ export interface UpdateOrderProductRequest {
      * @memberof UpdateOrderProductRequest
      */
     name?: string | null;
+    /**
+     * 選択肢。省略は据え置き、空配列は「選択肢を無くす」。
+     * @type {Array<OrderProductOptionGroupRequest>}
+     * @memberof UpdateOrderProductRequest
+     */
+    optionGroups?: Array<OrderProductOptionGroupRequest> | null;
     /**
      * 
      * @type {string}

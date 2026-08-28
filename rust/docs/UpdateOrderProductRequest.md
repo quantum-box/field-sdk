@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **kind** | Option<**String**> |  | [optional]
 **list_price** | Option<**i32**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
+**option_groups** | Option<[**Vec<models::OrderProductOptionGroupRequest>**](OrderProductOptionGroupRequest.md)> | 選択肢。省略は据え置き、空配列は「選択肢を無くす」。 | [optional]
 **publication_description** | Option<**String**> |  | [optional]
 **publication_name** | Option<**String**> |  | [optional]
 **publication_status** | Option<**String**> |  | [optional]

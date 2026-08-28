@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**get_customer**](StoreKitApi.md#get_customer) | **GET** /v1/storekit/customers/{customer_id} | Get customer.
 [**get_order_receipt**](StoreKitApi.md#get_order_receipt) | **GET** /v1/storekit/consumer-orders/{order_id}/receipt | Get a printable receipt for a consumer order.
 [**get_product**](StoreKitApi.md#get_product) | **GET** /v1/storekit/products/{product_id} | Get a storefront product.
+[**get_product_selections**](StoreKitApi.md#get_product_selections) | **GET** /v1/storekit/products/{product_id}/selections | List the variants and option groups a product offers.
 [**get_product_stock**](StoreKitApi.md#get_product_stock) | **GET** /v1/storekit/products/{product_id}/stock | Get product stock.
 [**list_customers**](StoreKitApi.md#list_customers) | **GET** /v1/storekit/customers | List customers.
 [**list_fulfillment_methods**](StoreKitApi.md#list_fulfillment_methods) | **GET** /v1/storekit/fulfillment-methods | List supported fulfillment methods.
@@ -402,6 +403,36 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::ProductResponse**](ProductResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_product_selections
+
+> models::ProductSelectionsResponse get_product_selections(product_id)
+List the variants and option groups a product offers.
+
+Prices live here, not in the cart request: a client renders these choices and then sends back IDs only.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**product_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::ProductSelectionsResponse**](ProductSelectionsResponse.md)
 
 ### Authorization
 
@@ -1073,7 +1104,7 @@ This endpoint does not need any parameter.
 
 ## storekit_list_orders
 
-> models::StoreKitListOrderResponse storekit_list_orders(user_id, session_id, customer_id, status, limit, offset)
+> models::StoreKitListOrderResponse storekit_list_orders(user_id, session_id, customer_id, status, updated_after, limit, offset)
 List orders.
 
 ### Parameters
@@ -1084,7 +1115,8 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<**String**> |  |  |
 **session_id** | Option<**String**> |  |  |
 **customer_id** | Option<**String**> |  |  |
-**status** | Option<**String**> |  |  |
+**status** | Option<**String**> | Order status to keep. Accepts a comma-separated list (`confirmed,preparing,ready`) so a kitchen board can watch every in-progress status in one request. |  |
+**updated_after** | Option<**String**> | RFC 3339 lower bound on `updated_at`, for delta polling.  The bound is **inclusive**: `consumer_orders.updated_at` has second precision, so an exclusive bound would permanently drop a row updated later in the same second as the caller's cursor. Poll with the largest `updated_at` of the previous response and de-duplicate on order ID; the overlap is at most one second of rows.  Supplying it also switches the result order to `updated_at` ascending, so a backlog longer than one page drains in order. |  |
 **limit** | Option<**i32**> |  |  |
 **offset** | Option<**i32**> |  |  |
 

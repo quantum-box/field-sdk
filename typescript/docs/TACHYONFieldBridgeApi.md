@@ -11,6 +11,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**invokeBridgeAction**](TACHYONFieldBridgeApi.md#invokebridgeaction) | **POST** /v1/bridge/actions/{action} |  |
 | [**listBridgeDefinitions**](TACHYONFieldBridgeApi.md#listbridgedefinitions) | **GET** /v1/bridge/definitions |  |
 | [**listBridgeRuns**](TACHYONFieldBridgeApi.md#listbridgeruns) | **GET** /v1/bridge/runs |  |
+| [**listBridgeTargetObjects**](TACHYONFieldBridgeApi.md#listbridgetargetobjects) | **GET** /v1/bridge/objects | The objects a definition may target, with the properties each one accepts. |
 | [**previewBridgeFile**](TACHYONFieldBridgeApi.md#previewbridgefile) | **POST** /v1/bridge/definitions/{definition_id}/runs/preview-file |  |
 | [**previewBridgeRun**](TACHYONFieldBridgeApi.md#previewbridgerun) | **POST** /v1/bridge/definitions/{definition_id}/runs/preview |  |
 
@@ -521,6 +522,69 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Tenant-scoped Bridge run history |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listBridgeTargetObjects
+
+> BridgeTargetObjectListResponse listBridgeTargetObjects()
+
+The objects a definition may target, with the properties each one accepts.
+
+The browser builds its mapping UI from this instead of keeping a second copy of the field lists: a target added to the registry shows up in the UI with no client change, and the two can no longer disagree about what is required.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  TACHYONFieldBridgeApi,
+} from '@tachyon-sdk/field';
+import type { ListBridgeTargetObjectsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TACHYONFieldBridgeApi(config);
+
+  try {
+    const data = await api.listBridgeTargetObjects();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**BridgeTargetObjectListResponse**](BridgeTargetObjectListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Importable bridge target objects and their fields |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

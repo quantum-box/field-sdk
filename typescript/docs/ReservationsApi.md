@@ -38,6 +38,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**listExtensionLifecycleAuditEvents**](ReservationsApi.md#listextensionlifecycleauditevents) | **GET** /v1/erp/extensions/audit |  |
 | [**listExtensions**](ReservationsApi.md#listextensions) | **GET** /v1/erp/extensions |  |
 | [**listReservationCancellations**](ReservationsApi.md#listreservationcancellations) | **GET** /v1/erp/reservations/{id}/cancellations |  |
+| [**listReservationNotificationTemplates**](ReservationsApi.md#listreservationnotificationtemplates) | **GET** /v1/erp/reservation-notification-templates |  |
 | [**listReservationProducts**](ReservationsApi.md#listreservationproducts) | **GET** /v1/erp/reservation-products |  |
 | [**listReservationResourceTimeSlots**](ReservationsApi.md#listreservationresourcetimeslots) | **GET** /v1/erp/reservation-resources/{id}/time-slots |  |
 | [**listReservationResources**](ReservationsApi.md#listreservationresources) | **GET** /v1/erp/reservation-resources |  |
@@ -64,6 +65,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**replaceReservationProduct**](ReservationsApi.md#replacereservationproduct) | **PUT** /v1/erp/reservation-products/{id} |  |
 | [**replaceReservationProductSlots**](ReservationsApi.md#replacereservationproductslotsoperation) | **PUT** /v1/erp/reservation-products/{id}/slots |  |
 | [**replaceReservationResourceSchedule**](ReservationsApi.md#replacereservationresourcescheduleoperation) | **PUT** /v1/erp/reservation-resources/{id}/schedule |  |
+| [**saveReservationNotificationTemplates**](ReservationsApi.md#savereservationnotificationtemplatesoperation) | **PUT** /v1/erp/reservation-notification-templates |  |
 | [**seedReservationProductsFromExtensionConfig**](ReservationsApi.md#seedreservationproductsfromextensionconfig) | **POST** /v1/erp/reservation-products/seed-from-extension-config |  |
 | [**sendReservationNotification**](ReservationsApi.md#sendreservationnotificationoperation) | **POST** /v1/erp/reservations/{id}/notifications |  |
 | [**unassignReservationStaff**](ReservationsApi.md#unassignreservationstaff) | **POST** /v1/erp/reservations/{id}/staff-assignment/unassign |  |
@@ -2464,6 +2466,67 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listReservationNotificationTemplates
+
+> ReservationNotificationTemplatesResponse listReservationNotificationTemplates()
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationNotificationTemplatesRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  try {
+    const data = await api.listReservationNotificationTemplates();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ReservationNotificationTemplatesResponse**](ReservationNotificationTemplatesResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listReservationProducts
 
 > ReservationProductCatalogListResponse listReservationProducts(includeDisabled)
@@ -4318,6 +4381,75 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## saveReservationNotificationTemplates
+
+> ReservationNotificationTemplatesResponse saveReservationNotificationTemplates(saveReservationNotificationTemplatesRequest)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { SaveReservationNotificationTemplatesOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // SaveReservationNotificationTemplatesRequest
+    saveReservationNotificationTemplatesRequest: ...,
+  } satisfies SaveReservationNotificationTemplatesOperationRequest;
+
+  try {
+    const data = await api.saveReservationNotificationTemplates(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **saveReservationNotificationTemplatesRequest** | [SaveReservationNotificationTemplatesRequest](SaveReservationNotificationTemplatesRequest.md) |  | |
+
+### Return type
+
+[**ReservationNotificationTemplatesResponse**](ReservationNotificationTemplatesResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## seedReservationProductsFromExtensionConfig
 
 > SeedReservationProductsResponse seedReservationProductsFromExtensionConfig(seedReservationProductsRequest)
@@ -4383,6 +4515,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+| **409** | The extension config changed while the catalog was being seeded; read it again and retry |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

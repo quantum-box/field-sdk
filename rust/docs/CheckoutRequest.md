@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **customer_email** | Option<**String**> |  | [optional]
 **customer_id** | Option<**String**> |  | [optional]
 **customer_name** | Option<**String**> |  | [optional]
-**fulfillment_method** | Option<**String**> |  | [optional]
+**fulfillment_method** | Option<**String**> | `pickup`, `delivery`, or `dine_in`. | [optional]
 **payment_method** | Option<**String**> |  | [optional]
 **pickup_requested_at** | Option<**String**> |  | [optional]
 **sales_channel** | Option<**String**> |  | [optional]
@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **source_medium** | Option<**String**> |  | [optional]
 **store_id** | Option<**String**> |  | [optional]
 **success_url** | Option<**String**> |  | [optional]
+**table_number** | Option<**String**> | Seat or table the dine-in order is served to, as the store labels it. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

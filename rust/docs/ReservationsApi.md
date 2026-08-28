@@ -38,6 +38,7 @@ Method | HTTP request | Description
 [**list_extension_lifecycle_audit_events**](ReservationsApi.md#list_extension_lifecycle_audit_events) | **GET** /v1/erp/extensions/audit | 
 [**list_extensions**](ReservationsApi.md#list_extensions) | **GET** /v1/erp/extensions | 
 [**list_reservation_cancellations**](ReservationsApi.md#list_reservation_cancellations) | **GET** /v1/erp/reservations/{id}/cancellations | 
+[**list_reservation_notification_templates**](ReservationsApi.md#list_reservation_notification_templates) | **GET** /v1/erp/reservation-notification-templates | 
 [**list_reservation_products**](ReservationsApi.md#list_reservation_products) | **GET** /v1/erp/reservation-products | 
 [**list_reservation_resource_time_slots**](ReservationsApi.md#list_reservation_resource_time_slots) | **GET** /v1/erp/reservation-resources/{id}/time-slots | 
 [**list_reservation_resources**](ReservationsApi.md#list_reservation_resources) | **GET** /v1/erp/reservation-resources | 
@@ -64,6 +65,7 @@ Method | HTTP request | Description
 [**replace_reservation_product**](ReservationsApi.md#replace_reservation_product) | **PUT** /v1/erp/reservation-products/{id} | 
 [**replace_reservation_product_slots**](ReservationsApi.md#replace_reservation_product_slots) | **PUT** /v1/erp/reservation-products/{id}/slots | 
 [**replace_reservation_resource_schedule**](ReservationsApi.md#replace_reservation_resource_schedule) | **PUT** /v1/erp/reservation-resources/{id}/schedule | 
+[**save_reservation_notification_templates**](ReservationsApi.md#save_reservation_notification_templates) | **PUT** /v1/erp/reservation-notification-templates | 
 [**seed_reservation_products_from_extension_config**](ReservationsApi.md#seed_reservation_products_from_extension_config) | **POST** /v1/erp/reservation-products/seed-from-extension-config | 
 [**send_reservation_notification**](ReservationsApi.md#send_reservation_notification) | **POST** /v1/erp/reservations/{id}/notifications | 
 [**unassign_reservation_staff**](ReservationsApi.md#unassign_reservation_staff) | **POST** /v1/erp/reservations/{id}/staff-assignment/unassign | 
@@ -1040,6 +1042,31 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## list_reservation_notification_templates
+
+> models::ReservationNotificationTemplatesResponse list_reservation_notification_templates()
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**models::ReservationNotificationTemplatesResponse**](ReservationNotificationTemplatesResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## list_reservation_products
 
 > models::ReservationProductCatalogListResponse list_reservation_products(include_disabled)
@@ -1773,6 +1800,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::ReservationResourceScheduleResponse**](ReservationResourceScheduleResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## save_reservation_notification_templates
+
+> models::ReservationNotificationTemplatesResponse save_reservation_notification_templates(save_reservation_notification_templates_request)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**save_reservation_notification_templates_request** | [**SaveReservationNotificationTemplatesRequest**](SaveReservationNotificationTemplatesRequest.md) |  | [required] |
+
+### Return type
+
+[**models::ReservationNotificationTemplatesResponse**](ReservationNotificationTemplatesResponse.md)
 
 ### Authorization
 
