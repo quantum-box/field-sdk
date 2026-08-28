@@ -17,6 +17,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**getCustomer**](StoreKitApi.md#getcustomer) | **GET** /v1/storekit/customers/{customer_id} | Get customer. |
 | [**getOrderReceipt**](StoreKitApi.md#getorderreceipt) | **GET** /v1/storekit/consumer-orders/{order_id}/receipt | Get a printable receipt for a consumer order. |
 | [**getProduct**](StoreKitApi.md#getproduct) | **GET** /v1/storekit/products/{product_id} | Get a storefront product. |
+| [**getProductSelections**](StoreKitApi.md#getproductselections) | **GET** /v1/storekit/products/{product_id}/selections | List the variants and option groups a product offers. |
 | [**getProductStock**](StoreKitApi.md#getproductstock) | **GET** /v1/storekit/products/{product_id}/stock | Get product stock. |
 | [**listCustomers**](StoreKitApi.md#listcustomers) | **GET** /v1/storekit/customers | List customers. |
 | [**listFulfillmentMethods**](StoreKitApi.md#listfulfillmentmethods) | **GET** /v1/storekit/fulfillment-methods | List supported fulfillment methods. |
@@ -933,6 +934,77 @@ example().catch(console.error);
 ### Return type
 
 [**ProductResponse**](ProductResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getProductSelections
+
+> ProductSelectionsResponse getProductSelections(productId)
+
+List the variants and option groups a product offers.
+
+Prices live here, not in the cart request: a client renders these choices and then sends back IDs only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { GetProductSelectionsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    productId: productId_example,
+  } satisfies GetProductSelectionsRequest;
+
+  try {
+    const data = await api.getProductSelections(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **productId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**ProductSelectionsResponse**](ProductSelectionsResponse.md)
 
 ### Authorization
 
@@ -2571,7 +2643,7 @@ This endpoint does not need any parameter.
 
 ## storekitListOrders
 
-> StoreKitListOrderResponse storekitListOrders(userId, sessionId, customerId, status, limit, offset)
+> StoreKitListOrderResponse storekitListOrders(userId, sessionId, customerId, status, updatedAfter, limit, offset)
 
 List orders.
 
@@ -2599,8 +2671,10 @@ async function example() {
     sessionId: sessionId_example,
     // string (optional)
     customerId: customerId_example,
-    // string (optional)
+    // string | Order status to keep. Accepts a comma-separated list (`confirmed,preparing,ready`) so a kitchen board can watch every in-progress status in one request. (optional)
     status: status_example,
+    // string | RFC 3339 lower bound on `updated_at`, for delta polling.  The bound is **inclusive**: `consumer_orders.updated_at` has second precision, so an exclusive bound would permanently drop a row updated later in the same second as the caller\'s cursor. Poll with the largest `updated_at` of the previous response and de-duplicate on order ID; the overlap is at most one second of rows.  Supplying it also switches the result order to `updated_at` ascending, so a backlog longer than one page drains in order. (optional)
+    updatedAfter: updatedAfter_example,
     // number (optional)
     limit: 56,
     // number (optional)
@@ -2627,7 +2701,8 @@ example().catch(console.error);
 | **userId** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **sessionId** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **status** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **status** | `string` | Order status to keep. Accepts a comma-separated list (&#x60;confirmed,preparing,ready&#x60;) so a kitchen board can watch every in-progress status in one request. | [Optional] [Defaults to `undefined`] |
+| **updatedAfter** | `string` | RFC 3339 lower bound on &#x60;updated_at&#x60;, for delta polling.  The bound is **inclusive**: &#x60;consumer_orders.updated_at&#x60; has second precision, so an exclusive bound would permanently drop a row updated later in the same second as the caller\&#39;s cursor. Poll with the largest &#x60;updated_at&#x60; of the previous response and de-duplicate on order ID; the overlap is at most one second of rows.  Supplying it also switches the result order to &#x60;updated_at&#x60; ascending, so a backlog longer than one page drains in order. | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` |  | [Optional] [Defaults to `undefined`] |
 

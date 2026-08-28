@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **customer_name** | Option<**String**> |  | [optional]
 **delivered_at** | Option<**String**> |  | [optional]
 **discount_nanodollar** | **i64** |  | 
-**fulfillment_method** | Option<**String**> |  | [optional]
+**fulfillment_method** | Option<**String**> | `pickup`, `delivery`, or `dine_in`. | [optional]
 **id** | **String** |  | 
 **items** | [**Vec<models::OrderItemResponse>**](OrderItemResponse.md) |  | 
 **payment_method** | Option<**String**> |  | [optional]
@@ -36,6 +36,7 @@ Name | Type | Description | Notes
 **source_medium** | Option<**String**> |  | [optional]
 **status** | **String** |  | 
 **subtotal_nanodollar** | **i64** |  | 
+**table_number** | Option<**String**> | Seat or table the dine-in order is served to. | [optional]
 **tenant_id** | **String** |  | 
 **total_nanodollar** | **i64** |  | 
 **updated_at** | **String** |  | 

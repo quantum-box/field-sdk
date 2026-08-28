@@ -38,6 +38,7 @@ Name | Type
 `sourceMedium` | string
 `status` | string
 `subtotalNanodollar` | number
+`tableNumber` | string
 `tenantId` | string
 `totalNanodollar` | number
 `updatedAt` | string

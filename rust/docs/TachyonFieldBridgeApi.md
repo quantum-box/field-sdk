@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**invoke_bridge_action**](TachyonFieldBridgeApi.md#invoke_bridge_action) | **POST** /v1/bridge/actions/{action} | 
 [**list_bridge_definitions**](TachyonFieldBridgeApi.md#list_bridge_definitions) | **GET** /v1/bridge/definitions | 
 [**list_bridge_runs**](TachyonFieldBridgeApi.md#list_bridge_runs) | **GET** /v1/bridge/runs | 
+[**list_bridge_target_objects**](TachyonFieldBridgeApi.md#list_bridge_target_objects) | **GET** /v1/bridge/objects | The objects a definition may target, with the properties each one accepts.
 [**preview_bridge_file**](TachyonFieldBridgeApi.md#preview_bridge_file) | **POST** /v1/bridge/definitions/{definition_id}/runs/preview-file | 
 [**preview_bridge_run**](TachyonFieldBridgeApi.md#preview_bridge_run) | **POST** /v1/bridge/definitions/{definition_id}/runs/preview | 
 
@@ -205,6 +206,33 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::BridgeRunListResponse**](BridgeRunListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_bridge_target_objects
+
+> models::BridgeTargetObjectListResponse list_bridge_target_objects()
+The objects a definition may target, with the properties each one accepts.
+
+The browser builds its mapping UI from this instead of keeping a second copy of the field lists: a target added to the registry shows up in the UI with no client change, and the two can no longer disagree about what is required.
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**models::BridgeTargetObjectListResponse**](BridgeTargetObjectListResponse.md)
 
 ### Authorization
 

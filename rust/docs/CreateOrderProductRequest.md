@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **kind** | **String** |  | 
 **list_price** | **i32** |  | 
 **name** | **String** |  | 
+**option_groups** | Option<[**Vec<models::OrderProductOptionGroupRequest>**](OrderProductOptionGroupRequest.md)> | 選択肢 (トッピング等)。省略は「選択肢の話をしていない」。 | [optional]
 **publication_description** | Option<**String**> |  | [optional]
 **publication_name** | Option<**String**> |  | [optional]
 **publication_status** | Option<**String**> |  | [optional]

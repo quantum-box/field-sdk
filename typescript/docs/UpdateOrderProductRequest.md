@@ -16,6 +16,7 @@ Name | Type
 `kind` | string
 `listPrice` | number
 `name` | string
+`optionGroups` | [Array&lt;OrderProductOptionGroupRequest&gt;](OrderProductOptionGroupRequest.md)
 `publicationDescription` | string
 `publicationName` | string
 `publicationStatus` | string
