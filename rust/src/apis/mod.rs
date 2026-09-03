@@ -115,7 +115,10 @@ impl From<&str> for ContentType {
 
 pub mod agent_documents_api;
 pub mod approvals_api;
+pub mod consumer_api;
 pub mod custom_fields_api;
+pub mod customer_contacts_api;
+pub mod customers_api;
 pub mod deals_api;
 pub mod default_api;
 pub mod document_pdf_settings_api;
@@ -145,6 +148,7 @@ pub mod saa_s_subscriptions_api;
 pub mod sales_contract_signing_api;
 pub mod store_kit_api;
 pub mod storefront_profile_api;
+pub mod tachyon_field_analytics_api;
 pub mod tachyon_field_api_keys_api;
 pub mod tachyon_field_billing_accounts_api;
 pub mod tachyon_field_bridge_api;

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **active** | Option<**bool**> |  | [optional]
 **label** | Option<**String**> |  | [optional]
 **options** | Option<**Vec<String>**> |  | [optional]
+**placeholder** | Option<**String**> |  | [optional]
 **required** | Option<**bool**> |  | [optional]
 **sort_order** | Option<**i32**> |  | [optional]
 

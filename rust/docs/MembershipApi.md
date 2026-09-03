@@ -9,17 +9,26 @@ Method | HTTP request | Description
 [**create_customer_credential**](MembershipApi.md#create_customer_credential) | **POST** /v1/erp/membership/customers/{customer_id}/credentials | 
 [**create_customer_subject**](MembershipApi.md#create_customer_subject) | **POST** /v1/erp/membership/customers/{customer_id}/subjects | 
 [**create_membership_consent_item**](MembershipApi.md#create_membership_consent_item) | **POST** /v1/erp/membership/consent-items | 
+[**create_membership_entitlement**](MembershipApi.md#create_membership_entitlement) | **POST** /v1/erp/membership/entitlements | 
 [**create_membership_plan**](MembershipApi.md#create_membership_plan) | **POST** /v1/erp/membership/plans | 
 [**delete_membership_consent_item**](MembershipApi.md#delete_membership_consent_item) | **DELETE** /v1/erp/membership/consent-items/{id} | 
+[**delete_membership_entitlement**](MembershipApi.md#delete_membership_entitlement) | **DELETE** /v1/erp/membership/entitlements/{id} | 
 [**delete_membership_plan**](MembershipApi.md#delete_membership_plan) | **DELETE** /v1/erp/membership/plans/{id} | 
 [**get_customer_membership**](MembershipApi.md#get_customer_membership) | **GET** /v1/erp/membership/customers/{customer_id} | 
+[**list_membership_activities**](MembershipApi.md#list_membership_activities) | **GET** /v1/erp/membership/customers/{customer_id}/activities | 
 [**list_membership_consent_items**](MembershipApi.md#list_membership_consent_items) | **GET** /v1/erp/membership/consent-items | 
+[**list_membership_entitlements**](MembershipApi.md#list_membership_entitlements) | **GET** /v1/erp/membership/entitlements | 
+[**list_membership_offerings**](MembershipApi.md#list_membership_offerings) | **GET** /v1/erp/membership/offerings | 
 [**list_membership_plans**](MembershipApi.md#list_membership_plans) | **GET** /v1/erp/membership/plans | 
+[**list_membership_roster**](MembershipApi.md#list_membership_roster) | **GET** /v1/erp/membership/customers | 
+[**list_reception_fields**](MembershipApi.md#list_reception_fields) | **GET** /v1/erp/membership/reception-fields | Every box on this tenant's reception sheet.
 [**record_customer_consents**](MembershipApi.md#record_customer_consents) | **POST** /v1/erp/membership/customers/{customer_id}/consents | 
 [**register_membership**](MembershipApi.md#register_membership) | **POST** /v1/erp/membership/registrations | 
+[**replace_reception_fields**](MembershipApi.md#replace_reception_fields) | **PUT** /v1/erp/membership/reception-fields | Saves the boxes named in the request. Boxes left out keep their current setting, so a screen that shows a subset cannot reset the rest.
 [**update_customer_credential**](MembershipApi.md#update_customer_credential) | **PUT** /v1/erp/membership/credentials/{id} | 
 [**update_customer_subject**](MembershipApi.md#update_customer_subject) | **PUT** /v1/erp/membership/subjects/{id} | 
 [**update_membership_consent_item**](MembershipApi.md#update_membership_consent_item) | **PUT** /v1/erp/membership/consent-items/{id} | 
+[**update_membership_entitlement**](MembershipApi.md#update_membership_entitlement) | **PATCH** /v1/erp/membership/entitlements/{id} | 
 [**update_membership_plan**](MembershipApi.md#update_membership_plan) | **PUT** /v1/erp/membership/plans/{id} | 
 
 
@@ -47,7 +56,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -167,6 +176,34 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## create_membership_entitlement
+
+> models::MembershipEntitlementResponse create_membership_entitlement(create_membership_entitlement_request)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**create_membership_entitlement_request** | [**CreateMembershipEntitlementRequest**](CreateMembershipEntitlementRequest.md) |  | [required] |
+
+### Return type
+
+[**models::MembershipEntitlementResponse**](MembershipEntitlementResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## create_membership_plan
 
 > models::MembershipPlanResponse create_membership_plan(create_membership_plan_request)
@@ -198,6 +235,34 @@ Name | Type | Description  | Required | Notes
 ## delete_membership_consent_item
 
 > delete_membership_consent_item(id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_membership_entitlement
+
+> delete_membership_entitlement(id)
 
 
 ### Parameters
@@ -279,6 +344,36 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## list_membership_activities
+
+> models::MembershipActivityListResponse list_membership_activities(customer_id, limit, cursor)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**customer_id** | **String** | Customer ID | [required] |
+**limit** | Option<**i32**> | Maximum number of events to return (default 20, maximum 100). |  |
+**cursor** | Option<**String**> | Opaque base64url cursor returned by the previous page. |  |
+
+### Return type
+
+[**models::MembershipActivityListResponse**](MembershipActivityListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## list_membership_consent_items
 
 > models::MembershipConsentItemListResponse list_membership_consent_items(include_inactive)
@@ -307,6 +402,62 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## list_membership_entitlements
+
+> models::MembershipEntitlementListResponse list_membership_entitlements(include_inactive)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**include_inactive** | Option<**bool**> | Include deactivated grants |  |
+
+### Return type
+
+[**models::MembershipEntitlementListResponse**](MembershipEntitlementListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_membership_offerings
+
+> models::MembershipOfferingListResponse list_membership_offerings(include_inactive)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**include_inactive** | Option<**bool**> | Also return grants that are disabled or whose product is not on sale |  |
+
+### Return type
+
+[**models::MembershipOfferingListResponse**](MembershipOfferingListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## list_membership_plans
 
 > models::MembershipPlanListResponse list_membership_plans(include_inactive)
@@ -322,6 +473,66 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::MembershipPlanListResponse**](MembershipPlanListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_membership_roster
+
+> models::MembershipRosterResponse list_membership_roster(state, plan_id, q, expiring_within_days, limit, offset)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**state** | Option<**String**> | `current`（既定）/ `expiring` / `lapsed` / `all`。 |  |
+**plan_id** | Option<**String**> |  |  |
+**q** | Option<**String**> | 氏名・カナ・メール・電話の部分一致。 |  |
+**expiring_within_days** | Option<**i32**> | `state=expiring` のときだけ効く。既定は 30 日。 |  |
+**limit** | Option<**i64**> |  |  |
+**offset** | Option<**i64**> |  |  |
+
+### Return type
+
+[**models::MembershipRosterResponse**](MembershipRosterResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_reception_fields
+
+> models::ReceptionFieldListResponse list_reception_fields()
+Every box on this tenant's reception sheet.
+
+The list is always complete: boxes the tenant never configured come back with their built-in default rather than being absent, so the counter screen and the document reader can both be built straight from the response without knowing which boxes happen to be stored.
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**models::ReceptionFieldListResponse**](ReceptionFieldListResponse.md)
 
 ### Authorization
 
@@ -379,6 +590,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::MembershipCustomerViewResponse**](MembershipCustomerViewResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## replace_reception_fields
+
+> models::ReceptionFieldListResponse replace_reception_fields(replace_reception_fields_request)
+Saves the boxes named in the request. Boxes left out keep their current setting, so a screen that shows a subset cannot reset the rest.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**replace_reception_fields_request** | [**ReplaceReceptionFieldsRequest**](ReplaceReceptionFieldsRequest.md) |  | [required] |
+
+### Return type
+
+[**models::ReceptionFieldListResponse**](ReceptionFieldListResponse.md)
 
 ### Authorization
 
@@ -466,6 +705,35 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::MembershipConsentItemResponse**](MembershipConsentItemResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_membership_entitlement
+
+> models::MembershipEntitlementResponse update_membership_entitlement(id, update_membership_entitlement_request)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**update_membership_entitlement_request** | [**UpdateMembershipEntitlementRequest**](UpdateMembershipEntitlementRequest.md) |  | [required] |
+
+### Return type
+
+[**models::MembershipEntitlementResponse**](MembershipEntitlementResponse.md)
 
 ### Authorization
 

@@ -4,7 +4,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**exportConsumerCustomersCsv**](TACHYONFieldCRMCustomersApi.md#exportconsumercustomerscsv) | **GET** /v1/erp/customers/export.csv |  |
+| [**exportConsumerCustomersCsv**](TACHYONFieldCRMCustomersApi.md#exportconsumercustomerscsv) | **GET** /v1/erp/customers/export.csv | 一覧と同じクエリ文字列（&#x60;segment&#x60; / &#x60;sort&#x60; / &#x60;min_order_total_nanodollar&#x60; など）を受け、絞り込んだ結果をそのまま CSV にする。画面で作ったリストを そのまま持ち出せるようにするためで、絞り込みを無視して全件を返すと、 「購入金額上位のリスト」を出したつもりの利用者に台帳全体が渡る。 &#x60;limit&#x60; / &#x60;offset&#x60; は無視して先頭から全件を読む。 |
 | [**importConsumerCustomersCsv**](TACHYONFieldCRMCustomersApi.md#importconsumercustomerscsv) | **POST** /v1/erp/customers/import.csv |  |
 
 
@@ -13,7 +13,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 > exportConsumerCustomersCsv()
 
-
+一覧と同じクエリ文字列（&#x60;segment&#x60; / &#x60;sort&#x60; / &#x60;min_order_total_nanodollar&#x60; など）を受け、絞り込んだ結果をそのまま CSV にする。画面で作ったリストを そのまま持ち出せるようにするためで、絞り込みを無視して全件を返すと、 「購入金額上位のリスト」を出したつもりの利用者に台帳全体が渡る。 &#x60;limit&#x60; / &#x60;offset&#x60; は無視して先頭から全件を読む。
 
 ### Example
 

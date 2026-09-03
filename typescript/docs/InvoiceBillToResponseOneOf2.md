@@ -1,13 +1,13 @@
 
 # InvoiceBillToResponseOneOf2
 
+台帳に無い相手。識別子は無く、発行時の写しだけが相手を表す。
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `kind` | string
-`legacyReferenceId` | string
 `snapshot` | any
 
 

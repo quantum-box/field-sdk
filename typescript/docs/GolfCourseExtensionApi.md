@@ -4,15 +4,17 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**analyzeGolfCourseTabular**](GolfCourseExtensionApi.md#analyzegolfcoursetabular) | **POST** /v1/erp/extensions/golf-course/tabular/analyze |  |
+| [**analyzeGolfCourseTabular**](GolfCourseExtensionApi.md#analyzegolfcoursetabular) | **POST** /v1/erp/extensions/golf-course/tabular/analyze | Deprecated authorization-compatible alias of [&#x60;analyze_bridge_tabular&#x60;]. |
 
 
 
 ## analyzeGolfCourseTabular
 
-> TabularAnalyzeResponse analyzeGolfCourseTabular(file, context, headerRow, idempotencyKey, mappingMode, mappingProposal, sheetName, targetSchema)
+> TabularAnalyzeResponse analyzeGolfCourseTabular(file, context, headerRow, idempotencyKey, mappingMode, mappingProposal, rotation, sheetName, targetSchema)
 
+Deprecated authorization-compatible alias of [&#x60;analyze_bridge_tabular&#x60;].
 
+Deprecated. Use POST /v1/bridge/tabular/analyze, which runs the same analyzer and requires field:PreviewBridgeRun. This alias exists only so CourseBoard can roll back to it, and is not removed because /v1/ endpoints are not deleted in place.
 
 ### Example
 
@@ -44,6 +46,8 @@ async function example() {
     mappingMode: mappingMode_example,
     // string (optional)
     mappingProposal: mappingProposal_example,
+    // string | Clockwise degrees to turn a scanned PDF by before it is read: `0`, `90`, `180`, or `270`. (optional)
+    rotation: rotation_example,
     // string (optional)
     sheetName: sheetName_example,
     // string (optional)
@@ -73,6 +77,7 @@ example().catch(console.error);
 | **idempotencyKey** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **mappingMode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **mappingProposal** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **rotation** | `string` | Clockwise degrees to turn a scanned PDF by before it is read: &#x60;0&#x60;, &#x60;90&#x60;, &#x60;180&#x60;, or &#x60;270&#x60;. | [Optional] [Defaults to `undefined`] |
 | **sheetName** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **targetSchema** | `string` |  | [Optional] [Defaults to `undefined`] |
 

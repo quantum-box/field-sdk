@@ -11,7 +11,9 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**confirmCheckoutSession**](StoreKitApi.md#confirmcheckoutsession) | **POST** /v1/storekit/checkout_sessions/{order_id}/confirm | Confirm checkout session. |
 | [**createCart**](StoreKitApi.md#createcartoperation) | **POST** /v1/storekit/carts | Create or retrieve a cart. |
 | [**createCustomer**](StoreKitApi.md#createcustomeroperation) | **POST** /v1/storekit/customers | Create customer. |
+| [**createWebhookEndpoint**](StoreKitApi.md#createwebhookendpointoperation) | **POST** /v1/storekit/webhook-endpoints | webhook 宛先を登録し、署名シークレットを一度だけ返す。 |
 | [**deleteCustomer**](StoreKitApi.md#deletecustomer) | **DELETE** /v1/storekit/customers/{customer_id} | Delete customer. |
+| [**deleteWebhookEndpoint**](StoreKitApi.md#deletewebhookendpoint) | **DELETE** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を削除する。 |
 | [**deliverOrder**](StoreKitApi.md#deliverorder) | **POST** /v1/storekit/orders/{order_id}/deliver | Deliver order. |
 | [**getCart**](StoreKitApi.md#getcart) | **GET** /v1/storekit/carts/{cart_id} | Get a cart. |
 | [**getCustomer**](StoreKitApi.md#getcustomer) | **GET** /v1/storekit/customers/{customer_id} | Get customer. |
@@ -19,14 +21,18 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**getProduct**](StoreKitApi.md#getproduct) | **GET** /v1/storekit/products/{product_id} | Get a storefront product. |
 | [**getProductSelections**](StoreKitApi.md#getproductselections) | **GET** /v1/storekit/products/{product_id}/selections | List the variants and option groups a product offers. |
 | [**getProductStock**](StoreKitApi.md#getproductstock) | **GET** /v1/storekit/products/{product_id}/stock | Get product stock. |
+| [**getWebhookEndpoint**](StoreKitApi.md#getwebhookendpoint) | **GET** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を1件取得する。 |
 | [**listCustomers**](StoreKitApi.md#listcustomers) | **GET** /v1/storekit/customers | List customers. |
 | [**listFulfillmentMethods**](StoreKitApi.md#listfulfillmentmethods) | **GET** /v1/storekit/fulfillment-methods | List supported fulfillment methods. |
 | [**listProducts**](StoreKitApi.md#listproducts) | **GET** /v1/storekit/products | List storefront products. |
+| [**listWebhookDeliveries**](StoreKitApi.md#listwebhookdeliveries) | **GET** /v1/storekit/webhook-endpoints/{endpoint_id}/deliveries | 宛先の配送履歴を新しい順に返す。 |
+| [**listWebhookEndpoints**](StoreKitApi.md#listwebhookendpoints) | **GET** /v1/storekit/webhook-endpoints | テナントの webhook 宛先を一覧する。 |
 | [**pickupOrder**](StoreKitApi.md#pickuporder) | **POST** /v1/storekit/orders/{order_id}/pickup | Mark pickup order as picked up. |
 | [**prepareOrder**](StoreKitApi.md#prepareorder) | **POST** /v1/storekit/orders/{order_id}/prepare | Prepare order for fulfillment. |
 | [**readyOrder**](StoreKitApi.md#readyorder) | **POST** /v1/storekit/orders/{order_id}/ready | Mark pickup order as ready. |
 | [**refundOrder**](StoreKitApi.md#refundorder) | **POST** /v1/storekit/orders/{order_id}/refund | Refund order. |
 | [**removeCartItem**](StoreKitApi.md#removecartitem) | **DELETE** /v1/storekit/carts/{cart_id}/items/{item_id} | Remove a cart item by item ID. |
+| [**rotateWebhookEndpointSecret**](StoreKitApi.md#rotatewebhookendpointsecret) | **POST** /v1/storekit/webhook-endpoints/{endpoint_id}/rotate-secret | 署名シークレットを更新し、新しい値を一度だけ返す。 |
 | [**selectPickupDatetime**](StoreKitApi.md#selectpickupdatetimeoperation) | **POST** /v1/storekit/orders/{order_id}/select-pickup-datetime | Select pickup date-time. |
 | [**shipOrder**](StoreKitApi.md#shiporder) | **POST** /v1/storekit/orders/{order_id}/ship | Ship order. |
 | [**storefrontCreateReservation**](StoreKitApi.md#storefrontcreatereservationoperation) | **POST** /v1/storekit/reservations |  |
@@ -42,8 +48,10 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**storekitGetOrder**](StoreKitApi.md#storekitgetorder) | **GET** /v1/storekit/orders/{order_id} | Get order. |
 | [**storekitListCategories**](StoreKitApi.md#storekitlistcategories) | **GET** /v1/storekit/categories | List storefront categories. |
 | [**storekitListOrders**](StoreKitApi.md#storekitlistorders) | **GET** /v1/storekit/orders | List orders. |
+| [**testWebhookEndpoint**](StoreKitApi.md#testwebhookendpoint) | **POST** /v1/storekit/webhook-endpoints/{endpoint_id}/test | 宛先へ署名付きの疎通確認イベントを1回送る。 |
 | [**updateCartItem**](StoreKitApi.md#updatecartitemoperation) | **POST** /v1/storekit/carts/{cart_id}/items/{item_id} | Update a cart item by item ID. |
 | [**updateCustomer**](StoreKitApi.md#updatecustomeroperation) | **POST** /v1/storekit/customers/{customer_id} | Update customer. |
+| [**updateWebhookEndpoint**](StoreKitApi.md#updatewebhookendpointoperation) | **PATCH** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を部分更新する。 |
 | [**validateCoupon**](StoreKitApi.md#validatecouponoperation) | **POST** /v1/storekit/coupons/validate | Validate coupon. |
 
 
@@ -536,6 +544,75 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## createWebhookEndpoint
+
+> WebhookEndpointWithSecretResponse createWebhookEndpoint(createWebhookEndpointRequest)
+
+webhook 宛先を登録し、署名シークレットを一度だけ返す。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { CreateWebhookEndpointOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // CreateWebhookEndpointRequest
+    createWebhookEndpointRequest: ...,
+  } satisfies CreateWebhookEndpointOperationRequest;
+
+  try {
+    const data = await api.createWebhookEndpoint(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **createWebhookEndpointRequest** | [CreateWebhookEndpointRequest](CreateWebhookEndpointRequest.md) |  | |
+
+### Return type
+
+[**WebhookEndpointWithSecretResponse**](WebhookEndpointWithSecretResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## deleteCustomer
 
 > DeletedResponse deleteCustomer(customerId)
@@ -601,6 +678,75 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteWebhookEndpoint
+
+> deleteWebhookEndpoint(endpointId)
+
+webhook 宛先を削除する。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { DeleteWebhookEndpointRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    endpointId: endpointId_example,
+  } satisfies DeleteWebhookEndpointRequest;
+
+  try {
+    const data = await api.deleteWebhookEndpoint(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **endpointId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -1093,13 +1239,82 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getWebhookEndpoint
+
+> WebhookEndpointResponse getWebhookEndpoint(endpointId)
+
+webhook 宛先を1件取得する。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { GetWebhookEndpointRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    endpointId: endpointId_example,
+  } satisfies GetWebhookEndpointRequest;
+
+  try {
+    const data = await api.getWebhookEndpoint(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **endpointId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**WebhookEndpointResponse**](WebhookEndpointResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listCustomers
 
-> StoreKitListCustomerResponse listCustomers(email, name, phone, limit)
+> StoreKitListCustomerResponse listCustomers(email, name, phone, ids, limit, offset)
 
 List customers.
 
-&#x60;email&#x60; matches exactly; &#x60;name&#x60; (display name or kana reading) and &#x60;phone&#x60; match partially. Results are candidates: customers are never merged or deduplicated, so two people sharing a name or a household phone number stay separate records. Picking the right candidate — or registering a new customer — is the caller\&#39;s decision.
+&#x60;email&#x60; matches exactly; &#x60;name&#x60; (display name or kana reading) and &#x60;phone&#x60; match partially. Results are candidates: customers are never merged or deduplicated, so two people sharing a name or a household phone number stay separate records. Picking the right candidate — or registering a new customer — is the caller\&#39;s decision.  &#x60;ids&#x60; fetches a known set of customers in one call, for callers that already hold customer IDs and only need the names and phone numbers to display alongside them. It is ANDed with the other filters, is capped at 100 IDs per request (more is a 400, never a silent truncation), and drops IDs that do not exist instead of failing the request.  &#x60;offset&#x60; pages through the filtered set, and &#x60;total&#x60; on the response is that set\&#39;s size — not the size of the returned page. The order is stable for a given filter, so paging neither repeats nor skips a row.  &#x60;limit&#x60; and &#x60;offset&#x60; on the response body are always &#x60;0&#x60; here: the legacy upstream list carried no pagination metadata and StoreKit has exposed zeroes since. Read &#x60;has_more&#x60; and &#x60;total&#x60; instead.
 
 ### Example
 
@@ -1125,8 +1340,12 @@ async function example() {
     name: name_example,
     // string | Partial match against the phone number. Separators are ignored on both sides, so `090-1234-5678` and `09012345678` match. (optional)
     phone: phone_example,
+    // string | Comma-separated customer IDs, at most 100 per request (`ids=cus_a,cus_b`). Combines with `email`, `name` and `phone` as AND, and does not widen `limit`: pass a `limit` big enough for the set you asked for. IDs that do not exist are dropped from the result rather than reported. More than 100 IDs is a 400; the list is never silently truncated. An `ids` that parses to no ID at all matches nothing, so an empty page stays empty. (optional)
+    ids: ids_example,
     // number (optional)
     limit: 789,
+    // number | Rows to skip, applied after the filters above. Defaults to 0. (optional)
+    offset: 56,
   } satisfies ListCustomersRequest;
 
   try {
@@ -1149,7 +1368,9 @@ example().catch(console.error);
 | **email** | `string` | Exact email match. | [Optional] [Defaults to `undefined`] |
 | **name** | `string` | Partial match against the display name or its kana reading. | [Optional] [Defaults to `undefined`] |
 | **phone** | `string` | Partial match against the phone number. Separators are ignored on both sides, so &#x60;090-1234-5678&#x60; and &#x60;09012345678&#x60; match. | [Optional] [Defaults to `undefined`] |
+| **ids** | `string` | Comma-separated customer IDs, at most 100 per request (&#x60;ids&#x3D;cus_a,cus_b&#x60;). Combines with &#x60;email&#x60;, &#x60;name&#x60; and &#x60;phone&#x60; as AND, and does not widen &#x60;limit&#x60;: pass a &#x60;limit&#x60; big enough for the set you asked for. IDs that do not exist are dropped from the result rather than reported. More than 100 IDs is a 400; the list is never silently truncated. An &#x60;ids&#x60; that parses to no ID at all matches nothing, so an empty page stays empty. | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **offset** | `number` | Rows to skip, applied after the filters above. Defaults to 0. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -1169,6 +1390,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
+| **400** | More than 100 &#x60;ids&#x60; in one request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -1293,6 +1515,139 @@ example().catch(console.error);
 ### Return type
 
 [**StoreKitListProductResponse**](StoreKitListProductResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listWebhookDeliveries
+
+> Array&lt;WebhookDeliveryResponse&gt; listWebhookDeliveries(endpointId, limit)
+
+宛先の配送履歴を新しい順に返す。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { ListWebhookDeliveriesRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    endpointId: endpointId_example,
+    // number (optional)
+    limit: 56,
+  } satisfies ListWebhookDeliveriesRequest;
+
+  try {
+    const data = await api.listWebhookDeliveries(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **endpointId** | `string` |  | [Defaults to `undefined`] |
+| **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**Array&lt;WebhookDeliveryResponse&gt;**](WebhookDeliveryResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listWebhookEndpoints
+
+> Array&lt;WebhookEndpointResponse&gt; listWebhookEndpoints()
+
+テナントの webhook 宛先を一覧する。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { ListWebhookEndpointsRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  try {
+    const data = await api.listWebhookEndpoints();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Array&lt;WebhookEndpointResponse&gt;**](WebhookEndpointResponse.md)
 
 ### Authorization
 
@@ -1641,6 +1996,77 @@ example().catch(console.error);
 ### Return type
 
 [**OkResponse**](OkResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## rotateWebhookEndpointSecret
+
+> WebhookEndpointWithSecretResponse rotateWebhookEndpointSecret(endpointId)
+
+署名シークレットを更新し、新しい値を一度だけ返す。
+
+旧世代は24時間だけ併記される。受信側はその間に値を差し替える。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { RotateWebhookEndpointSecretRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    endpointId: endpointId_example,
+  } satisfies RotateWebhookEndpointSecretRequest;
+
+  try {
+    const data = await api.rotateWebhookEndpointSecret(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **endpointId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**WebhookEndpointWithSecretResponse**](WebhookEndpointWithSecretResponse.md)
 
 ### Authorization
 
@@ -2165,7 +2591,7 @@ async function example() {
     staffId: staffId_example,
     // string | Filter by customer ID (optional)
     customerId: customerId_example,
-    // number | Maximum number of reservations to return (optional)
+    // number | Page size; defaults to 100, maximum 500. A larger value is capped rather than rejected, and the applied value comes back as `limit` in the response. (optional)
     limit: 56,
     // number | Number of reservations to skip (optional)
     offset: 56,
@@ -2194,7 +2620,7 @@ example().catch(console.error);
 | **resourceId** | `string` | Filter by resource ID | [Optional] [Defaults to `undefined`] |
 | **staffId** | `string` | Filter by assigned staff ID | [Optional] [Defaults to `undefined`] |
 | **customerId** | `string` | Filter by customer ID | [Optional] [Defaults to `undefined`] |
-| **limit** | `number` | Maximum number of reservations to return | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Page size; defaults to 100, maximum 500. A larger value is capped rather than rejected, and the applied value comes back as &#x60;limit&#x60; in the response. | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` | Number of reservations to skip | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -2728,6 +3154,77 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## testWebhookEndpoint
+
+> WebhookTestResponse testWebhookEndpoint(endpointId)
+
+宛先へ署名付きの疎通確認イベントを1回送る。
+
+実配送とまったく同じ経路（SSRF ガード・接続先の固定・署名・timeout）を 通る。注文イベントも配送行も作らないので、履歴には残らない。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { TestWebhookEndpointRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    endpointId: endpointId_example,
+  } satisfies TestWebhookEndpointRequest;
+
+  try {
+    const data = await api.testWebhookEndpoint(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **endpointId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**WebhookTestResponse**](WebhookTestResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## updateCartItem
 
 > CartResponse updateCartItem(cartId, itemId, updateCartItemRequest)
@@ -2856,6 +3353,78 @@ example().catch(console.error);
 ### Return type
 
 [**CustomerResponse**](CustomerResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateWebhookEndpoint
+
+> WebhookEndpointResponse updateWebhookEndpoint(endpointId, updateWebhookEndpointRequest)
+
+webhook 宛先を部分更新する。
+
+### Example
+
+```ts
+import {
+  Configuration,
+  StoreKitApi,
+} from '@tachyon-sdk/field';
+import type { UpdateWebhookEndpointOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new StoreKitApi(config);
+
+  const body = {
+    // string
+    endpointId: endpointId_example,
+    // UpdateWebhookEndpointRequest
+    updateWebhookEndpointRequest: ...,
+  } satisfies UpdateWebhookEndpointOperationRequest;
+
+  try {
+    const data = await api.updateWebhookEndpoint(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **endpointId** | `string` |  | [Defaults to `undefined`] |
+| **updateWebhookEndpointRequest** | [UpdateWebhookEndpointRequest](UpdateWebhookEndpointRequest.md) |  | |
+
+### Return type
+
+[**WebhookEndpointResponse**](WebhookEndpointResponse.md)
 
 ### Authorization
 

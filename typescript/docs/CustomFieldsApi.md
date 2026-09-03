@@ -15,7 +15,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 ## createCustomFieldDefinition
 
-> CustomFieldDefinitionResponse createCustomFieldDefinition(createCustomFieldDefinitionRequest)
+> CustomFieldDefinitionResponse createCustomFieldDefinition(createCustomFieldDefinitionRequest, xTachyonCustomFieldTypes)
 
 
 
@@ -39,6 +39,8 @@ async function example() {
   const body = {
     // CreateCustomFieldDefinitionRequest
     createCustomFieldDefinitionRequest: ...,
+    // string | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. (optional)
+    xTachyonCustomFieldTypes: xTachyonCustomFieldTypes_example,
   } satisfies CreateCustomFieldDefinitionOperationRequest;
 
   try {
@@ -59,6 +61,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **createCustomFieldDefinitionRequest** | [CreateCustomFieldDefinitionRequest](CreateCustomFieldDefinitionRequest.md) |  | |
+| **xTachyonCustomFieldTypes** | `string` | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -225,7 +228,7 @@ example().catch(console.error);
 
 ## listCustomFieldDefinitions
 
-> CustomFieldDefinitionListResponse listCustomFieldDefinitions(entityType, includeInactive)
+> CustomFieldDefinitionListResponse listCustomFieldDefinitions(entityType, includeInactive, xTachyonCustomFieldTypes)
 
 
 
@@ -251,6 +254,8 @@ async function example() {
     entityType: entityType_example,
     // boolean | Include soft-deleted definitions (default false) (optional)
     includeInactive: true,
+    // string | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. (optional)
+    xTachyonCustomFieldTypes: xTachyonCustomFieldTypes_example,
   } satisfies ListCustomFieldDefinitionsRequest;
 
   try {
@@ -272,6 +277,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **entityType** | `string` | Filter by entity type (client/consumer/product/order/invoice/reservation/customer_subject) | [Optional] [Defaults to `undefined`] |
 | **includeInactive** | `boolean` | Include soft-deleted definitions (default false) | [Optional] [Defaults to `undefined`] |
+| **xTachyonCustomFieldTypes** | `string` | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -372,7 +378,7 @@ example().catch(console.error);
 
 ## updateCustomFieldDefinition
 
-> CustomFieldDefinitionResponse updateCustomFieldDefinition(id, updateCustomFieldDefinitionRequest)
+> CustomFieldDefinitionResponse updateCustomFieldDefinition(id, updateCustomFieldDefinitionRequest, xTachyonCustomFieldTypes)
 
 
 
@@ -398,6 +404,8 @@ async function example() {
     id: id_example,
     // UpdateCustomFieldDefinitionRequest
     updateCustomFieldDefinitionRequest: ...,
+    // string | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. (optional)
+    xTachyonCustomFieldTypes: xTachyonCustomFieldTypes_example,
   } satisfies UpdateCustomFieldDefinitionOperationRequest;
 
   try {
@@ -419,6 +427,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` | Custom field definition ID | [Defaults to `undefined`] |
 | **updateCustomFieldDefinitionRequest** | [UpdateCustomFieldDefinitionRequest](UpdateCustomFieldDefinitionRequest.md) |  | |
+| **xTachyonCustomFieldTypes** | `string` | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

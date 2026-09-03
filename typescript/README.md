@@ -69,12 +69,23 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *ApprovalsApi* | [**listApprovals**](docs/ApprovalsApi.md#listapprovals) | **GET** /api/approvals | 
 *ApprovalsApi* | [**mutateApproval**](docs/ApprovalsApi.md#mutateapproval) | **POST** /api/approvals | 
 *ApprovalsApi* | [**updateApprovalFlow**](docs/ApprovalsApi.md#updateapprovalflowoperation) | **PUT** /v1/erp/approval-flows/{id} | 
+*ConsumerApi* | [**getConsumerConsents**](docs/ConsumerApi.md#getconsumerconsents) | **GET** /v1/erp/customers/{customer_id}/consents | 
+*ConsumerApi* | [**getCustomerContactPreferences**](docs/ConsumerApi.md#getcustomercontactpreferences) | **GET** /v1/erp/customers/{customer_id}/contact-preferences | チャネルごとの現在の連絡可否を1コールで返す。
+*ConsumerApi* | [**recordConsumerConsents**](docs/ConsumerApi.md#recordconsumerconsentsoperation) | **POST** /v1/erp/customers/{customer_id}/consents | 
+*ConsumerApi* | [**recordCustomerContactPreferences**](docs/ConsumerApi.md#recordcustomercontactpreferences) | **POST** /v1/erp/customers/{customer_id}/contact-preferences | 連絡拒否の申し出、およびその撤回を記録する。
 *CustomFieldsApi* | [**createCustomFieldDefinition**](docs/CustomFieldsApi.md#createcustomfielddefinitionoperation) | **POST** /v1/erp/custom-fields/definitions | 
 *CustomFieldsApi* | [**deleteCustomFieldDefinition**](docs/CustomFieldsApi.md#deletecustomfielddefinition) | **DELETE** /v1/erp/custom-fields/definitions/{id} | 
 *CustomFieldsApi* | [**getCustomFieldValues**](docs/CustomFieldsApi.md#getcustomfieldvalues) | **GET** /v1/erp/custom-fields/values/{entity_type}/{entity_id} | 
 *CustomFieldsApi* | [**listCustomFieldDefinitions**](docs/CustomFieldsApi.md#listcustomfielddefinitions) | **GET** /v1/erp/custom-fields/definitions | 
 *CustomFieldsApi* | [**setCustomFieldValues**](docs/CustomFieldsApi.md#setcustomfieldvaluesoperation) | **PUT** /v1/erp/custom-fields/values/{entity_type}/{entity_id} | 
 *CustomFieldsApi* | [**updateCustomFieldDefinition**](docs/CustomFieldsApi.md#updatecustomfielddefinitionoperation) | **PUT** /v1/erp/custom-fields/definitions/{id} | 
+*CustomerContactsApi* | [**cancelCustomerContact**](docs/CustomerContactsApi.md#cancelcustomercontact) | **DELETE** /v1/erp/customer-contacts/{contact_id} | 取り消し。行は消さず &#x60;cancelledAt&#x60; / &#x60;cancelledBy&#x60; を立てて返す。
+*CustomerContactsApi* | [**createCustomerContact**](docs/CustomerContactsApi.md#createcustomercontactoperation) | **POST** /v1/erp/customers/{customer_id}/contacts | 
+*CustomerContactsApi* | [**listAllCustomerContacts**](docs/CustomerContactsApi.md#listallcustomercontacts) | **GET** /v1/erp/customer-contacts | 
+*CustomerContactsApi* | [**listCustomerContacts**](docs/CustomerContactsApi.md#listcustomercontacts) | **GET** /v1/erp/customers/{customer_id}/contacts | 
+*CustomerContactsApi* | [**lookupLatestCustomerContacts**](docs/CustomerContactsApi.md#lookuplatestcustomercontacts) | **POST** /v1/erp/customer-contacts/latest-lookup | 
+*CustomerContactsApi* | [**updateCustomerContact**](docs/CustomerContactsApi.md#updatecustomercontactoperation) | **PATCH** /v1/erp/customer-contacts/{contact_id} | 
+*CustomersApi* | [**createConsumerCustomer**](docs/CustomersApi.md#createconsumercustomeroperation) | **POST** /v1/erp/customers | 
 *DealsApi* | [**createDeal**](docs/DealsApi.md#createdealoperation) | **POST** /v1/erp/deals | 
 *DealsApi* | [**getDeal**](docs/DealsApi.md#getdeal) | **GET** /v1/erp/deals/{id} | 
 *DealsApi* | [**listDeals**](docs/DealsApi.md#listdeals) | **GET** /v1/erp/deals | 
@@ -139,7 +150,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *GolfCourseApi* | [**upsertCaddieAvailability**](docs/GolfCourseApi.md#upsertcaddieavailability) | **POST** /v1/erp/extensions/golf-course/caddie-availabilities | 
 *GolfCourseApi* | [**upsertDailyBudget**](docs/GolfCourseApi.md#upsertdailybudget) | **POST** /v1/erp/extensions/golf-course/daily-budgets | 
 *GolfCourseApi* | [**upsertGolfReservationProduct**](docs/GolfCourseApi.md#upsertgolfreservationproduct) | **POST** /v1/erp/extensions/golf-course/reservation-products/{service_id} | 
-*GolfCourseExtensionApi* | [**analyzeGolfCourseTabular**](docs/GolfCourseExtensionApi.md#analyzegolfcoursetabular) | **POST** /v1/erp/extensions/golf-course/tabular/analyze | 
+*GolfCourseExtensionApi* | [**analyzeGolfCourseTabular**](docs/GolfCourseExtensionApi.md#analyzegolfcoursetabular) | **POST** /v1/erp/extensions/golf-course/tabular/analyze | Deprecated authorization-compatible alias of [&#x60;analyze_bridge_tabular&#x60;].
 *HRMApi* | [**clockInStaff**](docs/HRMApi.md#clockinstaff) | **POST** /v1/erp/hrm/staff/{id}/clock-in | 
 *HRMApi* | [**clockInStaffLegacyPrefix**](docs/HRMApi.md#clockinstafflegacyprefix) | **POST** /v1/erp/staff/{id}/clock-in | 
 *HRMApi* | [**clockOutStaff**](docs/HRMApi.md#clockoutstaff) | **POST** /v1/erp/hrm/staff/{id}/clock-out | 
@@ -227,17 +238,26 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *MembershipApi* | [**createCustomerCredential**](docs/MembershipApi.md#createcustomercredentialoperation) | **POST** /v1/erp/membership/customers/{customer_id}/credentials | 
 *MembershipApi* | [**createCustomerSubject**](docs/MembershipApi.md#createcustomersubjectoperation) | **POST** /v1/erp/membership/customers/{customer_id}/subjects | 
 *MembershipApi* | [**createMembershipConsentItem**](docs/MembershipApi.md#createmembershipconsentitemoperation) | **POST** /v1/erp/membership/consent-items | 
+*MembershipApi* | [**createMembershipEntitlement**](docs/MembershipApi.md#createmembershipentitlementoperation) | **POST** /v1/erp/membership/entitlements | 
 *MembershipApi* | [**createMembershipPlan**](docs/MembershipApi.md#createmembershipplanoperation) | **POST** /v1/erp/membership/plans | 
 *MembershipApi* | [**deleteMembershipConsentItem**](docs/MembershipApi.md#deletemembershipconsentitem) | **DELETE** /v1/erp/membership/consent-items/{id} | 
+*MembershipApi* | [**deleteMembershipEntitlement**](docs/MembershipApi.md#deletemembershipentitlement) | **DELETE** /v1/erp/membership/entitlements/{id} | 
 *MembershipApi* | [**deleteMembershipPlan**](docs/MembershipApi.md#deletemembershipplan) | **DELETE** /v1/erp/membership/plans/{id} | 
 *MembershipApi* | [**getCustomerMembership**](docs/MembershipApi.md#getcustomermembership) | **GET** /v1/erp/membership/customers/{customer_id} | 
+*MembershipApi* | [**listMembershipActivities**](docs/MembershipApi.md#listmembershipactivities) | **GET** /v1/erp/membership/customers/{customer_id}/activities | 
 *MembershipApi* | [**listMembershipConsentItems**](docs/MembershipApi.md#listmembershipconsentitems) | **GET** /v1/erp/membership/consent-items | 
+*MembershipApi* | [**listMembershipEntitlements**](docs/MembershipApi.md#listmembershipentitlements) | **GET** /v1/erp/membership/entitlements | 
+*MembershipApi* | [**listMembershipOfferings**](docs/MembershipApi.md#listmembershipofferings) | **GET** /v1/erp/membership/offerings | 
 *MembershipApi* | [**listMembershipPlans**](docs/MembershipApi.md#listmembershipplans) | **GET** /v1/erp/membership/plans | 
+*MembershipApi* | [**listMembershipRoster**](docs/MembershipApi.md#listmembershiproster) | **GET** /v1/erp/membership/customers | 
+*MembershipApi* | [**listReceptionFields**](docs/MembershipApi.md#listreceptionfields) | **GET** /v1/erp/membership/reception-fields | Every box on this tenant\&#39;s reception sheet.
 *MembershipApi* | [**recordCustomerConsents**](docs/MembershipApi.md#recordcustomerconsentsoperation) | **POST** /v1/erp/membership/customers/{customer_id}/consents | 
 *MembershipApi* | [**registerMembership**](docs/MembershipApi.md#registermembershipoperation) | **POST** /v1/erp/membership/registrations | 
+*MembershipApi* | [**replaceReceptionFields**](docs/MembershipApi.md#replacereceptionfieldsoperation) | **PUT** /v1/erp/membership/reception-fields | Saves the boxes named in the request. Boxes left out keep their current setting, so a screen that shows a subset cannot reset the rest.
 *MembershipApi* | [**updateCustomerCredential**](docs/MembershipApi.md#updatecustomercredentialoperation) | **PUT** /v1/erp/membership/credentials/{id} | 
 *MembershipApi* | [**updateCustomerSubject**](docs/MembershipApi.md#updatecustomersubjectoperation) | **PUT** /v1/erp/membership/subjects/{id} | 
 *MembershipApi* | [**updateMembershipConsentItem**](docs/MembershipApi.md#updatemembershipconsentitemoperation) | **PUT** /v1/erp/membership/consent-items/{id} | 
+*MembershipApi* | [**updateMembershipEntitlement**](docs/MembershipApi.md#updatemembershipentitlementoperation) | **PATCH** /v1/erp/membership/entitlements/{id} | 
 *MembershipApi* | [**updateMembershipPlan**](docs/MembershipApi.md#updatemembershipplanoperation) | **PUT** /v1/erp/membership/plans/{id} | 
 *OrderEntryPointsApi* | [**createOrderEntryPoint**](docs/OrderEntryPointsApi.md#createorderentrypointoperation) | **POST** /v1/field/order-entry-points | Provision a QR or kiosk and mint its public token.
 *OrderEntryPointsApi* | [**disableOrderEntryPoint**](docs/OrderEntryPointsApi.md#disableorderentrypoint) | **DELETE** /v1/field/order-entry-points/{id} | Retire an entry point.
@@ -281,6 +301,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *PublicSalesContractSigningApi* | [**getPublicSigningSession**](docs/PublicSalesContractSigningApi.md#getpublicsigningsession) | **GET** /v1/public/sales-contract-signing/session | 
 *PublicStorefrontApi* | [**listPublicCustomFieldDefinitions**](docs/PublicStorefrontApi.md#listpubliccustomfielddefinitions) | **GET** /v1/public/storefront/{tenant_id}/custom-field-definitions | 
 *PublicStorefrontApi* | [**publicStorefrontAddCartItem**](docs/PublicStorefrontApi.md#publicstorefrontaddcartitem) | **POST** /v1/public/storefront/{tenant_id}/carts/{cart_id}/items | Add a product to a cart.
+*PublicStorefrontApi* | [**publicStorefrontCancelOrderByLookupToken**](docs/PublicStorefrontApi.md#publicstorefrontcancelorderbylookuptoken) | **POST** /v1/public/storefront/{tenant_id}/orders/by-token/{lookup_token}/cancel | Cancel the one order represented by a lookup token.
 *PublicStorefrontApi* | [**publicStorefrontCheckout**](docs/PublicStorefrontApi.md#publicstorefrontcheckout) | **POST** /v1/public/storefront/{tenant_id}/checkout_sessions | Place the order.
 *PublicStorefrontApi* | [**publicStorefrontClearCart**](docs/PublicStorefrontApi.md#publicstorefrontclearcart) | **POST** /v1/public/storefront/{tenant_id}/carts/{cart_id}/clear | Empty a cart.
 *PublicStorefrontApi* | [**publicStorefrontCreateCart**](docs/PublicStorefrontApi.md#publicstorefrontcreatecart) | **POST** /v1/public/storefront/{tenant_id}/carts | Open a cart.
@@ -312,14 +333,19 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *QuotationsApi* | [**getQuotation**](docs/QuotationsApi.md#getquotation) | **GET** /v1/erp/quotations/{id} | 
 *QuotationsApi* | [**listQuotations**](docs/QuotationsApi.md#listquotations) | **GET** /v1/erp/quotations | 
 *QuotationsApi* | [**updateQuotation**](docs/QuotationsApi.md#updatequotationoperation) | **PATCH** /v1/erp/quotations/{id} | 
+*ReservationsApi* | [**acknowledgeHandoffNote**](docs/ReservationsApi.md#acknowledgehandoffnote) | **POST** /v1/erp/handoff-notes/{id}/acknowledge | 
 *ReservationsApi* | [**assignReservationStaff**](docs/ReservationsApi.md#assignreservationstaff) | **POST** /v1/erp/reservations/{id}/staff-assignment | 
 *ReservationsApi* | [**cancelReservationWithPolicy**](docs/ReservationsApi.md#cancelreservationwithpolicy) | **POST** /v1/erp/reservations/{id}/cancel | 
 *ReservationsApi* | [**closeCustomerClientAffiliation**](docs/ReservationsApi.md#closecustomerclientaffiliationoperation) | **POST** /v1/erp/customer-client-affiliations/{id}/close | 
+*ReservationsApi* | [**closeReservationWaitlistEntry**](docs/ReservationsApi.md#closereservationwaitlistentryoperation) | **POST** /v1/erp/reservation-waitlist/{id}/close | 
+*ReservationsApi* | [**convertReservationWaitlistEntry**](docs/ReservationsApi.md#convertreservationwaitlistentryoperation) | **POST** /v1/erp/reservation-waitlist/{id}/convert | 
 *ReservationsApi* | [**createCustomerClientAffiliation**](docs/ReservationsApi.md#createcustomerclientaffiliationoperation) | **POST** /v1/erp/customer-client-affiliations | 
+*ReservationsApi* | [**createHandoffNote**](docs/ReservationsApi.md#createhandoffnoteoperation) | **POST** /v1/erp/handoff-notes | 
 *ReservationsApi* | [**createReservation**](docs/ReservationsApi.md#createreservationoperation) | **POST** /v1/erp/reservations | 
 *ReservationsApi* | [**createReservationProduct**](docs/ReservationsApi.md#createreservationproduct) | **POST** /v1/erp/reservation-products | 
 *ReservationsApi* | [**createReservationResource**](docs/ReservationsApi.md#createreservationresourceoperation) | **POST** /v1/erp/reservation-resources | 
 *ReservationsApi* | [**createReservationType**](docs/ReservationsApi.md#createreservationtypeoperation) | **POST** /v1/erp/reservation-types | 
+*ReservationsApi* | [**createReservationWaitlistEntry**](docs/ReservationsApi.md#createreservationwaitlistentryoperation) | **POST** /v1/erp/reservation-waitlist | 
 *ReservationsApi* | [**createStaffAssignment**](docs/ReservationsApi.md#createstaffassignment) | **POST** /v1/erp/staff-assignments | 
 *ReservationsApi* | [**createStaffProfile**](docs/ReservationsApi.md#createstaffprofile) | **POST** /v1/erp/staff-profiles | 
 *ReservationsApi* | [**deleteReservationProduct**](docs/ReservationsApi.md#deletereservationproduct) | **DELETE** /v1/erp/reservation-products/{id} | 
@@ -338,6 +364,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *ReservationsApi* | [**getReservationResource**](docs/ReservationsApi.md#getreservationresource) | **GET** /v1/erp/reservation-resources/{id} | 
 *ReservationsApi* | [**getReservationResourceSchedule**](docs/ReservationsApi.md#getreservationresourceschedule) | **GET** /v1/erp/reservation-resources/{id}/schedule | 
 *ReservationsApi* | [**getReservationScheduleLocation**](docs/ReservationsApi.md#getreservationschedulelocation) | **GET** /v1/erp/reservation-schedule-location | 
+*ReservationsApi* | [**getReservationWaitlistEntry**](docs/ReservationsApi.md#getreservationwaitlistentry) | **GET** /v1/erp/reservation-waitlist/{id} | 
 *ReservationsApi* | [**importProductSlotsIntoResourceSchedule**](docs/ReservationsApi.md#importproductslotsintoresourceschedule) | **POST** /v1/erp/reservation-resources/{id}/schedule/import-product-slots | 
 *ReservationsApi* | [**issueReservationBillingLink**](docs/ReservationsApi.md#issuereservationbillinglinkoperation) | **POST** /v1/erp/reservations/{id}/billing-link | 
 *ReservationsApi* | [**issueReservationSquareInvoice**](docs/ReservationsApi.md#issuereservationsquareinvoice) | **POST** /v1/erp/reservations/{id}/billing-invoice | 
@@ -345,6 +372,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *ReservationsApi* | [**listCustomerClientAffiliations**](docs/ReservationsApi.md#listcustomerclientaffiliations) | **GET** /v1/erp/customer-client-affiliations | 
 *ReservationsApi* | [**listExtensionLifecycleAuditEvents**](docs/ReservationsApi.md#listextensionlifecycleauditevents) | **GET** /v1/erp/extensions/audit | 
 *ReservationsApi* | [**listExtensions**](docs/ReservationsApi.md#listextensions) | **GET** /v1/erp/extensions | 
+*ReservationsApi* | [**listHandoffNotes**](docs/ReservationsApi.md#listhandoffnotes) | **GET** /v1/erp/handoff-notes | 
 *ReservationsApi* | [**listReservationCancellations**](docs/ReservationsApi.md#listreservationcancellations) | **GET** /v1/erp/reservations/{id}/cancellations | 
 *ReservationsApi* | [**listReservationNotificationTemplates**](docs/ReservationsApi.md#listreservationnotificationtemplates) | **GET** /v1/erp/reservation-notification-templates | 
 *ReservationsApi* | [**listReservationProducts**](docs/ReservationsApi.md#listreservationproducts) | **GET** /v1/erp/reservation-products | 
@@ -353,6 +381,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *ReservationsApi* | [**listReservationScheduleDateOverrides**](docs/ReservationsApi.md#listreservationscheduledateoverrides) | **GET** /v1/erp/reservation-resources/{id}/schedule/overrides | 
 *ReservationsApi* | [**listReservationTypes**](docs/ReservationsApi.md#listreservationtypes) | **GET** /v1/erp/reservation-types | 
 *ReservationsApi* | [**listReservationTypesForManagement**](docs/ReservationsApi.md#listreservationtypesformanagement) | **GET** /v1/erp/reservation-types/manage | 
+*ReservationsApi* | [**listReservationWaitlist**](docs/ReservationsApi.md#listreservationwaitlist) | **GET** /v1/erp/reservation-waitlist | 
 *ReservationsApi* | [**listReservations**](docs/ReservationsApi.md#listreservations) | **GET** /v1/erp/reservations | 
 *ReservationsApi* | [**listResources**](docs/ReservationsApi.md#listresources) | **GET** /v1/erp/resources | 
 *ReservationsApi* | [**listStaffAssignments**](docs/ReservationsApi.md#liststaffassignments) | **GET** /v1/erp/staff-assignments | 
@@ -373,6 +402,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *ReservationsApi* | [**replaceReservationProduct**](docs/ReservationsApi.md#replacereservationproduct) | **PUT** /v1/erp/reservation-products/{id} | 
 *ReservationsApi* | [**replaceReservationProductSlots**](docs/ReservationsApi.md#replacereservationproductslotsoperation) | **PUT** /v1/erp/reservation-products/{id}/slots | 
 *ReservationsApi* | [**replaceReservationResourceSchedule**](docs/ReservationsApi.md#replacereservationresourcescheduleoperation) | **PUT** /v1/erp/reservation-resources/{id}/schedule | 
+*ReservationsApi* | [**retractHandoffNote**](docs/ReservationsApi.md#retracthandoffnoteoperation) | **POST** /v1/erp/handoff-notes/{id}/retract | 
 *ReservationsApi* | [**saveReservationNotificationTemplates**](docs/ReservationsApi.md#savereservationnotificationtemplatesoperation) | **PUT** /v1/erp/reservation-notification-templates | 
 *ReservationsApi* | [**seedReservationProductsFromExtensionConfig**](docs/ReservationsApi.md#seedreservationproductsfromextensionconfig) | **POST** /v1/erp/reservation-products/seed-from-extension-config | 
 *ReservationsApi* | [**sendReservationNotification**](docs/ReservationsApi.md#sendreservationnotificationoperation) | **POST** /v1/erp/reservations/{id}/notifications | 
@@ -415,7 +445,9 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *StoreKitApi* | [**confirmCheckoutSession**](docs/StoreKitApi.md#confirmcheckoutsession) | **POST** /v1/storekit/checkout_sessions/{order_id}/confirm | Confirm checkout session.
 *StoreKitApi* | [**createCart**](docs/StoreKitApi.md#createcartoperation) | **POST** /v1/storekit/carts | Create or retrieve a cart.
 *StoreKitApi* | [**createCustomer**](docs/StoreKitApi.md#createcustomeroperation) | **POST** /v1/storekit/customers | Create customer.
+*StoreKitApi* | [**createWebhookEndpoint**](docs/StoreKitApi.md#createwebhookendpointoperation) | **POST** /v1/storekit/webhook-endpoints | webhook 宛先を登録し、署名シークレットを一度だけ返す。
 *StoreKitApi* | [**deleteCustomer**](docs/StoreKitApi.md#deletecustomer) | **DELETE** /v1/storekit/customers/{customer_id} | Delete customer.
+*StoreKitApi* | [**deleteWebhookEndpoint**](docs/StoreKitApi.md#deletewebhookendpoint) | **DELETE** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を削除する。
 *StoreKitApi* | [**deliverOrder**](docs/StoreKitApi.md#deliverorder) | **POST** /v1/storekit/orders/{order_id}/deliver | Deliver order.
 *StoreKitApi* | [**getCart**](docs/StoreKitApi.md#getcart) | **GET** /v1/storekit/carts/{cart_id} | Get a cart.
 *StoreKitApi* | [**getCustomer**](docs/StoreKitApi.md#getcustomer) | **GET** /v1/storekit/customers/{customer_id} | Get customer.
@@ -423,14 +455,18 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *StoreKitApi* | [**getProduct**](docs/StoreKitApi.md#getproduct) | **GET** /v1/storekit/products/{product_id} | Get a storefront product.
 *StoreKitApi* | [**getProductSelections**](docs/StoreKitApi.md#getproductselections) | **GET** /v1/storekit/products/{product_id}/selections | List the variants and option groups a product offers.
 *StoreKitApi* | [**getProductStock**](docs/StoreKitApi.md#getproductstock) | **GET** /v1/storekit/products/{product_id}/stock | Get product stock.
+*StoreKitApi* | [**getWebhookEndpoint**](docs/StoreKitApi.md#getwebhookendpoint) | **GET** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を1件取得する。
 *StoreKitApi* | [**listCustomers**](docs/StoreKitApi.md#listcustomers) | **GET** /v1/storekit/customers | List customers.
 *StoreKitApi* | [**listFulfillmentMethods**](docs/StoreKitApi.md#listfulfillmentmethods) | **GET** /v1/storekit/fulfillment-methods | List supported fulfillment methods.
 *StoreKitApi* | [**listProducts**](docs/StoreKitApi.md#listproducts) | **GET** /v1/storekit/products | List storefront products.
+*StoreKitApi* | [**listWebhookDeliveries**](docs/StoreKitApi.md#listwebhookdeliveries) | **GET** /v1/storekit/webhook-endpoints/{endpoint_id}/deliveries | 宛先の配送履歴を新しい順に返す。
+*StoreKitApi* | [**listWebhookEndpoints**](docs/StoreKitApi.md#listwebhookendpoints) | **GET** /v1/storekit/webhook-endpoints | テナントの webhook 宛先を一覧する。
 *StoreKitApi* | [**pickupOrder**](docs/StoreKitApi.md#pickuporder) | **POST** /v1/storekit/orders/{order_id}/pickup | Mark pickup order as picked up.
 *StoreKitApi* | [**prepareOrder**](docs/StoreKitApi.md#prepareorder) | **POST** /v1/storekit/orders/{order_id}/prepare | Prepare order for fulfillment.
 *StoreKitApi* | [**readyOrder**](docs/StoreKitApi.md#readyorder) | **POST** /v1/storekit/orders/{order_id}/ready | Mark pickup order as ready.
 *StoreKitApi* | [**refundOrder**](docs/StoreKitApi.md#refundorder) | **POST** /v1/storekit/orders/{order_id}/refund | Refund order.
 *StoreKitApi* | [**removeCartItem**](docs/StoreKitApi.md#removecartitem) | **DELETE** /v1/storekit/carts/{cart_id}/items/{item_id} | Remove a cart item by item ID.
+*StoreKitApi* | [**rotateWebhookEndpointSecret**](docs/StoreKitApi.md#rotatewebhookendpointsecret) | **POST** /v1/storekit/webhook-endpoints/{endpoint_id}/rotate-secret | 署名シークレットを更新し、新しい値を一度だけ返す。
 *StoreKitApi* | [**selectPickupDatetime**](docs/StoreKitApi.md#selectpickupdatetimeoperation) | **POST** /v1/storekit/orders/{order_id}/select-pickup-datetime | Select pickup date-time.
 *StoreKitApi* | [**shipOrder**](docs/StoreKitApi.md#shiporder) | **POST** /v1/storekit/orders/{order_id}/ship | Ship order.
 *StoreKitApi* | [**storefrontCreateReservation**](docs/StoreKitApi.md#storefrontcreatereservationoperation) | **POST** /v1/storekit/reservations | 
@@ -446,8 +482,10 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *StoreKitApi* | [**storekitGetOrder**](docs/StoreKitApi.md#storekitgetorder) | **GET** /v1/storekit/orders/{order_id} | Get order.
 *StoreKitApi* | [**storekitListCategories**](docs/StoreKitApi.md#storekitlistcategories) | **GET** /v1/storekit/categories | List storefront categories.
 *StoreKitApi* | [**storekitListOrders**](docs/StoreKitApi.md#storekitlistorders) | **GET** /v1/storekit/orders | List orders.
+*StoreKitApi* | [**testWebhookEndpoint**](docs/StoreKitApi.md#testwebhookendpoint) | **POST** /v1/storekit/webhook-endpoints/{endpoint_id}/test | 宛先へ署名付きの疎通確認イベントを1回送る。
 *StoreKitApi* | [**updateCartItem**](docs/StoreKitApi.md#updatecartitemoperation) | **POST** /v1/storekit/carts/{cart_id}/items/{item_id} | Update a cart item by item ID.
 *StoreKitApi* | [**updateCustomer**](docs/StoreKitApi.md#updatecustomeroperation) | **POST** /v1/storekit/customers/{customer_id} | Update customer.
+*StoreKitApi* | [**updateWebhookEndpoint**](docs/StoreKitApi.md#updatewebhookendpointoperation) | **PATCH** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を部分更新する。
 *StoreKitApi* | [**validateCoupon**](docs/StoreKitApi.md#validatecouponoperation) | **POST** /v1/storekit/coupons/validate | Validate coupon.
 *StorefrontProfileApi* | [**getStorefrontProfile**](docs/StorefrontProfileApi.md#getstorefrontprofile) | **GET** /v1/field/storefront-profile | 
 *StorefrontProfileApi* | [**saveStorefrontProfile**](docs/StorefrontProfileApi.md#savestorefrontprofileoperation) | **PUT** /v1/field/storefront-profile | 
@@ -456,6 +494,8 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *TACHYONFieldAPIKeysApi* | [**getApiKey**](docs/TACHYONFieldAPIKeysApi.md#getapikey) | **GET** /v1/field/api-keys/{id} | 
 *TACHYONFieldAPIKeysApi* | [**listApiKeys**](docs/TACHYONFieldAPIKeysApi.md#listapikeys) | **GET** /v1/field/api-keys | 
 *TACHYONFieldAPIKeysApi* | [**revokeApiKey**](docs/TACHYONFieldAPIKeysApi.md#revokeapikey) | **POST** /v1/field/api-keys/{id}/revoke | 
+*TACHYONFieldAnalyticsApi* | [**getCustomerPurchaseSummary**](docs/TACHYONFieldAnalyticsApi.md#getcustomerpurchasesummary) | **GET** /v1/erp/analytics/customer-purchase-summary/{customer_id} | 顧客1件の購買サマリ。
+*TACHYONFieldAnalyticsApi* | [**listCustomerPurchaseSummaries**](docs/TACHYONFieldAnalyticsApi.md#listcustomerpurchasesummaries) | **GET** /v1/erp/analytics/customer-purchase-summary | 顧客ごとの購買サマリを横断で返す。
 *TACHYONFieldBillingAccountsApi* | [**addOperator**](docs/TACHYONFieldBillingAccountsApi.md#addoperatoroperation) | **POST** /v1/field/billing-accounts/{id}/operators | &#x60;POST /v1/field/billing-accounts/{id}/operators&#x60; — add an operator to a billing account.
 *TACHYONFieldBillingAccountsApi* | [**createBillingAccount**](docs/TACHYONFieldBillingAccountsApi.md#createbillingaccountoperation) | **POST** /v1/field/billing-accounts | &#x60;POST /v1/field/billing-accounts&#x60; — create a new billing account.
 *TACHYONFieldBillingAccountsApi* | [**getBillingAccount**](docs/TACHYONFieldBillingAccountsApi.md#getbillingaccount) | **GET** /v1/field/billing-accounts/{id} | &#x60;GET /v1/field/billing-accounts/{id}&#x60; — get a single billing account.
@@ -479,7 +519,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 *TACHYONFieldBridgeExportApi* | [**listBridgeExportObjects**](docs/TACHYONFieldBridgeExportApi.md#listbridgeexportobjects) | **GET** /v1/bridge/exports/objects | 
 *TACHYONFieldCRMClientsApi* | [**exportClientsCsv**](docs/TACHYONFieldCRMClientsApi.md#exportclientscsv) | **GET** /v1/erp/clients/export.csv | 
 *TACHYONFieldCRMClientsApi* | [**importClientsCsv**](docs/TACHYONFieldCRMClientsApi.md#importclientscsv) | **POST** /v1/erp/clients/import.csv | 
-*TACHYONFieldCRMCustomersApi* | [**exportConsumerCustomersCsv**](docs/TACHYONFieldCRMCustomersApi.md#exportconsumercustomerscsv) | **GET** /v1/erp/customers/export.csv | 
+*TACHYONFieldCRMCustomersApi* | [**exportConsumerCustomersCsv**](docs/TACHYONFieldCRMCustomersApi.md#exportconsumercustomerscsv) | **GET** /v1/erp/customers/export.csv | 一覧と同じクエリ文字列（&#x60;segment&#x60; / &#x60;sort&#x60; / &#x60;min_order_total_nanodollar&#x60; など）を受け、絞り込んだ結果をそのまま CSV にする。画面で作ったリストを そのまま持ち出せるようにするためで、絞り込みを無視して全件を返すと、 「購入金額上位のリスト」を出したつもりの利用者に台帳全体が渡る。 &#x60;limit&#x60; / &#x60;offset&#x60; は無視して先頭から全件を読む。
 *TACHYONFieldCRMCustomersApi* | [**importConsumerCustomersCsv**](docs/TACHYONFieldCRMCustomersApi.md#importconsumercustomerscsv) | **POST** /v1/erp/customers/import.csv | 
 *TACHYONFieldIAMApi* | [**deleteErpUserRole**](docs/TACHYONFieldIAMApi.md#deleteerpuserrole) | **DELETE** /v1/field/iam/users/{user_id} | 
 *TACHYONFieldIAMApi* | [**inviteErpUser**](docs/TACHYONFieldIAMApi.md#inviteerpuseroperation) | **POST** /v1/field/iam/users/invite | 
@@ -576,32 +616,47 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [ClockInRequest](docs/ClockInRequest.md)
 - [ClockOutRequest](docs/ClockOutRequest.md)
 - [CloseCustomerClientAffiliationRequest](docs/CloseCustomerClientAffiliationRequest.md)
+- [CloseReservationWaitlistEntryRequest](docs/CloseReservationWaitlistEntryRequest.md)
 - [CompletePublicSigningInput](docs/CompletePublicSigningInput.md)
+- [ConsumerConsentStateListResponse](docs/ConsumerConsentStateListResponse.md)
+- [ConsumerConsentStateResponse](docs/ConsumerConsentStateResponse.md)
 - [ConsumerCustomerCsvImportError](docs/ConsumerCustomerCsvImportError.md)
 - [ConsumerCustomerCsvImportResponse](docs/ConsumerCustomerCsvImportResponse.md)
+- [ContactPreferenceChannel](docs/ContactPreferenceChannel.md)
+- [ContactPreferenceEntryRequest](docs/ContactPreferenceEntryRequest.md)
+- [ContactPreferenceListResponse](docs/ContactPreferenceListResponse.md)
+- [ContactPreferenceResponse](docs/ContactPreferenceResponse.md)
 - [ContractLineItem](docs/ContractLineItem.md)
 - [ConvertOrderToInvoiceResponse](docs/ConvertOrderToInvoiceResponse.md)
 - [ConvertQuotationToInvoiceResponse](docs/ConvertQuotationToInvoiceResponse.md)
+- [ConvertReservationWaitlistEntryRequest](docs/ConvertReservationWaitlistEntryRequest.md)
+- [ConvertReservationWaitlistEntryResponse](docs/ConvertReservationWaitlistEntryResponse.md)
 - [CouponResponse](docs/CouponResponse.md)
 - [CrateOrderApiOrderItemResponse](docs/CrateOrderApiOrderItemResponse.md)
 - [CrateOrderApiOrderResponse](docs/CrateOrderApiOrderResponse.md)
+- [CreatableCustomFieldTypeWire](docs/CreatableCustomFieldTypeWire.md)
 - [CreateActivityRequest](docs/CreateActivityRequest.md)
 - [CreateApiKeyRequest](docs/CreateApiKeyRequest.md)
 - [CreateApiKeyResponse](docs/CreateApiKeyResponse.md)
 - [CreateApprovalFlowRequest](docs/CreateApprovalFlowRequest.md)
 - [CreateBillingAccountRequest](docs/CreateBillingAccountRequest.md)
 - [CreateCartRequest](docs/CreateCartRequest.md)
+- [CreateConsumerCustomerRequest](docs/CreateConsumerCustomerRequest.md)
 - [CreateCustomFieldDefinitionRequest](docs/CreateCustomFieldDefinitionRequest.md)
 - [CreateCustomerClientAffiliationRequest](docs/CreateCustomerClientAffiliationRequest.md)
+- [CreateCustomerContactRequest](docs/CreateCustomerContactRequest.md)
 - [CreateCustomerCredentialRequest](docs/CreateCustomerCredentialRequest.md)
 - [CreateCustomerRequest](docs/CreateCustomerRequest.md)
 - [CreateCustomerSubjectRequest](docs/CreateCustomerSubjectRequest.md)
 - [CreateDealRequest](docs/CreateDealRequest.md)
 - [CreateExpenseRequest](docs/CreateExpenseRequest.md)
+- [CreateHandoffNoteRequest](docs/CreateHandoffNoteRequest.md)
 - [CreateInvoiceLineItemRequest](docs/CreateInvoiceLineItemRequest.md)
 - [CreateInvoiceRequest](docs/CreateInvoiceRequest.md)
 - [CreateMembershipConsentItemRequest](docs/CreateMembershipConsentItemRequest.md)
+- [CreateMembershipEntitlementRequest](docs/CreateMembershipEntitlementRequest.md)
 - [CreateMembershipPlanRequest](docs/CreateMembershipPlanRequest.md)
+- [CreateOrderClientAddressRequest](docs/CreateOrderClientAddressRequest.md)
 - [CreateOrderEntryPointRequest](docs/CreateOrderEntryPointRequest.md)
 - [CreateOrderItemRequest](docs/CreateOrderItemRequest.md)
 - [CreateOrderProductRequest](docs/CreateOrderProductRequest.md)
@@ -616,6 +671,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [CreateReservationResourceRequest](docs/CreateReservationResourceRequest.md)
 - [CreateReservationResponse](docs/CreateReservationResponse.md)
 - [CreateReservationTypeRequest](docs/CreateReservationTypeRequest.md)
+- [CreateReservationWaitlistEntryRequest](docs/CreateReservationWaitlistEntryRequest.md)
 - [CreateReturnLineRequest](docs/CreateReturnLineRequest.md)
 - [CreateReturnRequest](docs/CreateReturnRequest.md)
 - [CreateSaasChangeRequestRequest](docs/CreateSaasChangeRequestRequest.md)
@@ -630,16 +686,23 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [CreateStockTransferRequest](docs/CreateStockTransferRequest.md)
 - [CreateStripeConnectOnboardingLinkRequest](docs/CreateStripeConnectOnboardingLinkRequest.md)
 - [CreateVendorRequest](docs/CreateVendorRequest.md)
+- [CreateWebhookEndpointRequest](docs/CreateWebhookEndpointRequest.md)
+- [CreatedEntityResponse](docs/CreatedEntityResponse.md)
+- [CurrencyTotalsResponse](docs/CurrencyTotalsResponse.md)
 - [CustomFieldDefinitionListResponse](docs/CustomFieldDefinitionListResponse.md)
 - [CustomFieldDefinitionResponse](docs/CustomFieldDefinitionResponse.md)
 - [CustomFieldEntityType](docs/CustomFieldEntityType.md)
-- [CustomFieldType](docs/CustomFieldType.md)
 - [CustomFieldValuesResponse](docs/CustomFieldValuesResponse.md)
 - [CustomerAddressRequest](docs/CustomerAddressRequest.md)
 - [CustomerClientAffiliation](docs/CustomerClientAffiliation.md)
 - [CustomerClientAffiliationListResponse](docs/CustomerClientAffiliationListResponse.md)
 - [CustomerConsentResponse](docs/CustomerConsentResponse.md)
+- [CustomerContactListResponse](docs/CustomerContactListResponse.md)
+- [CustomerContactResponse](docs/CustomerContactResponse.md)
 - [CustomerCredentialResponse](docs/CustomerCredentialResponse.md)
+- [CustomerPurchaseSummaryListResponse](docs/CustomerPurchaseSummaryListResponse.md)
+- [CustomerPurchaseSummaryResponse](docs/CustomerPurchaseSummaryResponse.md)
+- [CustomerPurchaseSummaryRowResponse](docs/CustomerPurchaseSummaryRowResponse.md)
 - [CustomerResponse](docs/CustomerResponse.md)
 - [CustomerSubjectResponse](docs/CustomerSubjectResponse.md)
 - [DailyBudget](docs/DailyBudget.md)
@@ -730,6 +793,9 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [GolfReservationProductListResponse](docs/GolfReservationProductListResponse.md)
 - [GolfResourceKind](docs/GolfResourceKind.md)
 - [GolfUnpaidCancellationItem](docs/GolfUnpaidCancellationItem.md)
+- [HandoffNote](docs/HandoffNote.md)
+- [HandoffNoteAuthorType](docs/HandoffNoteAuthorType.md)
+- [HandoffNoteListResponse](docs/HandoffNoteListResponse.md)
 - [ImportProductSlotsRequest](docs/ImportProductSlotsRequest.md)
 - [ImportProductSlotsResponse](docs/ImportProductSlotsResponse.md)
 - [InspectionDispositionLineRequest](docs/InspectionDispositionLineRequest.md)
@@ -747,30 +813,49 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [InvoiceBillToRequest](docs/InvoiceBillToRequest.md)
 - [InvoiceBillToRequestOneOf](docs/InvoiceBillToRequestOneOf.md)
 - [InvoiceBillToRequestOneOf1](docs/InvoiceBillToRequestOneOf1.md)
+- [InvoiceBillToRequestOneOf2](docs/InvoiceBillToRequestOneOf2.md)
 - [InvoiceBillToResponse](docs/InvoiceBillToResponse.md)
 - [InvoiceBillToResponseOneOf](docs/InvoiceBillToResponseOneOf.md)
 - [InvoiceBillToResponseOneOf1](docs/InvoiceBillToResponseOneOf1.md)
 - [InvoiceBillToResponseOneOf2](docs/InvoiceBillToResponseOneOf2.md)
+- [InvoiceBillToResponseOneOf3](docs/InvoiceBillToResponseOneOf3.md)
 - [InvoiceLineItemResponse](docs/InvoiceLineItemResponse.md)
 - [InvoiceListResponse](docs/InvoiceListResponse.md)
 - [InvoiceResponse](docs/InvoiceResponse.md)
+- [InvoiceSourceRequest](docs/InvoiceSourceRequest.md)
+- [InvoiceSourceResponse](docs/InvoiceSourceResponse.md)
 - [InvoiceVoidEligibilityResponse](docs/InvoiceVoidEligibilityResponse.md)
 - [InvoiceVoidErrorResponse](docs/InvoiceVoidErrorResponse.md)
 - [InvoiceVoidPeriodResponse](docs/InvoiceVoidPeriodResponse.md)
 - [IssueReservationBillingLinkRequest](docs/IssueReservationBillingLinkRequest.md)
 - [IssueReservationBillingLinkResponse](docs/IssueReservationBillingLinkResponse.md)
 - [IssueReservationSquareInvoiceResponse](docs/IssueReservationSquareInvoiceResponse.md)
+- [LatestCustomerContactListResponse](docs/LatestCustomerContactListResponse.md)
+- [LatestCustomerContactLookupRequest](docs/LatestCustomerContactLookupRequest.md)
+- [LatestCustomerContactResponse](docs/LatestCustomerContactResponse.md)
 - [LeaveRequestStatus](docs/LeaveRequestStatus.md)
 - [LeaveRequestType](docs/LeaveRequestType.md)
 - [LowStockAlertListResponse](docs/LowStockAlertListResponse.md)
 - [LowStockAlertResponse](docs/LowStockAlertResponse.md)
+- [MembershipActivityActorResponse](docs/MembershipActivityActorResponse.md)
+- [MembershipActivityListResponse](docs/MembershipActivityListResponse.md)
+- [MembershipActivityResponse](docs/MembershipActivityResponse.md)
+- [MembershipActivitySourceResponse](docs/MembershipActivitySourceResponse.md)
+- [MembershipActivityTargetResponse](docs/MembershipActivityTargetResponse.md)
 - [MembershipConsentItemListResponse](docs/MembershipConsentItemListResponse.md)
 - [MembershipConsentItemResponse](docs/MembershipConsentItemResponse.md)
 - [MembershipCustomerResponse](docs/MembershipCustomerResponse.md)
 - [MembershipCustomerViewResponse](docs/MembershipCustomerViewResponse.md)
+- [MembershipEntitlementListResponse](docs/MembershipEntitlementListResponse.md)
+- [MembershipEntitlementResponse](docs/MembershipEntitlementResponse.md)
+- [MembershipOfferingListResponse](docs/MembershipOfferingListResponse.md)
+- [MembershipOfferingResponse](docs/MembershipOfferingResponse.md)
 - [MembershipPlanAssignmentResponse](docs/MembershipPlanAssignmentResponse.md)
 - [MembershipPlanListResponse](docs/MembershipPlanListResponse.md)
 - [MembershipPlanResponse](docs/MembershipPlanResponse.md)
+- [MembershipRosterEntryResponse](docs/MembershipRosterEntryResponse.md)
+- [MembershipRosterResponse](docs/MembershipRosterResponse.md)
+- [MembershipSaleResponse](docs/MembershipSaleResponse.md)
 - [MessageResponse](docs/MessageResponse.md)
 - [OkResponse](docs/OkResponse.md)
 - [OperatorBillingAccountResponse](docs/OperatorBillingAccountResponse.md)
@@ -848,10 +933,17 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [QuotationListResponse](docs/QuotationListResponse.md)
 - [QuotationPdfResponse](docs/QuotationPdfResponse.md)
 - [QuotationResponse](docs/QuotationResponse.md)
+- [ReceptionFieldKey](docs/ReceptionFieldKey.md)
+- [ReceptionFieldListResponse](docs/ReceptionFieldListResponse.md)
+- [ReceptionFieldResponse](docs/ReceptionFieldResponse.md)
+- [ReceptionFieldSettingRequest](docs/ReceptionFieldSettingRequest.md)
 - [ReconcileSquarePaymentRequest](docs/ReconcileSquarePaymentRequest.md)
+- [RecordConsumerConsentsRequest](docs/RecordConsumerConsentsRequest.md)
+- [RecordContactPreferencesRequest](docs/RecordContactPreferencesRequest.md)
 - [RecordCustomerConsentsRequest](docs/RecordCustomerConsentsRequest.md)
 - [RegisterExtensionRequest](docs/RegisterExtensionRequest.md)
 - [RegisterMembershipRequest](docs/RegisterMembershipRequest.md)
+- [RegistrationAddressRequest](docs/RegistrationAddressRequest.md)
 - [RegistrationConsentRequest](docs/RegistrationConsentRequest.md)
 - [RegistrationCredentialRequest](docs/RegistrationCredentialRequest.md)
 - [RegistrationCustomerRequest](docs/RegistrationCustomerRequest.md)
@@ -862,6 +954,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [ReleasePaymentIntentHoldRequest](docs/ReleasePaymentIntentHoldRequest.md)
 - [ReplaceCaddieCourseMembershipsRequest](docs/ReplaceCaddieCourseMembershipsRequest.md)
 - [ReplaceGolfProductSlotsRequest](docs/ReplaceGolfProductSlotsRequest.md)
+- [ReplaceReceptionFieldsRequest](docs/ReplaceReceptionFieldsRequest.md)
 - [ReplaceReservationProductSlotsRequest](docs/ReplaceReservationProductSlotsRequest.md)
 - [ReplaceReservationResourceScheduleRequest](docs/ReplaceReservationResourceScheduleRequest.md)
 - [ReplenishmentPolicyResponse](docs/ReplenishmentPolicyResponse.md)
@@ -899,11 +992,16 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [ReservationStatusSnapshot](docs/ReservationStatusSnapshot.md)
 - [ReservationType](docs/ReservationType.md)
 - [ReservationTypeListResponse](docs/ReservationTypeListResponse.md)
+- [ReservationWaitlistCandidate](docs/ReservationWaitlistCandidate.md)
+- [ReservationWaitlistEntry](docs/ReservationWaitlistEntry.md)
+- [ReservationWaitlistListResponse](docs/ReservationWaitlistListResponse.md)
+- [ReservationWaitlistStatus](docs/ReservationWaitlistStatus.md)
 - [ResourceListResponse](docs/ResourceListResponse.md)
 - [ResourceTimeSlot](docs/ResourceTimeSlot.md)
 - [ResourceTimeSlotGenerationResponse](docs/ResourceTimeSlotGenerationResponse.md)
 - [ResourceTimeSlotGenerationResult](docs/ResourceTimeSlotGenerationResult.md)
 - [ResourceTimeSlotListResponse](docs/ResourceTimeSlotListResponse.md)
+- [RetractHandoffNoteRequest](docs/RetractHandoffNoteRequest.md)
 - [ReturnLineRefRequest](docs/ReturnLineRefRequest.md)
 - [ReturnLineRefResponse](docs/ReturnLineRefResponse.md)
 - [ReturnLineResponse](docs/ReturnLineResponse.md)
@@ -1033,6 +1131,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [StorefrontUpdateReservationRequest](docs/StorefrontUpdateReservationRequest.md)
 - [StripeConnectAccountResponse](docs/StripeConnectAccountResponse.md)
 - [StripeConnectOnboardingLinkResponse](docs/StripeConnectOnboardingLinkResponse.md)
+- [SummaryPeriodResponse](docs/SummaryPeriodResponse.md)
 - [TabularAnalyzeResponse](docs/TabularAnalyzeResponse.md)
 - [TabularMappingFieldResponse](docs/TabularMappingFieldResponse.md)
 - [TabularMappingResponse](docs/TabularMappingResponse.md)
@@ -1048,6 +1147,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [UpdateCartItemRequest](docs/UpdateCartItemRequest.md)
 - [UpdateCustomFieldDefinitionRequest](docs/UpdateCustomFieldDefinitionRequest.md)
 - [UpdateCustomerClientAffiliationRequest](docs/UpdateCustomerClientAffiliationRequest.md)
+- [UpdateCustomerContactRequest](docs/UpdateCustomerContactRequest.md)
 - [UpdateCustomerCredentialRequest](docs/UpdateCustomerCredentialRequest.md)
 - [UpdateCustomerRequest](docs/UpdateCustomerRequest.md)
 - [UpdateCustomerSubjectRequest](docs/UpdateCustomerSubjectRequest.md)
@@ -1061,6 +1161,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [UpdateInvoiceRequest](docs/UpdateInvoiceRequest.md)
 - [UpdateLowStockDecisionRequest](docs/UpdateLowStockDecisionRequest.md)
 - [UpdateMembershipConsentItemRequest](docs/UpdateMembershipConsentItemRequest.md)
+- [UpdateMembershipEntitlementRequest](docs/UpdateMembershipEntitlementRequest.md)
 - [UpdateMembershipPlanRequest](docs/UpdateMembershipPlanRequest.md)
 - [UpdateOrderEntryPointRequest](docs/UpdateOrderEntryPointRequest.md)
 - [UpdateOrderProductRequest](docs/UpdateOrderProductRequest.md)
@@ -1078,6 +1179,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [UpdateStaffShiftRequest](docs/UpdateStaffShiftRequest.md)
 - [UpdateStageSettingsRequest](docs/UpdateStageSettingsRequest.md)
 - [UpdateVendorRequest](docs/UpdateVendorRequest.md)
+- [UpdateWebhookEndpointRequest](docs/UpdateWebhookEndpointRequest.md)
 - [UpsertCategoryRequest](docs/UpsertCategoryRequest.md)
 - [UpsertReplenishmentPolicyRequest](docs/UpsertReplenishmentPolicyRequest.md)
 - [ValidateCouponRequest](docs/ValidateCouponRequest.md)
@@ -1087,6 +1189,10 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 - [VoidInvoiceResponse](docs/VoidInvoiceResponse.md)
 - [WarehouseListResponse](docs/WarehouseListResponse.md)
 - [WarehouseResponse](docs/WarehouseResponse.md)
+- [WebhookDeliveryResponse](docs/WebhookDeliveryResponse.md)
+- [WebhookEndpointResponse](docs/WebhookEndpointResponse.md)
+- [WebhookEndpointWithSecretResponse](docs/WebhookEndpointWithSecretResponse.md)
+- [WebhookTestResponse](docs/WebhookTestResponse.md)
 
 ### Authorization
 
@@ -1116,7 +1222,7 @@ This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.or
 and is automatically generated by the
 [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `0.1.16`
+- API version: `0.1.25`
 - Package version: `0.1.0`
 - Generator version: `7.20.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`

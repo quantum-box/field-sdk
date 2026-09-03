@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `note` | string
 `planId` | string
+`productId` | string
 `startedOn` | string
 
 

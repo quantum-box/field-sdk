@@ -606,11 +606,18 @@ export interface AssignMembershipPlanRequest {
      */
     note?: string | null;
     /**
-     * 
+     * Class to join directly. Mutually exclusive with `productId`; one of
+     * the two is required.
      * @type {string}
      * @memberof AssignMembershipPlanRequest
      */
-    planId: string;
+    planId?: string | null;
+    /**
+     * Product being sold. Mutually exclusive with `planId`.
+     * @type {string}
+     * @memberof AssignMembershipPlanRequest
+     */
+    productId?: string | null;
     /**
      * YYYY-MM-DD (default today)
      * @type {string}
@@ -2213,6 +2220,12 @@ export interface ClientCsvImportResponse {
      * @memberof ClientCsvImportResponse
      */
     errors: Array<ClientCsvImportError>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClientCsvImportResponse
+     */
+    updated: number;
 }
 /**
  * 
@@ -2287,6 +2300,27 @@ export interface CloseCustomerClientAffiliationRequest {
 /**
  * 
  * @export
+ * @interface CloseReservationWaitlistEntryRequest
+ */
+export interface CloseReservationWaitlistEntryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CloseReservationWaitlistEntryRequest
+     */
+    reason?: string | null;
+    /**
+     * `withdrawn` (the guest no longer wants it) or `expired` (the date
+     * passed). `converted` is not accepted: that status is only reachable by
+     * actually creating the reservation.
+     * @type {string}
+     * @memberof CloseReservationWaitlistEntryRequest
+     */
+    status: string;
+}
+/**
+ * 
+ * @export
  * @interface CompletePublicSigningInput
  */
 export interface CompletePublicSigningInput {
@@ -2302,6 +2336,105 @@ export interface CompletePublicSigningInput {
      * @memberof CompletePublicSigningInput
      */
     values: Array<PublicSigningValueInput>;
+}
+/**
+ * 
+ * @export
+ * @interface ConsumerConsentStateListResponse
+ */
+export interface ConsumerConsentStateListResponse {
+    /**
+     * 
+     * @type {Array<ConsumerConsentStateResponse>}
+     * @memberof ConsumerConsentStateListResponse
+     */
+    items: Array<ConsumerConsentStateResponse>;
+}
+/**
+ * `consent_key` ごとに解決した現在の同意状態。
+ * 
+ * 定義側 (`membership_consent_items`) と証跡側 (`customer_consents`) を突き
+ * 合わせた結果を返す。片方にしか無い状態もあるので、どちらの欠落も `null`
+ * で表せる形にしてある。
+ * @export
+ * @interface ConsumerConsentStateResponse
+ */
+export interface ConsumerConsentStateResponse {
+    /**
+     * 一度も記録が無ければ `null`。`false` は「拒否された」であって「未取得」
+     * ではない。
+     * @type {boolean}
+     * @memberof ConsumerConsentStateResponse
+     */
+    accepted?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    acceptedAt?: string | null;
+    /**
+     * 記録時点の約款バージョン。
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    acceptedTermsVersion?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    body?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    channel?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    consentKey: string;
+    /**
+     * 定義側の現在の約款バージョン。
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    currentTermsVersion?: string | null;
+    /**
+     * Source application document retained in the Evidence domain.
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    evidenceRecordId?: string | null;
+    /**
+     * 定義が無効化・削除済みの `consentKey` では `null`。証跡は残るので行は
+     * 消えない。
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    label?: string | null;
+    /**
+     * 同意済みだが、そのときの約款バージョンが現在の定義と違う。再同意を
+     * 促す判断に使う。
+     * @type {boolean}
+     * @memberof ConsumerConsentStateResponse
+     */
+    outdated: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumerConsentStateResponse
+     */
+    recordedBy?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConsumerConsentStateResponse
+     */
+    required?: boolean | null;
 }
 /**
  * 
@@ -2340,7 +2473,139 @@ export interface ConsumerCustomerCsvImportResponse {
      * @memberof ConsumerCustomerCsvImportResponse
      */
     errors: Array<ConsumerCustomerCsvImportError>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ConsumerCustomerCsvImportResponse
+     */
+    updated: number;
 }
+
+/**
+ * 顧客へ**連絡する手段**。連絡拒否 (do-not-contact) の単位 (PLT-4053)。
+ * 
+ * [`ConsentChannel`] とは別物。あちらは「窓口で取ったか web で取ったか」
+ * という受け取り経路で、こちらは「電話してよいか、郵便を送ってよいか」。
+ * 同じ列で2つの意味を持たせると、電話を拒否した顧客が「店頭で申し出た」
+ * の意味の `store` として保存され、判定が壊れる。
+ * 
+ * テナント設定ではなく固定の集合にしてある。連絡可否を読む側（顧客を
+ * 抽出して案内を送る Cloud App）が、テナントごとのキー体系を知らずに
+ * 「連絡してよい相手」を求められることが要件そのもので、語彙が可変だと
+ * 判定が呼び出し側に戻ってしまう。業種非依存の手段だけを並べる。
+ * 
+ * 接触履歴の [`crate::customer_contact::ContactChannel`] (PLT-4052) とも
+ * 別物。あちらは「実際にどの手段で接触したか」の記録で `visit` / `chat` /
+ * `other` を含み、こちらは「送ってよいか」を判定する到達手段だけに絞って
+ * ある。両方を `ContactChannel` と呼ぶと `order` の re-export で名前が
+ * 衝突するので、連絡可否側に接頭辞を付けている。
+ * @export
+ */
+export const ContactPreferenceChannel = {
+    Phone: 'Phone',
+    Email: 'Email',
+    Sms: 'Sms',
+    Post: 'Post'
+} as const;
+export type ContactPreferenceChannel = typeof ContactPreferenceChannel[keyof typeof ContactPreferenceChannel];
+
+/**
+ * 
+ * @export
+ * @interface ContactPreferenceEntryRequest
+ */
+export interface ContactPreferenceEntryRequest {
+    /**
+     * 連絡手段。`phone` / `email` / `sms` / `post`。
+     * @type {ContactPreferenceChannel}
+     * @memberof ContactPreferenceEntryRequest
+     */
+    channel: ContactPreferenceChannel;
+    /**
+     * `false` で「このチャネルへは連絡しない」。`true` はその撤回。
+     * どちらも証跡への追記で、前の行は残る。
+     * @type {boolean}
+     * @memberof ContactPreferenceEntryRequest
+     */
+    contactable: boolean;
+    /**
+     * 申し出の内容や受け付けた状況。省略可。
+     * @type {string}
+     * @memberof ContactPreferenceEntryRequest
+     */
+    note?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ContactPreferenceListResponse
+ */
+export interface ContactPreferenceListResponse {
+    /**
+     * 
+     * @type {Array<ContactPreferenceResponse>}
+     * @memberof ContactPreferenceListResponse
+     */
+    items: Array<ContactPreferenceResponse>;
+}
+/**
+ * チャネルごとに解決した現在の連絡可否。
+ * 
+ * [`ContactPreferenceChannel::ALL`] の全チャネルを必ず返す。記録の無いチャネルを
+ * 省くと、呼び出し側が「返ってこない = 不可」と読む余地が残る。
+ * @export
+ * @interface ContactPreferenceResponse
+ */
+export interface ContactPreferenceResponse {
+    /**
+     * 
+     * @type {ContactPreferenceChannel}
+     * @memberof ContactPreferenceResponse
+     */
+    channel: ContactPreferenceChannel;
+    /**
+     * **いま**このチャネルへ連絡してよいか。申し出が一度も無ければ `true`
+     * （既定は連絡可）。
+     * @type {boolean}
+     * @memberof ContactPreferenceResponse
+     */
+    contactable: boolean;
+    /**
+     * 顧客からの申し出が記録されているか。`false` は「聞いていない」で
+     * あって「拒否されていない」ことの証明ではない。
+     * @type {boolean}
+     * @memberof ContactPreferenceResponse
+     */
+    declared: boolean;
+    /**
+     * 最新の申し出の日時 (RFC 3339)。未記録なら `null`。
+     * @type {string}
+     * @memberof ContactPreferenceResponse
+     */
+    declaredAt?: string | null;
+    /**
+     * 申し出に添えられたメモ。
+     * @type {string}
+     * @memberof ContactPreferenceResponse
+     */
+    note?: string | null;
+    /**
+     * 受け付けた担当。
+     * @type {string}
+     * @memberof ContactPreferenceResponse
+     */
+    recordedBy?: string | null;
+    /**
+     * 申し出を受け取った経路 (`store` / `web` / `kiosk`)。連絡手段ではない。
+     * @type {string}
+     * @memberof ContactPreferenceResponse
+     */
+    source?: string | null;
+}
+
+
 /**
  * 契約明細 1 行。見積・受注からの引き継ぎ元と同じ形。
  * @export
@@ -2403,6 +2668,109 @@ export interface ConvertQuotationToInvoiceResponse {
      * @memberof ConvertQuotationToInvoiceResponse
      */
     quotation: QuotationResponse;
+}
+/**
+ * Overrides for the reservation an entry becomes.
+ * 
+ * Everything is optional and defaults to what the entry recorded. The
+ * overrides exist because the queue stores what the guest asked for weeks
+ * ago, and the booking that finally happens may differ — a different resource
+ * freed up, or the price was agreed on the phone.
+ * @export
+ * @interface ConvertReservationWaitlistEntryRequest
+ */
+export interface ConvertReservationWaitlistEntryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    cancelUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    currency?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    depositAmount?: number | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    endsAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    idempotencyKey?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    notes?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    prepaymentPolicy?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    priceAmount?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    resourceId?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    startsAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    successUrl?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertReservationWaitlistEntryRequest
+     */
+    timezone?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ConvertReservationWaitlistEntryResponse
+ */
+export interface ConvertReservationWaitlistEntryResponse {
+    /**
+     * 
+     * @type {ReservationWaitlistEntry}
+     * @memberof ConvertReservationWaitlistEntryResponse
+     */
+    entry: ReservationWaitlistEntry;
+    /**
+     * 
+     * @type {CreateReservationResponse}
+     * @memberof ConvertReservationWaitlistEntryResponse
+     */
+    reservation: CreateReservationResponse;
 }
 /**
  * 
@@ -2689,6 +3057,22 @@ export interface CrateOrderApiOrderResponse {
      */
     updatedAt: string;
 }
+
+/**
+ * 
+ * @export
+ */
+export const CreatableCustomFieldTypeWire = {
+    Text: 'text',
+    Email: 'email',
+    Tel: 'tel',
+    Number: 'number',
+    Date: 'date',
+    Select: 'select',
+    Boolean: 'boolean'
+} as const;
+export type CreatableCustomFieldTypeWire = typeof CreatableCustomFieldTypeWire[keyof typeof CreatableCustomFieldTypeWire];
+
 /**
  * 
  * @export
@@ -2878,6 +3262,80 @@ export interface CreateCartRequest {
 /**
  * 
  * @export
+ * @interface CreateConsumerCustomerRequest
+ */
+export interface CreateConsumerCustomerRequest {
+    /**
+     * 
+     * @type {CreateOrderClientAddressRequest}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    address?: CreateOrderClientAddressRequest | null;
+    /**
+     * YYYY-MM-DD (PLT-4040)。省略可。
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    birthDate?: string | null;
+    /**
+     * store / web / kiosk (default store)
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    channel?: string | null;
+    /**
+     * 窓口で用紙にチェックをもらって登録する運用では、顧客の作成と同意の
+     * 記録が同じ一枚から起きる (PLT-4041)。ここで一緒に渡せると、顧客だけ
+     * できて同意が落ちる中途半端な状態を呼び出し側が後始末せずに済む。
+     * @type {Array<RegistrationConsentRequest>}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    consents?: Array<RegistrationConsentRequest>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    email?: string | null;
+    /**
+     * 再送鍵。同じ鍵の2回目以降は顧客を増やさず、最初に作った顧客を
+     * `200 OK` で返す。
+     * 
+     * 窓口の二重クリックや、応答を取りこぼした呼び出し側のリトライで同姓
+     * 同名の顧客が並ぶのを止めるために要る。鍵から顧客 ID を導くので、
+     * 応答を見ていない呼び出し側でも同じ顧客に辿り着ける。
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    idempotencyKey?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    nameKana?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    phone?: string | null;
+    /**
+     * 語彙はテナントが決める。16 文字まで (PLT-4040)。
+     * @type {string}
+     * @memberof CreateConsumerCustomerRequest
+     */
+    sex?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateCustomFieldDefinitionRequest
  */
 export interface CreateCustomFieldDefinitionRequest {
@@ -2895,10 +3353,10 @@ export interface CreateCustomFieldDefinitionRequest {
     fieldKey: string;
     /**
      * 
-     * @type {string}
+     * @type {CreatableCustomFieldTypeWire}
      * @memberof CreateCustomFieldDefinitionRequest
      */
-    fieldType: string;
+    fieldType: CreatableCustomFieldTypeWire;
     /**
      * 
      * @type {string}
@@ -2913,6 +3371,12 @@ export interface CreateCustomFieldDefinitionRequest {
     options?: Array<string> | null;
     /**
      * 
+     * @type {string}
+     * @memberof CreateCustomFieldDefinitionRequest
+     */
+    placeholder?: string | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof CreateCustomFieldDefinitionRequest
      */
@@ -2924,6 +3388,8 @@ export interface CreateCustomFieldDefinitionRequest {
      */
     sortOrder?: number | null;
 }
+
+
 /**
  * 
  * @export
@@ -2966,6 +3432,57 @@ export interface CreateCustomerClientAffiliationRequest {
      * @memberof CreateCustomerClientAffiliationRequest
      */
     validTo?: Date | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateCustomerContactRequest
+ */
+export interface CreateCustomerContactRequest {
+    /**
+     * phone / email / visit / chat / sms / letter / other
+     * @type {string}
+     * @memberof CreateCustomerContactRequest
+     */
+    channel: string;
+    /**
+     * outbound / inbound
+     * @type {string}
+     * @memberof CreateCustomerContactRequest
+     */
+    direction: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateCustomerContactRequest
+     */
+    nextActionAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerContactRequest
+     */
+    note?: string | null;
+    /**
+     * 実際に接触した時刻。省略時はサーバの現在時刻。
+     * @type {Date}
+     * @memberof CreateCustomerContactRequest
+     */
+    occurredAt?: Date | null;
+    /**
+     * connected / no_answer / left_message / refused / callback_requested /
+     * undeliverable / other。かけた時点で分からなければ省略してよく、あとで
+     * `PATCH` で足せる。
+     * @type {string}
+     * @memberof CreateCustomerContactRequest
+     */
+    outcome?: string | null;
+    /**
+     * 実施した担当。省略時は呼び出した利用者。
+     * @type {string}
+     * @memberof CreateCustomerContactRequest
+     */
+    performedBy?: string | null;
 }
 /**
  * 
@@ -3222,6 +3739,37 @@ export interface CreateExpenseRequest {
 /**
  * 
  * @export
+ * @interface CreateHandoffNoteRequest
+ */
+export interface CreateHandoffNoteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateHandoffNoteRequest
+     */
+    body: string;
+    /**
+     * Free label the tenant chooses. Defaults to `general`.
+     * @type {string}
+     * @memberof CreateHandoffNoteRequest
+     */
+    category?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateHandoffNoteRequest
+     */
+    subjectId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateHandoffNoteRequest
+     */
+    subjectType: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateInvoiceLineItemRequest
  */
 export interface CreateInvoiceLineItemRequest {
@@ -3356,6 +3904,14 @@ export interface CreateInvoiceRequest {
      */
     smsMessage?: string | null;
     /**
+     * Records this invoice is raised from. Optional and additive: an existing
+     * caller that omits it creates an invoice with no declared origin,
+     * exactly as before.
+     * @type {Array<InvoiceSourceRequest>}
+     * @memberof CreateInvoiceRequest
+     */
+    sources?: Array<InvoiceSourceRequest> | null;
+    /**
      * 
      * @type {string}
      * @memberof CreateInvoiceRequest
@@ -3420,6 +3976,31 @@ export interface CreateMembershipConsentItemRequest {
 /**
  * 
  * @export
+ * @interface CreateMembershipEntitlementRequest
+ */
+export interface CreateMembershipEntitlementRequest {
+    /**
+     * `membership_plans.id` of the class the buyer joins.
+     * @type {string}
+     * @memberof CreateMembershipEntitlementRequest
+     */
+    membershipPlanId: string;
+    /**
+     * `order_products.id` of the product that grants the membership.
+     * @type {string}
+     * @memberof CreateMembershipEntitlementRequest
+     */
+    productId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMembershipEntitlementRequest
+     */
+    validDays?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateMembershipPlanRequest
  */
 export interface CreateMembershipPlanRequest {
@@ -3453,6 +4034,43 @@ export interface CreateMembershipPlanRequest {
      * @memberof CreateMembershipPlanRequest
      */
     validDays?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateOrderClientAddressRequest
+ */
+export interface CreateOrderClientAddressRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderClientAddressRequest
+     */
+    address1: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderClientAddressRequest
+     */
+    address2?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderClientAddressRequest
+     */
+    city: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderClientAddressRequest
+     */
+    postalCode: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderClientAddressRequest
+     */
+    state: string;
 }
 /**
  * 
@@ -4333,6 +4951,85 @@ export interface CreateReservationTypeRequest {
 /**
  * 
  * @export
+ * @interface CreateReservationWaitlistEntryRequest
+ */
+export interface CreateReservationWaitlistEntryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    customerEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    customerId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    customerName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    customerPhone?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    desiredEndsAt: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    desiredStartsAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    notes?: string | null;
+    /**
+     * Party size. Defaults to 1.
+     * @type {number}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    quantity?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    reservationTypeId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    resourceId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    serviceId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReservationWaitlistEntryRequest
+     */
+    storeId?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateReturnLineRequest
  */
 export interface CreateReturnLineRequest {
@@ -4960,6 +5657,93 @@ export interface CreateVendorRequest {
 /**
  * 
  * @export
+ * @interface CreateWebhookEndpointRequest
+ */
+export interface CreateWebhookEndpointRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWebhookEndpointRequest
+     */
+    description?: string | null;
+    /**
+     * 省略時は購読可能な全 event type。
+     * @type {Array<string>}
+     * @memberof CreateWebhookEndpointRequest
+     */
+    eventTypes?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWebhookEndpointRequest
+     */
+    url: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreatedEntityResponse
+ */
+export interface CreatedEntityResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatedEntityResponse
+     */
+    id: string;
+}
+/**
+ * 通貨ごとの金額。1テナントに複数通貨が混ざりうるので合算しない。
+ * @export
+ * @interface CurrencyTotalsResponse
+ */
+export interface CurrencyTotalsResponse {
+    /**
+     * ISO 4217。`reservations.currency` の値。
+     * @type {string}
+     * @memberof CurrencyTotalsResponse
+     */
+    currency: string;
+    /**
+     * この通貨での初回購入日（Asia/Tokyo）。
+     * @type {string}
+     * @memberof CurrencyTotalsResponse
+     */
+    firstPurchaseDate?: string | null;
+    /**
+     * この通貨での最終購入日（Asia/Tokyo）。
+     * @type {string}
+     * @memberof CurrencyTotalsResponse
+     */
+    lastPurchaseDate?: string | null;
+    /**
+     * うち回収済み。`total_amount - paid_amount` が未収。
+     * @type {number}
+     * @memberof CurrencyTotalsResponse
+     */
+    paidAmount: number;
+    /**
+     * この通貨での購入回数。
+     * @type {number}
+     * @memberof CurrencyTotalsResponse
+     */
+    purchaseCount: number;
+    /**
+     * 累計購入額。税込。金額未確定（0）の予約もそのまま 0 として入る。
+     * @type {number}
+     * @memberof CurrencyTotalsResponse
+     */
+    totalAmount: number;
+    /**
+     * この通貨での購入のうち、金額が未確定（0）のもの。
+     * @type {number}
+     * @memberof CurrencyTotalsResponse
+     */
+    unpricedCount: number;
+}
+/**
+ * 
+ * @export
  * @interface CustomFieldDefinitionListResponse
  */
 export interface CustomFieldDefinitionListResponse {
@@ -5001,7 +5785,7 @@ export interface CustomFieldDefinitionResponse {
      */
     fieldKey: string;
     /**
-     * 
+     * Known values: text, email, tel, number, date, select, boolean. Clients must accept future custom field types.
      * @type {string}
      * @memberof CustomFieldDefinitionResponse
      */
@@ -5024,6 +5808,12 @@ export interface CustomFieldDefinitionResponse {
      * @memberof CustomFieldDefinitionResponse
      */
     options?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomFieldDefinitionResponse
+     */
+    placeholder?: string | null;
     /**
      * 
      * @type {boolean}
@@ -5064,20 +5854,6 @@ export const CustomFieldEntityType = {
     CustomerSubject: 'CustomerSubject'
 } as const;
 export type CustomFieldEntityType = typeof CustomFieldEntityType[keyof typeof CustomFieldEntityType];
-
-
-/**
- * 
- * @export
- */
-export const CustomFieldType = {
-    Text: 'Text',
-    Number: 'Number',
-    Date: 'Date',
-    Select: 'Select',
-    Boolean: 'Boolean'
-} as const;
-export type CustomFieldType = typeof CustomFieldType[keyof typeof CustomFieldType];
 
 /**
  * 
@@ -5274,6 +6050,12 @@ export interface CustomerConsentResponse {
      * @type {string}
      * @memberof CustomerConsentResponse
      */
+    evidenceRecordId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerConsentResponse
+     */
     id: string;
     /**
      * 
@@ -5287,6 +6069,123 @@ export interface CustomerConsentResponse {
      * @memberof CustomerConsentResponse
      */
     termsVersion: string;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerContactListResponse
+ */
+export interface CustomerContactListResponse {
+    /**
+     * 
+     * @type {Array<CustomerContactResponse>}
+     * @memberof CustomerContactListResponse
+     */
+    items: Array<CustomerContactResponse>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerContactListResponse
+     */
+    limit: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerContactListResponse
+     */
+    offset: number;
+    /**
+     * 絞り込んだ結果の総件数。返した `items` の数ではない。
+     * @type {number}
+     * @memberof CustomerContactListResponse
+     */
+    total: number;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerContactResponse
+ */
+export interface CustomerContactResponse {
+    /**
+     * 取り消されていなければ `null`。行は消えないので、監査では
+     * `includeCancelled=true` で読み戻せる。
+     * @type {Date}
+     * @memberof CustomerContactResponse
+     */
+    cancelledAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    cancelledBy?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    channel: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerContactResponse
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    direction: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerContactResponse
+     */
+    nextActionAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerContactResponse
+     */
+    occurredAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    outcome?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerContactResponse
+     */
+    performedBy?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomerContactResponse
+     */
+    updatedAt: Date;
 }
 /**
  * 
@@ -5372,6 +6271,214 @@ export interface CustomerCredentialResponse {
      * @memberof CustomerCredentialResponse
      */
     verifiedBy?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerPurchaseSummaryListResponse
+ */
+export interface CustomerPurchaseSummaryListResponse {
+    /**
+     * この集計がいつ時点かを表す UTC 時刻。
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    computedAt: string;
+    /**
+     * このページの金額がどの通貨のものか。対象に予約が1件も無ければ `null`。
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    currency?: string | null;
+    /**
+     * 
+     * @type {Array<CustomerPurchaseSummaryRowResponse>}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    items: Array<CustomerPurchaseSummaryRowResponse>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    limit: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    offset: number;
+    /**
+     * 
+     * @type {SummaryPeriodResponse}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    period: SummaryPeriodResponse;
+    /**
+     * 絞り込み後の顧客数。ページに載った件数ではない。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryListResponse
+     */
+    total: number;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerPurchaseSummaryResponse
+ */
+export interface CustomerPurchaseSummaryResponse {
+    /**
+     * キャンセル（`cancelled` / `rejected`）。金額にも回数にも入れていない。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    cancelledCount: number;
+    /**
+     * この集計がいつ時点かを表す UTC 時刻。都度計算なので常に「今」で、
+     * 「確定済みだが提供日がまだ来ていない」の判定基準もこの時刻。
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    computedAt: string;
+    /**
+     * 通貨ごとの金額の内訳。購入が無ければ空。
+     * @type {Array<CurrencyTotalsResponse>}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    currencies: Array<CurrencyTotalsResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    customerId: string;
+    /**
+     * 初回購入日（Asia/Tokyo）。購入が無ければ `null`。
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    firstPurchaseDate?: string | null;
+    /**
+     * 最終購入日（Asia/Tokyo）。購入が無ければ `null`。
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    lastPurchaseDate?: string | null;
+    /**
+     * no-show。金額にも回数にも入れていない。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    noShowCount: number;
+    /**
+     * まだ確定していない予約（申込中・支払待ち・変更/キャンセル申請中など）。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    pendingCount: number;
+    /**
+     * 
+     * @type {SummaryPeriodResponse}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    period: SummaryPeriodResponse;
+    /**
+     * 購入回数（通貨をまたいだ合計）。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    purchaseCount: number;
+    /**
+     * 購入のうち金額が未確定（0）のもの。0 を足しただけの回数が分かる。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    unpricedCount: number;
+    /**
+     * 確定済みだが提供日がまだ来ていない予約。購入には数えていない。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryResponse
+     */
+    upcomingCount: number;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerPurchaseSummaryRowResponse
+ */
+export interface CustomerPurchaseSummaryRowResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    cancelledCount: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    currency: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    firstPurchaseDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    lastPurchaseDate?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    noShowCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    paidAmount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    pendingCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    purchaseCount: number;
+    /**
+     * 累計購入額。税込。
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    totalAmount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    unpricedCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPurchaseSummaryRowResponse
+     */
+    upcomingCount: number;
 }
 /**
  * 
@@ -8580,6 +9687,130 @@ export interface GolfUnpaidCancellationItem {
     reservationNumber: string;
 }
 /**
+ * One handover note, as it was written. Rows are never edited or deleted:
+ * acknowledgement and retraction are the only mutations, and both are
+ * additive stamps rather than rewrites of the body.
+ * @export
+ * @interface HandoffNote
+ */
+export interface HandoffNote {
+    /**
+     * When someone took the handover over. `None` while it is still
+     * outstanding, which is what the reception board filters on.
+     * @type {Date}
+     * @memberof HandoffNote
+     */
+    acknowledgedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    acknowledgedBy?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    authorId?: string | null;
+    /**
+     * 
+     * @type {HandoffNoteAuthorType}
+     * @memberof HandoffNote
+     */
+    authorType: HandoffNoteAuthorType;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    body: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    category: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof HandoffNote
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    id: string;
+    /**
+     * A note written in error stays readable and is marked retracted; it is
+     * never removed, or the log would no longer be a log.
+     * @type {Date}
+     * @memberof HandoffNote
+     */
+    retractedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    retractedBy?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    retractionReason?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    subjectId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    subjectType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HandoffNote
+     */
+    tenantId: string;
+}
+
+
+
+/**
+ * What kind of principal wrote a note. Mirrors the cancellation trail's
+ * actor classification so both trails name the same actor kind for the
+ * same request.
+ * @export
+ */
+export const HandoffNoteAuthorType = {
+    User: 'User',
+    ServiceAccount: 'ServiceAccount',
+    System: 'System'
+} as const;
+export type HandoffNoteAuthorType = typeof HandoffNoteAuthorType[keyof typeof HandoffNoteAuthorType];
+
+/**
+ * 
+ * @export
+ * @interface HandoffNoteListResponse
+ */
+export interface HandoffNoteListResponse {
+    /**
+     * 
+     * @type {Array<HandoffNote>}
+     * @memberof HandoffNoteListResponse
+     */
+    items: Array<HandoffNote>;
+}
+/**
  * 
  * @export
  * @interface ImportProductSlotsRequest
@@ -8971,7 +10202,7 @@ export type InvoiceBillToEvidenceResponseOneOf1KindEnum = typeof InvoiceBillToEv
  * 
  * @export
  */
-export type InvoiceBillToRequest = InvoiceBillToRequestOneOf | InvoiceBillToRequestOneOf1;
+export type InvoiceBillToRequest = InvoiceBillToRequestOneOf | InvoiceBillToRequestOneOf1 | InvoiceBillToRequestOneOf2;
 /**
  * 
  * @export
@@ -9037,11 +10268,56 @@ export const InvoiceBillToRequestOneOf1KindEnum = {
 export type InvoiceBillToRequestOneOf1KindEnum = typeof InvoiceBillToRequestOneOf1KindEnum[keyof typeof InvoiceBillToRequestOneOf1KindEnum];
 
 /**
+ * 顧客台帳にも取引先にも無い相手への単発請求。
+ * 
+ * 識別子を求めず、宛名と連絡先だけで請求先を決める。台帳に載せたい
+ * ときは顧客を作ってから `customer` を送る — Field はここから勝手に
+ * 顧客を作らない。
+ * @export
+ * @interface InvoiceBillToRequestOneOf2
+ */
+export interface InvoiceBillToRequestOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToRequestOneOf2
+     */
+    email?: string | null;
+    /**
+     * 
+     * @type {InvoiceBillToRequestOneOf2KindEnum}
+     * @memberof InvoiceBillToRequestOneOf2
+     */
+    kind: InvoiceBillToRequestOneOf2KindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToRequestOneOf2
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToRequestOneOf2
+     */
+    phone?: string | null;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToRequestOneOf2KindEnum = {
+    Unregistered: 'unregistered'
+} as const;
+export type InvoiceBillToRequestOneOf2KindEnum = typeof InvoiceBillToRequestOneOf2KindEnum[keyof typeof InvoiceBillToRequestOneOf2KindEnum];
+
+/**
  * @type InvoiceBillToResponse
  * 
  * @export
  */
-export type InvoiceBillToResponse = InvoiceBillToResponseOneOf | InvoiceBillToResponseOneOf1 | InvoiceBillToResponseOneOf2;
+export type InvoiceBillToResponse = InvoiceBillToResponseOneOf | InvoiceBillToResponseOneOf1 | InvoiceBillToResponseOneOf2 | InvoiceBillToResponseOneOf3;
 /**
  * 
  * @export
@@ -9119,7 +10395,7 @@ export const InvoiceBillToResponseOneOf1KindEnum = {
 export type InvoiceBillToResponseOneOf1KindEnum = typeof InvoiceBillToResponseOneOf1KindEnum[keyof typeof InvoiceBillToResponseOneOf1KindEnum];
 
 /**
- * 
+ * 台帳に無い相手。識別子は無く、発行時の写しだけが相手を表す。
  * @export
  * @interface InvoiceBillToResponseOneOf2
  */
@@ -9130,12 +10406,6 @@ export interface InvoiceBillToResponseOneOf2 {
      * @memberof InvoiceBillToResponseOneOf2
      */
     kind: InvoiceBillToResponseOneOf2KindEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InvoiceBillToResponseOneOf2
-     */
-    legacyReferenceId: string;
     /**
      * 
      * @type {any}
@@ -9149,9 +10419,44 @@ export interface InvoiceBillToResponseOneOf2 {
  * @export
  */
 export const InvoiceBillToResponseOneOf2KindEnum = {
-    LegacyUnresolved: 'legacy_unresolved'
+    Unregistered: 'unregistered'
 } as const;
 export type InvoiceBillToResponseOneOf2KindEnum = typeof InvoiceBillToResponseOneOf2KindEnum[keyof typeof InvoiceBillToResponseOneOf2KindEnum];
+
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToResponseOneOf3
+ */
+export interface InvoiceBillToResponseOneOf3 {
+    /**
+     * 
+     * @type {InvoiceBillToResponseOneOf3KindEnum}
+     * @memberof InvoiceBillToResponseOneOf3
+     */
+    kind: InvoiceBillToResponseOneOf3KindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToResponseOneOf3
+     */
+    legacyReferenceId: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof InvoiceBillToResponseOneOf3
+     */
+    snapshot: any | null;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToResponseOneOf3KindEnum = {
+    LegacyUnresolved: 'legacy_unresolved'
+} as const;
+export type InvoiceBillToResponseOneOf3KindEnum = typeof InvoiceBillToResponseOneOf3KindEnum[keyof typeof InvoiceBillToResponseOneOf3KindEnum];
 
 /**
  * 
@@ -9350,6 +10655,12 @@ export interface InvoiceResponse {
      */
     smsDeliveryStatus?: string | null;
     /**
+     * What this invoice was raised for. Empty when no origin was declared.
+     * @type {Array<InvoiceSourceResponse>}
+     * @memberof InvoiceResponse
+     */
+    sources: Array<InvoiceSourceResponse>;
+    /**
      * 
      * @type {string}
      * @memberof InvoiceResponse
@@ -9397,6 +10708,61 @@ export interface InvoiceResponse {
      * @memberof InvoiceResponse
      */
     updatedAt: string;
+}
+/**
+ * A record this invoice is being raised from.
+ * 
+ * `reason` is the caller's own classification. Field stores it verbatim,
+ * filters on it exactly, and attaches no meaning to any particular value, so
+ * one tenant's `cancellation_fee` and another's `no_show_fee` are the same
+ * kind of thing to Field.
+ * @export
+ * @interface InvoiceSourceRequest
+ */
+export interface InvoiceSourceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceRequest
+     */
+    reason?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceRequest
+     */
+    sourceId: string;
+    /**
+     * One of `reservation`, `order`, `subscription`, `quotation`, `contract`.
+     * @type {string}
+     * @memberof InvoiceSourceRequest
+     */
+    sourceType: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceSourceResponse
+ */
+export interface InvoiceSourceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceResponse
+     */
+    reason: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceResponse
+     */
+    sourceId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceResponse
+     */
+    sourceType: string;
 }
 /**
  * 
@@ -9584,6 +10950,89 @@ export interface IssueReservationSquareInvoiceResponse {
      */
     squareInvoiceId: string;
 }
+/**
+ * 一度も接触していない顧客は `items` に現れない。「まだ連絡していない」と
+ * 「連絡したが記録が無い」を利用側で取り違えないよう、問い合わせた ID を
+ * そのまま返して差分を取れるようにする。
+ * @export
+ * @interface LatestCustomerContactListResponse
+ */
+export interface LatestCustomerContactListResponse {
+    /**
+     * 
+     * @type {Array<LatestCustomerContactResponse>}
+     * @memberof LatestCustomerContactListResponse
+     */
+    items: Array<LatestCustomerContactResponse>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof LatestCustomerContactListResponse
+     */
+    requestedCustomerIds: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface LatestCustomerContactLookupRequest
+ */
+export interface LatestCustomerContactLookupRequest {
+    /**
+     * 最終接触を知りたい顧客 ID。顧客一覧の1ページぶんをそのまま渡す想定。
+     * @type {Array<string>}
+     * @memberof LatestCustomerContactLookupRequest
+     */
+    customerIds: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface LatestCustomerContactResponse
+ */
+export interface LatestCustomerContactResponse {
+    /**
+     * 取り消し済みを除いた接触回数。
+     * @type {number}
+     * @memberof LatestCustomerContactResponse
+     */
+    contactCount: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LatestCustomerContactResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LatestCustomerContactResponse
+     */
+    lastChannel: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LatestCustomerContactResponse
+     */
+    lastContactId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof LatestCustomerContactResponse
+     */
+    lastContactedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof LatestCustomerContactResponse
+     */
+    lastDirection: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LatestCustomerContactResponse
+     */
+    lastOutcome?: string | null;
+}
 
 /**
  * 
@@ -9748,6 +11197,167 @@ export interface LowStockAlertResponse {
 /**
  * 
  * @export
+ * @interface MembershipActivityActorResponse
+ */
+export interface MembershipActivityActorResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityActorResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityActorResponse
+     */
+    type: string;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipActivityListResponse
+ */
+export interface MembershipActivityListResponse {
+    /**
+     * 
+     * @type {Array<MembershipActivityResponse>}
+     * @memberof MembershipActivityListResponse
+     */
+    items: Array<MembershipActivityResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityListResponse
+     */
+    nextCursor?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipActivityResponse
+ */
+export interface MembershipActivityResponse {
+    /**
+     * 
+     * @type {MembershipActivityActorResponse}
+     * @memberof MembershipActivityResponse
+     */
+    actor: MembershipActivityActorResponse;
+    /**
+     * 
+     * @type {any}
+     * @memberof MembershipActivityResponse
+     */
+    after?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof MembershipActivityResponse
+     */
+    before?: any | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof MembershipActivityResponse
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityResponse
+     */
+    kind: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof MembershipActivityResponse
+     */
+    occurredAt: Date;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipActivityResponse
+     */
+    schemaVersion: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipActivityResponse
+     */
+    seq?: number | null;
+    /**
+     * 
+     * @type {MembershipActivitySourceResponse}
+     * @memberof MembershipActivityResponse
+     */
+    source?: MembershipActivitySourceResponse | null;
+    /**
+     * 
+     * @type {MembershipActivityTargetResponse}
+     * @memberof MembershipActivityResponse
+     */
+    target?: MembershipActivityTargetResponse | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityResponse
+     */
+    tenantId: string;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipActivitySourceResponse
+ */
+export interface MembershipActivitySourceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivitySourceResponse
+     */
+    application?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivitySourceResponse
+     */
+    channel?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipActivityTargetResponse
+ */
+export interface MembershipActivityTargetResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityTargetResponse
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActivityTargetResponse
+     */
+    type: string;
+}
+/**
+ * 
+ * @export
  * @interface MembershipConsentItemListResponse
  */
 export interface MembershipConsentItemListResponse {
@@ -9893,11 +11503,159 @@ export interface MembershipCustomerViewResponse {
      */
     customer: MembershipCustomerResponse;
     /**
+     * The counter sale this registration produced, when a product was sold.
+     * @type {MembershipSaleResponse}
+     * @memberof MembershipCustomerViewResponse
+     */
+    sale?: MembershipSaleResponse | null;
+    /**
      * 
      * @type {Array<CustomerSubjectResponse>}
      * @memberof MembershipCustomerViewResponse
      */
     subjects: Array<CustomerSubjectResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipEntitlementListResponse
+ */
+export interface MembershipEntitlementListResponse {
+    /**
+     * 
+     * @type {Array<MembershipEntitlementResponse>}
+     * @memberof MembershipEntitlementListResponse
+     */
+    items: Array<MembershipEntitlementResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipEntitlementResponse
+ */
+export interface MembershipEntitlementResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MembershipEntitlementResponse
+     */
+    active: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipEntitlementResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipEntitlementResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipEntitlementResponse
+     */
+    membershipPlanId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipEntitlementResponse
+     */
+    productId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipEntitlementResponse
+     */
+    updatedAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipEntitlementResponse
+     */
+    validDays?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipOfferingListResponse
+ */
+export interface MembershipOfferingListResponse {
+    /**
+     * 
+     * @type {Array<MembershipOfferingResponse>}
+     * @memberof MembershipOfferingListResponse
+     */
+    items: Array<MembershipOfferingResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipOfferingResponse
+ */
+export interface MembershipOfferingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    billingCycle: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    entitlementId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipOfferingResponse
+     */
+    listPrice: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    membershipPlanId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    membershipPlanName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    productId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    productName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipOfferingResponse
+     */
+    productStatus: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MembershipOfferingResponse
+     */
+    sellable: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipOfferingResponse
+     */
+    validDays?: number | null;
 }
 /**
  * 
@@ -10021,6 +11779,140 @@ export interface MembershipPlanResponse {
      * @memberof MembershipPlanResponse
      */
     validDays?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipRosterEntryResponse
+ */
+export interface MembershipRosterEntryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    assignmentStatus: string;
+    /**
+     * 今日この割り当てが有効か。`assignmentStatus` だけでは判定できない。
+     * @type {boolean}
+     * @memberof MembershipRosterEntryResponse
+     */
+    current: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    endedOn?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    nameKana?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    phone?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    planId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    planName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipRosterEntryResponse
+     */
+    startedOn: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MembershipRosterEntryResponse
+     */
+    subjectCount: number;
+}
+/**
+ * 
+ * @export
+ * @interface MembershipRosterResponse
+ */
+export interface MembershipRosterResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MembershipRosterResponse
+     */
+    hasMore: boolean;
+    /**
+     * 
+     * @type {Array<MembershipRosterEntryResponse>}
+     * @memberof MembershipRosterResponse
+     */
+    items: Array<MembershipRosterEntryResponse>;
+}
+/**
+ * What the counter sale recorded, or why it did not.
+ * 
+ * The customer, their consents and their membership are written before the
+ * sale, in different tables, and cannot be rolled back together. Failing the
+ * whole request when only the sale fails would leave the operator looking at
+ * an error with a registered customer behind it, and the obvious response —
+ * submit again — creates a second customer.
+ * 
+ * So the sale is best effort and says so out loud. `orderId` present means
+ * the money is recorded; `error` present means it is not and somebody has to
+ * ring it up. What must never happen is neither: silence would be the same
+ * unrecorded revenue this whole change exists to fix.
+ * @export
+ * @interface MembershipSaleResponse
+ */
+export interface MembershipSaleResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipSaleResponse
+     */
+    error?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipSaleResponse
+     */
+    orderId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipSaleResponse
+     */
+    productId: string;
 }
 /**
  * 
@@ -10601,6 +12493,16 @@ export interface OrderResponse {
      * @memberof OrderResponse
      */
     items: Array<OrderItemResponse>;
+    /**
+     * How the order was entered: `qr`, `kiosk`, `staff`, or `online`.
+     * 
+     * Server-derived, and `None` on every order placed before the column
+     * existed. A staff board reads the route from here rather than taking
+     * apart an encoded `sales_channel_detail`.
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    orderEntryMode?: string | null;
     /**
      * 
      * @type {string}
@@ -11988,7 +13890,7 @@ export interface PublicCustomFieldDefinitionResponse {
      */
     fieldKey: string;
     /**
-     * 
+     * Known values: text, email, tel, number, date, select, boolean. Clients must accept future custom field types.
      * @type {string}
      * @memberof PublicCustomFieldDefinitionResponse
      */
@@ -12005,6 +13907,12 @@ export interface PublicCustomFieldDefinitionResponse {
      * @memberof PublicCustomFieldDefinitionResponse
      */
     options?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCustomFieldDefinitionResponse
+     */
+    placeholder?: string | null;
     /**
      * 
      * @type {boolean}
@@ -13539,6 +15447,118 @@ export interface QuotationResponse {
      */
     validUntil: string;
 }
+
+/**
+ * A box that has a built-in column behind it.
+ * 
+ * The customer's name is not here: the ledger cannot store a row without
+ * one, so no tenant may switch it off or make it optional.
+ * @export
+ */
+export const ReceptionFieldKey = {
+    CustomerNameKana: 'CustomerNameKana',
+    CustomerEmail: 'CustomerEmail',
+    CustomerPhone: 'CustomerPhone',
+    CustomerBirthDate: 'CustomerBirthDate',
+    CustomerSex: 'CustomerSex',
+    CustomerAddress: 'CustomerAddress',
+    SubjectName: 'SubjectName',
+    SubjectType: 'SubjectType',
+    SubjectBirthDate: 'SubjectBirthDate',
+    SubjectSex: 'SubjectSex',
+    SubjectNote: 'SubjectNote',
+    Plan: 'Plan',
+    Credential: 'Credential'
+} as const;
+export type ReceptionFieldKey = typeof ReceptionFieldKey[keyof typeof ReceptionFieldKey];
+
+/**
+ * 
+ * @export
+ * @interface ReceptionFieldListResponse
+ */
+export interface ReceptionFieldListResponse {
+    /**
+     * 
+     * @type {Array<ReceptionFieldResponse>}
+     * @memberof ReceptionFieldListResponse
+     */
+    items: Array<ReceptionFieldResponse>;
+}
+/**
+ * A reception box as the counter screen should draw it.
+ * @export
+ * @interface ReceptionFieldResponse
+ */
+export interface ReceptionFieldResponse {
+    /**
+     * True when `label` is the tenant's own wording. The settings screen
+     * needs this to offer "back to the default".
+     * @type {boolean}
+     * @memberof ReceptionFieldResponse
+     */
+    customLabel: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReceptionFieldResponse
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {ReceptionFieldKey}
+     * @memberof ReceptionFieldResponse
+     */
+    fieldKey: ReceptionFieldKey;
+    /**
+     * What to print beside the box: the tenant's wording when it renamed
+     * the box, the built-in wording otherwise.
+     * @type {string}
+     * @memberof ReceptionFieldResponse
+     */
+    label: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReceptionFieldResponse
+     */
+    required: boolean;
+}
+
+
+/**
+ * One box on the tenant's reception sheet.
+ * @export
+ * @interface ReceptionFieldSettingRequest
+ */
+export interface ReceptionFieldSettingRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReceptionFieldSettingRequest
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {ReceptionFieldKey}
+     * @memberof ReceptionFieldSettingRequest
+     */
+    fieldKey: ReceptionFieldKey;
+    /**
+     * Blank or omitted keeps the built-in wording for the box.
+     * @type {string}
+     * @memberof ReceptionFieldSettingRequest
+     */
+    label?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReceptionFieldSettingRequest
+     */
+    required: boolean;
+}
+
+
 /**
  * 
  * @export
@@ -13557,6 +15577,47 @@ export interface ReconcileSquarePaymentRequest {
      * @memberof ReconcileSquarePaymentRequest
      */
     note?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface RecordConsumerConsentsRequest
+ */
+export interface RecordConsumerConsentsRequest {
+    /**
+     * store / web / kiosk (default store)
+     * @type {string}
+     * @memberof RecordConsumerConsentsRequest
+     */
+    channel?: string | null;
+    /**
+     * 記録する同意項目。テナントが定義済みの `consentKey` だけを受け付ける。
+     * @type {Array<RegistrationConsentRequest>}
+     * @memberof RecordConsumerConsentsRequest
+     */
+    consents: Array<RegistrationConsentRequest>;
+}
+/**
+ * 
+ * @export
+ * @interface RecordContactPreferencesRequest
+ */
+export interface RecordContactPreferencesRequest {
+    /**
+     * 1回の申し出で複数チャネルをまとめて記録できる。同じチャネルを2つ
+     * 入れた要求は 400。同一時刻の2行のどちらが勝つかを呼び出し側の
+     * 並び順に委ねないため。
+     * @type {Array<ContactPreferenceEntryRequest>}
+     * @memberof RecordContactPreferencesRequest
+     */
+    preferences: Array<ContactPreferenceEntryRequest>;
+    /**
+     * 申し出を**受け取った経路**。`store`（既定）/ `web` / `kiosk`。
+     * 連絡手段ではない。
+     * @type {string}
+     * @memberof RecordContactPreferencesRequest
+     */
+    source?: string | null;
 }
 /**
  * 
@@ -13669,6 +15730,13 @@ export interface RegisterMembershipRequest {
      */
     channel?: string | null;
     /**
+     * Immutable Evidence record for the application document used to record
+     * these consent answers. Validated in the tenant before customer writes.
+     * @type {string}
+     * @memberof RegisterMembershipRequest
+     */
+    consentEvidenceRecordId?: string | null;
+    /**
      * 
      * @type {Array<RegistrationConsentRequest>}
      * @memberof RegisterMembershipRequest
@@ -13687,23 +15755,81 @@ export interface RegisterMembershipRequest {
      */
     customer?: RegistrationCustomerRequest | null;
     /**
+     * Trade-specific boxes for the customer, keyed by
+     * `custom_field_definitions.field_key` under the `consumer` entity type.
+     * 
+     * Accepted only alongside `customer`. Registering an existing customer
+     * carries no values: this endpoint would have to write the whole set,
+     * and a reception sheet that happens not to ask for a box would erase
+     * what that customer answered the last time it did.
+     * @type {object}
+     * @memberof RegisterMembershipRequest
+     */
+    customerCustomFields?: object;
+    /**
      * Existing customer to register. Mutually exclusive with `customer`.
      * @type {string}
      * @memberof RegisterMembershipRequest
      */
     customerId?: string | null;
     /**
-     * 
+     * Class to join directly, without a sale. Kept so a client deployed
+     * before the product switch keeps working; mutually exclusive with
+     * `productId`.
      * @type {string}
      * @memberof RegisterMembershipRequest
      */
     planId?: string | null;
+    /**
+     * Product being sold at the counter. Its grant decides which class the
+     * customer joins and for how long.
+     * @type {string}
+     * @memberof RegisterMembershipRequest
+     */
+    productId?: string | null;
     /**
      * 
      * @type {Array<RegistrationSubjectRequest>}
      * @memberof RegisterMembershipRequest
      */
     subjects?: Array<RegistrationSubjectRequest>;
+}
+/**
+ * Address written on a reception sheet.
+ * @export
+ * @interface RegistrationAddressRequest
+ */
+export interface RegistrationAddressRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationAddressRequest
+     */
+    address1: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationAddressRequest
+     */
+    address2?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationAddressRequest
+     */
+    city: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationAddressRequest
+     */
+    postalCode: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationAddressRequest
+     */
+    state: string;
 }
 /**
  * 
@@ -13774,17 +15900,34 @@ export interface RegistrationCredentialRequest {
     verified?: boolean | null;
 }
 /**
+ * The customer half of a reception sheet.
  * 
+ * Every field but the name is optional here. Which of them a given tenant
+ * actually demands is decided by its reception field settings, not by this
+ * type: a dog run asks for an address, a bar asks for nothing but a name,
+ * and the customer ledger already stores every one of these as nullable.
  * @export
  * @interface RegistrationCustomerRequest
  */
 export interface RegistrationCustomerRequest {
     /**
      * 
+     * @type {RegistrationAddressRequest}
+     * @memberof RegistrationCustomerRequest
+     */
+    address?: RegistrationAddressRequest | null;
+    /**
+     * YYYY-MM-DD
      * @type {string}
      * @memberof RegistrationCustomerRequest
      */
-    email: string;
+    birthDate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCustomerRequest
+     */
+    email?: string | null;
     /**
      * 
      * @type {string}
@@ -13796,7 +15939,19 @@ export interface RegistrationCustomerRequest {
      * @type {string}
      * @memberof RegistrationCustomerRequest
      */
+    nameKana?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegistrationCustomerRequest
+     */
     phone?: string | null;
+    /**
+     * 語彙はテナントが決める。16 文字まで。
+     * @type {string}
+     * @memberof RegistrationCustomerRequest
+     */
+    sex?: string | null;
 }
 /**
  * 
@@ -13810,6 +15965,15 @@ export interface RegistrationSubjectRequest {
      * @memberof RegistrationSubjectRequest
      */
     birthDate?: string | null;
+    /**
+     * Trade-specific boxes for this subject — breed, size, plate number —
+     * keyed by `custom_field_definitions.field_key` under the
+     * `customer_subject` entity type. Every active required definition must
+     * be present, as on the values endpoint.
+     * @type {object}
+     * @memberof RegistrationSubjectRequest
+     */
+    customFields?: object;
     /**
      * 
      * @type {string}
@@ -13938,6 +16102,20 @@ export interface ReplaceGolfProductSlotsRequest {
     slots: Array<GolfProductSlotBody>;
 }
 /**
+ * The whole sheet. Boxes left out of the list keep whatever they had, so a
+ * screen that only knows about some of them cannot silently reset the rest.
+ * @export
+ * @interface ReplaceReceptionFieldsRequest
+ */
+export interface ReplaceReceptionFieldsRequest {
+    /**
+     * 
+     * @type {Array<ReceptionFieldSettingRequest>}
+     * @memberof ReplaceReceptionFieldsRequest
+     */
+    items: Array<ReceptionFieldSettingRequest>;
+}
+/**
  * 
  * @export
  * @interface ReplaceReservationProductSlotsRequest
@@ -13956,6 +16134,13 @@ export interface ReplaceReservationProductSlotsRequest {
  * @interface ReplaceReservationResourceScheduleRequest
  */
 export interface ReplaceReservationResourceScheduleRequest {
+    /**
+     * 1-365. Omit to preserve the current setting; explicit null clears it.
+     * The hourly job acts only when at least one active ordinary rule exists.
+     * @type {number}
+     * @memberof ReplaceReservationResourceScheduleRequest
+     */
+    rollingWindowDays?: number | null;
     /**
      * Complete desired set of active resource-level availability rules.
      * @type {Array<ReservationAvailabilityRuleRequest>}
@@ -14751,6 +16936,26 @@ export interface ReservationListResponse {
      * @memberof ReservationListResponse
      */
     items: Array<Reservation>;
+    /**
+     * The page size actually applied. A request above the documented maximum
+     * is capped rather than rejected, and this is where the cap shows up.
+     * @type {number}
+     * @memberof ReservationListResponse
+     */
+    limit: number;
+    /**
+     * The offset actually applied.
+     * @type {number}
+     * @memberof ReservationListResponse
+     */
+    offset: number;
+    /**
+     * Reservations matching the filter across the whole tenant, ignoring
+     * `limit`/`offset`. Paging is done when `offset + items.len() >= total`.
+     * @type {number}
+     * @memberof ReservationListResponse
+     */
+    total: number;
 }
 /**
  * The editable half of a template, as the editor submits it.
@@ -15183,6 +17388,12 @@ export interface ReservationResourceScheduleResponse {
      */
     resourceId: string;
     /**
+     * Null means that this resource is not opted in to rolling generation.
+     * @type {number}
+     * @memberof ReservationResourceScheduleResponse
+     */
+    rollingWindowDays: number | null;
+    /**
      * 
      * @type {Array<ReservationAvailabilityRuleResponse>}
      * @memberof ReservationResourceScheduleResponse
@@ -15542,6 +17753,347 @@ export interface ReservationTypeListResponse {
     items: Array<ReservationType>;
 }
 /**
+ * A queue entry together with what an operator needs to decide about it.
+ * 
+ * The two extra fields are computed per read rather than stored: both go
+ * stale the moment any other reservation on the slot changes, so a stored
+ * copy would be wrong more often than right.
+ * @export
+ * @interface ReservationWaitlistCandidate
+ */
+export interface ReservationWaitlistCandidate {
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistCandidate
+     */
+    closedAt?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    closedBy?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    closedReason?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    convertedReservationId?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistCandidate
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    customerEmail?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    customerId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    customerName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    customerPhone?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistCandidate
+     */
+    desiredEndsAt: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistCandidate
+     */
+    desiredStartsAt: Date;
+    /**
+     * When the entry joined the queue. Distinct from `created_at` so that a
+     * re-queued request sorts by when it re-queued.
+     * @type {Date}
+     * @memberof ReservationWaitlistCandidate
+     */
+    enqueuedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    notes?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationWaitlistCandidate
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    reservationTypeId: string;
+    /**
+     * The resource the entry is waiting on. Stored as the empty string when
+     * unset, matching `reservation_time_slots`, but exposed as `None` so
+     * callers never have to know that.
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    resourceId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    serviceId?: string;
+    /**
+     * 
+     * @type {ReservationWaitlistStatus}
+     * @memberof ReservationWaitlistCandidate
+     */
+    status: ReservationWaitlistStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    storeId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistCandidate
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistCandidate
+     */
+    updatedAt: Date;
+    /**
+     * Free groups left on the slot right now, or `None` when no slot row
+     * exists for the requested time — an unopened slot is not the same answer
+     * as a full one, and only the second is something an operator can wait
+     * out.
+     * 
+     * Groups, not people: `reservation_time_slots.capacity` counts inventory
+     * groups and one reservation consumes exactly one of them whatever its
+     * party size (`slot_consumption::hold_one_group`). A party of four
+     * therefore needs one free group, not four.
+     * @type {number}
+     * @memberof ReservationWaitlistCandidate
+     */
+    availableSlotGroups?: number | null;
+    /**
+     * 1-based place in the queue for this entry's slot, counting only entries
+     * still waiting.
+     * @type {number}
+     * @memberof ReservationWaitlistCandidate
+     */
+    queuePosition: number;
+}
+
+
+/**
+ * One request waiting for a slot.
+ * @export
+ * @interface ReservationWaitlistEntry
+ */
+export interface ReservationWaitlistEntry {
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistEntry
+     */
+    closedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    closedBy?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    closedReason?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    convertedReservationId?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistEntry
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    customerEmail?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    customerId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    customerName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    customerPhone?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistEntry
+     */
+    desiredEndsAt: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistEntry
+     */
+    desiredStartsAt: Date;
+    /**
+     * When the entry joined the queue. Distinct from `created_at` so that a
+     * re-queued request sorts by when it re-queued.
+     * @type {Date}
+     * @memberof ReservationWaitlistEntry
+     */
+    enqueuedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    notes?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReservationWaitlistEntry
+     */
+    quantity: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    reservationTypeId: string;
+    /**
+     * The resource the entry is waiting on. Stored as the empty string when
+     * unset, matching `reservation_time_slots`, but exposed as `None` so
+     * callers never have to know that.
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    resourceId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    serviceId?: string | null;
+    /**
+     * 
+     * @type {ReservationWaitlistStatus}
+     * @memberof ReservationWaitlistEntry
+     */
+    status: ReservationWaitlistStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    storeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationWaitlistEntry
+     */
+    tenantId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationWaitlistEntry
+     */
+    updatedAt: Date;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ReservationWaitlistListResponse
+ */
+export interface ReservationWaitlistListResponse {
+    /**
+     * 
+     * @type {Array<ReservationWaitlistCandidate>}
+     * @memberof ReservationWaitlistListResponse
+     */
+    items: Array<ReservationWaitlistCandidate>;
+}
+
+/**
+ * Where an entry stands. Only `Waiting` is in the queue; the other three
+ * are terminal and differ in *why* the entry left it, which is what a
+ * later "how often do we actually seat waitlisted guests" question needs.
+ * @export
+ */
+export const ReservationWaitlistStatus = {
+    Waiting: 'Waiting',
+    Converted: 'Converted',
+    Withdrawn: 'Withdrawn',
+    Expired: 'Expired'
+} as const;
+export type ReservationWaitlistStatus = typeof ReservationWaitlistStatus[keyof typeof ReservationWaitlistStatus];
+
+/**
  * 
  * @export
  * @interface ResourceListResponse
@@ -15815,6 +18367,19 @@ export interface ResourceTimeSlotListResponse {
      * @memberof ResourceTimeSlotListResponse
      */
     slots: Array<ResourceTimeSlot>;
+}
+/**
+ * 
+ * @export
+ * @interface RetractHandoffNoteRequest
+ */
+export interface RetractHandoffNoteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RetractHandoffNoteRequest
+     */
+    reason?: string | null;
 }
 /**
  * 
@@ -17262,6 +19827,13 @@ export interface SaveStaffMemberRequest {
      * @memberof SaveStaffMemberRequest
      */
     hiredAt?: Date | null;
+    /**
+     * The office or post held, kept apart from `employmentType` because a
+     * director is engaged under a delegation contract rather than employment.
+     * @type {string}
+     * @memberof SaveStaffMemberRequest
+     */
+    jobTitle?: string | null;
     /**
      * 
      * @type {string}
@@ -19238,6 +21810,15 @@ export interface StaffMember {
      */
     id: string;
     /**
+     * The position held, which is a different axis from how the person is
+     * engaged: a director is under a delegation contract rather than an
+     * employment one, and can serve either full time or not. Free text so a
+     * tenant can spell its own org chart; `None` when nothing was recorded.
+     * @type {string}
+     * @memberof StaffMember
+     */
+    jobTitle?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof StaffMember
@@ -20505,6 +23086,16 @@ export interface StoreKitListCustomerResponse {
      * @memberof StoreKitListCustomerResponse
      */
     offset: number;
+    /**
+     * 絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+     * 
+     * `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+     * 数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+     * 値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+     * @type {number}
+     * @memberof StoreKitListCustomerResponse
+     */
+    total?: number | null;
 }
 /**
  * 
@@ -20579,6 +23170,16 @@ export interface StoreKitListOrderResponse {
      * @memberof StoreKitListOrderResponse
      */
     offset: number;
+    /**
+     * 絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+     * 
+     * `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+     * 数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+     * 値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+     * @type {number}
+     * @memberof StoreKitListOrderResponse
+     */
+    total?: number | null;
 }
 /**
  * 
@@ -20664,6 +23265,16 @@ export interface StoreKitListOrderResponseItemsInner {
      * @memberof StoreKitListOrderResponseItemsInner
      */
     items: Array<OrderItemResponse>;
+    /**
+     * How the order was entered: `qr`, `kiosk`, `staff`, or `online`.
+     * 
+     * Server-derived, and `None` on every order placed before the column
+     * existed. A staff board reads the route from here rather than taking
+     * apart an encoded `sales_channel_detail`.
+     * @type {string}
+     * @memberof StoreKitListOrderResponseItemsInner
+     */
+    orderEntryMode?: string | null;
     /**
      * 
      * @type {string}
@@ -20839,6 +23450,16 @@ export interface StoreKitListProductResponse {
      * @memberof StoreKitListProductResponse
      */
     offset: number;
+    /**
+     * 絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+     * 
+     * `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+     * 数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+     * 値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+     * @type {number}
+     * @memberof StoreKitListProductResponse
+     */
+    total?: number | null;
 }
 /**
  * 
@@ -20943,6 +23564,16 @@ export interface StoreKitListPublicProductResponse {
      * @memberof StoreKitListPublicProductResponse
      */
     offset: number;
+    /**
+     * 絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+     * 
+     * `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+     * 数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+     * 値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+     * @type {number}
+     * @memberof StoreKitListPublicProductResponse
+     */
+    total?: number | null;
 }
 /**
  * A menu row, and whether it can be ordered right now.
@@ -21679,6 +24310,25 @@ export interface StripeConnectOnboardingLinkResponse {
     url: string;
 }
 /**
+ * 集計対象の期間。絞り込みを指定しなかった軸は `null` で返す。
+ * @export
+ * @interface SummaryPeriodResponse
+ */
+export interface SummaryPeriodResponse {
+    /**
+     * 提供日（Asia/Tokyo）の下限。含む。
+     * @type {string}
+     * @memberof SummaryPeriodResponse
+     */
+    from?: string | null;
+    /**
+     * 提供日（Asia/Tokyo）の上限。含む。
+     * @type {string}
+     * @memberof SummaryPeriodResponse
+     */
+    to?: string | null;
+}
+/**
  * 
  * @export
  * @interface TabularAnalyzeResponse
@@ -22189,6 +24839,12 @@ export interface UpdateCustomFieldDefinitionRequest {
     options?: Array<string> | null;
     /**
      * 
+     * @type {string}
+     * @memberof UpdateCustomFieldDefinitionRequest
+     */
+    placeholder?: string | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof UpdateCustomFieldDefinitionRequest
      */
@@ -22212,6 +24868,49 @@ export interface UpdateCustomerClientAffiliationRequest {
      * @memberof UpdateCustomerClientAffiliationRequest
      */
     billingAllowed: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateCustomerContactRequest
+ */
+export interface UpdateCustomerContactRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerContactRequest
+     */
+    channel?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerContactRequest
+     */
+    nextActionAt?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerContactRequest
+     */
+    note?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof UpdateCustomerContactRequest
+     */
+    occurredAt?: Date | null;
+    /**
+     * Explicit null clears the stored value.
+     * @type {string}
+     * @memberof UpdateCustomerContactRequest
+     */
+    outcome?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerContactRequest
+     */
+    performedBy?: string | null;
 }
 /**
  * 
@@ -22722,6 +25421,31 @@ export interface UpdateMembershipConsentItemRequest {
      * @memberof UpdateMembershipConsentItemRequest
      */
     termsVersion?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateMembershipEntitlementRequest
+ */
+export interface UpdateMembershipEntitlementRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateMembershipEntitlementRequest
+     */
+    active?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMembershipEntitlementRequest
+     */
+    membershipPlanId?: string | null;
+    /**
+     * Explicit null makes the grant open-ended.
+     * @type {number}
+     * @memberof UpdateMembershipEntitlementRequest
+     */
+    validDays?: number | null;
 }
 /**
  * 
@@ -23545,6 +26269,12 @@ export interface UpdateStaffMemberRequest {
      * @type {string}
      * @memberof UpdateStaffMemberRequest
      */
+    jobTitle?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStaffMemberRequest
+     */
     name?: string | null;
     /**
      * 
@@ -23672,6 +26402,37 @@ export interface UpdateVendorRequest {
      * @memberof UpdateVendorRequest
      */
     taxRegistrationName?: string | null;
+}
+/**
+ * 部分更新。absent は「触らない」。`description` は空文字で消す。
+ * @export
+ * @interface UpdateWebhookEndpointRequest
+ */
+export interface UpdateWebhookEndpointRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateWebhookEndpointRequest
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateWebhookEndpointRequest
+     */
+    eventTypes?: Array<string> | null;
+    /**
+     * `active` または `paused`。`blocked` は運用の結果であって指定できない。
+     * @type {string}
+     * @memberof UpdateWebhookEndpointRequest
+     */
+    status?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateWebhookEndpointRequest
+     */
+    url?: string | null;
 }
 /**
  * 
@@ -23975,4 +26736,254 @@ export interface WarehouseResponse {
      * @memberof WarehouseResponse
      */
     updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookDeliveryResponse
+ */
+export interface WebhookDeliveryResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof WebhookDeliveryResponse
+     */
+    attemptCount: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    deadAt?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    eventId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    eventType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    lastErrorCode?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof WebhookDeliveryResponse
+     */
+    lastStatusCode?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    nextAttemptAt: string;
+    /**
+     * `pending`, `in_flight`, `succeeded`, or `dead`.
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookDeliveryResponse
+     */
+    succeededAt?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookEndpointResponse
+ */
+export interface WebhookEndpointResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    blockedAt?: string | null;
+    /**
+     * 連続して恒久失敗した配信の数。`blocked` の理由を読むための値。
+     * @type {number}
+     * @memberof WebhookEndpointResponse
+     */
+    consecutiveFailures: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    description?: string | null;
+    /**
+     * 購読している versioned event type。
+     * @type {Array<string>}
+     * @memberof WebhookEndpointResponse
+     */
+    eventTypes: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    lastErrorCode?: string | null;
+    /**
+     * 旧世代の署名を併記しなくなる時刻。
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    previousSecretExpiresAt?: string | null;
+    /**
+     * ローテーション猶予中だけ入る。この世代の署名もまだ併記されている。
+     * @type {number}
+     * @memberof WebhookEndpointResponse
+     */
+    previousSecretVersion?: number | null;
+    /**
+     * 導出シークレットの世代。値そのものは返さない。
+     * @type {number}
+     * @memberof WebhookEndpointResponse
+     */
+    secretVersion: number;
+    /**
+     * `active`, `paused`, or `blocked`.
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointResponse
+     */
+    url: string;
+}
+/**
+ * 作成とローテーションの応答**だけ**がシークレットを載せる。
+ * @export
+ * @interface WebhookEndpointWithSecretResponse
+ */
+export interface WebhookEndpointWithSecretResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    blockedAt?: string;
+    /**
+     * 連続して恒久失敗した配信の数。`blocked` の理由を読むための値。
+     * @type {number}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    consecutiveFailures: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    description?: string;
+    /**
+     * 購読している versioned event type。
+     * @type {Array<string>}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    eventTypes: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    lastErrorCode?: string;
+    /**
+     * 旧世代の署名を併記しなくなる時刻。
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    previousSecretExpiresAt?: string;
+    /**
+     * ローテーション猶予中だけ入る。この世代の署名もまだ併記されている。
+     * @type {number}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    previousSecretVersion?: number;
+    /**
+     * 導出シークレットの世代。値そのものは返さない。
+     * @type {number}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    secretVersion: number;
+    /**
+     * `active`, `paused`, or `blocked`.
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    status: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    url: string;
+    /**
+     * 一度だけ返る。サーバは平文を保存しないので、後から読み出せない。
+     * @type {string}
+     * @memberof WebhookEndpointWithSecretResponse
+     */
+    signingSecret: string;
+}
+/**
+ * 疎通確認の結果。応答本文は返さない（secret や PII が混ざりうる）。
+ * @export
+ * @interface WebhookTestResponse
+ */
+export interface WebhookTestResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WebhookTestResponse
+     */
+    delivered: boolean;
+    /**
+     * 有界な失敗理由。`TIMEOUT` / `BLOCKED_ADDRESS` / `CLIENT_ERROR` など。
+     * @type {string}
+     * @memberof WebhookTestResponse
+     */
+    errorCode?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof WebhookTestResponse
+     */
+    statusCode?: number | null;
 }

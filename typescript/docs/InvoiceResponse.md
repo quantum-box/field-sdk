@@ -29,6 +29,7 @@ Name | Type
 `sentAt` | string
 `smsDeliveryFailureCode` | string
 `smsDeliveryStatus` | string
+`sources` | [Array&lt;InvoiceSourceResponse&gt;](InvoiceSourceResponse.md)
 `squarePaymentLinkId` | string
 `status` | string
 `subtotalAmount` | number

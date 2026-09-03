@@ -19,7 +19,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 ## analyzeBridgeTabular
 
-> TabularAnalyzeResponse analyzeBridgeTabular(file, context, headerRow, idempotencyKey, mappingMode, mappingProposal, sheetName, targetSchema)
+> TabularAnalyzeResponse analyzeBridgeTabular(file, context, headerRow, idempotencyKey, mappingMode, mappingProposal, rotation, sheetName, targetSchema)
 
 
 
@@ -53,6 +53,8 @@ async function example() {
     mappingMode: mappingMode_example,
     // string (optional)
     mappingProposal: mappingProposal_example,
+    // string | Clockwise degrees to turn a scanned PDF by before it is read: `0`, `90`, `180`, or `270`. (optional)
+    rotation: rotation_example,
     // string (optional)
     sheetName: sheetName_example,
     // string (optional)
@@ -82,6 +84,7 @@ example().catch(console.error);
 | **idempotencyKey** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **mappingMode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **mappingProposal** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **rotation** | `string` | Clockwise degrees to turn a scanned PDF by before it is read: &#x60;0&#x60;, &#x60;90&#x60;, &#x60;180&#x60;, or &#x60;270&#x60;. | [Optional] [Defaults to `undefined`] |
 | **sheetName** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **targetSchema** | `string` |  | [Optional] [Defaults to `undefined`] |
 
@@ -591,7 +594,7 @@ This endpoint does not need any parameter.
 
 ## previewBridgeFile
 
-> BridgeRunResponse previewBridgeFile(definitionId, file, context, headerRow, idempotencyKey, mappingMode, mappingProposal, sheetName, targetSchema)
+> BridgeRunResponse previewBridgeFile(definitionId, file, context, headerRow, idempotencyKey, mappingMode, mappingProposal, rotation, sheetName, targetSchema)
 
 
 
@@ -627,6 +630,8 @@ async function example() {
     mappingMode: mappingMode_example,
     // string (optional)
     mappingProposal: mappingProposal_example,
+    // string | Clockwise degrees to turn a scanned PDF by before it is read: `0`, `90`, `180`, or `270`. (optional)
+    rotation: rotation_example,
     // string (optional)
     sheetName: sheetName_example,
     // string (optional)
@@ -657,6 +662,7 @@ example().catch(console.error);
 | **idempotencyKey** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **mappingMode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **mappingProposal** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **rotation** | `string` | Clockwise degrees to turn a scanned PDF by before it is read: &#x60;0&#x60;, &#x60;90&#x60;, &#x60;180&#x60;, or &#x60;270&#x60;. | [Optional] [Defaults to `undefined`] |
 | **sheetName** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **targetSchema** | `string` |  | [Optional] [Defaults to `undefined`] |
 

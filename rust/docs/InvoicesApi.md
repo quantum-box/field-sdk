@@ -161,7 +161,7 @@ Name | Type | Description  | Required | Notes
 
 ## list_invoices
 
-> models::InvoiceListResponse list_invoices(status, client_id, limit, offset)
+> models::InvoiceListResponse list_invoices(status, client_id, source_type, source_id, reason, limit, offset)
 
 
 ### Parameters
@@ -171,6 +171,9 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **status** | Option<**String**> | Filter by invoice status. |  |
 **client_id** | Option<**String**> | Filter by client ID. |  |
+**source_type** | Option<**String**> | Return invoices raised from this record kind. One of `reservation`, `order`, `subscription`, `quotation`, `contract`.  Named in camelCase to match the JSON bodies, with the endpoint's older snake_case spelling accepted as an alias so both conventions work. |  |
+**source_id** | Option<**String**> | Return invoices raised from this record. Combine with `sourceType` to answer whether a given record has already been billed. |  |
+**reason** | Option<**String**> | Return invoices carrying this caller-defined classification on any of their sources. Matched exactly. |  |
 **limit** | Option<**i32**> | Maximum number of invoices to return. |  |
 **offset** | Option<**i32**> | Number of invoices to skip. |  |
 

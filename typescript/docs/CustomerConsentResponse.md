@@ -11,6 +11,7 @@ Name | Type
 `channel` | string
 `consentKey` | string
 `customerId` | string
+`evidenceRecordId` | string
 `id` | string
 `recordedBy` | string
 `termsVersion` | string

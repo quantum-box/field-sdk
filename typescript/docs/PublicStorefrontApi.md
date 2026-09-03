@@ -6,6 +6,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 |------------- | ------------- | -------------|
 | [**listPublicCustomFieldDefinitions**](PublicStorefrontApi.md#listpubliccustomfielddefinitions) | **GET** /v1/public/storefront/{tenant_id}/custom-field-definitions |  |
 | [**publicStorefrontAddCartItem**](PublicStorefrontApi.md#publicstorefrontaddcartitem) | **POST** /v1/public/storefront/{tenant_id}/carts/{cart_id}/items | Add a product to a cart. |
+| [**publicStorefrontCancelOrderByLookupToken**](PublicStorefrontApi.md#publicstorefrontcancelorderbylookuptoken) | **POST** /v1/public/storefront/{tenant_id}/orders/by-token/{lookup_token}/cancel | Cancel the one order represented by a lookup token. |
 | [**publicStorefrontCheckout**](PublicStorefrontApi.md#publicstorefrontcheckout) | **POST** /v1/public/storefront/{tenant_id}/checkout_sessions | Place the order. |
 | [**publicStorefrontClearCart**](PublicStorefrontApi.md#publicstorefrontclearcart) | **POST** /v1/public/storefront/{tenant_id}/carts/{cart_id}/clear | Empty a cart. |
 | [**publicStorefrontCreateCart**](PublicStorefrontApi.md#publicstorefrontcreatecart) | **POST** /v1/public/storefront/{tenant_id}/carts | Open a cart. |
@@ -31,7 +32,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 ## listPublicCustomFieldDefinitions
 
-> PublicCustomFieldDefinitionListResponse listPublicCustomFieldDefinitions(tenantId, entityType)
+> PublicCustomFieldDefinitionListResponse listPublicCustomFieldDefinitions(tenantId, entityType, xTachyonCustomFieldTypes)
 
 
 
@@ -57,6 +58,8 @@ async function example() {
     tenantId: tenantId_example,
     // string | Public form entity type (reservation/customer_subject)
     entityType: entityType_example,
+    // string | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. (optional)
+    xTachyonCustomFieldTypes: xTachyonCustomFieldTypes_example,
   } satisfies ListPublicCustomFieldDefinitionsRequest;
 
   try {
@@ -78,6 +81,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **tenantId** | `string` | Tenant whose public storefront is being read | [Defaults to `undefined`] |
 | **entityType** | `string` | Public form entity type (reservation/customer_subject) | [Defaults to `undefined`] |
+| **xTachyonCustomFieldTypes** | `string` | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -178,6 +182,84 @@ example().catch(console.error);
 | **200** |  |  -  |
 | **400** | Unavailable product or rejected quantity |  -  |
 | **429** | Tenant cart budget exhausted |  -  |
+| **503** | Public storefront limiter unavailable |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## publicStorefrontCancelOrderByLookupToken
+
+> PublicOrderResponse publicStorefrontCancelOrderByLookupToken(tenantId, lookupToken)
+
+Cancel the one order represented by a lookup token.
+
+There is deliberately no order ID in this contract. The short-lived token is resolved server-side under the tenant in the path, so it cannot be paired with a different customer\&#39;s order.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PublicStorefrontApi,
+} from '@tachyon-sdk/field';
+import type { PublicStorefrontCancelOrderByLookupTokenRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new PublicStorefrontApi(config);
+
+  const body = {
+    // string | Tenant whose public storefront is being ordered from
+    tenantId: tenantId_example,
+    // string | Token minted by the lookup
+    lookupToken: lookupToken_example,
+  } satisfies PublicStorefrontCancelOrderByLookupTokenRequest;
+
+  try {
+    const data = await api.publicStorefrontCancelOrderByLookupToken(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tenantId** | `string` | Tenant whose public storefront is being ordered from | [Defaults to `undefined`] |
+| **lookupToken** | `string` | Token minted by the lookup | [Defaults to `undefined`] |
+
+### Return type
+
+[**PublicOrderResponse**](PublicOrderResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+| **404** | Lookup token is unknown, expired or belongs to another tenant |  -  |
+| **409** | The order has reached a non-cancellable status |  -  |
+| **429** | Tenant consumer-cancel budget exhausted |  -  |
 | **503** | Public storefront limiter unavailable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

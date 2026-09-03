@@ -4,14 +4,19 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**acknowledgeHandoffNote**](ReservationsApi.md#acknowledgehandoffnote) | **POST** /v1/erp/handoff-notes/{id}/acknowledge |  |
 | [**assignReservationStaff**](ReservationsApi.md#assignreservationstaff) | **POST** /v1/erp/reservations/{id}/staff-assignment |  |
 | [**cancelReservationWithPolicy**](ReservationsApi.md#cancelreservationwithpolicy) | **POST** /v1/erp/reservations/{id}/cancel |  |
 | [**closeCustomerClientAffiliation**](ReservationsApi.md#closecustomerclientaffiliationoperation) | **POST** /v1/erp/customer-client-affiliations/{id}/close |  |
+| [**closeReservationWaitlistEntry**](ReservationsApi.md#closereservationwaitlistentryoperation) | **POST** /v1/erp/reservation-waitlist/{id}/close |  |
+| [**convertReservationWaitlistEntry**](ReservationsApi.md#convertreservationwaitlistentryoperation) | **POST** /v1/erp/reservation-waitlist/{id}/convert |  |
 | [**createCustomerClientAffiliation**](ReservationsApi.md#createcustomerclientaffiliationoperation) | **POST** /v1/erp/customer-client-affiliations |  |
+| [**createHandoffNote**](ReservationsApi.md#createhandoffnoteoperation) | **POST** /v1/erp/handoff-notes |  |
 | [**createReservation**](ReservationsApi.md#createreservationoperation) | **POST** /v1/erp/reservations |  |
 | [**createReservationProduct**](ReservationsApi.md#createreservationproduct) | **POST** /v1/erp/reservation-products |  |
 | [**createReservationResource**](ReservationsApi.md#createreservationresourceoperation) | **POST** /v1/erp/reservation-resources |  |
 | [**createReservationType**](ReservationsApi.md#createreservationtypeoperation) | **POST** /v1/erp/reservation-types |  |
+| [**createReservationWaitlistEntry**](ReservationsApi.md#createreservationwaitlistentryoperation) | **POST** /v1/erp/reservation-waitlist |  |
 | [**createStaffAssignment**](ReservationsApi.md#createstaffassignment) | **POST** /v1/erp/staff-assignments |  |
 | [**createStaffProfile**](ReservationsApi.md#createstaffprofile) | **POST** /v1/erp/staff-profiles |  |
 | [**deleteReservationProduct**](ReservationsApi.md#deletereservationproduct) | **DELETE** /v1/erp/reservation-products/{id} |  |
@@ -30,6 +35,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**getReservationResource**](ReservationsApi.md#getreservationresource) | **GET** /v1/erp/reservation-resources/{id} |  |
 | [**getReservationResourceSchedule**](ReservationsApi.md#getreservationresourceschedule) | **GET** /v1/erp/reservation-resources/{id}/schedule |  |
 | [**getReservationScheduleLocation**](ReservationsApi.md#getreservationschedulelocation) | **GET** /v1/erp/reservation-schedule-location |  |
+| [**getReservationWaitlistEntry**](ReservationsApi.md#getreservationwaitlistentry) | **GET** /v1/erp/reservation-waitlist/{id} |  |
 | [**importProductSlotsIntoResourceSchedule**](ReservationsApi.md#importproductslotsintoresourceschedule) | **POST** /v1/erp/reservation-resources/{id}/schedule/import-product-slots |  |
 | [**issueReservationBillingLink**](ReservationsApi.md#issuereservationbillinglinkoperation) | **POST** /v1/erp/reservations/{id}/billing-link |  |
 | [**issueReservationSquareInvoice**](ReservationsApi.md#issuereservationsquareinvoice) | **POST** /v1/erp/reservations/{id}/billing-invoice |  |
@@ -37,6 +43,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**listCustomerClientAffiliations**](ReservationsApi.md#listcustomerclientaffiliations) | **GET** /v1/erp/customer-client-affiliations |  |
 | [**listExtensionLifecycleAuditEvents**](ReservationsApi.md#listextensionlifecycleauditevents) | **GET** /v1/erp/extensions/audit |  |
 | [**listExtensions**](ReservationsApi.md#listextensions) | **GET** /v1/erp/extensions |  |
+| [**listHandoffNotes**](ReservationsApi.md#listhandoffnotes) | **GET** /v1/erp/handoff-notes |  |
 | [**listReservationCancellations**](ReservationsApi.md#listreservationcancellations) | **GET** /v1/erp/reservations/{id}/cancellations |  |
 | [**listReservationNotificationTemplates**](ReservationsApi.md#listreservationnotificationtemplates) | **GET** /v1/erp/reservation-notification-templates |  |
 | [**listReservationProducts**](ReservationsApi.md#listreservationproducts) | **GET** /v1/erp/reservation-products |  |
@@ -45,6 +52,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**listReservationScheduleDateOverrides**](ReservationsApi.md#listreservationscheduledateoverrides) | **GET** /v1/erp/reservation-resources/{id}/schedule/overrides |  |
 | [**listReservationTypes**](ReservationsApi.md#listreservationtypes) | **GET** /v1/erp/reservation-types |  |
 | [**listReservationTypesForManagement**](ReservationsApi.md#listreservationtypesformanagement) | **GET** /v1/erp/reservation-types/manage |  |
+| [**listReservationWaitlist**](ReservationsApi.md#listreservationwaitlist) | **GET** /v1/erp/reservation-waitlist |  |
 | [**listReservations**](ReservationsApi.md#listreservations) | **GET** /v1/erp/reservations |  |
 | [**listResources**](ReservationsApi.md#listresources) | **GET** /v1/erp/resources |  |
 | [**listStaffAssignments**](ReservationsApi.md#liststaffassignments) | **GET** /v1/erp/staff-assignments |  |
@@ -65,6 +73,7 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**replaceReservationProduct**](ReservationsApi.md#replacereservationproduct) | **PUT** /v1/erp/reservation-products/{id} |  |
 | [**replaceReservationProductSlots**](ReservationsApi.md#replacereservationproductslotsoperation) | **PUT** /v1/erp/reservation-products/{id}/slots |  |
 | [**replaceReservationResourceSchedule**](ReservationsApi.md#replacereservationresourcescheduleoperation) | **PUT** /v1/erp/reservation-resources/{id}/schedule |  |
+| [**retractHandoffNote**](ReservationsApi.md#retracthandoffnoteoperation) | **POST** /v1/erp/handoff-notes/{id}/retract |  |
 | [**saveReservationNotificationTemplates**](ReservationsApi.md#savereservationnotificationtemplatesoperation) | **PUT** /v1/erp/reservation-notification-templates |  |
 | [**seedReservationProductsFromExtensionConfig**](ReservationsApi.md#seedreservationproductsfromextensionconfig) | **POST** /v1/erp/reservation-products/seed-from-extension-config |  |
 | [**sendReservationNotification**](ReservationsApi.md#sendreservationnotificationoperation) | **POST** /v1/erp/reservations/{id}/notifications |  |
@@ -77,6 +86,77 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 | [**updateStaffAssignment**](ReservationsApi.md#updatestaffassignment) | **PATCH** /v1/erp/staff-assignments/{id} |  |
 | [**updateStaffProfile**](ReservationsApi.md#updatestaffprofile) | **PATCH** /v1/erp/staff-profiles/{id} |  |
 
+
+
+## acknowledgeHandoffNote
+
+> HandoffNote acknowledgeHandoffNote(id)
+
+
+
+Marks the note as taken over.  The first acknowledgement wins: pressing this on an already acknowledged note keeps whoever picked it up first, because that is the fact the handover turns on.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { AcknowledgeHandoffNoteRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Handoff note ID
+    id: id_example,
+  } satisfies AcknowledgeHandoffNoteRequest;
+
+  try {
+    const data = await api.acknowledgeHandoffNote(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Handoff note ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**HandoffNote**](HandoffNote.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## assignReservationStaff
@@ -298,6 +378,154 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## closeReservationWaitlistEntry
+
+> ReservationWaitlistEntry closeReservationWaitlistEntry(id, closeReservationWaitlistEntryRequest)
+
+
+
+Takes an entry out of the queue without booking it.  Closing an entry that already left the queue returns it unchanged rather than rewriting why it first left.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CloseReservationWaitlistEntryOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Waitlist entry ID
+    id: id_example,
+    // CloseReservationWaitlistEntryRequest
+    closeReservationWaitlistEntryRequest: ...,
+  } satisfies CloseReservationWaitlistEntryOperationRequest;
+
+  try {
+    const data = await api.closeReservationWaitlistEntry(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Waitlist entry ID | [Defaults to `undefined`] |
+| **closeReservationWaitlistEntryRequest** | [CloseReservationWaitlistEntryRequest](CloseReservationWaitlistEntryRequest.md) |  | |
+
+### Return type
+
+[**ReservationWaitlistEntry**](ReservationWaitlistEntry.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## convertReservationWaitlistEntry
+
+> ConvertReservationWaitlistEntryResponse convertReservationWaitlistEntry(id, convertReservationWaitlistEntryRequest)
+
+
+
+Books the entry, seating the guest.  This is the manual promotion. It runs the ordinary reservation creation path, so it takes the slot hold there and fails with 409 if the slot filled up again in the meantime — the entry then stays in the queue. The entry is stamped &#x60;converted&#x60; only after the reservation exists.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ConvertReservationWaitlistEntryOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Waitlist entry ID
+    id: id_example,
+    // ConvertReservationWaitlistEntryRequest
+    convertReservationWaitlistEntryRequest: ...,
+  } satisfies ConvertReservationWaitlistEntryOperationRequest;
+
+  try {
+    const data = await api.convertReservationWaitlistEntry(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Waitlist entry ID | [Defaults to `undefined`] |
+| **convertReservationWaitlistEntryRequest** | [ConvertReservationWaitlistEntryRequest](ConvertReservationWaitlistEntryRequest.md) |  | |
+
+### Return type
+
+[**ConvertReservationWaitlistEntryResponse**](ConvertReservationWaitlistEntryResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## createCustomerClientAffiliation
 
 > CustomerClientAffiliation createCustomerClientAffiliation(createCustomerClientAffiliationRequest)
@@ -348,6 +576,77 @@ example().catch(console.error);
 ### Return type
 
 [**CustomerClientAffiliation**](CustomerClientAffiliation.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createHandoffNote
+
+> HandoffNote createHandoffNote(createHandoffNoteRequest)
+
+
+
+Appends one handover note.  The note is never edited afterwards. A mistaken note is retracted, not rewritten, so the board always shows what was actually written.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CreateHandoffNoteOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // CreateHandoffNoteRequest
+    createHandoffNoteRequest: ...,
+  } satisfies CreateHandoffNoteOperationRequest;
+
+  try {
+    const data = await api.createHandoffNote(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **createHandoffNoteRequest** | [CreateHandoffNoteRequest](CreateHandoffNoteRequest.md) |  | |
+
+### Return type
+
+[**HandoffNote**](HandoffNote.md)
 
 ### Authorization
 
@@ -624,6 +923,77 @@ example().catch(console.error);
 ### Return type
 
 [**ReservationType**](ReservationType.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createReservationWaitlistEntry
+
+> ReservationWaitlistEntry createReservationWaitlistEntry(createReservationWaitlistEntryRequest)
+
+
+
+Adds one request to the queue.  Joining the queue consumes no slot inventory: the whole point is that the slot has none left. The entry needs &#x60;customerId&#x60; or at least one of &#x60;customerName&#x60;, &#x60;customerEmail&#x60;, &#x60;customerPhone&#x60; — a waitlist nobody can call back is not actionable.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { CreateReservationWaitlistEntryOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // CreateReservationWaitlistEntryRequest
+    createReservationWaitlistEntryRequest: ...,
+  } satisfies CreateReservationWaitlistEntryOperationRequest;
+
+  try {
+    const data = await api.createReservationWaitlistEntry(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **createReservationWaitlistEntryRequest** | [CreateReservationWaitlistEntryRequest](CreateReservationWaitlistEntryRequest.md) |  | |
+
+### Return type
+
+[**ReservationWaitlistEntry**](ReservationWaitlistEntry.md)
 
 ### Authorization
 
@@ -1907,6 +2277,75 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getReservationWaitlistEntry
+
+> ReservationWaitlistEntry getReservationWaitlistEntry(id)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { GetReservationWaitlistEntryRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Waitlist entry ID
+    id: id_example,
+  } satisfies GetReservationWaitlistEntryRequest;
+
+  try {
+    const data = await api.getReservationWaitlistEntry(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Waitlist entry ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationWaitlistEntry**](ReservationWaitlistEntry.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## importProductSlotsIntoResourceSchedule
 
 > ImportProductSlotsResponse importProductSlotsIntoResourceSchedule(id, importProductSlotsRequest)
@@ -2375,6 +2814,98 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ExtensionManifestListResponse**](ExtensionManifestListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listHandoffNotes
+
+> HandoffNoteListResponse listHandoffNotes(subjectType, subjectId, category, outstandingOnly, includeRetracted, from, to, limit)
+
+
+
+Lists handover notes, newest first.  Pass &#x60;subjectType&#x60; and &#x60;subjectId&#x60; for one subject\&#39;s board, or &#x60;outstandingOnly&#x3D;true&#x60; for everything still waiting to be picked up. Retracted notes are hidden unless &#x60;includeRetracted&#x3D;true&#x60;.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListHandoffNotesRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Narrow to one subject, e.g. `reservation`. Both parts are needed for a single subject\'s board; either alone still filters. (optional)
+    subjectType: subjectType_example,
+    // string (optional)
+    subjectId: subjectId_example,
+    // string (optional)
+    category: category_example,
+    // boolean | Keep only notes nobody has taken over yet — the shift-start read. (optional)
+    outstandingOnly: true,
+    // boolean | Include notes that were withdrawn. Off by default so a retracted note stops appearing on the board, while staying readable for audit. (optional)
+    includeRetracted: true,
+    // Date (optional)
+    from: 2013-10-20T19:20:30+01:00,
+    // Date (optional)
+    to: 2013-10-20T19:20:30+01:00,
+    // number (optional)
+    limit: 56,
+  } satisfies ListHandoffNotesRequest;
+
+  try {
+    const data = await api.listHandoffNotes(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **subjectType** | `string` | Narrow to one subject, e.g. &#x60;reservation&#x60;. Both parts are needed for a single subject\&#39;s board; either alone still filters. | [Optional] [Defaults to `undefined`] |
+| **subjectId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **category** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **outstandingOnly** | `boolean` | Keep only notes nobody has taken over yet — the shift-start read. | [Optional] [Defaults to `undefined`] |
+| **includeRetracted** | `boolean` | Include notes that were withdrawn. Off by default so a retracted note stops appearing on the board, while staying readable for audit. | [Optional] [Defaults to `undefined`] |
+| **from** | `Date` |  | [Optional] [Defaults to `undefined`] |
+| **to** | `Date` |  | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**HandoffNoteListResponse**](HandoffNoteListResponse.md)
 
 ### Authorization
 
@@ -2948,11 +3479,105 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listReservationWaitlist
+
+> ReservationWaitlistListResponse listReservationWaitlist(status, reservationTypeId, resourceId, customerId, from, to, seatableOnly, limit)
+
+
+
+Lists キャンセル待ち entries, oldest first.  Each item carries &#x60;queuePosition&#x60; — its place among the entries still waiting for the same slot — and &#x60;availableSlotGroups&#x60;, the free inventory groups that slot has right now. One booking consumes one group whatever the party size, so a single free group seats an entry of any &#x60;quantity&#x60;. &#x60;availableSlotGroups&#x60; is absent when no slot has been opened for the requested time, which is a different situation from a full one. &#x60;seatableOnly&#x3D;true&#x60; narrows the list to entries the slot can already take.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { ListReservationWaitlistRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Defaults to `waiting`. Pass a terminal status to read the history of entries that already left the queue. (optional)
+    status: status_example,
+    // string (optional)
+    reservationTypeId: reservationTypeId_example,
+    // string (optional)
+    resourceId: resourceId_example,
+    // string (optional)
+    customerId: customerId_example,
+    // Date | Bounds `desiredStartsAt` as the half-open interval `[from, to)`. (optional)
+    from: 2013-10-20T19:20:30+01:00,
+    // Date (optional)
+    to: 2013-10-20T19:20:30+01:00,
+    // boolean | Keep only entries whose slot has room for them right now — the \"空きが 出た\" list an operator works from. (optional)
+    seatableOnly: true,
+    // number (optional)
+    limit: 56,
+  } satisfies ListReservationWaitlistRequest;
+
+  try {
+    const data = await api.listReservationWaitlist(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **status** | `string` | Defaults to &#x60;waiting&#x60;. Pass a terminal status to read the history of entries that already left the queue. | [Optional] [Defaults to `undefined`] |
+| **reservationTypeId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **resourceId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **from** | `Date` | Bounds &#x60;desiredStartsAt&#x60; as the half-open interval &#x60;[from, to)&#x60;. | [Optional] [Defaults to `undefined`] |
+| **to** | `Date` |  | [Optional] [Defaults to `undefined`] |
+| **seatableOnly** | `boolean` | Keep only entries whose slot has room for them right now — the \&quot;空きが 出た\&quot; list an operator works from. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ReservationWaitlistListResponse**](ReservationWaitlistListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listReservations
 
-> ReservationListResponse listReservations(status, paymentStatus, reservationTypeId, resourceId, staffId, customerId, search, limit, offset)
+> ReservationListResponse listReservations(status, paymentStatus, reservationTypeId, resourceId, staffId, customerId, search, from, to, updatedSince, limit, offset)
 
 
+
+Lists a tenant\&#39;s reservations, newest start time first.  &#x60;from&#x60;/&#x60;to&#x60; bound the reservation\&#39;s own start time (&#x60;startsAt&#x60;) as the half-open interval &#x60;[from, to)&#x60;, so consecutive windows cover a period exactly once. &#x60;updatedSince&#x60; bounds &#x60;updatedAt&#x60; inclusively, for incremental reads.  &#x60;limit&#x60; defaults to 100 and is capped at 500; a larger request is capped rather than rejected, and the response echoes the applied &#x60;limit&#x60;, &#x60;offset&#x60;, and the filter\&#39;s &#x60;total&#x60;.
 
 ### Example
 
@@ -2986,7 +3611,13 @@ async function example() {
     customerId: customerId_example,
     // string | Search reservation number or the reservation-held customer snapshot. (optional)
     search: search_example,
-    // number (optional)
+    // Date | Inclusive lower bound on the reservation\'s own start time (`startsAt`), RFC 3339. Not the creation or update time. (optional)
+    from: 2013-10-20T19:20:30+01:00,
+    // Date | Exclusive upper bound on the reservation\'s own start time (`startsAt`), RFC 3339. Exclusive so consecutive windows (`[from, to)`) cover a period exactly once. (optional)
+    to: 2013-10-20T19:20:30+01:00,
+    // Date | Return only reservations whose `updatedAt` is at or after this RFC 3339 instant. The bound is inclusive, so replaying the previous page\'s high-water mark can repeat a row but never skips one. (optional)
+    updatedSince: 2013-10-20T19:20:30+01:00,
+    // number | Page size. Defaults to 100, maximum 500. A larger value is capped at 500 rather than rejected, and the applied value comes back as `limit` in the response. Declared in the description rather than as a schema `maximum` because the server caps instead of failing validation. (optional)
     limit: 56,
     // number (optional)
     offset: 56,
@@ -3016,7 +3647,10 @@ example().catch(console.error);
 | **staffId** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **search** | `string` | Search reservation number or the reservation-held customer snapshot. | [Optional] [Defaults to `undefined`] |
-| **limit** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **from** | `Date` | Inclusive lower bound on the reservation\&#39;s own start time (&#x60;startsAt&#x60;), RFC 3339. Not the creation or update time. | [Optional] [Defaults to `undefined`] |
+| **to** | `Date` | Exclusive upper bound on the reservation\&#39;s own start time (&#x60;startsAt&#x60;), RFC 3339. Exclusive so consecutive windows (&#x60;[from, to)&#x60;) cover a period exactly once. | [Optional] [Defaults to `undefined`] |
+| **updatedSince** | `Date` | Return only reservations whose &#x60;updatedAt&#x60; is at or after this RFC 3339 instant. The bound is inclusive, so replaying the previous page\&#39;s high-water mark can repeat a row but never skips one. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Page size. Defaults to 100, maximum 500. A larger value is capped at 500 rather than rejected, and the applied value comes back as &#x60;limit&#x60; in the response. Declared in the description rather than as a schema &#x60;maximum&#x60; because the server caps instead of failing validation. | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -4362,6 +4996,80 @@ example().catch(console.error);
 ### Return type
 
 [**ReservationResourceScheduleResponse**](ReservationResourceScheduleResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## retractHandoffNote
+
+> HandoffNote retractHandoffNote(id, retractHandoffNoteRequest)
+
+
+
+Withdraws a note written in error.  The row is not deleted and the body is not rewritten: the note stays readable and marked as retracted, which is what keeps the log a log.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReservationsApi,
+} from '@tachyon-sdk/field';
+import type { RetractHandoffNoteOperationRequest } from '@tachyon-sdk/field';
+
+async function example() {
+  console.log("🚀 Testing @tachyon-sdk/field SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ReservationsApi(config);
+
+  const body = {
+    // string | Handoff note ID
+    id: id_example,
+    // RetractHandoffNoteRequest
+    retractHandoffNoteRequest: ...,
+  } satisfies RetractHandoffNoteOperationRequest;
+
+  try {
+    const data = await api.retractHandoffNote(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | Handoff note ID | [Defaults to `undefined`] |
+| **retractHandoffNoteRequest** | [RetractHandoffNoteRequest](RetractHandoffNoteRequest.md) |  | |
+
+### Return type
+
+[**HandoffNote**](HandoffNote.md)
 
 ### Authorization
 

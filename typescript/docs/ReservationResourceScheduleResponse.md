@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `resourceId` | string
+`rollingWindowDays` | number
 `rules` | [Array&lt;ReservationAvailabilityRuleResponse&gt;](ReservationAvailabilityRuleResponse.md)
 
 

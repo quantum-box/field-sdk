@@ -375,14 +375,22 @@ components:
           - string
           - 'null'
         planId:
-          type: string
+          description: |-
+            Class to join directly. Mutually exclusive with `productId`; one of
+            the two is required.
+          type:
+          - string
+          - 'null'
+        productId:
+          description: Product being sold. Mutually exclusive with `planId`.
+          type:
+          - string
+          - 'null'
         startedOn:
           description: YYYY-MM-DD (default today)
           type:
           - string
           - 'null'
-      required:
-      - planId
       type: object
     AutoAssignCaddiesRequest:
       properties:
@@ -1346,8 +1354,12 @@ components:
           items:
             $ref: '#/components/schemas/ClientCsvImportError'
           type: array
+        updated:
+          minimum: 0
+          type: integer
       required:
       - created
+      - updated
       - errors
       type: object
     ClockInRequest:
@@ -1402,6 +1414,21 @@ components:
       required:
       - validTo
       type: object
+    CloseReservationWaitlistEntryRequest:
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+        status:
+          description: |-
+            `withdrawn` (the guest no longer wants it) or `expired` (the date
+            passed). `converted` is not accepted: that status is only reachable by
+            actually creating the reservation.
+          type: string
+      required:
+      - status
+      type: object
     CompletePublicSigningInput:
       properties:
         idempotencyKey:
@@ -1413,6 +1440,83 @@ components:
       required:
       - idempotencyKey
       - values
+      type: object
+    ConsumerConsentStateListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ConsumerConsentStateResponse'
+          type: array
+      required:
+      - items
+      type: object
+    ConsumerConsentStateResponse:
+      description: |-
+        `consent_key` ごとに解決した現在の同意状態。
+
+        定義側 (`membership_consent_items`) と証跡側 (`customer_consents`) を突き
+        合わせた結果を返す。片方にしか無い状態もあるので、どちらの欠落も `null`
+        で表せる形にしてある。
+      properties:
+        accepted:
+          description: |-
+            一度も記録が無ければ `null`。`false` は「拒否された」であって「未取得」
+            ではない。
+          type:
+          - boolean
+          - 'null'
+        acceptedAt:
+          type:
+          - string
+          - 'null'
+        acceptedTermsVersion:
+          description: 記録時点の約款バージョン。
+          type:
+          - string
+          - 'null'
+        body:
+          type:
+          - string
+          - 'null'
+        channel:
+          type:
+          - string
+          - 'null'
+        consentKey:
+          type: string
+        currentTermsVersion:
+          description: 定義側の現在の約款バージョン。
+          type:
+          - string
+          - 'null'
+        evidenceRecordId:
+          description: Source application document retained in the Evidence domain.
+          type:
+          - string
+          - 'null'
+        label:
+          description: |-
+            定義が無効化・削除済みの `consentKey` では `null`。証跡は残るので行は
+            消えない。
+          type:
+          - string
+          - 'null'
+        outdated:
+          description: |-
+            同意済みだが、そのときの約款バージョンが現在の定義と違う。再同意を
+            促す判断に使う。
+          type: boolean
+        recordedBy:
+          type:
+          - string
+          - 'null'
+        required:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - consentKey
+      - outdated
       type: object
     ConsumerCustomerCsvImportError:
       properties:
@@ -1434,9 +1538,110 @@ components:
           items:
             $ref: '#/components/schemas/ConsumerCustomerCsvImportError'
           type: array
+        updated:
+          minimum: 0
+          type: integer
       required:
       - created
+      - updated
       - errors
+      type: object
+    ContactPreferenceChannel:
+      description: |-
+        顧客へ**連絡する手段**。連絡拒否 (do-not-contact) の単位 (PLT-4053)。
+
+        [`ConsentChannel`] とは別物。あちらは「窓口で取ったか web で取ったか」
+        という受け取り経路で、こちらは「電話してよいか、郵便を送ってよいか」。
+        同じ列で2つの意味を持たせると、電話を拒否した顧客が「店頭で申し出た」
+        の意味の `store` として保存され、判定が壊れる。
+
+        テナント設定ではなく固定の集合にしてある。連絡可否を読む側（顧客を
+        抽出して案内を送る Cloud App）が、テナントごとのキー体系を知らずに
+        「連絡してよい相手」を求められることが要件そのもので、語彙が可変だと
+        判定が呼び出し側に戻ってしまう。業種非依存の手段だけを並べる。
+
+        接触履歴の [`crate::customer_contact::ContactChannel`] (PLT-4052) とも
+        別物。あちらは「実際にどの手段で接触したか」の記録で `visit` / `chat` /
+        `other` を含み、こちらは「送ってよいか」を判定する到達手段だけに絞って
+        ある。両方を `ContactChannel` と呼ぶと `order` の re-export で名前が
+        衝突するので、連絡可否側に接頭辞を付けている。
+      enum:
+      - Phone
+      - Email
+      - Sms
+      - Post
+      type: string
+    ContactPreferenceEntryRequest:
+      properties:
+        channel:
+          $ref: '#/components/schemas/ContactPreferenceChannel'
+          description: 連絡手段。`phone` / `email` / `sms` / `post`。
+        contactable:
+          description: |-
+            `false` で「このチャネルへは連絡しない」。`true` はその撤回。
+            どちらも証跡への追記で、前の行は残る。
+          type: boolean
+        note:
+          description: 申し出の内容や受け付けた状況。省略可。
+          type:
+          - string
+          - 'null'
+      required:
+      - channel
+      - contactable
+      type: object
+    ContactPreferenceListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ContactPreferenceResponse'
+          type: array
+      required:
+      - items
+      type: object
+    ContactPreferenceResponse:
+      description: |-
+        チャネルごとに解決した現在の連絡可否。
+
+        [`ContactPreferenceChannel::ALL`] の全チャネルを必ず返す。記録の無いチャネルを
+        省くと、呼び出し側が「返ってこない = 不可」と読む余地が残る。
+      properties:
+        channel:
+          $ref: '#/components/schemas/ContactPreferenceChannel'
+        contactable:
+          description: |-
+            **いま**このチャネルへ連絡してよいか。申し出が一度も無ければ `true`
+            （既定は連絡可）。
+          type: boolean
+        declared:
+          description: |-
+            顧客からの申し出が記録されているか。`false` は「聞いていない」で
+            あって「拒否されていない」ことの証明ではない。
+          type: boolean
+        declaredAt:
+          description: 最新の申し出の日時 (RFC 3339)。未記録なら `null`。
+          type:
+          - string
+          - 'null'
+        note:
+          description: 申し出に添えられたメモ。
+          type:
+          - string
+          - 'null'
+        recordedBy:
+          description: 受け付けた担当。
+          type:
+          - string
+          - 'null'
+        source:
+          description: 申し出を受け取った経路 (`store` / `web` / `kiosk`)。連絡手段ではない。
+          type:
+          - string
+          - 'null'
+      required:
+      - channel
+      - contactable
+      - declared
       type: object
     ContractLineItem:
       description: 契約明細 1 行。見積・受注からの引き継ぎ元と同じ形。
@@ -1473,6 +1678,78 @@ components:
       required:
       - quotation
       - invoiceId
+      type: object
+    ConvertReservationWaitlistEntryRequest:
+      description: |-
+        Overrides for the reservation an entry becomes.
+
+        Everything is optional and defaults to what the entry recorded. The
+        overrides exist because the queue stores what the guest asked for weeks
+        ago, and the booking that finally happens may differ — a different resource
+        freed up, or the price was agreed on the phone.
+      properties:
+        cancelUrl:
+          type:
+          - string
+          - 'null'
+        currency:
+          type:
+          - string
+          - 'null'
+        depositAmount:
+          format: int64
+          type:
+          - integer
+          - 'null'
+        endsAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        idempotencyKey:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        prepaymentPolicy:
+          type:
+          - string
+          - 'null'
+        priceAmount:
+          format: int64
+          type:
+          - integer
+          - 'null'
+        resourceId:
+          type:
+          - string
+          - 'null'
+        startsAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        successUrl:
+          type:
+          - string
+          - 'null'
+        timezone:
+          type:
+          - string
+          - 'null'
+      type: object
+    ConvertReservationWaitlistEntryResponse:
+      properties:
+        entry:
+          $ref: '#/components/schemas/ReservationWaitlistEntry'
+        reservation:
+          $ref: '#/components/schemas/CreateReservationResponse'
+      required:
+      - entry
+      - reservation
       type: object
     CouponResponse:
       properties:
@@ -1531,6 +1808,16 @@ components:
       - created_at
       - updated_at
       type: object
+    CreatableCustomFieldTypeWire:
+      enum:
+      - text
+      - email
+      - tel
+      - number
+      - date
+      - select
+      - boolean
+      type: string
     CreateActivityRequest:
       properties:
         clientId:
@@ -1648,6 +1935,63 @@ components:
           - string
           - 'null'
       type: object
+    CreateConsumerCustomerRequest:
+      properties:
+        address:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/CreateOrderClientAddressRequest'
+        birthDate:
+          description: YYYY-MM-DD (PLT-4040)。省略可。
+          type:
+          - string
+          - 'null'
+        channel:
+          description: store / web / kiosk (default store)
+          type:
+          - string
+          - 'null'
+        consents:
+          description: |-
+            窓口で用紙にチェックをもらって登録する運用では、顧客の作成と同意の
+            記録が同じ一枚から起きる (PLT-4041)。ここで一緒に渡せると、顧客だけ
+            できて同意が落ちる中途半端な状態を呼び出し側が後始末せずに済む。
+          items:
+            $ref: '#/components/schemas/RegistrationConsentRequest'
+          type: array
+        email:
+          type:
+          - string
+          - 'null'
+        idempotencyKey:
+          description: |-
+            再送鍵。同じ鍵の2回目以降は顧客を増やさず、最初に作った顧客を
+            `200 OK` で返す。
+
+            窓口の二重クリックや、応答を取りこぼした呼び出し側のリトライで同姓
+            同名の顧客が並ぶのを止めるために要る。鍵から顧客 ID を導くので、
+            応答を見ていない呼び出し側でも同じ顧客に辿り着ける。
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        nameKana:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+        sex:
+          description: 語彙はテナントが決める。16 文字まで (PLT-4040)。
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      type: object
     CreateCustomFieldDefinitionRequest:
       properties:
         entityType:
@@ -1655,7 +1999,7 @@ components:
         fieldKey:
           type: string
         fieldType:
-          type: string
+          $ref: '#/components/schemas/CreatableCustomFieldTypeWire'
         label:
           type: string
         options:
@@ -1663,6 +2007,10 @@ components:
             type: string
           type:
           - array
+          - 'null'
+        placeholder:
+          type:
+          - string
           - 'null'
         required:
           type:
@@ -1704,6 +2052,46 @@ components:
       - clientId
       - relationshipType
       - validFrom
+      type: object
+    CreateCustomerContactRequest:
+      properties:
+        channel:
+          description: phone / email / visit / chat / sms / letter / other
+          type: string
+        direction:
+          description: outbound / inbound
+          type: string
+        nextActionAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        note:
+          type:
+          - string
+          - 'null'
+        occurredAt:
+          description: 実際に接触した時刻。省略時はサーバの現在時刻。
+          format: date-time
+          type:
+          - string
+          - 'null'
+        outcome:
+          description: |-
+            connected / no_answer / left_message / refused / callback_requested /
+            undeliverable / other。かけた時点で分からなければ省略してよく、あとで
+            `PATCH` で足せる。
+          type:
+          - string
+          - 'null'
+        performedBy:
+          description: 実施した担当。省略時は呼び出した利用者。
+          type:
+          - string
+          - 'null'
+      required:
+      - channel
+      - direction
       type: object
     CreateCustomerCredentialRequest:
       properties:
@@ -1869,6 +2257,24 @@ components:
       - payee
       - amount
       type: object
+    CreateHandoffNoteRequest:
+      properties:
+        body:
+          type: string
+        category:
+          description: Free label the tenant chooses. Defaults to `general`.
+          type:
+          - string
+          - 'null'
+        subjectId:
+          type: string
+        subjectType:
+          type: string
+      required:
+      - subjectType
+      - subjectId
+      - body
+      type: object
     CreateInvoiceLineItemRequest:
       properties:
         description:
@@ -1959,6 +2365,16 @@ components:
           type:
           - string
           - 'null'
+        sources:
+          description: |-
+            Records this invoice is raised from. Optional and additive: an existing
+            caller that omits it creates an invoice with no declared origin,
+            exactly as before.
+          items:
+            $ref: '#/components/schemas/InvoiceSourceRequest'
+          type:
+          - array
+          - 'null'
         status:
           type:
           - string
@@ -2003,6 +2419,23 @@ components:
       - consentKey
       - label
       type: object
+    CreateMembershipEntitlementRequest:
+      properties:
+        membershipPlanId:
+          description: '`membership_plans.id` of the class the buyer joins.'
+          type: string
+        productId:
+          description: '`order_products.id` of the product that grants the membership.'
+          type: string
+        validDays:
+          format: int32
+          type:
+          - integer
+          - 'null'
+      required:
+      - productId
+      - membershipPlanId
+      type: object
     CreateMembershipPlanRequest:
       properties:
         description:
@@ -2028,6 +2461,26 @@ components:
           - 'null'
       required:
       - name
+      type: object
+    CreateOrderClientAddressRequest:
+      properties:
+        address1:
+          type: string
+        address2:
+          type:
+          - string
+          - 'null'
+        city:
+          type: string
+        postalCode:
+          type: string
+        state:
+          type: string
+      required:
+      - postalCode
+      - state
+      - city
+      - address1
       type: object
     CreateOrderEntryPointRequest:
       additionalProperties: false
@@ -2611,6 +3064,59 @@ components:
       - code
       - name
       type: object
+    CreateReservationWaitlistEntryRequest:
+      properties:
+        customerEmail:
+          type:
+          - string
+          - 'null'
+        customerId:
+          type:
+          - string
+          - 'null'
+        customerName:
+          type:
+          - string
+          - 'null'
+        customerPhone:
+          type:
+          - string
+          - 'null'
+        desiredEndsAt:
+          format: date-time
+          type: string
+        desiredStartsAt:
+          format: date-time
+          type: string
+        notes:
+          type:
+          - string
+          - 'null'
+        quantity:
+          description: Party size. Defaults to 1.
+          format: int32
+          type:
+          - integer
+          - 'null'
+        reservationTypeId:
+          type: string
+        resourceId:
+          type:
+          - string
+          - 'null'
+        serviceId:
+          type:
+          - string
+          - 'null'
+        storeId:
+          type:
+          - string
+          - 'null'
+      required:
+      - reservationTypeId
+      - desiredStartsAt
+      - desiredEndsAt
+      type: object
     CreateReturnLineRequest:
       properties:
         purchasedQuantity:
@@ -3004,6 +3510,71 @@ components:
       required:
       - name
       type: object
+    CreateWebhookEndpointRequest:
+      additionalProperties: false
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        event_types:
+          description: 省略時は購読可能な全 event type。
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        url:
+          type: string
+      required:
+      - url
+      type: object
+    CreatedEntityResponse:
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      type: object
+    CurrencyTotalsResponse:
+      description: 通貨ごとの金額。1テナントに複数通貨が混ざりうるので合算しない。
+      properties:
+        currency:
+          description: ISO 4217。`reservations.currency` の値。
+          type: string
+        firstPurchaseDate:
+          description: この通貨での初回購入日（Asia/Tokyo）。
+          type:
+          - string
+          - 'null'
+        lastPurchaseDate:
+          description: この通貨での最終購入日（Asia/Tokyo）。
+          type:
+          - string
+          - 'null'
+        paidAmount:
+          description: うち回収済み。`total_amount - paid_amount` が未収。
+          format: int64
+          type: integer
+        purchaseCount:
+          description: この通貨での購入回数。
+          format: int64
+          type: integer
+        totalAmount:
+          description: 累計購入額。税込。金額未確定（0）の予約もそのまま 0 として入る。
+          format: int64
+          type: integer
+        unpricedCount:
+          description: この通貨での購入のうち、金額が未確定（0）のもの。
+          format: int64
+          type: integer
+      required:
+      - currency
+      - totalAmount
+      - paidAmount
+      - purchaseCount
+      - unpricedCount
+      type: object
     CustomFieldDefinitionListResponse:
       properties:
         items:
@@ -3024,7 +3595,7 @@ components:
         fieldKey:
           type: string
         fieldType:
-          type: string
+          $ref: '#/components/schemas/CustomFieldTypeWire'
         id:
           type: string
         label:
@@ -3034,6 +3605,10 @@ components:
             type: string
           type:
           - array
+          - 'null'
+        placeholder:
+          type:
+          - string
           - 'null'
         required:
           type: boolean
@@ -3067,14 +3642,17 @@ components:
       - Reservation
       - CustomerSubject
       type: string
-    CustomFieldType:
-      enum:
-      - Text
-      - Number
-      - Date
-      - Select
-      - Boolean
+    CustomFieldTypeWire:
+      description: 'Known values: text, email, tel, number, date, select, boolean. Clients must accept future custom field types.'
       type: string
+      x-extensible-enum:
+      - text
+      - email
+      - tel
+      - number
+      - date
+      - select
+      - boolean
     CustomFieldValuesResponse:
       properties:
         entityId:
@@ -3175,6 +3753,10 @@ components:
           type: string
         customerId:
           type: string
+        evidenceRecordId:
+          type:
+          - string
+          - 'null'
         id:
           type: string
         recordedBy:
@@ -3191,6 +3773,87 @@ components:
       - accepted
       - channel
       - acceptedAt
+      type: object
+    CustomerContactListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/CustomerContactResponse'
+          type: array
+        limit:
+          format: int32
+          minimum: 0
+          type: integer
+        offset:
+          format: int32
+          minimum: 0
+          type: integer
+        total:
+          description: 絞り込んだ結果の総件数。返した `items` の数ではない。
+          format: int64
+          type: integer
+      required:
+      - items
+      - total
+      - limit
+      - offset
+      type: object
+    CustomerContactResponse:
+      properties:
+        cancelledAt:
+          description: |-
+            取り消されていなければ `null`。行は消えないので、監査では
+            `includeCancelled=true` で読み戻せる。
+          format: date-time
+          type:
+          - string
+          - 'null'
+        cancelledBy:
+          type:
+          - string
+          - 'null'
+        channel:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        customerId:
+          type: string
+        direction:
+          type: string
+        id:
+          type: string
+        nextActionAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        note:
+          type:
+          - string
+          - 'null'
+        occurredAt:
+          format: date-time
+          type: string
+        outcome:
+          type:
+          - string
+          - 'null'
+        performedBy:
+          type:
+          - string
+          - 'null'
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - customerId
+      - channel
+      - direction
+      - occurredAt
+      - createdAt
+      - updatedAt
       type: object
     CustomerCredentialResponse:
       properties:
@@ -3240,6 +3903,155 @@ components:
       - archived
       - createdAt
       - updatedAt
+      type: object
+    CustomerPurchaseSummaryListResponse:
+      properties:
+        computedAt:
+          description: この集計がいつ時点かを表す UTC 時刻。
+          type: string
+        currency:
+          description: このページの金額がどの通貨のものか。対象に予約が1件も無ければ `null`。
+          type:
+          - string
+          - 'null'
+        items:
+          items:
+            $ref: '#/components/schemas/CustomerPurchaseSummaryRowResponse'
+          type: array
+        limit:
+          format: int32
+          minimum: 0
+          type: integer
+        offset:
+          format: int32
+          minimum: 0
+          type: integer
+        period:
+          $ref: '#/components/schemas/SummaryPeriodResponse'
+        total:
+          description: 絞り込み後の顧客数。ページに載った件数ではない。
+          format: int64
+          type: integer
+      required:
+      - computedAt
+      - period
+      - total
+      - limit
+      - offset
+      - items
+      type: object
+    CustomerPurchaseSummaryResponse:
+      properties:
+        cancelledCount:
+          description: キャンセル（`cancelled` / `rejected`）。金額にも回数にも入れていない。
+          format: int64
+          type: integer
+        computedAt:
+          description: |-
+            この集計がいつ時点かを表す UTC 時刻。都度計算なので常に「今」で、
+            「確定済みだが提供日がまだ来ていない」の判定基準もこの時刻。
+          type: string
+        currencies:
+          description: 通貨ごとの金額の内訳。購入が無ければ空。
+          items:
+            $ref: '#/components/schemas/CurrencyTotalsResponse'
+          type: array
+        customerId:
+          type: string
+        firstPurchaseDate:
+          description: 初回購入日（Asia/Tokyo）。購入が無ければ `null`。
+          type:
+          - string
+          - 'null'
+        lastPurchaseDate:
+          description: 最終購入日（Asia/Tokyo）。購入が無ければ `null`。
+          type:
+          - string
+          - 'null'
+        noShowCount:
+          description: no-show。金額にも回数にも入れていない。
+          format: int64
+          type: integer
+        pendingCount:
+          description: まだ確定していない予約（申込中・支払待ち・変更/キャンセル申請中など）。
+          format: int64
+          type: integer
+        period:
+          $ref: '#/components/schemas/SummaryPeriodResponse'
+        purchaseCount:
+          description: 購入回数（通貨をまたいだ合計）。
+          format: int64
+          type: integer
+        unpricedCount:
+          description: 購入のうち金額が未確定（0）のもの。0 を足しただけの回数が分かる。
+          format: int64
+          type: integer
+        upcomingCount:
+          description: 確定済みだが提供日がまだ来ていない予約。購入には数えていない。
+          format: int64
+          type: integer
+      required:
+      - customerId
+      - computedAt
+      - period
+      - purchaseCount
+      - unpricedCount
+      - upcomingCount
+      - cancelledCount
+      - noShowCount
+      - pendingCount
+      - currencies
+      type: object
+    CustomerPurchaseSummaryRowResponse:
+      properties:
+        cancelledCount:
+          format: int64
+          type: integer
+        currency:
+          type: string
+        customerId:
+          type: string
+        firstPurchaseDate:
+          type:
+          - string
+          - 'null'
+        lastPurchaseDate:
+          type:
+          - string
+          - 'null'
+        noShowCount:
+          format: int64
+          type: integer
+        paidAmount:
+          format: int64
+          type: integer
+        pendingCount:
+          format: int64
+          type: integer
+        purchaseCount:
+          format: int64
+          type: integer
+        totalAmount:
+          description: 累計購入額。税込。
+          format: int64
+          type: integer
+        unpricedCount:
+          format: int64
+          type: integer
+        upcomingCount:
+          format: int64
+          type: integer
+      required:
+      - customerId
+      - currency
+      - totalAmount
+      - paidAmount
+      - purchaseCount
+      - unpricedCount
+      - upcomingCount
+      - cancelledCount
+      - noShowCount
+      - pendingCount
       type: object
     CustomerResponse:
       properties:
@@ -5148,6 +5960,90 @@ components:
       - linkIssued
       - paymentStatus
       type: object
+    HandoffNote:
+      description: |-
+        One handover note, as it was written. Rows are never edited or deleted:
+        acknowledgement and retraction are the only mutations, and both are
+        additive stamps rather than rewrites of the body.
+      properties:
+        acknowledgedAt:
+          description: |-
+            When someone took the handover over. `None` while it is still
+            outstanding, which is what the reception board filters on.
+          format: date-time
+          type:
+          - string
+          - 'null'
+        acknowledgedBy:
+          type:
+          - string
+          - 'null'
+        authorId:
+          type:
+          - string
+          - 'null'
+        authorType:
+          $ref: '#/components/schemas/HandoffNoteAuthorType'
+        body:
+          type: string
+        category:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        id:
+          type: string
+        retractedAt:
+          description: |-
+            A note written in error stays readable and is marked retracted; it is
+            never removed, or the log would no longer be a log.
+          format: date-time
+          type:
+          - string
+          - 'null'
+        retractedBy:
+          type:
+          - string
+          - 'null'
+        retractionReason:
+          type:
+          - string
+          - 'null'
+        subjectId:
+          type: string
+        subjectType:
+          type: string
+        tenantId:
+          type: string
+      required:
+      - id
+      - tenantId
+      - subjectType
+      - subjectId
+      - category
+      - body
+      - authorType
+      - createdAt
+      type: object
+    HandoffNoteAuthorType:
+      description: |-
+        What kind of principal wrote a note. Mirrors the cancellation trail's
+        actor classification so both trails name the same actor kind for the
+        same request.
+      enum:
+      - User
+      - ServiceAccount
+      - System
+      type: string
+    HandoffNoteListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/HandoffNote'
+          type: array
+      required:
+      - items
+      type: object
     ImportProductSlotsRequest:
       additionalProperties: false
       properties:
@@ -5410,6 +6306,31 @@ components:
         - clientId
         - kind
         type: object
+      - description: |-
+          顧客台帳にも取引先にも無い相手への単発請求。
+
+          識別子を求めず、宛名と連絡先だけで請求先を決める。台帳に載せたい
+          ときは顧客を作ってから `customer` を送る — Field はここから勝手に
+          顧客を作らない。
+        properties:
+          email:
+            type:
+            - string
+            - 'null'
+          kind:
+            enum:
+            - unregistered
+            type: string
+          name:
+            type: string
+          phone:
+            type:
+            - string
+            - 'null'
+        required:
+        - name
+        - kind
+        type: object
     InvoiceBillToResponse:
       oneOf:
       - properties:
@@ -5438,6 +6359,17 @@ components:
         required:
         - clientId
         - evidence
+        - snapshot
+        - kind
+        type: object
+      - description: 台帳に無い相手。識別子は無く、発行時の写しだけが相手を表す。
+        properties:
+          kind:
+            enum:
+            - unregistered
+            type: string
+          snapshot: {}
+        required:
         - snapshot
         - kind
         type: object
@@ -5572,6 +6504,11 @@ components:
           type:
           - string
           - 'null'
+        sources:
+          description: What this invoice was raised for. Empty when no origin was declared.
+          items:
+            $ref: '#/components/schemas/InvoiceSourceResponse'
+          type: array
         squarePaymentLinkId:
           type:
           - string
@@ -5598,6 +6535,7 @@ components:
       - tenantId
       - invoiceNumber
       - clientId
+      - sources
       - lineItems
       - dueDate
       - status
@@ -5609,6 +6547,43 @@ components:
       - postingDisposition
       - createdAt
       - updatedAt
+      type: object
+    InvoiceSourceRequest:
+      description: |-
+        A record this invoice is being raised from.
+
+        `reason` is the caller's own classification. Field stores it verbatim,
+        filters on it exactly, and attaches no meaning to any particular value, so
+        one tenant's `cancellation_fee` and another's `no_show_fee` are the same
+        kind of thing to Field.
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+        sourceId:
+          type: string
+        sourceType:
+          description: One of `reservation`, `order`, `subscription`, `quotation`, `contract`.
+          type: string
+      required:
+      - sourceType
+      - sourceId
+      type: object
+    InvoiceSourceResponse:
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+        sourceId:
+          type: string
+        sourceType:
+          type: string
+      required:
+      - sourceType
+      - sourceId
+      - reason
       type: object
     InvoiceVoidEligibilityResponse:
       properties:
@@ -5714,6 +6689,63 @@ components:
       - squareInvoiceId
       - reusedExistingInvoice
       type: object
+    LatestCustomerContactListResponse:
+      description: |-
+        一度も接触していない顧客は `items` に現れない。「まだ連絡していない」と
+        「連絡したが記録が無い」を利用側で取り違えないよう、問い合わせた ID を
+        そのまま返して差分を取れるようにする。
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/LatestCustomerContactResponse'
+          type: array
+        requestedCustomerIds:
+          items:
+            type: string
+          type: array
+      required:
+      - items
+      - requestedCustomerIds
+      type: object
+    LatestCustomerContactLookupRequest:
+      properties:
+        customerIds:
+          description: 最終接触を知りたい顧客 ID。顧客一覧の1ページぶんをそのまま渡す想定。
+          items:
+            type: string
+          type: array
+      required:
+      - customerIds
+      type: object
+    LatestCustomerContactResponse:
+      properties:
+        contactCount:
+          description: 取り消し済みを除いた接触回数。
+          format: int64
+          type: integer
+        customerId:
+          type: string
+        lastChannel:
+          type: string
+        lastContactId:
+          type: string
+        lastContactedAt:
+          format: date-time
+          type: string
+        lastDirection:
+          type: string
+        lastOutcome:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+      - lastContactedAt
+      - lastContactId
+      - lastChannel
+      - lastDirection
+      - contactCount
+      type: object
     LeaveRequestStatus:
       enum:
       - requested
@@ -5813,6 +6845,99 @@ components:
       - decisionStatus
       - updatedAt
       type: object
+    MembershipActivityActorResponse:
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    MembershipActivityListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/MembershipActivityResponse'
+          type: array
+        nextCursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - items
+      type: object
+    MembershipActivityResponse:
+      properties:
+        actor:
+          $ref: '#/components/schemas/MembershipActivityActorResponse'
+        after: {}
+        before: {}
+        createdAt:
+          format: date-time
+          type: string
+        customerId:
+          type: string
+        id:
+          type: string
+        kind:
+          type: string
+        occurredAt:
+          format: date-time
+          type: string
+        schemaVersion:
+          format: int32
+          minimum: 0
+          type: integer
+        seq:
+          format: int64
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        source:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MembershipActivitySourceResponse'
+        target:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MembershipActivityTargetResponse'
+        tenantId:
+          type: string
+      required:
+      - id
+      - customerId
+      - kind
+      - actor
+      - schemaVersion
+      - occurredAt
+      - createdAt
+      - tenantId
+      type: object
+    MembershipActivitySourceResponse:
+      properties:
+        application:
+          type:
+          - string
+          - 'null'
+        channel:
+          type:
+          - string
+          - 'null'
+      type: object
+    MembershipActivityTargetResponse:
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+      required:
+      - type
+      type: object
     MembershipConsentItemListResponse:
       properties:
         items:
@@ -5897,6 +7022,11 @@ components:
           type: array
         customer:
           $ref: '#/components/schemas/MembershipCustomerResponse'
+        sale:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MembershipSaleResponse'
+            description: The counter sale this registration produced, when a product was sold.
         subjects:
           items:
             $ref: '#/components/schemas/CustomerSubjectResponse'
@@ -5906,6 +7036,88 @@ components:
       - subjects
       - consents
       - credentials
+      type: object
+    MembershipEntitlementListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/MembershipEntitlementResponse'
+          type: array
+      required:
+      - items
+      type: object
+    MembershipEntitlementResponse:
+      properties:
+        active:
+          type: boolean
+        createdAt:
+          type: string
+        id:
+          type: string
+        membershipPlanId:
+          type: string
+        productId:
+          type: string
+        updatedAt:
+          type: string
+        validDays:
+          format: int32
+          type:
+          - integer
+          - 'null'
+      required:
+      - id
+      - productId
+      - membershipPlanId
+      - active
+      - createdAt
+      - updatedAt
+      type: object
+    MembershipOfferingListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/MembershipOfferingResponse'
+          type: array
+      required:
+      - items
+      type: object
+    MembershipOfferingResponse:
+      properties:
+        billingCycle:
+          type: string
+        entitlementId:
+          type: string
+        listPrice:
+          format: int32
+          type: integer
+        membershipPlanId:
+          type: string
+        membershipPlanName:
+          type: string
+        productId:
+          type: string
+        productName:
+          type: string
+        productStatus:
+          type: string
+        sellable:
+          type: boolean
+        validDays:
+          format: int32
+          type:
+          - integer
+          - 'null'
+      required:
+      - entitlementId
+      - productId
+      - productName
+      - productStatus
+      - billingCycle
+      - listPrice
+      - membershipPlanId
+      - membershipPlanName
+      - sellable
       type: object
     MembershipPlanAssignmentResponse:
       properties:
@@ -5979,6 +7191,92 @@ components:
       - sortOrder
       - createdAt
       - updatedAt
+      type: object
+    MembershipRosterEntryResponse:
+      properties:
+        assignmentStatus:
+          type: string
+        current:
+          description: 今日この割り当てが有効か。`assignmentStatus` だけでは判定できない。
+          type: boolean
+        customerId:
+          type: string
+        email:
+          type: string
+        endedOn:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        nameKana:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+        planId:
+          type: string
+        planName:
+          type:
+          - string
+          - 'null'
+        startedOn:
+          type: string
+        subjectCount:
+          format: int64
+          type: integer
+      required:
+      - customerId
+      - name
+      - email
+      - planId
+      - assignmentStatus
+      - startedOn
+      - current
+      - subjectCount
+      type: object
+    MembershipRosterResponse:
+      properties:
+        hasMore:
+          type: boolean
+        items:
+          items:
+            $ref: '#/components/schemas/MembershipRosterEntryResponse'
+          type: array
+      required:
+      - items
+      - hasMore
+      type: object
+    MembershipSaleResponse:
+      description: |-
+        What the counter sale recorded, or why it did not.
+
+        The customer, their consents and their membership are written before the
+        sale, in different tables, and cannot be rolled back together. Failing the
+        whole request when only the sale fails would leave the operator looking at
+        an error with a registered customer behind it, and the obvious response —
+        submit again — creates a second customer.
+
+        So the sale is best effort and says so out loud. `orderId` present means
+        the money is recorded; `error` present means it is not and somebody has to
+        ring it up. What must never happen is neither: silence would be the same
+        unrecorded revenue this whole change exists to fix.
+      properties:
+        error:
+          type:
+          - string
+          - 'null'
+        orderId:
+          type:
+          - string
+          - 'null'
+        productId:
+          type: string
+      required:
+      - productId
       type: object
     MessageResponse:
       properties:
@@ -6326,6 +7624,16 @@ components:
           items:
             $ref: '#/components/schemas/OrderItemResponse'
           type: array
+        order_entry_mode:
+          description: |-
+            How the order was entered: `qr`, `kiosk`, `staff`, or `online`.
+
+            Server-derived, and `None` on every order placed before the column
+            existed. A staff board reads the route from here rather than taking
+            apart an encoded `sales_channel_detail`.
+          type:
+          - string
+          - 'null'
         payment_method:
           type:
           - string
@@ -7262,7 +8570,7 @@ components:
         fieldKey:
           type: string
         fieldType:
-          type: string
+          $ref: '#/components/schemas/CustomFieldTypeWire'
         label:
           type: string
         options:
@@ -7270,6 +8578,10 @@ components:
             type: string
           type:
           - array
+          - 'null'
+        placeholder:
+          type:
+          - string
           - 'null'
         required:
           type: boolean
@@ -8248,6 +9560,81 @@ components:
       - createdAt
       - updatedAt
       type: object
+    ReceptionFieldKey:
+      description: |-
+        A box that has a built-in column behind it.
+
+        The customer's name is not here: the ledger cannot store a row without
+        one, so no tenant may switch it off or make it optional.
+      enum:
+      - CustomerNameKana
+      - CustomerEmail
+      - CustomerPhone
+      - CustomerBirthDate
+      - CustomerSex
+      - CustomerAddress
+      - SubjectName
+      - SubjectType
+      - SubjectBirthDate
+      - SubjectSex
+      - SubjectNote
+      - Plan
+      - Credential
+      type: string
+    ReceptionFieldListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ReceptionFieldResponse'
+          type: array
+      required:
+      - items
+      type: object
+    ReceptionFieldResponse:
+      description: A reception box as the counter screen should draw it.
+      properties:
+        customLabel:
+          description: |-
+            True when `label` is the tenant's own wording. The settings screen
+            needs this to offer "back to the default".
+          type: boolean
+        enabled:
+          type: boolean
+        fieldKey:
+          $ref: '#/components/schemas/ReceptionFieldKey'
+        label:
+          description: |-
+            What to print beside the box: the tenant's wording when it renamed
+            the box, the built-in wording otherwise.
+          type: string
+        required:
+          type: boolean
+      required:
+      - fieldKey
+      - enabled
+      - required
+      - label
+      - customLabel
+      type: object
+    ReceptionFieldSettingRequest:
+      description: One box on the tenant's reception sheet.
+      properties:
+        enabled:
+          type: boolean
+        fieldKey:
+          $ref: '#/components/schemas/ReceptionFieldKey'
+        label:
+          description: Blank or omitted keeps the built-in wording for the box.
+          type:
+          - string
+          - 'null'
+        required:
+          type: boolean
+      required:
+      - fieldKey
+      - enabled
+      - required
+      type: object
     ReconcileSquarePaymentRequest:
       properties:
         invoiceId:
@@ -8258,6 +9645,41 @@ components:
           - 'null'
       required:
       - invoiceId
+      type: object
+    RecordConsumerConsentsRequest:
+      properties:
+        channel:
+          description: store / web / kiosk (default store)
+          type:
+          - string
+          - 'null'
+        consents:
+          description: 記録する同意項目。テナントが定義済みの `consentKey` だけを受け付ける。
+          items:
+            $ref: '#/components/schemas/RegistrationConsentRequest'
+          type: array
+      required:
+      - consents
+      type: object
+    RecordContactPreferencesRequest:
+      properties:
+        preferences:
+          description: |-
+            1回の申し出で複数チャネルをまとめて記録できる。同じチャネルを2つ
+            入れた要求は 400。同一時刻の2行のどちらが勝つかを呼び出し側の
+            並び順に委ねないため。
+          items:
+            $ref: '#/components/schemas/ContactPreferenceEntryRequest'
+          type: array
+        source:
+          description: |-
+            申し出を**受け取った経路**。`store`（既定）/ `web` / `kiosk`。
+            連絡手段ではない。
+          type:
+          - string
+          - 'null'
+      required:
+      - preferences
       type: object
     RecordCustomerConsentsRequest:
       properties:
@@ -8312,6 +9734,13 @@ components:
           type:
           - string
           - 'null'
+        consentEvidenceRecordId:
+          description: |-
+            Immutable Evidence record for the application document used to record
+            these consent answers. Validated in the tenant before customer writes.
+          type:
+          - string
+          - 'null'
         consents:
           items:
             $ref: '#/components/schemas/RegistrationConsentRequest'
@@ -8325,12 +9754,33 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/RegistrationCustomerRequest'
             description: New customer to create. Mutually exclusive with `customerId`.
+        customerCustomFields:
+          description: |-
+            Trade-specific boxes for the customer, keyed by
+            `custom_field_definitions.field_key` under the `consumer` entity type.
+
+            Accepted only alongside `customer`. Registering an existing customer
+            carries no values: this endpoint would have to write the whole set,
+            and a reception sheet that happens not to ask for a box would erase
+            what that customer answered the last time it did.
+          type: object
         customerId:
           description: Existing customer to register. Mutually exclusive with `customer`.
           type:
           - string
           - 'null'
         planId:
+          description: |-
+            Class to join directly, without a sale. Kept so a client deployed
+            before the product switch keeps working; mutually exclusive with
+            `productId`.
+          type:
+          - string
+          - 'null'
+        productId:
+          description: |-
+            Product being sold at the counter. Its grant decides which class the
+            customer joins and for how long.
           type:
           - string
           - 'null'
@@ -8338,6 +9788,27 @@ components:
           items:
             $ref: '#/components/schemas/RegistrationSubjectRequest'
           type: array
+      type: object
+    RegistrationAddressRequest:
+      description: Address written on a reception sheet.
+      properties:
+        address1:
+          type: string
+        address2:
+          type:
+          - string
+          - 'null'
+        city:
+          type: string
+        postalCode:
+          type: string
+        state:
+          type: string
+      required:
+      - postalCode
+      - state
+      - city
+      - address1
       type: object
     RegistrationConsentRequest:
       properties:
@@ -8385,18 +9856,44 @@ components:
       - label
       type: object
     RegistrationCustomerRequest:
+      description: |-
+        The customer half of a reception sheet.
+
+        Every field but the name is optional here. Which of them a given tenant
+        actually demands is decided by its reception field settings, not by this
+        type: a dog run asks for an address, a bar asks for nothing but a name,
+        and the customer ledger already stores every one of these as nullable.
       properties:
+        address:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/RegistrationAddressRequest'
+        birthDate:
+          description: YYYY-MM-DD
+          type:
+          - string
+          - 'null'
         email:
-          type: string
+          type:
+          - string
+          - 'null'
         name:
           type: string
+        nameKana:
+          type:
+          - string
+          - 'null'
         phone:
+          type:
+          - string
+          - 'null'
+        sex:
+          description: 語彙はテナントが決める。16 文字まで。
           type:
           - string
           - 'null'
       required:
       - name
-      - email
       type: object
     RegistrationSubjectRequest:
       properties:
@@ -8405,6 +9902,13 @@ components:
           type:
           - string
           - 'null'
+        customFields:
+          description: |-
+            Trade-specific boxes for this subject — breed, size, plate number —
+            keyed by `custom_field_definitions.field_key` under the
+            `customer_subject` entity type. Every active required definition must
+            be present, as on the values endpoint.
+          type: object
         name:
           type: string
         note:
@@ -8488,6 +9992,18 @@ components:
       required:
       - slots
       type: object
+    ReplaceReceptionFieldsRequest:
+      description: |-
+        The whole sheet. Boxes left out of the list keep whatever they had, so a
+        screen that only knows about some of them cannot silently reset the rest.
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ReceptionFieldSettingRequest'
+          type: array
+      required:
+      - items
+      type: object
     ReplaceReservationProductSlotsRequest:
       additionalProperties: false
       properties:
@@ -8500,6 +10016,14 @@ components:
     ReplaceReservationResourceScheduleRequest:
       additionalProperties: false
       properties:
+        rollingWindowDays:
+          description: |-
+            1-365. Omit to preserve the current setting; explicit null clears it.
+            The hourly job acts only when at least one active ordinary rule exists.
+          format: int32
+          type:
+          - integer
+          - 'null'
         rules:
           description: Complete desired set of active resource-level availability rules.
           items:
@@ -9008,8 +10532,30 @@ components:
           items:
             $ref: '#/components/schemas/Reservation'
           type: array
+        limit:
+          description: |-
+            The page size actually applied. A request above the documented maximum
+            is capped rather than rejected, and this is where the cap shows up.
+          format: int32
+          minimum: 0
+          type: integer
+        offset:
+          description: The offset actually applied.
+          format: int32
+          minimum: 0
+          type: integer
+        total:
+          description: |-
+            Reservations matching the filter across the whole tenant, ignoring
+            `limit`/`offset`. Paging is done when `offset + items.len() >= total`.
+          format: int64
+          minimum: 0
+          type: integer
       required:
       - items
+      - total
+      - limit
+      - offset
       type: object
     ReservationNotificationTemplateContent:
       description: The editable half of a template, as the editor submits it.
@@ -9272,12 +10818,19 @@ components:
       properties:
         resourceId:
           type: string
+        rollingWindowDays:
+          description: Null means that this resource is not opted in to rolling generation.
+          format: int32
+          type:
+          - integer
+          - 'null'
         rules:
           items:
             $ref: '#/components/schemas/ReservationAvailabilityRuleResponse'
           type: array
       required:
       - resourceId
+      - rollingWindowDays
       - rules
       type: object
     ReservationResourceType:
@@ -9492,6 +11045,158 @@ components:
       required:
       - items
       type: object
+    ReservationWaitlistCandidate:
+      allOf:
+      - $ref: '#/components/schemas/ReservationWaitlistEntry'
+      - properties:
+          availableSlotGroups:
+            description: |-
+              Free groups left on the slot right now, or `None` when no slot row
+              exists for the requested time — an unopened slot is not the same answer
+              as a full one, and only the second is something an operator can wait
+              out.
+
+              Groups, not people: `reservation_time_slots.capacity` counts inventory
+              groups and one reservation consumes exactly one of them whatever its
+              party size (`slot_consumption::hold_one_group`). A party of four
+              therefore needs one free group, not four.
+            format: int32
+            type:
+            - integer
+            - 'null'
+          queuePosition:
+            description: |-
+              1-based place in the queue for this entry's slot, counting only entries
+              still waiting.
+            format: int32
+            minimum: 0
+            type: integer
+        required:
+        - queuePosition
+        type: object
+      description: |-
+        A queue entry together with what an operator needs to decide about it.
+
+        The two extra fields are computed per read rather than stored: both go
+        stale the moment any other reservation on the slot changes, so a stored
+        copy would be wrong more often than right.
+    ReservationWaitlistEntry:
+      description: One request waiting for a slot.
+      properties:
+        closedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        closedBy:
+          type:
+          - string
+          - 'null'
+        closedReason:
+          type:
+          - string
+          - 'null'
+        convertedReservationId:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          format: date-time
+          type: string
+        customerEmail:
+          type:
+          - string
+          - 'null'
+        customerId:
+          type:
+          - string
+          - 'null'
+        customerName:
+          type:
+          - string
+          - 'null'
+        customerPhone:
+          type:
+          - string
+          - 'null'
+        desiredEndsAt:
+          format: date-time
+          type: string
+        desiredStartsAt:
+          format: date-time
+          type: string
+        enqueuedAt:
+          description: |-
+            When the entry joined the queue. Distinct from `created_at` so that a
+            re-queued request sorts by when it re-queued.
+          format: date-time
+          type: string
+        id:
+          type: string
+        notes:
+          type:
+          - string
+          - 'null'
+        quantity:
+          format: int32
+          type: integer
+        reservationTypeId:
+          type: string
+        resourceId:
+          description: |-
+            The resource the entry is waiting on. Stored as the empty string when
+            unset, matching `reservation_time_slots`, but exposed as `None` so
+            callers never have to know that.
+          type:
+          - string
+          - 'null'
+        serviceId:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/ReservationWaitlistStatus'
+        storeId:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - tenantId
+      - reservationTypeId
+      - desiredStartsAt
+      - desiredEndsAt
+      - quantity
+      - status
+      - enqueuedAt
+      - createdAt
+      - updatedAt
+      type: object
+    ReservationWaitlistListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ReservationWaitlistCandidate'
+          type: array
+      required:
+      - items
+      type: object
+    ReservationWaitlistStatus:
+      description: |-
+        Where an entry stands. Only `Waiting` is in the queue; the other three
+        are terminal and differ in *why* the entry left it, which is what a
+        later "how often do we actually seat waitlisted guests" question needs.
+      enum:
+      - Waiting
+      - Converted
+      - Withdrawn
+      - Expired
+      type: string
     ResourceListResponse:
       properties:
         items:
@@ -9642,6 +11347,13 @@ components:
       required:
       - resourceId
       - slots
+      type: object
+    RetractHandoffNoteRequest:
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
       type: object
     ReturnLineRefRequest:
       properties:
@@ -10528,6 +12240,13 @@ components:
           - 'null'
         hiredAt:
           format: date
+          type:
+          - string
+          - 'null'
+        jobTitle:
+          description: |-
+            The office or post held, kept apart from `employmentType` because a
+            director is engaged under a delegation contract rather than employment.
           type:
           - string
           - 'null'
@@ -11750,6 +13469,15 @@ components:
           - 'null'
         id:
           type: string
+        jobTitle:
+          description: |-
+            The position held, which is a different axis from how the person is
+            engaged: a director is under a delegation contract rather than an
+            employment one, and can serve either full time or not. Free text so a
+            tenant can spell its own org chart; `None` when nothing was recorded.
+          type:
+          - string
+          - 'null'
         name:
           type: string
         phone:
@@ -12547,6 +14275,18 @@ components:
           format: int32
           minimum: 0
           type: integer
+        total:
+          description: |-
+            絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+
+            `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+            数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+            値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
       required:
       - items
       - limit
@@ -12608,6 +14348,16 @@ components:
                 items:
                   $ref: '#/components/schemas/OrderItemResponse'
                 type: array
+              order_entry_mode:
+                description: |-
+                  How the order was entered: `qr`, `kiosk`, `staff`, or `online`.
+
+                  Server-derived, and `None` on every order placed before the column
+                  existed. A staff board reads the route from here rather than taking
+                  apart an encoded `sales_channel_detail`.
+                type:
+                - string
+                - 'null'
               payment_method:
                 type:
                 - string
@@ -12715,6 +14465,18 @@ components:
           format: int32
           minimum: 0
           type: integer
+        total:
+          description: |-
+            絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+
+            `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+            数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+            値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
       required:
       - items
       - limit
@@ -12783,6 +14545,18 @@ components:
           format: int32
           minimum: 0
           type: integer
+        total:
+          description: |-
+            絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+
+            `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+            数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+            値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
       required:
       - items
       - limit
@@ -12865,6 +14639,18 @@ components:
           format: int32
           minimum: 0
           type: integer
+        total:
+          description: |-
+            絞り込み後の総件数。ページの件数ではない (PLT-4050)。
+
+            `null` は「この一覧は総件数を数えていない」であって 0 ではない。総件
+            数には母集合を1回余分に数える COUNT が要るので、必要とする一覧だけが
+            値を載せる。今のところ載るのは `GET /v1/storekit/customers` だけ。
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
       required:
       - items
       - limit
@@ -13297,6 +15083,20 @@ components:
       required:
       - url
       type: object
+    SummaryPeriodResponse:
+      description: 集計対象の期間。絞り込みを指定しなかった軸は `null` で返す。
+      properties:
+        from:
+          description: 提供日（Asia/Tokyo）の下限。含む。
+          type:
+          - string
+          - 'null'
+        to:
+          description: 提供日（Asia/Tokyo）の上限。含む。
+          type:
+          - string
+          - 'null'
+      type: object
     TabularAnalyzeResponse:
       properties:
         headerRow:
@@ -13439,6 +15239,13 @@ components:
           - string
           - 'null'
         mappingProposal:
+          type:
+          - string
+          - 'null'
+        rotation:
+          description: |-
+            Clockwise degrees to turn a scanned PDF by before it is read:
+            `0`, `90`, `180`, or `270`.
           type:
           - string
           - 'null'
@@ -13646,6 +15453,10 @@ components:
           type:
           - array
           - 'null'
+        placeholder:
+          type:
+          - string
+          - 'null'
         required:
           type:
           - boolean
@@ -13663,6 +15474,35 @@ components:
           type: boolean
       required:
       - billingAllowed
+      type: object
+    UpdateCustomerContactRequest:
+      properties:
+        channel:
+          type:
+          - string
+          - 'null'
+        nextActionAt:
+          type:
+          - string
+          - 'null'
+        note:
+          type:
+          - string
+          - 'null'
+        occurredAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        outcome:
+          description: Explicit null clears the stored value.
+          type:
+          - string
+          - 'null'
+        performedBy:
+          type:
+          - string
+          - 'null'
       type: object
     UpdateCustomerCredentialRequest:
       properties:
@@ -13990,6 +15830,23 @@ components:
         termsVersion:
           type:
           - string
+          - 'null'
+      type: object
+    UpdateMembershipEntitlementRequest:
+      properties:
+        active:
+          type:
+          - boolean
+          - 'null'
+        membershipPlanId:
+          type:
+          - string
+          - 'null'
+        validDays:
+          description: Explicit null makes the grant open-ended.
+          format: int32
+          type:
+          - integer
           - 'null'
       type: object
     UpdateMembershipPlanRequest:
@@ -14541,6 +16398,10 @@ components:
           type:
           - string
           - 'null'
+        jobTitle:
+          type:
+          - string
+          - 'null'
         name:
           type:
           - string
@@ -14626,6 +16487,30 @@ components:
           - string
           - 'null'
         taxRegistrationName:
+          type:
+          - string
+          - 'null'
+      type: object
+    UpdateWebhookEndpointRequest:
+      additionalProperties: false
+      description: 部分更新。absent は「触らない」。`description` は空文字で消す。
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        event_types:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        status:
+          description: '`active` または `paused`。`blocked` は運用の結果であって指定できない。'
+          type:
+          - string
+          - 'null'
+        url:
           type:
           - string
           - 'null'
@@ -14811,6 +16696,138 @@ components:
       - createdAt
       - updatedAt
       type: object
+    WebhookDeliveryResponse:
+      properties:
+        attempt_count:
+          format: int32
+          minimum: 0
+          type: integer
+        created_at:
+          type: string
+        dead_at:
+          type:
+          - string
+          - 'null'
+        event_id:
+          type: string
+        event_type:
+          type: string
+        id:
+          type: string
+        last_error_code:
+          type:
+          - string
+          - 'null'
+        last_status_code:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        next_attempt_at:
+          type: string
+        status:
+          description: '`pending`, `in_flight`, `succeeded`, or `dead`.'
+          type: string
+        succeeded_at:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - event_id
+      - event_type
+      - status
+      - attempt_count
+      - next_attempt_at
+      - created_at
+      type: object
+    WebhookEndpointResponse:
+      properties:
+        blocked_at:
+          type:
+          - string
+          - 'null'
+        consecutive_failures:
+          description: 連続して恒久失敗した配信の数。`blocked` の理由を読むための値。
+          format: int32
+          minimum: 0
+          type: integer
+        description:
+          type:
+          - string
+          - 'null'
+        event_types:
+          description: 購読している versioned event type。
+          items:
+            type: string
+          type: array
+        id:
+          type: string
+        last_error_code:
+          type:
+          - string
+          - 'null'
+        previous_secret_expires_at:
+          description: 旧世代の署名を併記しなくなる時刻。
+          type:
+          - string
+          - 'null'
+        previous_secret_version:
+          description: ローテーション猶予中だけ入る。この世代の署名もまだ併記されている。
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        secret_version:
+          description: 導出シークレットの世代。値そのものは返さない。
+          format: int32
+          minimum: 0
+          type: integer
+        status:
+          description: '`active`, `paused`, or `blocked`.'
+          type: string
+        url:
+          type: string
+      required:
+      - id
+      - url
+      - event_types
+      - status
+      - secret_version
+      - consecutive_failures
+      type: object
+    WebhookEndpointWithSecretResponse:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEndpointResponse'
+      - properties:
+          signing_secret:
+            description: 一度だけ返る。サーバは平文を保存しないので、後から読み出せない。
+            type: string
+        required:
+        - signing_secret
+        type: object
+      description: 作成とローテーションの応答**だけ**がシークレットを載せる。
+    WebhookTestResponse:
+      description: 疎通確認の結果。応答本文は返さない（secret や PII が混ざりうる）。
+      properties:
+        delivered:
+          type: boolean
+        error_code:
+          description: 有界な失敗理由。`TIMEOUT` / `BLOCKED_ADDRESS` / `CLIENT_ERROR` など。
+          type:
+          - string
+          - 'null'
+        status_code:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      required:
+      - delivered
+      type: object
     crate.order_api.OrderItemResponse:
       properties:
         amount:
@@ -14946,7 +16963,7 @@ info:
   license:
     name: ''
   title: tachyon-field-api
-  version: 0.1.16
+  version: 0.1.25
 openapi: 3.1.0
 paths:
   /api/agent/invoices:
@@ -14964,6 +16981,39 @@ paths:
       - description: Filter by client ID.
         in: query
         name: client_id
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices raised from this record kind. One of `reservation`,
+          `order`, `subscription`, `quotation`, `contract`.
+
+          Named in camelCase to match the JSON bodies, with the endpoint's older
+          snake_case spelling accepted as an alias so both conventions work.
+        in: query
+        name: sourceType
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices raised from this record. Combine with `sourceType` to
+          answer whether a given record has already been billed.
+        in: query
+        name: sourceId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices carrying this caller-defined classification on any of
+          their sources. Matched exactly.
+        in: query
+        name: reason
         required: false
         schema:
           type:
@@ -15603,6 +17653,181 @@ paths:
           description: Invalid file or mapping request
       tags:
       - TACHYON Field Bridge
+  /v1/erp/analytics/customer-purchase-summary:
+    get:
+      description: |-
+        1回の数え方・キャンセル/no-show の扱い・金額未確定・税込は単票と同じ。
+        金額で並べ替えるため1ページは単一通貨で、`currency` を省略したときに対象へ
+        通貨が2つ以上あれば 400 にして選ばせる（黙って合算すると呼び出し側が
+        気づけないまま間違った合計を使う）。
+
+        `total` は絞り込み後の顧客数で、`limit` / `offset` とは独立している。
+        既定では購入が1件も無い顧客は出ない（`minPurchaseCount` の既定が 1）。
+      operationId: list_customer_purchase_summaries
+      parameters:
+      - description: 提供日（Asia/Tokyo）の下限。`YYYY-MM-DD`。
+        in: query
+        name: from
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: 提供日（Asia/Tokyo）の上限。`YYYY-MM-DD`。
+        in: query
+        name: to
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          集計する通貨。対象に通貨が1つしか無ければ省略できる。2つ以上あるのに
+          省略すると、どれで並べたいのか決まらないので 400。
+        in: query
+        name: currency
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          期間内の購入回数の下限。既定 1（購入が1件も無い顧客は出ない）。
+          0 を渡すと、キャンセルや no-show しかない顧客も出る。
+        in: query
+        name: minPurchaseCount
+        required: false
+        schema:
+          format: int64
+          type:
+          - integer
+          - 'null'
+      - description: 最終購入からこの日数以上あいた顧客だけを返す（休眠の抽出）。
+        in: query
+        name: dormantForDays
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - description: |-
+          `total_amount` / `purchase_count` / `last_purchase_date`。既定は
+          `total_amount`。
+        in: query
+        name: sort
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: '`asc` / `desc`。既定は `desc`。'
+        in: query
+        name: order
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: 既定 50、上限 200。
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPurchaseSummaryListResponse'
+          description: 購買サマリの一覧
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: クエリが不正、または通貨が一意に決まらない
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: field:ViewSalesAnalytics がない
+      summary: 顧客ごとの購買サマリを横断で返す。
+      tags:
+      - TACHYON field - Analytics
+  /v1/erp/analytics/customer-purchase-summary/{customer_id}:
+    get:
+      description: |-
+        1回 = 予約1件。`confirmed` / `completed` で、かつ提供開始 (`startsAt`) が
+        `computedAt` を過ぎたものだけを購入として数える。キャンセル・no-show・
+        未提供・未確定は金額にも回数にも入れず、それぞれ件数だけを別項目で返す。
+        金額は税込で、`reservations.currency` ごとに `currencies` へ分けて返す。
+        集計はリクエストごとの都度計算で、いつ時点かは `computedAt`。
+
+        顧客台帳の存在確認はしない。予約を1件も持たない ID でも 404 ではなく、
+        すべて 0 のサマリを返す（「購入が無い」は正当な答えなので）。
+      operationId: get_customer_purchase_summary
+      parameters:
+      - description: 顧客台帳の ID（reservations.customer_id）
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      - description: 提供日（Asia/Tokyo）の下限。`YYYY-MM-DD`。省略すると全期間。
+        in: query
+        name: from
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: 提供日（Asia/Tokyo）の上限。`YYYY-MM-DD`。省略すると全期間。
+        in: query
+        name: to
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPurchaseSummaryResponse'
+          description: 購買サマリ
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: クエリが不正
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: field:ViewSalesAnalytics がない
+      summary: 顧客1件の購買サマリ。
+      tags:
+      - TACHYON field - Analytics
   /v1/erp/app-store/apps:
     get:
       operationId: list_tenant_extension_statuses_app_store
@@ -15786,6 +18011,14 @@ paths:
           type:
           - boolean
           - 'null'
+      - description: Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored.
+        in: header
+        name: X-Tachyon-Custom-Field-Types
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           content:
@@ -15797,6 +18030,15 @@ paths:
       - Custom Fields
     post:
       operationId: create_custom_field_definition
+      parameters:
+      - description: Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored.
+        in: header
+        name: X-Tachyon-Custom-Field-Types
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       requestBody:
         content:
           application/json:
@@ -15836,6 +18078,14 @@ paths:
         required: true
         schema:
           type: string
+      - description: Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored.
+        in: header
+        name: X-Tachyon-Custom-Field-Types
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       requestBody:
         content:
           application/json:
@@ -15991,6 +18241,210 @@ paths:
           description: ''
       tags:
       - Reservations
+  /v1/erp/customer-contacts:
+    get:
+      operationId: list_all_customer_contacts
+      parameters:
+      - description: 顧客で絞る。顧客配下の一覧では使わない（パスが決める）。
+        in: query
+        name: customerId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: channel
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: direction
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: outcome
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: performedBy
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: '`occurredAt >= from`'
+        in: query
+        name: occurredFrom
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: '`occurredAt <= to`'
+        in: query
+        name: occurredTo
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: 取り消し済みも含める。既定は除く。
+        in: query
+        name: includeCancelled
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - description: 既定 50、上限 200。
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerContactListResponse'
+          description: ''
+      tags:
+      - Customer Contacts
+  /v1/erp/customer-contacts/latest-lookup:
+    post:
+      operationId: lookup_latest_customer_contacts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LatestCustomerContactLookupRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestCustomerContactListResponse'
+          description: ''
+      tags:
+      - Customer Contacts
+  /v1/erp/customer-contacts/{contact_id}:
+    delete:
+      operationId: cancel_customer_contact
+      parameters:
+      - description: Customer contact ID (`cct_…`)
+        in: path
+        name: contact_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerContactResponse'
+          description: ''
+      summary: 取り消し。行は消さず `cancelledAt` / `cancelledBy` を立てて返す。
+      tags:
+      - Customer Contacts
+    patch:
+      operationId: update_customer_contact
+      parameters:
+      - description: Customer contact ID (`cct_…`)
+        in: path
+        name: contact_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerContactRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerContactResponse'
+          description: ''
+      tags:
+      - Customer Contacts
+  /v1/erp/customers:
+    post:
+      operationId: create_consumer_customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConsumerCustomerRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedEntityResponse'
+          description: Replay of an earlier request with the same idempotencyKey
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedEntityResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Malformed input
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Authentication required
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Insufficient permission
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
+      tags:
+      - Customers
   /v1/erp/customers/export.csv:
     get:
       operationId: export_consumer_customers_csv
@@ -15999,6 +18453,12 @@ paths:
           content:
             text/csv: {}
           description: Rendered CSV of consumer customers (個人顧客)
+      summary: |-
+        一覧と同じクエリ文字列（`segment` / `sort` / `min_order_total_nanodollar`
+        など）を受け、絞り込んだ結果をそのまま CSV にする。画面で作ったリストを
+        そのまま持ち出せるようにするためで、絞り込みを無視して全件を返すと、
+        「購入金額上位のリスト」を出したつもりの利用者に台帳全体が渡る。
+        `limit` / `offset` は無視して先頭から全件を読む。
       tags:
       - TACHYON field - CRM Customers
   /v1/erp/customers/import.csv:
@@ -16020,6 +18480,231 @@ paths:
           description: Import result summary
       tags:
       - TACHYON field - CRM Customers
+  /v1/erp/customers/{customer_id}/consents:
+    get:
+      operationId: get_consumer_consents
+      parameters:
+      - description: Consumer customer ID (`cus_…`)
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumerConsentStateListResponse'
+          description: ''
+      tags:
+      - Consumer
+    post:
+      operationId: record_consumer_consents
+      parameters:
+      - description: Consumer customer ID (`cus_…`)
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordConsumerConsentsRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumerConsentStateListResponse'
+          description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
+      tags:
+      - Consumer
+  /v1/erp/customers/{customer_id}/contact-preferences:
+    get:
+      description: |-
+        申し出の記録が無いチャネルは `contactable: true` / `declared: false`。
+        「連絡してよい」が既定で、拒否は申し出があって初めて立つ。撤回された拒否は
+        `contactable: true` に戻るが、証跡そのものは消えない。
+      operationId: get_customer_contact_preferences
+      parameters:
+      - description: Consumer customer ID (`cus_…`)
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactPreferenceListResponse'
+          description: ''
+      summary: チャネルごとの現在の連絡可否を1コールで返す。
+      tags:
+      - Consumer
+    post:
+      description: |-
+        上書きはしない。拒否も撤回も証跡への追記で、以前の行は残る。応答は書き込み
+        後に畳み直した全チャネルの現在値。
+      operationId: record_customer_contact_preferences
+      parameters:
+      - description: Consumer customer ID (`cus_…`)
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordContactPreferencesRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactPreferenceListResponse'
+          description: ''
+      summary: 連絡拒否の申し出、およびその撤回を記録する。
+      tags:
+      - Consumer
+  /v1/erp/customers/{customer_id}/contacts:
+    get:
+      operationId: list_customer_contacts
+      parameters:
+      - description: Customer ID (`cus_…`)
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      - description: 顧客で絞る。顧客配下の一覧では使わない（パスが決める）。
+        in: query
+        name: customerId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: channel
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: direction
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: outcome
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: performedBy
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: '`occurredAt >= from`'
+        in: query
+        name: occurredFrom
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: '`occurredAt <= to`'
+        in: query
+        name: occurredTo
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: 取り消し済みも含める。既定は除く。
+        in: query
+        name: includeCancelled
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - description: 既定 50、上限 200。
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerContactListResponse'
+          description: ''
+      tags:
+      - Customer Contacts
+    post:
+      operationId: create_customer_contact
+      parameters:
+      - description: Customer ID (`cus_…`)
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerContactRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerContactResponse'
+          description: ''
+      tags:
+      - Customer Contacts
   /v1/erp/deals:
     get:
       operationId: list_deals
@@ -17449,6 +20134,7 @@ paths:
       - Golf Course
   /v1/erp/extensions/golf-course/tabular/analyze:
     post:
+      description: Deprecated. Use POST /v1/bridge/tabular/analyze, which runs the same analyzer and requires field:PreviewBridgeRun. This alias exists only so CourseBoard can roll back to it, and is not removed because /v1/ endpoints are not deleted in place.
       operationId: analyze_golf_course_tabular
       requestBody:
         content:
@@ -17469,6 +20155,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid file or mapping request
+      summary: Deprecated authorization-compatible alias of [`analyze_bridge_tabular`].
       tags:
       - Golf Course Extension
   /v1/erp/extensions/status:
@@ -17588,6 +20275,163 @@ paths:
           description: ''
         '409':
           description: Reservation products are served from the generic product catalog for this tenant; write them through /v1/erp/reservation-products
+      tags:
+      - Reservations
+  /v1/erp/handoff-notes:
+    get:
+      description: |-
+        Lists handover notes, newest first.
+
+        Pass `subjectType` and `subjectId` for one subject's board, or `outstandingOnly=true` for everything still waiting to be picked up. Retracted notes are hidden unless `includeRetracted=true`.
+      operationId: list_handoff_notes
+      parameters:
+      - description: |-
+          Narrow to one subject, e.g. `reservation`. Both parts are needed for a
+          single subject's board; either alone still filters.
+        in: query
+        name: subjectType
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: subjectId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: category
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: Keep only notes nobody has taken over yet — the shift-start read.
+        in: query
+        name: outstandingOnly
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - description: |-
+          Include notes that were withdrawn. Off by default so a retracted note
+          stops appearing on the board, while staying readable for audit.
+        in: query
+        name: includeRetracted
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - in: query
+        name: from
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: to
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandoffNoteListResponse'
+          description: ''
+      tags:
+      - Reservations
+    post:
+      description: |-
+        Appends one handover note.
+
+        The note is never edited afterwards. A mistaken note is retracted, not rewritten, so the board always shows what was actually written.
+      operationId: create_handoff_note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHandoffNoteRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandoffNote'
+          description: ''
+      tags:
+      - Reservations
+  /v1/erp/handoff-notes/{id}/acknowledge:
+    post:
+      description: |-
+        Marks the note as taken over.
+
+        The first acknowledgement wins: pressing this on an already acknowledged note keeps whoever picked it up first, because that is the fact the handover turns on.
+      operationId: acknowledge_handoff_note
+      parameters:
+      - description: Handoff note ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandoffNote'
+          description: ''
+      tags:
+      - Reservations
+  /v1/erp/handoff-notes/{id}/retract:
+    post:
+      description: |-
+        Withdraws a note written in error.
+
+        The row is not deleted and the body is not rewritten: the note stays readable and marked as retracted, which is what keeps the log a log.
+      operationId: retract_handoff_note
+      parameters:
+      - description: Handoff note ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetractHandoffNoteRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandoffNote'
+          description: ''
       tags:
       - Reservations
   /v1/erp/hrm/leave-requests/{id}:
@@ -18346,6 +21190,76 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomerCredentialResponse'
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
+      tags:
+      - Membership
+  /v1/erp/membership/customers:
+    get:
+      operationId: list_membership_roster
+      parameters:
+      - description: '`current`（既定）/ `expiring` / `lapsed` / `all`。'
+        in: query
+        name: state
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: planId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: 氏名・カナ・メール・電話の部分一致。
+        in: query
+        name: q
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: '`state=expiring` のときだけ効く。既定は 30 日。'
+        in: query
+        name: expiringWithinDays
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: query
+        name: limit
+        required: false
+        schema:
+          format: int64
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: query
+        name: offset
+        required: false
+        schema:
+          format: int64
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipRosterResponse'
+          description: ''
       tags:
       - Membership
   /v1/erp/membership/customers/{customer_id}:
@@ -18358,6 +21272,67 @@ paths:
               schema:
                 $ref: '#/components/schemas/MembershipCustomerViewResponse'
           description: ''
+      tags:
+      - Membership
+  /v1/erp/membership/customers/{customer_id}/activities:
+    get:
+      operationId: list_membership_activities
+      parameters:
+      - description: Customer ID
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+      - description: Maximum number of events to return (default 20, maximum 100).
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - description: Opaque base64url cursor returned by the previous page.
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipActivityListResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid limit or cursor
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Authentication required
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Insufficient permission
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Customer not found
       tags:
       - Membership
   /v1/erp/membership/customers/{customer_id}/consents:
@@ -18376,6 +21351,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/MembershipCustomerViewResponse'
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
       tags:
       - Membership
   /v1/erp/membership/customers/{customer_id}/credentials:
@@ -18394,6 +21375,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomerCredentialResponse'
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
       tags:
       - Membership
   /v1/erp/membership/customers/{customer_id}/plan-assignments:
@@ -18412,6 +21399,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/MembershipPlanAssignmentResponse'
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
       tags:
       - Membership
   /v1/erp/membership/customers/{customer_id}/subjects:
@@ -18429,6 +21422,96 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerSubjectResponse'
+          description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
+      tags:
+      - Membership
+  /v1/erp/membership/entitlements:
+    get:
+      operationId: list_membership_entitlements
+      parameters:
+      - description: Include deactivated grants
+        in: query
+        name: includeInactive
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipEntitlementListResponse'
+          description: ''
+      tags:
+      - Membership
+    post:
+      operationId: create_membership_entitlement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMembershipEntitlementRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipEntitlementResponse'
+          description: ''
+      tags:
+      - Membership
+  /v1/erp/membership/entitlements/{id}:
+    delete:
+      operationId: delete_membership_entitlement
+      responses:
+        '204':
+          description: ''
+      tags:
+      - Membership
+    patch:
+      operationId: update_membership_entitlement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMembershipEntitlementRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipEntitlementResponse'
+          description: ''
+      tags:
+      - Membership
+  /v1/erp/membership/offerings:
+    get:
+      operationId: list_membership_offerings
+      parameters:
+      - description: Also return grants that are disabled or whose product is not on sale
+        in: query
+        name: includeInactive
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipOfferingListResponse'
           description: ''
       tags:
       - Membership
@@ -18495,6 +21578,44 @@ paths:
           description: ''
       tags:
       - Membership
+  /v1/erp/membership/reception-fields:
+    get:
+      description: |-
+        The list is always complete: boxes the tenant never configured come back
+        with their built-in default rather than being absent, so the counter
+        screen and the document reader can both be built straight from the
+        response without knowing which boxes happen to be stored.
+      operationId: list_reception_fields
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceptionFieldListResponse'
+          description: ''
+      summary: Every box on this tenant's reception sheet.
+      tags:
+      - Membership
+    put:
+      operationId: replace_reception_fields
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceReceptionFieldsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceptionFieldListResponse'
+          description: ''
+      summary: |-
+        Saves the boxes named in the request. Boxes left out keep their current
+        setting, so a screen that shows a subset cannot reset the rest.
+      tags:
+      - Membership
   /v1/erp/membership/registrations:
     post:
       operationId: register_membership
@@ -18511,6 +21632,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/MembershipCustomerViewResponse'
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
       tags:
       - Membership
   /v1/erp/membership/subjects/{id}:
@@ -18519,6 +21646,12 @@ paths:
       responses:
         '204':
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
       tags:
       - Membership
     put:
@@ -18536,6 +21669,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomerSubjectResponse'
           description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Membership activity snapshot exceeded its size limit
       tags:
       - Membership
   /v1/erp/orders:
@@ -19810,8 +22949,196 @@ paths:
           description: ''
       tags:
       - Reservations
+  /v1/erp/reservation-waitlist:
+    get:
+      description: |-
+        Lists キャンセル待ち entries, oldest first.
+
+        Each item carries `queuePosition` — its place among the entries still waiting for the same slot — and `availableSlotGroups`, the free inventory groups that slot has right now. One booking consumes one group whatever the party size, so a single free group seats an entry of any `quantity`. `availableSlotGroups` is absent when no slot has been opened for the requested time, which is a different situation from a full one. `seatableOnly=true` narrows the list to entries the slot can already take.
+      operationId: list_reservation_waitlist
+      parameters:
+      - description: |-
+          Defaults to `waiting`. Pass a terminal status to read the history of
+          entries that already left the queue.
+        in: query
+        name: status
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: reservationTypeId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: resourceId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: customerId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: Bounds `desiredStartsAt` as the half-open interval `[from, to)`.
+        in: query
+        name: from
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: to
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Keep only entries whose slot has room for them right now — the "空きが
+          出た" list an operator works from.
+        in: query
+        name: seatableOnly
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationWaitlistListResponse'
+          description: ''
+      tags:
+      - Reservations
+    post:
+      description: |-
+        Adds one request to the queue.
+
+        Joining the queue consumes no slot inventory: the whole point is that the slot has none left. The entry needs `customerId` or at least one of `customerName`, `customerEmail`, `customerPhone` — a waitlist nobody can call back is not actionable.
+      operationId: create_reservation_waitlist_entry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservationWaitlistEntryRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationWaitlistEntry'
+          description: ''
+      tags:
+      - Reservations
+  /v1/erp/reservation-waitlist/{id}:
+    get:
+      operationId: get_reservation_waitlist_entry
+      parameters:
+      - description: Waitlist entry ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationWaitlistEntry'
+          description: ''
+      tags:
+      - Reservations
+  /v1/erp/reservation-waitlist/{id}/close:
+    post:
+      description: |-
+        Takes an entry out of the queue without booking it.
+
+        Closing an entry that already left the queue returns it unchanged rather than rewriting why it first left.
+      operationId: close_reservation_waitlist_entry
+      parameters:
+      - description: Waitlist entry ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseReservationWaitlistEntryRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationWaitlistEntry'
+          description: ''
+      tags:
+      - Reservations
+  /v1/erp/reservation-waitlist/{id}/convert:
+    post:
+      description: |-
+        Books the entry, seating the guest.
+
+        This is the manual promotion. It runs the ordinary reservation creation path, so it takes the slot hold there and fails with 409 if the slot filled up again in the meantime — the entry then stays in the queue. The entry is stamped `converted` only after the reservation exists.
+      operationId: convert_reservation_waitlist_entry
+      parameters:
+      - description: Waitlist entry ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConvertReservationWaitlistEntryRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConvertReservationWaitlistEntryResponse'
+          description: ''
+      tags:
+      - Reservations
   /v1/erp/reservations:
     get:
+      description: |-
+        Lists a tenant's reservations, newest start time first.
+
+        `from`/`to` bound the reservation's own start time (`startsAt`) as the half-open interval `[from, to)`, so consecutive windows cover a period exactly once. `updatedSince` bounds `updatedAt` inclusively, for incremental reads.
+
+        `limit` defaults to 100 and is capped at 500; a larger request is capped rather than rejected, and the response echoes the applied `limit`, `offset`, and the filter's `total`.
       operationId: list_reservations
       parameters:
       - in: query
@@ -19864,7 +23191,47 @@ paths:
           type:
           - string
           - 'null'
-      - in: query
+      - description: |-
+          Inclusive lower bound on the reservation's own start time
+          (`startsAt`), RFC 3339. Not the creation or update time.
+        in: query
+        name: from
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Exclusive upper bound on the reservation's own start time
+          (`startsAt`), RFC 3339. Exclusive so consecutive windows
+          (`[from, to)`) cover a period exactly once.
+        in: query
+        name: to
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return only reservations whose `updatedAt` is at or after this RFC 3339
+          instant. The bound is inclusive, so replaying the previous page's
+          high-water mark can repeat a row but never skips one.
+        in: query
+        name: updatedSince
+        required: false
+        schema:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Page size. Defaults to 100, maximum 500. A larger value is capped at
+          500 rather than rejected, and the applied value comes back as `limit`
+          in the response. Declared in the description rather than as a schema
+          `maximum` because the server caps instead of failing validation.
+        in: query
         name: limit
         required: false
         schema:
@@ -23446,6 +26813,39 @@ paths:
           type:
           - string
           - 'null'
+      - description: |-
+          Return invoices raised from this record kind. One of `reservation`,
+          `order`, `subscription`, `quotation`, `contract`.
+
+          Named in camelCase to match the JSON bodies, with the endpoint's older
+          snake_case spelling accepted as an alias so both conventions work.
+        in: query
+        name: sourceType
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices raised from this record. Combine with `sourceType` to
+          answer whether a given record has already been billed.
+        in: query
+        name: sourceId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices carrying this caller-defined classification on any of
+          their sources. Matched exactly.
+        in: query
+        name: reason
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       - description: Maximum number of invoices to return.
         in: query
         name: limit
@@ -24199,7 +27599,11 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: ''
         '422':
-          description: Malformed input or unknown fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Malformed input, unknown fields, or an oversized activity snapshot
       security:
       - {}
       tags:
@@ -25040,6 +28444,14 @@ paths:
         required: true
         schema:
           type: string
+      - description: Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored.
+        in: header
+        name: X-Tachyon-Custom-Field-Types
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           content:
@@ -25143,6 +28555,62 @@ paths:
       security:
       - {}
       summary: Read an order again with the token the lookup handed back.
+      tags:
+      - Public storefront
+  /v1/public/storefront/{tenant_id}/orders/by-token/{lookup_token}/cancel:
+    post:
+      description: |-
+        There is deliberately no order ID in this contract. The short-lived token
+        is resolved server-side under the tenant in the path, so it cannot be
+        paired with a different customer's order.
+      operationId: public_storefront_cancel_order_by_lookup_token
+      parameters:
+      - description: Tenant whose public storefront is being ordered from
+        in: path
+        name: tenant_id
+        required: true
+        schema:
+          type: string
+      - description: Token minted by the lookup
+        in: path
+        name: lookup_token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicOrderResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Lookup token is unknown, expired or belongs to another tenant
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The order has reached a non-cancellable status
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Tenant consumer-cancel budget exhausted
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Public storefront limiter unavailable
+      security:
+      - {}
+      summary: Cancel the one order represented by a lookup token.
       tags:
       - Public storefront
   /v1/public/storefront/{tenant_id}/orders/lookup:
@@ -25827,6 +29295,20 @@ paths:
         merged or deduplicated, so two people sharing a name or a household
         phone number stay separate records. Picking the right candidate — or
         registering a new customer — is the caller's decision.
+
+        `ids` fetches a known set of customers in one call, for callers that
+        already hold customer IDs and only need the names and phone numbers to
+        display alongside them. It is ANDed with the other filters, is capped at
+        100 IDs per request (more is a 400, never a silent truncation), and
+        drops IDs that do not exist instead of failing the request.
+
+        `offset` pages through the filtered set, and `total` on the response is
+        that set's size — not the size of the returned page. The order is stable
+        for a given filter, so paging neither repeats nor skips a row.
+
+        `limit` and `offset` on the response body are always `0` here: the
+        legacy upstream list carried no pagination metadata and StoreKit has
+        exposed zeroes since. Read `has_more` and `total` instead.
       operationId: list_customers
       parameters:
       - description: Exact email match.
@@ -25855,11 +29337,36 @@ paths:
           type:
           - string
           - 'null'
+      - description: |-
+          Comma-separated customer IDs, at most 100 per request
+          (`ids=cus_a,cus_b`). Combines with `email`, `name`
+          and `phone` as AND, and does not widen `limit`: pass a `limit` big
+          enough for the set you asked for. IDs that do not exist are dropped
+          from the result rather than reported. More than 100 IDs is a 400;
+          the list is never silently truncated. An `ids` that parses to no ID
+          at all matches nothing, so an empty page stays empty.
+        in: query
+        name: ids
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       - in: query
         name: limit
         required: false
         schema:
           format: int64
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - description: Rows to skip, applied after the filters above. Defaults to 0.
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
           minimum: 0
           type:
           - integer
@@ -25871,6 +29378,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/StoreKitList_CustomerResponse'
           description: ''
+        '400':
+          description: More than 100 `ids` in one request
       summary: List customers.
       tags:
       - StoreKit
@@ -26456,7 +29965,7 @@ paths:
           type:
           - string
           - 'null'
-      - description: Maximum number of reservations to return
+      - description: Page size; defaults to 100, maximum 500. A larger value is capped rather than rejected, and the applied value comes back as `limit` in the response.
         in: query
         name: limit
         required: false
@@ -26653,6 +30162,168 @@ paths:
       security:
       - {}
       summary: Anonymous read for the public storefront.
+      tags:
+      - StoreKit
+  /v1/storekit/webhook-endpoints:
+    get:
+      operationId: list_webhook_endpoints
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WebhookEndpointResponse'
+                type: array
+          description: ''
+      summary: テナントの webhook 宛先を一覧する。
+      tags:
+      - StoreKit
+    post:
+      operationId: create_webhook_endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookEndpointRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpointWithSecretResponse'
+          description: ''
+      summary: webhook 宛先を登録し、署名シークレットを一度だけ返す。
+      tags:
+      - StoreKit
+  /v1/storekit/webhook-endpoints/{endpoint_id}:
+    delete:
+      operationId: delete_webhook_endpoint
+      parameters:
+      - in: path
+        name: endpoint_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: webhook 宛先を削除する。
+      tags:
+      - StoreKit
+    get:
+      operationId: get_webhook_endpoint
+      parameters:
+      - in: path
+        name: endpoint_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpointResponse'
+          description: ''
+      summary: webhook 宛先を1件取得する。
+      tags:
+      - StoreKit
+    patch:
+      operationId: update_webhook_endpoint
+      parameters:
+      - in: path
+        name: endpoint_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWebhookEndpointRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpointResponse'
+          description: ''
+      summary: webhook 宛先を部分更新する。
+      tags:
+      - StoreKit
+  /v1/storekit/webhook-endpoints/{endpoint_id}/deliveries:
+    get:
+      operationId: list_webhook_deliveries
+      parameters:
+      - in: path
+        name: endpoint_id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: limit
+        required: true
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WebhookDeliveryResponse'
+                type: array
+          description: ''
+      summary: 宛先の配送履歴を新しい順に返す。
+      tags:
+      - StoreKit
+  /v1/storekit/webhook-endpoints/{endpoint_id}/rotate-secret:
+    post:
+      description: 旧世代は24時間だけ併記される。受信側はその間に値を差し替える。
+      operationId: rotate_webhook_endpoint_secret
+      parameters:
+      - in: path
+        name: endpoint_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEndpointWithSecretResponse'
+          description: ''
+      summary: 署名シークレットを更新し、新しい値を一度だけ返す。
+      tags:
+      - StoreKit
+  /v1/storekit/webhook-endpoints/{endpoint_id}/test:
+    post:
+      description: |-
+        実配送とまったく同じ経路（SSRF ガード・接続先の固定・署名・timeout）を
+        通る。注文イベントも配送行も作らないので、履歴には残らない。
+      operationId: test_webhook_endpoint
+      parameters:
+      - in: path
+        name: endpoint_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookTestResponse'
+          description: ''
+      summary: 宛先へ署名付きの疎通確認イベントを1回送る。
       tags:
       - StoreKit
 security:

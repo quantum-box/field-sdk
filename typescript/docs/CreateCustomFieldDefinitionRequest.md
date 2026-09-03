@@ -8,9 +8,10 @@ Name | Type
 ------------ | -------------
 `entityType` | string
 `fieldKey` | string
-`fieldType` | string
+`fieldType` | [CreatableCustomFieldTypeWire](CreatableCustomFieldTypeWire.md)
 `label` | string
 `options` | Array&lt;string&gt;
+`placeholder` | string
 `required` | boolean
 `sortOrder` | number
 

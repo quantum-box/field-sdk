@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `birthDate` | string
+`customFields` | object
 `name` | string
 `note` | string
 `sex` | string

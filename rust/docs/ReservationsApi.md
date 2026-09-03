@@ -4,14 +4,19 @@ All URIs are relative to *https://tachyon-field-api.txcloud.app*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**acknowledge_handoff_note**](ReservationsApi.md#acknowledge_handoff_note) | **POST** /v1/erp/handoff-notes/{id}/acknowledge | 
 [**assign_reservation_staff**](ReservationsApi.md#assign_reservation_staff) | **POST** /v1/erp/reservations/{id}/staff-assignment | 
 [**cancel_reservation_with_policy**](ReservationsApi.md#cancel_reservation_with_policy) | **POST** /v1/erp/reservations/{id}/cancel | 
 [**close_customer_client_affiliation**](ReservationsApi.md#close_customer_client_affiliation) | **POST** /v1/erp/customer-client-affiliations/{id}/close | 
+[**close_reservation_waitlist_entry**](ReservationsApi.md#close_reservation_waitlist_entry) | **POST** /v1/erp/reservation-waitlist/{id}/close | 
+[**convert_reservation_waitlist_entry**](ReservationsApi.md#convert_reservation_waitlist_entry) | **POST** /v1/erp/reservation-waitlist/{id}/convert | 
 [**create_customer_client_affiliation**](ReservationsApi.md#create_customer_client_affiliation) | **POST** /v1/erp/customer-client-affiliations | 
+[**create_handoff_note**](ReservationsApi.md#create_handoff_note) | **POST** /v1/erp/handoff-notes | 
 [**create_reservation**](ReservationsApi.md#create_reservation) | **POST** /v1/erp/reservations | 
 [**create_reservation_product**](ReservationsApi.md#create_reservation_product) | **POST** /v1/erp/reservation-products | 
 [**create_reservation_resource**](ReservationsApi.md#create_reservation_resource) | **POST** /v1/erp/reservation-resources | 
 [**create_reservation_type**](ReservationsApi.md#create_reservation_type) | **POST** /v1/erp/reservation-types | 
+[**create_reservation_waitlist_entry**](ReservationsApi.md#create_reservation_waitlist_entry) | **POST** /v1/erp/reservation-waitlist | 
 [**create_staff_assignment**](ReservationsApi.md#create_staff_assignment) | **POST** /v1/erp/staff-assignments | 
 [**create_staff_profile**](ReservationsApi.md#create_staff_profile) | **POST** /v1/erp/staff-profiles | 
 [**delete_reservation_product**](ReservationsApi.md#delete_reservation_product) | **DELETE** /v1/erp/reservation-products/{id} | 
@@ -30,6 +35,7 @@ Method | HTTP request | Description
 [**get_reservation_resource**](ReservationsApi.md#get_reservation_resource) | **GET** /v1/erp/reservation-resources/{id} | 
 [**get_reservation_resource_schedule**](ReservationsApi.md#get_reservation_resource_schedule) | **GET** /v1/erp/reservation-resources/{id}/schedule | 
 [**get_reservation_schedule_location**](ReservationsApi.md#get_reservation_schedule_location) | **GET** /v1/erp/reservation-schedule-location | 
+[**get_reservation_waitlist_entry**](ReservationsApi.md#get_reservation_waitlist_entry) | **GET** /v1/erp/reservation-waitlist/{id} | 
 [**import_product_slots_into_resource_schedule**](ReservationsApi.md#import_product_slots_into_resource_schedule) | **POST** /v1/erp/reservation-resources/{id}/schedule/import-product-slots | 
 [**issue_reservation_billing_link**](ReservationsApi.md#issue_reservation_billing_link) | **POST** /v1/erp/reservations/{id}/billing-link | 
 [**issue_reservation_square_invoice**](ReservationsApi.md#issue_reservation_square_invoice) | **POST** /v1/erp/reservations/{id}/billing-invoice | 
@@ -37,6 +43,7 @@ Method | HTTP request | Description
 [**list_customer_client_affiliations**](ReservationsApi.md#list_customer_client_affiliations) | **GET** /v1/erp/customer-client-affiliations | 
 [**list_extension_lifecycle_audit_events**](ReservationsApi.md#list_extension_lifecycle_audit_events) | **GET** /v1/erp/extensions/audit | 
 [**list_extensions**](ReservationsApi.md#list_extensions) | **GET** /v1/erp/extensions | 
+[**list_handoff_notes**](ReservationsApi.md#list_handoff_notes) | **GET** /v1/erp/handoff-notes | 
 [**list_reservation_cancellations**](ReservationsApi.md#list_reservation_cancellations) | **GET** /v1/erp/reservations/{id}/cancellations | 
 [**list_reservation_notification_templates**](ReservationsApi.md#list_reservation_notification_templates) | **GET** /v1/erp/reservation-notification-templates | 
 [**list_reservation_products**](ReservationsApi.md#list_reservation_products) | **GET** /v1/erp/reservation-products | 
@@ -45,6 +52,7 @@ Method | HTTP request | Description
 [**list_reservation_schedule_date_overrides**](ReservationsApi.md#list_reservation_schedule_date_overrides) | **GET** /v1/erp/reservation-resources/{id}/schedule/overrides | 
 [**list_reservation_types**](ReservationsApi.md#list_reservation_types) | **GET** /v1/erp/reservation-types | 
 [**list_reservation_types_for_management**](ReservationsApi.md#list_reservation_types_for_management) | **GET** /v1/erp/reservation-types/manage | 
+[**list_reservation_waitlist**](ReservationsApi.md#list_reservation_waitlist) | **GET** /v1/erp/reservation-waitlist | 
 [**list_reservations**](ReservationsApi.md#list_reservations) | **GET** /v1/erp/reservations | 
 [**list_resources**](ReservationsApi.md#list_resources) | **GET** /v1/erp/resources | 
 [**list_staff_assignments**](ReservationsApi.md#list_staff_assignments) | **GET** /v1/erp/staff-assignments | 
@@ -65,6 +73,7 @@ Method | HTTP request | Description
 [**replace_reservation_product**](ReservationsApi.md#replace_reservation_product) | **PUT** /v1/erp/reservation-products/{id} | 
 [**replace_reservation_product_slots**](ReservationsApi.md#replace_reservation_product_slots) | **PUT** /v1/erp/reservation-products/{id}/slots | 
 [**replace_reservation_resource_schedule**](ReservationsApi.md#replace_reservation_resource_schedule) | **PUT** /v1/erp/reservation-resources/{id}/schedule | 
+[**retract_handoff_note**](ReservationsApi.md#retract_handoff_note) | **POST** /v1/erp/handoff-notes/{id}/retract | 
 [**save_reservation_notification_templates**](ReservationsApi.md#save_reservation_notification_templates) | **PUT** /v1/erp/reservation-notification-templates | 
 [**seed_reservation_products_from_extension_config**](ReservationsApi.md#seed_reservation_products_from_extension_config) | **POST** /v1/erp/reservation-products/seed-from-extension-config | 
 [**send_reservation_notification**](ReservationsApi.md#send_reservation_notification) | **POST** /v1/erp/reservations/{id}/notifications | 
@@ -77,6 +86,36 @@ Method | HTTP request | Description
 [**update_staff_assignment**](ReservationsApi.md#update_staff_assignment) | **PATCH** /v1/erp/staff-assignments/{id} | 
 [**update_staff_profile**](ReservationsApi.md#update_staff_profile) | **PATCH** /v1/erp/staff-profiles/{id} | 
 
+
+
+## acknowledge_handoff_note
+
+> models::HandoffNote acknowledge_handoff_note(id)
+
+
+Marks the note as taken over.  The first acknowledgement wins: pressing this on an already acknowledged note keeps whoever picked it up first, because that is the fact the handover turns on.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Handoff note ID | [required] |
+
+### Return type
+
+[**models::HandoffNote**](HandoffNote.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## assign_reservation_staff
@@ -167,6 +206,68 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## close_reservation_waitlist_entry
+
+> models::ReservationWaitlistEntry close_reservation_waitlist_entry(id, close_reservation_waitlist_entry_request)
+
+
+Takes an entry out of the queue without booking it.  Closing an entry that already left the queue returns it unchanged rather than rewriting why it first left.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Waitlist entry ID | [required] |
+**close_reservation_waitlist_entry_request** | [**CloseReservationWaitlistEntryRequest**](CloseReservationWaitlistEntryRequest.md) |  | [required] |
+
+### Return type
+
+[**models::ReservationWaitlistEntry**](ReservationWaitlistEntry.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## convert_reservation_waitlist_entry
+
+> models::ConvertReservationWaitlistEntryResponse convert_reservation_waitlist_entry(id, convert_reservation_waitlist_entry_request)
+
+
+Books the entry, seating the guest.  This is the manual promotion. It runs the ordinary reservation creation path, so it takes the slot hold there and fails with 409 if the slot filled up again in the meantime — the entry then stays in the queue. The entry is stamped `converted` only after the reservation exists.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Waitlist entry ID | [required] |
+**convert_reservation_waitlist_entry_request** | [**ConvertReservationWaitlistEntryRequest**](ConvertReservationWaitlistEntryRequest.md) |  | [required] |
+
+### Return type
+
+[**models::ConvertReservationWaitlistEntryResponse**](ConvertReservationWaitlistEntryResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## create_customer_client_affiliation
 
 > models::CustomerClientAffiliation create_customer_client_affiliation(create_customer_client_affiliation_request)
@@ -182,6 +283,36 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::CustomerClientAffiliation**](CustomerClientAffiliation.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## create_handoff_note
+
+> models::HandoffNote create_handoff_note(create_handoff_note_request)
+
+
+Appends one handover note.  The note is never edited afterwards. A mistaken note is retracted, not rewritten, so the board always shows what was actually written.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**create_handoff_note_request** | [**CreateHandoffNoteRequest**](CreateHandoffNoteRequest.md) |  | [required] |
+
+### Return type
+
+[**models::HandoffNote**](HandoffNote.md)
 
 ### Authorization
 
@@ -294,6 +425,36 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::ReservationType**](ReservationType.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## create_reservation_waitlist_entry
+
+> models::ReservationWaitlistEntry create_reservation_waitlist_entry(create_reservation_waitlist_entry_request)
+
+
+Adds one request to the queue.  Joining the queue consumes no slot inventory: the whole point is that the slot has none left. The entry needs `customerId` or at least one of `customerName`, `customerEmail`, `customerPhone` — a waitlist nobody can call back is not actionable.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**create_reservation_waitlist_entry_request** | [**CreateReservationWaitlistEntryRequest**](CreateReservationWaitlistEntryRequest.md) |  | [required] |
+
+### Return type
+
+[**models::ReservationWaitlistEntry**](ReservationWaitlistEntry.md)
 
 ### Authorization
 
@@ -816,6 +977,34 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## get_reservation_waitlist_entry
+
+> models::ReservationWaitlistEntry get_reservation_waitlist_entry(id)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Waitlist entry ID | [required] |
+
+### Return type
+
+[**models::ReservationWaitlistEntry**](ReservationWaitlistEntry.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## import_product_slots_into_resource_schedule
 
 > models::ImportProductSlotsResponse import_product_slots_into_resource_schedule(id, import_product_slots_request)
@@ -1000,6 +1189,43 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**models::ExtensionManifestListResponse**](ExtensionManifestListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_handoff_notes
+
+> models::HandoffNoteListResponse list_handoff_notes(subject_type, subject_id, category, outstanding_only, include_retracted, from, to, limit)
+
+
+Lists handover notes, newest first.  Pass `subjectType` and `subjectId` for one subject's board, or `outstandingOnly=true` for everything still waiting to be picked up. Retracted notes are hidden unless `includeRetracted=true`.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**subject_type** | Option<**String**> | Narrow to one subject, e.g. `reservation`. Both parts are needed for a single subject's board; either alone still filters. |  |
+**subject_id** | Option<**String**> |  |  |
+**category** | Option<**String**> |  |  |
+**outstanding_only** | Option<**bool**> | Keep only notes nobody has taken over yet — the shift-start read. |  |
+**include_retracted** | Option<**bool**> | Include notes that were withdrawn. Off by default so a retracted note stops appearing on the board, while staying readable for audit. |  |
+**from** | Option<**String**> |  |  |
+**to** | Option<**String**> |  |  |
+**limit** | Option<**i32**> |  |  |
+
+### Return type
+
+[**models::HandoffNoteListResponse**](HandoffNoteListResponse.md)
 
 ### Authorization
 
@@ -1237,10 +1463,49 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## list_reservation_waitlist
+
+> models::ReservationWaitlistListResponse list_reservation_waitlist(status, reservation_type_id, resource_id, customer_id, from, to, seatable_only, limit)
+
+
+Lists キャンセル待ち entries, oldest first.  Each item carries `queuePosition` — its place among the entries still waiting for the same slot — and `availableSlotGroups`, the free inventory groups that slot has right now. One booking consumes one group whatever the party size, so a single free group seats an entry of any `quantity`. `availableSlotGroups` is absent when no slot has been opened for the requested time, which is a different situation from a full one. `seatableOnly=true` narrows the list to entries the slot can already take.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**status** | Option<**String**> | Defaults to `waiting`. Pass a terminal status to read the history of entries that already left the queue. |  |
+**reservation_type_id** | Option<**String**> |  |  |
+**resource_id** | Option<**String**> |  |  |
+**customer_id** | Option<**String**> |  |  |
+**from** | Option<**String**> | Bounds `desiredStartsAt` as the half-open interval `[from, to)`. |  |
+**to** | Option<**String**> |  |  |
+**seatable_only** | Option<**bool**> | Keep only entries whose slot has room for them right now — the \"空きが 出た\" list an operator works from. |  |
+**limit** | Option<**i32**> |  |  |
+
+### Return type
+
+[**models::ReservationWaitlistListResponse**](ReservationWaitlistListResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## list_reservations
 
-> models::ReservationListResponse list_reservations(status, payment_status, reservation_type_id, resource_id, staff_id, customer_id, search, limit, offset)
+> models::ReservationListResponse list_reservations(status, payment_status, reservation_type_id, resource_id, staff_id, customer_id, search, from, to, updated_since, limit, offset)
 
+
+Lists a tenant's reservations, newest start time first.  `from`/`to` bound the reservation's own start time (`startsAt`) as the half-open interval `[from, to)`, so consecutive windows cover a period exactly once. `updatedSince` bounds `updatedAt` inclusively, for incremental reads.  `limit` defaults to 100 and is capped at 500; a larger request is capped rather than rejected, and the response echoes the applied `limit`, `offset`, and the filter's `total`.
 
 ### Parameters
 
@@ -1254,7 +1519,10 @@ Name | Type | Description  | Required | Notes
 **staff_id** | Option<**String**> |  |  |
 **customer_id** | Option<**String**> |  |  |
 **search** | Option<**String**> | Search reservation number or the reservation-held customer snapshot. |  |
-**limit** | Option<**i32**> |  |  |
+**from** | Option<**String**> | Inclusive lower bound on the reservation's own start time (`startsAt`), RFC 3339. Not the creation or update time. |  |
+**to** | Option<**String**> | Exclusive upper bound on the reservation's own start time (`startsAt`), RFC 3339. Exclusive so consecutive windows (`[from, to)`) cover a period exactly once. |  |
+**updated_since** | Option<**String**> | Return only reservations whose `updatedAt` is at or after this RFC 3339 instant. The bound is inclusive, so replaying the previous page's high-water mark can repeat a row but never skips one. |  |
+**limit** | Option<**i32**> | Page size. Defaults to 100, maximum 500. A larger value is capped at 500 rather than rejected, and the applied value comes back as `limit` in the response. Declared in the description rather than as a schema `maximum` because the server caps instead of failing validation. |  |
 **offset** | Option<**i32**> |  |  |
 
 ### Return type
@@ -1800,6 +2068,37 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::ReservationResourceScheduleResponse**](ReservationResourceScheduleResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## retract_handoff_note
+
+> models::HandoffNote retract_handoff_note(id, retract_handoff_note_request)
+
+
+Withdraws a note written in error.  The row is not deleted and the body is not rewritten: the note stays readable and marked as retracted, which is what keeps the log a log.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** | Handoff note ID | [required] |
+**retract_handoff_note_request** | [**RetractHandoffNoteRequest**](RetractHandoffNoteRequest.md) |  | [required] |
+
+### Return type
+
+[**models::HandoffNote**](HandoffNote.md)
 
 ### Authorization
 

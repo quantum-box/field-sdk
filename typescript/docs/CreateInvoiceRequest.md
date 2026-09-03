@@ -22,6 +22,7 @@ Name | Type
 `sendEmail` | boolean
 `sendSms` | boolean
 `smsMessage` | string
+`sources` | [Array&lt;InvoiceSourceRequest&gt;](InvoiceSourceRequest.md)
 `status` | string
 `taxAmount` | number
 `taxCategory` | string

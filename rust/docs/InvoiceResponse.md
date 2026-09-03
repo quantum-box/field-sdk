@@ -27,6 +27,7 @@ Name | Type | Description | Notes
 **sent_at** | Option<**String**> |  | [optional]
 **sms_delivery_failure_code** | Option<**String**> | Why the last SMS delivery attempt failed. Present only while `smsDeliveryStatus` is `Failed`. | [optional]
 **sms_delivery_status** | Option<**String**> |  | [optional]
+**sources** | [**Vec<models::InvoiceSourceResponse>**](InvoiceSourceResponse.md) | What this invoice was raised for. Empty when no origin was declared. | 
 **square_payment_link_id** | Option<**String**> |  | [optional]
 **status** | **String** |  | 
 **subtotal_amount** | **i64** |  | 

@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`rollingWindowDays` | number
 `rules` | [Array&lt;ReservationAvailabilityRuleRequest&gt;](ReservationAvailabilityRuleRequest.md)
 
 

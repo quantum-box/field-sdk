@@ -19,6 +19,7 @@ Name | Type
 `fulfillmentMethod` | string
 `id` | string
 `items` | [Array&lt;OrderItemResponse&gt;](OrderItemResponse.md)
+`orderEntryMode` | string
 `paymentMethod` | string
 `paymentStatus` | string
 `pickedUpAt` | string

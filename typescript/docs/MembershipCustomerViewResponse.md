@@ -12,6 +12,7 @@ Name | Type
 `consents` | [Array&lt;CustomerConsentResponse&gt;](CustomerConsentResponse.md)
 `credentials` | [Array&lt;CustomerCredentialResponse&gt;](CustomerCredentialResponse.md)
 `customer` | [MembershipCustomerResponse](MembershipCustomerResponse.md)
+`sale` | [MembershipSaleResponse](MembershipSaleResponse.md)
 `subjects` | [Array&lt;CustomerSubjectResponse&gt;](CustomerSubjectResponse.md)
 
 

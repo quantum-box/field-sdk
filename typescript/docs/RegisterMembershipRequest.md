@@ -7,11 +7,14 @@
 Name | Type
 ------------ | -------------
 `channel` | string
+`consentEvidenceRecordId` | string
 `consents` | [Array&lt;RegistrationConsentRequest&gt;](RegistrationConsentRequest.md)
 `credentials` | [Array&lt;RegistrationCredentialRequest&gt;](RegistrationCredentialRequest.md)
 `customer` | [RegistrationCustomerRequest](RegistrationCustomerRequest.md)
+`customerCustomFields` | object
 `customerId` | string
 `planId` | string
+`productId` | string
 `subjects` | [Array&lt;RegistrationSubjectRequest&gt;](RegistrationSubjectRequest.md)
 
 

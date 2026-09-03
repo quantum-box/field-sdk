@@ -9,6 +9,7 @@ Name | Type
 `active` | boolean
 `label` | string
 `options` | Array&lt;string&gt;
+`placeholder` | string
 `required` | boolean
 `sortOrder` | number
 
