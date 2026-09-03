@@ -350,12 +350,18 @@ pub async fn list_invoices(
     configuration: &configuration::Configuration,
     status: Option<&str>,
     client_id: Option<&str>,
+    source_type: Option<&str>,
+    source_id: Option<&str>,
+    reason: Option<&str>,
     limit: Option<i32>,
     offset: Option<i32>,
 ) -> Result<models::InvoiceListResponse, Error<ListInvoicesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_status = status;
     let p_query_client_id = client_id;
+    let p_query_source_type = source_type;
+    let p_query_source_id = source_id;
+    let p_query_reason = reason;
     let p_query_limit = limit;
     let p_query_offset = offset;
 
@@ -367,6 +373,15 @@ pub async fn list_invoices(
     }
     if let Some(ref param_value) = p_query_client_id {
         req_builder = req_builder.query(&[("client_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_source_type {
+        req_builder = req_builder.query(&[("sourceType", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_source_id {
+        req_builder = req_builder.query(&[("sourceId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_reason {
+        req_builder = req_builder.query(&[("reason", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);

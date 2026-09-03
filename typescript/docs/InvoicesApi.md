@@ -368,7 +368,7 @@ example().catch(console.error);
 
 ## listInvoices
 
-> InvoiceListResponse listInvoices(status, clientId, limit, offset)
+> InvoiceListResponse listInvoices(status, clientId, sourceType, sourceId, reason, limit, offset)
 
 
 
@@ -394,6 +394,12 @@ async function example() {
     status: status_example,
     // string | Filter by client ID. (optional)
     clientId: clientId_example,
+    // string | Return invoices raised from this record kind. One of `reservation`, `order`, `subscription`, `quotation`, `contract`.  Named in camelCase to match the JSON bodies, with the endpoint\'s older snake_case spelling accepted as an alias so both conventions work. (optional)
+    sourceType: sourceType_example,
+    // string | Return invoices raised from this record. Combine with `sourceType` to answer whether a given record has already been billed. (optional)
+    sourceId: sourceId_example,
+    // string | Return invoices carrying this caller-defined classification on any of their sources. Matched exactly. (optional)
+    reason: reason_example,
     // number | Maximum number of invoices to return. (optional)
     limit: 56,
     // number | Number of invoices to skip. (optional)
@@ -419,6 +425,9 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **status** | `string` | Filter by invoice status. | [Optional] [Defaults to `undefined`] |
 | **clientId** | `string` | Filter by client ID. | [Optional] [Defaults to `undefined`] |
+| **sourceType** | `string` | Return invoices raised from this record kind. One of &#x60;reservation&#x60;, &#x60;order&#x60;, &#x60;subscription&#x60;, &#x60;quotation&#x60;, &#x60;contract&#x60;.  Named in camelCase to match the JSON bodies, with the endpoint\&#39;s older snake_case spelling accepted as an alias so both conventions work. | [Optional] [Defaults to `undefined`] |
+| **sourceId** | `string` | Return invoices raised from this record. Combine with &#x60;sourceType&#x60; to answer whether a given record has already been billed. | [Optional] [Defaults to `undefined`] |
+| **reason** | `string` | Return invoices carrying this caller-defined classification on any of their sources. Matched exactly. | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` | Maximum number of invoices to return. | [Optional] [Defaults to `undefined`] |
 | **offset** | `number` | Number of invoices to skip. | [Optional] [Defaults to `undefined`] |
 

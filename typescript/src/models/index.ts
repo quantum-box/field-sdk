@@ -3904,6 +3904,14 @@ export interface CreateInvoiceRequest {
      */
     smsMessage?: string | null;
     /**
+     * Records this invoice is raised from. Optional and additive: an existing
+     * caller that omits it creates an invoice with no declared origin,
+     * exactly as before.
+     * @type {Array<InvoiceSourceRequest>}
+     * @memberof CreateInvoiceRequest
+     */
+    sources?: Array<InvoiceSourceRequest> | null;
+    /**
      * 
      * @type {string}
      * @memberof CreateInvoiceRequest
@@ -10647,6 +10655,12 @@ export interface InvoiceResponse {
      */
     smsDeliveryStatus?: string | null;
     /**
+     * What this invoice was raised for. Empty when no origin was declared.
+     * @type {Array<InvoiceSourceResponse>}
+     * @memberof InvoiceResponse
+     */
+    sources: Array<InvoiceSourceResponse>;
+    /**
      * 
      * @type {string}
      * @memberof InvoiceResponse
@@ -10694,6 +10708,61 @@ export interface InvoiceResponse {
      * @memberof InvoiceResponse
      */
     updatedAt: string;
+}
+/**
+ * A record this invoice is being raised from.
+ * 
+ * `reason` is the caller's own classification. Field stores it verbatim,
+ * filters on it exactly, and attaches no meaning to any particular value, so
+ * one tenant's `cancellation_fee` and another's `no_show_fee` are the same
+ * kind of thing to Field.
+ * @export
+ * @interface InvoiceSourceRequest
+ */
+export interface InvoiceSourceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceRequest
+     */
+    reason?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceRequest
+     */
+    sourceId: string;
+    /**
+     * One of `reservation`, `order`, `subscription`, `quotation`, `contract`.
+     * @type {string}
+     * @memberof InvoiceSourceRequest
+     */
+    sourceType: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceSourceResponse
+ */
+export interface InvoiceSourceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceResponse
+     */
+    reason: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceResponse
+     */
+    sourceId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceSourceResponse
+     */
+    sourceType: string;
 }
 /**
  * 

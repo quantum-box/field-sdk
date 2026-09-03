@@ -137,6 +137,9 @@ pub struct InvoiceResponse {
         skip_serializing_if = "Option::is_none"
     )]
     pub sms_delivery_status: Option<Option<String>>,
+    /// What this invoice was raised for. Empty when no origin was declared.
+    #[serde(rename = "sources")]
+    pub sources: Vec<models::InvoiceSourceResponse>,
     #[serde(
         rename = "squarePaymentLinkId",
         default,
@@ -170,6 +173,7 @@ impl InvoiceResponse {
         invoice_number: String,
         line_items: Vec<models::InvoiceLineItemResponse>,
         posting_disposition: String,
+        sources: Vec<models::InvoiceSourceResponse>,
         status: String,
         subtotal_amount: i64,
         tax_amount: i64,
@@ -202,6 +206,7 @@ impl InvoiceResponse {
             sent_at: None,
             sms_delivery_failure_code: None,
             sms_delivery_status: None,
+            sources,
             square_payment_link_id: None,
             status,
             subtotal_amount,

@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **send_email** | Option<**bool**> |  | [optional]
 **send_sms** | Option<**bool**> |  | [optional]
 **sms_message** | Option<**String**> |  | [optional]
+**sources** | Option<[**Vec<models::InvoiceSourceRequest>**](InvoiceSourceRequest.md)> | Records this invoice is raised from. Optional and additive: an existing caller that omits it creates an invoice with no declared origin, exactly as before. | [optional]
 **status** | Option<**String**> |  | [optional]
 **tax_amount** | Option<**i64**> |  | [optional]
 **tax_category** | Option<**String**> |  | [optional]

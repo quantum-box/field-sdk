@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { InvoiceSourceRequest } from './InvoiceSourceRequest';
+import {
+    InvoiceSourceRequestFromJSON,
+    InvoiceSourceRequestFromJSONTyped,
+    InvoiceSourceRequestToJSON,
+    InvoiceSourceRequestToJSONTyped,
+} from './InvoiceSourceRequest';
 import type { InvoiceBillToRequest } from './InvoiceBillToRequest';
 import {
     InvoiceBillToRequestFromJSON,
@@ -134,6 +141,14 @@ export interface CreateInvoiceRequest {
      */
     smsMessage?: string | null;
     /**
+     * Records this invoice is raised from. Optional and additive: an existing
+     * caller that omits it creates an invoice with no declared origin,
+     * exactly as before.
+     * @type {Array<InvoiceSourceRequest>}
+     * @memberof CreateInvoiceRequest
+     */
+    sources?: Array<InvoiceSourceRequest> | null;
+    /**
      * 
      * @type {string}
      * @memberof CreateInvoiceRequest
@@ -188,6 +203,7 @@ export function CreateInvoiceRequestFromJSONTyped(json: any, ignoreDiscriminator
         'sendEmail': json['sendEmail'] == null ? undefined : json['sendEmail'],
         'sendSms': json['sendSms'] == null ? undefined : json['sendSms'],
         'smsMessage': json['smsMessage'] == null ? undefined : json['smsMessage'],
+        'sources': json['sources'] == null ? undefined : ((json['sources'] as Array<any>).map(InvoiceSourceRequestFromJSON)),
         'status': json['status'] == null ? undefined : json['status'],
         'taxAmount': json['taxAmount'] == null ? undefined : json['taxAmount'],
         'taxCategory': json['taxCategory'] == null ? undefined : json['taxCategory'],
@@ -221,6 +237,7 @@ export function CreateInvoiceRequestToJSONTyped(value?: CreateInvoiceRequest | n
         'sendEmail': value['sendEmail'],
         'sendSms': value['sendSms'],
         'smsMessage': value['smsMessage'],
+        'sources': value['sources'] == null ? undefined : ((value['sources'] as Array<any>).map(InvoiceSourceRequestToJSON)),
         'status': value['status'],
         'taxAmount': value['taxAmount'],
         'taxCategory': value['taxCategory'],

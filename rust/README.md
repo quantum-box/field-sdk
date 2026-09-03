@@ -794,6 +794,8 @@ Class | Method | HTTP request | Description
  - [InvoiceLineItemResponse](docs/InvoiceLineItemResponse.md)
  - [InvoiceListResponse](docs/InvoiceListResponse.md)
  - [InvoiceResponse](docs/InvoiceResponse.md)
+ - [InvoiceSourceRequest](docs/InvoiceSourceRequest.md)
+ - [InvoiceSourceResponse](docs/InvoiceSourceResponse.md)
  - [InvoiceVoidEligibilityResponse](docs/InvoiceVoidEligibilityResponse.md)
  - [InvoiceVoidErrorResponse](docs/InvoiceVoidErrorResponse.md)
  - [InvoiceVoidPeriodResponse](docs/InvoiceVoidPeriodResponse.md)

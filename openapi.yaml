@@ -2365,6 +2365,16 @@ components:
           type:
           - string
           - 'null'
+        sources:
+          description: |-
+            Records this invoice is raised from. Optional and additive: an existing
+            caller that omits it creates an invoice with no declared origin,
+            exactly as before.
+          items:
+            $ref: '#/components/schemas/InvoiceSourceRequest'
+          type:
+          - array
+          - 'null'
         status:
           type:
           - string
@@ -6494,6 +6504,11 @@ components:
           type:
           - string
           - 'null'
+        sources:
+          description: What this invoice was raised for. Empty when no origin was declared.
+          items:
+            $ref: '#/components/schemas/InvoiceSourceResponse'
+          type: array
         squarePaymentLinkId:
           type:
           - string
@@ -6520,6 +6535,7 @@ components:
       - tenantId
       - invoiceNumber
       - clientId
+      - sources
       - lineItems
       - dueDate
       - status
@@ -6531,6 +6547,43 @@ components:
       - postingDisposition
       - createdAt
       - updatedAt
+      type: object
+    InvoiceSourceRequest:
+      description: |-
+        A record this invoice is being raised from.
+
+        `reason` is the caller's own classification. Field stores it verbatim,
+        filters on it exactly, and attaches no meaning to any particular value, so
+        one tenant's `cancellation_fee` and another's `no_show_fee` are the same
+        kind of thing to Field.
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+        sourceId:
+          type: string
+        sourceType:
+          description: One of `reservation`, `order`, `subscription`, `quotation`, `contract`.
+          type: string
+      required:
+      - sourceType
+      - sourceId
+      type: object
+    InvoiceSourceResponse:
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+        sourceId:
+          type: string
+        sourceType:
+          type: string
+      required:
+      - sourceType
+      - sourceId
+      - reason
       type: object
     InvoiceVoidEligibilityResponse:
       properties:
@@ -16933,6 +16986,39 @@ paths:
           type:
           - string
           - 'null'
+      - description: |-
+          Return invoices raised from this record kind. One of `reservation`,
+          `order`, `subscription`, `quotation`, `contract`.
+
+          Named in camelCase to match the JSON bodies, with the endpoint's older
+          snake_case spelling accepted as an alias so both conventions work.
+        in: query
+        name: sourceType
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices raised from this record. Combine with `sourceType` to
+          answer whether a given record has already been billed.
+        in: query
+        name: sourceId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices carrying this caller-defined classification on any of
+          their sources. Matched exactly.
+        in: query
+        name: reason
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       - description: Maximum number of invoices to return.
         in: query
         name: limit
@@ -26722,6 +26808,39 @@ paths:
       - description: Filter by client ID.
         in: query
         name: client_id
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices raised from this record kind. One of `reservation`,
+          `order`, `subscription`, `quotation`, `contract`.
+
+          Named in camelCase to match the JSON bodies, with the endpoint's older
+          snake_case spelling accepted as an alias so both conventions work.
+        in: query
+        name: sourceType
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices raised from this record. Combine with `sourceType` to
+          answer whether a given record has already been billed.
+        in: query
+        name: sourceId
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: |-
+          Return invoices carrying this caller-defined classification on any of
+          their sources. Matched exactly.
+        in: query
+        name: reason
         required: false
         schema:
           type:

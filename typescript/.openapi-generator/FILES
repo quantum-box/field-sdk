@@ -286,6 +286,8 @@ docs/InvoiceLineItemResponse.md
 docs/InvoiceListResponse.md
 docs/InvoiceResponse.md
 docs/InvoiceSchedulesApi.md
+docs/InvoiceSourceRequest.md
+docs/InvoiceSourceResponse.md
 docs/InvoiceVoidEligibilityResponse.md
 docs/InvoiceVoidErrorResponse.md
 docs/InvoiceVoidPeriodResponse.md
@@ -1011,6 +1013,8 @@ src/models/InvoiceBillToResponseOneOf3.ts
 src/models/InvoiceLineItemResponse.ts
 src/models/InvoiceListResponse.ts
 src/models/InvoiceResponse.ts
+src/models/InvoiceSourceRequest.ts
+src/models/InvoiceSourceResponse.ts
 src/models/InvoiceVoidEligibilityResponse.ts
 src/models/InvoiceVoidErrorResponse.ts
 src/models/InvoiceVoidPeriodResponse.ts

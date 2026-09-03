@@ -53,6 +53,9 @@ export interface GetInvoiceVoidEligibilityRequest {
 export interface ListInvoicesRequest {
     status?: string | null;
     clientId?: string | null;
+    sourceType?: string | null;
+    sourceId?: string | null;
+    reason?: string | null;
     limit?: number | null;
     offset?: number | null;
 }
@@ -362,6 +365,18 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         if (requestParameters['clientId'] != null) {
             queryParameters['client_id'] = requestParameters['clientId'];
+        }
+
+        if (requestParameters['sourceType'] != null) {
+            queryParameters['sourceType'] = requestParameters['sourceType'];
+        }
+
+        if (requestParameters['sourceId'] != null) {
+            queryParameters['sourceId'] = requestParameters['sourceId'];
+        }
+
+        if (requestParameters['reason'] != null) {
+            queryParameters['reason'] = requestParameters['reason'];
         }
 
         if (requestParameters['limit'] != null) {
