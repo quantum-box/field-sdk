@@ -148,7 +148,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **201** |  |  -  |
 | **400** |  |  -  |
-| **422** | Malformed input or unknown fields |  -  |
+| **422** | Malformed input, unknown fields, or an oversized activity snapshot |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

@@ -15,6 +15,7 @@ Name | Type
 `employmentType` | [EmploymentType](EmploymentType.md)
 `hiredAt` | Date
 `id` | string
+`jobTitle` | string
 `name` | string
 `phone` | string
 `tenantId` | string

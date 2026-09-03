@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**list_public_custom_field_definitions**](PublicStorefrontApi.md#list_public_custom_field_definitions) | **GET** /v1/public/storefront/{tenant_id}/custom-field-definitions | 
 [**public_storefront_add_cart_item**](PublicStorefrontApi.md#public_storefront_add_cart_item) | **POST** /v1/public/storefront/{tenant_id}/carts/{cart_id}/items | Add a product to a cart.
+[**public_storefront_cancel_order_by_lookup_token**](PublicStorefrontApi.md#public_storefront_cancel_order_by_lookup_token) | **POST** /v1/public/storefront/{tenant_id}/orders/by-token/{lookup_token}/cancel | Cancel the one order represented by a lookup token.
 [**public_storefront_checkout**](PublicStorefrontApi.md#public_storefront_checkout) | **POST** /v1/public/storefront/{tenant_id}/checkout_sessions | Place the order.
 [**public_storefront_clear_cart**](PublicStorefrontApi.md#public_storefront_clear_cart) | **POST** /v1/public/storefront/{tenant_id}/carts/{cart_id}/clear | Empty a cart.
 [**public_storefront_create_cart**](PublicStorefrontApi.md#public_storefront_create_cart) | **POST** /v1/public/storefront/{tenant_id}/carts | Open a cart.
@@ -31,7 +32,7 @@ Method | HTTP request | Description
 
 ## list_public_custom_field_definitions
 
-> models::PublicCustomFieldDefinitionListResponse list_public_custom_field_definitions(tenant_id, entity_type)
+> models::PublicCustomFieldDefinitionListResponse list_public_custom_field_definitions(tenant_id, entity_type, x_tachyon_custom_field_types)
 
 
 ### Parameters
@@ -41,6 +42,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **tenant_id** | **String** | Tenant whose public storefront is being read | [required] |
 **entity_type** | **String** | Public form entity type (reservation/customer_subject) | [required] |
+**x_tachyon_custom_field_types** | Option<**String**> | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. |  |
 
 ### Return type
 
@@ -85,6 +87,37 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## public_storefront_cancel_order_by_lookup_token
+
+> models::PublicOrderResponse public_storefront_cancel_order_by_lookup_token(tenant_id, lookup_token)
+Cancel the one order represented by a lookup token.
+
+There is deliberately no order ID in this contract. The short-lived token is resolved server-side under the tenant in the path, so it cannot be paired with a different customer's order.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**tenant_id** | **String** | Tenant whose public storefront is being ordered from | [required] |
+**lookup_token** | **String** | Token minted by the lookup | [required] |
+
+### Return type
+
+[**models::PublicOrderResponse**](PublicOrderResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

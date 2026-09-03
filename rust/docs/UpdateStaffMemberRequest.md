@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **employment_status** | Option<**String**> | active / on_leave / retired. Wins over `active` when both are sent. | [optional]
 **employment_type** | Option<**String**> |  | [optional]
 **hired_at** | Option<[**String**](String.md)> |  | [optional]
+**job_title** | Option<**String**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
 **phone** | Option<**String**> |  | [optional]
 

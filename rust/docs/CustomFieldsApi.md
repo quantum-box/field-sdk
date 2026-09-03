@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## create_custom_field_definition
 
-> models::CustomFieldDefinitionResponse create_custom_field_definition(create_custom_field_definition_request)
+> models::CustomFieldDefinitionResponse create_custom_field_definition(create_custom_field_definition_request, x_tachyon_custom_field_types)
 
 
 ### Parameters
@@ -24,6 +24,7 @@ Method | HTTP request | Description
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_custom_field_definition_request** | [**CreateCustomFieldDefinitionRequest**](CreateCustomFieldDefinitionRequest.md) |  | [required] |
+**x_tachyon_custom_field_types** | Option<**String**> | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. |  |
 
 ### Return type
 
@@ -100,7 +101,7 @@ Name | Type | Description  | Required | Notes
 
 ## list_custom_field_definitions
 
-> models::CustomFieldDefinitionListResponse list_custom_field_definitions(entity_type, include_inactive)
+> models::CustomFieldDefinitionListResponse list_custom_field_definitions(entity_type, include_inactive, x_tachyon_custom_field_types)
 
 
 ### Parameters
@@ -110,6 +111,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **entity_type** | Option<**String**> | Filter by entity type (client/consumer/product/order/invoice/reservation/customer_subject) |  |
 **include_inactive** | Option<**bool**> | Include soft-deleted definitions (default false) |  |
+**x_tachyon_custom_field_types** | Option<**String**> | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. |  |
 
 ### Return type
 
@@ -159,7 +161,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_custom_field_definition
 
-> models::CustomFieldDefinitionResponse update_custom_field_definition(id, update_custom_field_definition_request)
+> models::CustomFieldDefinitionResponse update_custom_field_definition(id, update_custom_field_definition_request, x_tachyon_custom_field_types)
 
 
 ### Parameters
@@ -169,6 +171,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** | Custom field definition ID | [required] |
 **update_custom_field_definition_request** | [**UpdateCustomFieldDefinitionRequest**](UpdateCustomFieldDefinitionRequest.md) |  | [required] |
+**x_tachyon_custom_field_types** | Option<**String**> | Comma-separated additional custom field types supported by this client. The legacy baseline (text, number, date, select, boolean) is always supported; when absent or empty, additional types are represented as text. Unknown type tokens are ignored. |  |
 
 ### Return type
 

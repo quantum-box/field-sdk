@@ -14,6 +14,7 @@ Name | Type
 `employmentStatus` | string
 `employmentType` | string
 `hiredAt` | Date
+`jobTitle` | string
 `name` | string
 `phone` | string
 

@@ -11,7 +11,9 @@ Method | HTTP request | Description
 [**confirm_checkout_session**](StoreKitApi.md#confirm_checkout_session) | **POST** /v1/storekit/checkout_sessions/{order_id}/confirm | Confirm checkout session.
 [**create_cart**](StoreKitApi.md#create_cart) | **POST** /v1/storekit/carts | Create or retrieve a cart.
 [**create_customer**](StoreKitApi.md#create_customer) | **POST** /v1/storekit/customers | Create customer.
+[**create_webhook_endpoint**](StoreKitApi.md#create_webhook_endpoint) | **POST** /v1/storekit/webhook-endpoints | webhook 宛先を登録し、署名シークレットを一度だけ返す。
 [**delete_customer**](StoreKitApi.md#delete_customer) | **DELETE** /v1/storekit/customers/{customer_id} | Delete customer.
+[**delete_webhook_endpoint**](StoreKitApi.md#delete_webhook_endpoint) | **DELETE** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を削除する。
 [**deliver_order**](StoreKitApi.md#deliver_order) | **POST** /v1/storekit/orders/{order_id}/deliver | Deliver order.
 [**get_cart**](StoreKitApi.md#get_cart) | **GET** /v1/storekit/carts/{cart_id} | Get a cart.
 [**get_customer**](StoreKitApi.md#get_customer) | **GET** /v1/storekit/customers/{customer_id} | Get customer.
@@ -19,14 +21,18 @@ Method | HTTP request | Description
 [**get_product**](StoreKitApi.md#get_product) | **GET** /v1/storekit/products/{product_id} | Get a storefront product.
 [**get_product_selections**](StoreKitApi.md#get_product_selections) | **GET** /v1/storekit/products/{product_id}/selections | List the variants and option groups a product offers.
 [**get_product_stock**](StoreKitApi.md#get_product_stock) | **GET** /v1/storekit/products/{product_id}/stock | Get product stock.
+[**get_webhook_endpoint**](StoreKitApi.md#get_webhook_endpoint) | **GET** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を1件取得する。
 [**list_customers**](StoreKitApi.md#list_customers) | **GET** /v1/storekit/customers | List customers.
 [**list_fulfillment_methods**](StoreKitApi.md#list_fulfillment_methods) | **GET** /v1/storekit/fulfillment-methods | List supported fulfillment methods.
 [**list_products**](StoreKitApi.md#list_products) | **GET** /v1/storekit/products | List storefront products.
+[**list_webhook_deliveries**](StoreKitApi.md#list_webhook_deliveries) | **GET** /v1/storekit/webhook-endpoints/{endpoint_id}/deliveries | 宛先の配送履歴を新しい順に返す。
+[**list_webhook_endpoints**](StoreKitApi.md#list_webhook_endpoints) | **GET** /v1/storekit/webhook-endpoints | テナントの webhook 宛先を一覧する。
 [**pickup_order**](StoreKitApi.md#pickup_order) | **POST** /v1/storekit/orders/{order_id}/pickup | Mark pickup order as picked up.
 [**prepare_order**](StoreKitApi.md#prepare_order) | **POST** /v1/storekit/orders/{order_id}/prepare | Prepare order for fulfillment.
 [**ready_order**](StoreKitApi.md#ready_order) | **POST** /v1/storekit/orders/{order_id}/ready | Mark pickup order as ready.
 [**refund_order**](StoreKitApi.md#refund_order) | **POST** /v1/storekit/orders/{order_id}/refund | Refund order.
 [**remove_cart_item**](StoreKitApi.md#remove_cart_item) | **DELETE** /v1/storekit/carts/{cart_id}/items/{item_id} | Remove a cart item by item ID.
+[**rotate_webhook_endpoint_secret**](StoreKitApi.md#rotate_webhook_endpoint_secret) | **POST** /v1/storekit/webhook-endpoints/{endpoint_id}/rotate-secret | 署名シークレットを更新し、新しい値を一度だけ返す。
 [**select_pickup_datetime**](StoreKitApi.md#select_pickup_datetime) | **POST** /v1/storekit/orders/{order_id}/select-pickup-datetime | Select pickup date-time.
 [**ship_order**](StoreKitApi.md#ship_order) | **POST** /v1/storekit/orders/{order_id}/ship | Ship order.
 [**storefront_create_reservation**](StoreKitApi.md#storefront_create_reservation) | **POST** /v1/storekit/reservations | 
@@ -42,8 +48,10 @@ Method | HTTP request | Description
 [**storekit_get_order**](StoreKitApi.md#storekit_get_order) | **GET** /v1/storekit/orders/{order_id} | Get order.
 [**storekit_list_categories**](StoreKitApi.md#storekit_list_categories) | **GET** /v1/storekit/categories | List storefront categories.
 [**storekit_list_orders**](StoreKitApi.md#storekit_list_orders) | **GET** /v1/storekit/orders | List orders.
+[**test_webhook_endpoint**](StoreKitApi.md#test_webhook_endpoint) | **POST** /v1/storekit/webhook-endpoints/{endpoint_id}/test | 宛先へ署名付きの疎通確認イベントを1回送る。
 [**update_cart_item**](StoreKitApi.md#update_cart_item) | **POST** /v1/storekit/carts/{cart_id}/items/{item_id} | Update a cart item by item ID.
 [**update_customer**](StoreKitApi.md#update_customer) | **POST** /v1/storekit/customers/{customer_id} | Update customer.
+[**update_webhook_endpoint**](StoreKitApi.md#update_webhook_endpoint) | **PATCH** /v1/storekit/webhook-endpoints/{endpoint_id} | webhook 宛先を部分更新する。
 [**validate_coupon**](StoreKitApi.md#validate_coupon) | **POST** /v1/storekit/coupons/validate | Validate coupon.
 
 
@@ -247,6 +255,34 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## create_webhook_endpoint
+
+> models::WebhookEndpointWithSecretResponse create_webhook_endpoint(create_webhook_endpoint_request)
+webhook 宛先を登録し、署名シークレットを一度だけ返す。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**create_webhook_endpoint_request** | [**CreateWebhookEndpointRequest**](CreateWebhookEndpointRequest.md) |  | [required] |
+
+### Return type
+
+[**models::WebhookEndpointWithSecretResponse**](WebhookEndpointWithSecretResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## delete_customer
 
 > models::DeletedResponse delete_customer(customer_id)
@@ -271,6 +307,34 @@ Name | Type | Description  | Required | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_webhook_endpoint
+
+> delete_webhook_endpoint(endpoint_id)
+webhook 宛先を削除する。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**endpoint_id** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -474,12 +538,40 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## get_webhook_endpoint
+
+> models::WebhookEndpointResponse get_webhook_endpoint(endpoint_id)
+webhook 宛先を1件取得する。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**endpoint_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::WebhookEndpointResponse**](WebhookEndpointResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## list_customers
 
-> models::StoreKitListCustomerResponse list_customers(email, name, phone, limit)
+> models::StoreKitListCustomerResponse list_customers(email, name, phone, ids, limit, offset)
 List customers.
 
-`email` matches exactly; `name` (display name or kana reading) and `phone` match partially. Results are candidates: customers are never merged or deduplicated, so two people sharing a name or a household phone number stay separate records. Picking the right candidate — or registering a new customer — is the caller's decision.
+`email` matches exactly; `name` (display name or kana reading) and `phone` match partially. Results are candidates: customers are never merged or deduplicated, so two people sharing a name or a household phone number stay separate records. Picking the right candidate — or registering a new customer — is the caller's decision.  `ids` fetches a known set of customers in one call, for callers that already hold customer IDs and only need the names and phone numbers to display alongside them. It is ANDed with the other filters, is capped at 100 IDs per request (more is a 400, never a silent truncation), and drops IDs that do not exist instead of failing the request.  `offset` pages through the filtered set, and `total` on the response is that set's size — not the size of the returned page. The order is stable for a given filter, so paging neither repeats nor skips a row.  `limit` and `offset` on the response body are always `0` here: the legacy upstream list carried no pagination metadata and StoreKit has exposed zeroes since. Read `has_more` and `total` instead.
 
 ### Parameters
 
@@ -489,7 +581,9 @@ Name | Type | Description  | Required | Notes
 **email** | Option<**String**> | Exact email match. |  |
 **name** | Option<**String**> | Partial match against the display name or its kana reading. |  |
 **phone** | Option<**String**> | Partial match against the phone number. Separators are ignored on both sides, so `090-1234-5678` and `09012345678` match. |  |
+**ids** | Option<**String**> | Comma-separated customer IDs, at most 100 per request (`ids=cus_a,cus_b`). Combines with `email`, `name` and `phone` as AND, and does not widen `limit`: pass a `limit` big enough for the set you asked for. IDs that do not exist are dropped from the result rather than reported. More than 100 IDs is a 400; the list is never silently truncated. An `ids` that parses to no ID at all matches nothing, so an empty page stays empty. |  |
 **limit** | Option<**i64**> |  |  |
+**offset** | Option<**i32**> | Rows to skip, applied after the filters above. Defaults to 0. |  |
 
 ### Return type
 
@@ -550,6 +644,60 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::StoreKitListProductResponse**](StoreKitList_ProductResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_webhook_deliveries
+
+> Vec<models::WebhookDeliveryResponse> list_webhook_deliveries(endpoint_id, limit)
+宛先の配送履歴を新しい順に返す。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**endpoint_id** | **String** |  | [required] |
+**limit** | Option<**i32**> |  |  |
+
+### Return type
+
+[**Vec<models::WebhookDeliveryResponse>**](WebhookDeliveryResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_webhook_endpoints
+
+> Vec<models::WebhookEndpointResponse> list_webhook_endpoints()
+テナントの webhook 宛先を一覧する。
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Vec<models::WebhookEndpointResponse>**](WebhookEndpointResponse.md)
 
 ### Authorization
 
@@ -691,6 +839,36 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::OkResponse**](OkResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## rotate_webhook_endpoint_secret
+
+> models::WebhookEndpointWithSecretResponse rotate_webhook_endpoint_secret(endpoint_id)
+署名シークレットを更新し、新しい値を一度だけ返す。
+
+旧世代は24時間だけ併記される。受信側はその間に値を差し替える。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**endpoint_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::WebhookEndpointWithSecretResponse**](WebhookEndpointWithSecretResponse.md)
 
 ### Authorization
 
@@ -913,7 +1091,7 @@ Name | Type | Description  | Required | Notes
 **resource_id** | Option<**String**> | Filter by resource ID |  |
 **staff_id** | Option<**String**> | Filter by assigned staff ID |  |
 **customer_id** | Option<**String**> | Filter by customer ID |  |
-**limit** | Option<**i32**> | Maximum number of reservations to return |  |
+**limit** | Option<**i32**> | Page size; defaults to 100, maximum 500. A larger value is capped rather than rejected, and the applied value comes back as `limit` in the response. |  |
 **offset** | Option<**i32**> | Number of reservations to skip |  |
 
 ### Return type
@@ -1136,6 +1314,36 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## test_webhook_endpoint
+
+> models::WebhookTestResponse test_webhook_endpoint(endpoint_id)
+宛先へ署名付きの疎通確認イベントを1回送る。
+
+実配送とまったく同じ経路（SSRF ガード・接続先の固定・署名・timeout）を 通る。注文イベントも配送行も作らないので、履歴には残らない。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**endpoint_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::WebhookTestResponse**](WebhookTestResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## update_cart_item
 
 > models::CartResponse update_cart_item(cart_id, item_id, update_cart_item_request)
@@ -1182,6 +1390,35 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::CustomerResponse**](CustomerResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_webhook_endpoint
+
+> models::WebhookEndpointResponse update_webhook_endpoint(endpoint_id, update_webhook_endpoint_request)
+webhook 宛先を部分更新する。
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**endpoint_id** | **String** |  | [required] |
+**update_webhook_endpoint_request** | [**UpdateWebhookEndpointRequest**](UpdateWebhookEndpointRequest.md) |  | [required] |
+
+### Return type
+
+[**models::WebhookEndpointResponse**](WebhookEndpointResponse.md)
 
 ### Authorization
 

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **employment_type** | [**models::EmploymentType**](EmploymentType.md) |  | 
 **hired_at** | Option<[**String**](String.md)> |  | [optional]
 **id** | **String** |  | 
+**job_title** | Option<**String**> | The position held, which is a different axis from how the person is engaged: a director is under a delegation contract rather than an employment one, and can serve either full time or not. Free text so a tenant can spell its own org chart; `None` when nothing was recorded. | [optional]
 **name** | **String** |  | 
 **phone** | Option<**String**> |  | [optional]
 **tenant_id** | **String** |  | 

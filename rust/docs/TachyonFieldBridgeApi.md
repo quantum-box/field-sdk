@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## analyze_bridge_tabular
 
-> models::TabularAnalyzeResponse analyze_bridge_tabular(file, context, header_row, idempotency_key, mapping_mode, mapping_proposal, sheet_name, target_schema)
+> models::TabularAnalyzeResponse analyze_bridge_tabular(file, context, header_row, idempotency_key, mapping_mode, mapping_proposal, rotation, sheet_name, target_schema)
 
 
 ### Parameters
@@ -33,6 +33,7 @@ Name | Type | Description  | Required | Notes
 **idempotency_key** | Option<**String**> |  |  |
 **mapping_mode** | Option<**String**> |  |  |
 **mapping_proposal** | Option<**String**> |  |  |
+**rotation** | Option<**String**> | Clockwise degrees to turn a scanned PDF by before it is read: `0`, `90`, `180`, or `270`. |  |
 **sheet_name** | Option<**String**> |  |  |
 **target_schema** | Option<**String**> |  |  |
 
@@ -248,7 +249,7 @@ This endpoint does not need any parameter.
 
 ## preview_bridge_file
 
-> models::BridgeRunResponse preview_bridge_file(definition_id, file, context, header_row, idempotency_key, mapping_mode, mapping_proposal, sheet_name, target_schema)
+> models::BridgeRunResponse preview_bridge_file(definition_id, file, context, header_row, idempotency_key, mapping_mode, mapping_proposal, rotation, sheet_name, target_schema)
 
 
 ### Parameters
@@ -263,6 +264,7 @@ Name | Type | Description  | Required | Notes
 **idempotency_key** | Option<**String**> |  |  |
 **mapping_mode** | Option<**String**> |  |  |
 **mapping_proposal** | Option<**String**> |  |  |
+**rotation** | Option<**String**> | Clockwise degrees to turn a scanned PDF by before it is read: `0`, `90`, `180`, or `270`. |  |
 **sheet_name** | Option<**String**> |  |  |
 **target_schema** | Option<**String**> |  |  |
 

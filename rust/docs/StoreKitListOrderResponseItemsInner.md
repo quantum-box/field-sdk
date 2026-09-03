@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **fulfillment_method** | Option<**String**> | `pickup`, `delivery`, or `dine_in`. | [optional]
 **id** | **String** |  | 
 **items** | [**Vec<models::OrderItemResponse>**](OrderItemResponse.md) |  | 
+**order_entry_mode** | Option<**String**> | How the order was entered: `qr`, `kiosk`, `staff`, or `online`.  Server-derived, and `None` on every order placed before the column existed. A staff board reads the route from here rather than taking apart an encoded `sales_channel_detail`. | [optional]
 **payment_method** | Option<**String**> |  | [optional]
 **payment_status** | **String** |  | 
 **picked_up_at** | Option<**String**> |  | [optional]

@@ -10,6 +10,7 @@ Name | Type
 `fieldType` | string
 `label` | string
 `options` | Array&lt;string&gt;
+`placeholder` | string
 `required` | boolean
 `sortOrder` | number
 

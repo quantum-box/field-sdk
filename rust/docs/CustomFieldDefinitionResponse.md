@@ -8,10 +8,11 @@ Name | Type | Description | Notes
 **created_at** | **String** |  | 
 **entity_type** | **String** |  | 
 **field_key** | **String** |  | 
-**field_type** | **String** |  | 
+**field_type** | **String** | Known values: text, email, tel, number, date, select, boolean. Clients must accept future custom field types. | 
 **id** | **String** |  | 
 **label** | **String** |  | 
 **options** | Option<**Vec<String>**> |  | [optional]
+**placeholder** | Option<**String**> |  | [optional]
 **required** | **bool** |  | 
 **sort_order** | **i32** |  | 
 **tenant_id** | **String** |  | 

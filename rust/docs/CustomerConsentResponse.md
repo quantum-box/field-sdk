@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **channel** | **String** |  | 
 **consent_key** | **String** |  | 
 **customer_id** | **String** |  | 
+**evidence_record_id** | Option<**String**> |  | [optional]
 **id** | **String** |  | 
 **recorded_by** | Option<**String**> |  | [optional]
 **terms_version** | **String** |  | 

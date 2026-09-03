@@ -10,7 +10,7 @@ language by [`scripts/generate.sh`](scripts/generate.sh).
 | [`rust/`](rust) | `field-sdk` (crate) | git dependency |
 | [`typescript/`](typescript) | `@tachyon-sdk/field` (npm) | npm, published on version bump |
 
-Coverage is the full REST surface: 233 paths across 36 tag groups (ERP, StoreKit,
+Coverage is the full REST surface: 362 paths across 50 tag groups (ERP, StoreKit,
 Bridge, IAM, invoices, quotations, reservations, ...).
 
 Both clients default to production — `https://tachyon-field-api.txcloud.app` is

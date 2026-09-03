@@ -2,7 +2,10 @@
 /* eslint-disable */
 export * from './AgentDocumentsApi';
 export * from './ApprovalsApi';
+export * from './ConsumerApi';
 export * from './CustomFieldsApi';
+export * from './CustomerContactsApi';
+export * from './CustomersApi';
 export * from './DealsApi';
 export * from './DefaultApi';
 export * from './DocumentPdfSettingsApi';
@@ -33,6 +36,7 @@ export * from './SalesContractSigningApi';
 export * from './StoreKitApi';
 export * from './StorefrontProfileApi';
 export * from './TACHYONFieldAPIKeysApi';
+export * from './TACHYONFieldAnalyticsApi';
 export * from './TACHYONFieldBillingAccountsApi';
 export * from './TACHYONFieldBridgeApi';
 export * from './TACHYONFieldBridgeExportApi';
