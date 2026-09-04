@@ -24,6 +24,11 @@ annotation would otherwise surface as a client that does not compile:
    ``<tag>_<operationId>`` — the same ``storekit_*`` names upstream settled on.
 4. No ``securitySchemes``, so no operation carried the bearer token.
 
+One more patch is deliberate rather than a guard: ``kind``-tagged ``oneOf``
+unions are hoisted into named subschemas and given a ``discriminator``, so the
+generated clients switch on the tag instead of guessing structurally and
+survive a variant the SDK predates. See ``discriminate_tagged_unions``.
+
 Every change is reported on stderr so any regression stays visible.
 
 Usage:
@@ -146,6 +151,138 @@ def deduplicate_operation_ids(spec: dict) -> list[tuple[str, str, str]]:
     return renamed
 
 
+DISCRIMINATOR_PROPERTY = "kind"
+
+
+def _pascal(value: str) -> str:
+    return "".join(part.capitalize() for part in re.split(r"[^0-9a-zA-Z]+", value) if part)
+
+
+def _tag_values(schema: dict) -> list[str] | None:
+    """Return the `kind` values of a tagged union, or None if it is not one.
+
+    A tagged union here is a ``oneOf`` whose every subschema is an inline
+    object with a required ``kind`` pinned to a single enum value — the shape
+    utoipa emits for a Rust enum with a ``#[serde(tag = "kind")]`` attribute.
+    Anything else (the ``oneOf: [{type: null}, {$ref: ...}]`` that stands for
+    ``Option<T>``, unions already carrying a discriminator) is left alone.
+    """
+    variants = schema.get("oneOf")
+    if not isinstance(variants, list) or len(variants) < 2:
+        return None
+    if schema.get("discriminator"):
+        return None
+
+    values: list[str] = []
+    for variant in variants:
+        if not isinstance(variant, dict) or "$ref" in variant:
+            return None
+        if variant.get("type") != "object":
+            return None
+        if DISCRIMINATOR_PROPERTY not in (variant.get("required") or []):
+            return None
+        tag = (variant.get("properties") or {}).get(DISCRIMINATOR_PROPERTY)
+        if not isinstance(tag, dict):
+            return None
+        enum = tag.get("enum")
+        if not isinstance(enum, list) or len(enum) != 1 or not isinstance(enum[0], str):
+            return None
+        values.append(enum[0])
+
+    if len(set(values)) != len(values):
+        return None
+    return values
+
+
+def discriminate_tagged_unions(spec: dict) -> tuple[list[tuple[str, str, str]], list[str]]:
+    """Turn `kind`-tagged `oneOf` unions into named, discriminated ones.
+
+    utoipa emits these unions as anonymous inline subschemas, which
+    openapi-generator names by position: ``InvoiceBillToResponseOneOf2`` meant
+    ``legacy_unresolved`` in spec 0.1.16 and ``unregistered`` in 0.1.25,
+    because a variant was inserted in the middle. Identical inline shapes are
+    also deduplicated across schemas, so `ReservationBillToRequest` borrowed
+    `InvoiceBillToRequestOneOf` for its `customer` arm.
+
+    We hoist every subschema to ``<Parent><PascalKind>`` and declare
+    ``discriminator: {propertyName: kind}``. The names then follow the tag
+    rather than the position, and both generators switch on ``kind`` instead of
+    guessing structurally:
+
+    - rust emits ``#[serde(tag = "kind")]`` instead of ``#[serde(untagged)]``;
+    - typescript-fetch emits ``{ kind: 'customer' } & ...`` unions whose
+      ``FromJSONTyped`` switches on the tag and returns the raw payload for a
+      tag it does not know, rather than the ``{} as any`` that silently
+      emptied the field.
+
+    ``kind`` is dropped from each hoisted subschema: the discriminator owns it,
+    and both generators re-attach it. Leaving it in place makes serde's
+    internally tagged representation fail with ``missing field `kind```,
+    because it strips the tag before handing the rest to the variant. The one
+    exception is a variant that carries nothing else — see below.
+
+    See tachyonfield's `docs/adr/cerp-25-api-versioning-policy.md`, which lets
+    upstream add response variants behind a label and requires generated
+    clients not to fall over on them.
+    """
+    schemas = (spec.get("components") or {}).get("schemas")
+    if not isinstance(schemas, dict):
+        return [], []
+
+    hoisted: list[tuple[str, str, str]] = []
+    collisions: list[str] = []
+
+    for parent in list(schemas):
+        schema = schemas[parent]
+        if not isinstance(schema, dict):
+            continue
+        values = _tag_values(schema)
+        if values is None:
+            continue
+
+        names = [f"{parent}{_pascal(value)}" for value in values]
+        # Hoisting onto a name that is already spoken for — by another schema,
+        # or by a sibling tag that pascal-cases the same way — would silently
+        # overwrite it. Report the union and leave it anonymous rather than
+        # corrupt the spec.
+        taken = [name for name in names if name in schemas]
+        taken += [name for name in set(names) if names.count(name) > 1]
+        if taken:
+            collisions.extend(sorted(set(taken)))
+            continue
+
+        mapping: dict[str, str] = {}
+        for index, (value, name) in enumerate(zip(values, names)):
+            variant = schema["oneOf"][index]
+            variant["required"] = [
+                item for item in variant["required"] if item != DISCRIMINATOR_PROPERTY
+            ]
+            if not variant["required"]:
+                del variant["required"]
+            # Dropping `kind` from a variant that carries nothing else would
+            # leave an empty object, which openapi-generator treats as
+            # free-form: no model is emitted and `serde_json::Value` / `any` is
+            # inlined instead, and the typescript barrel then imports a name
+            # that was never written. Such a variant keeps `kind` as an
+            # optional property — serde reads it back as `None` (the tag is
+            # stripped before the variant sees the body) and skips it on the
+            # way out, so the enum still owns the tag either way.
+            if len(variant["properties"]) > 1:
+                del variant["properties"][DISCRIMINATOR_PROPERTY]
+
+            schemas[name] = variant
+            schema["oneOf"][index] = {"$ref": f"#/components/schemas/{name}"}
+            mapping[value] = f"#/components/schemas/{name}"
+            hoisted.append((parent, value, name))
+
+        schema["discriminator"] = {
+            "propertyName": DISCRIMINATOR_PROPERTY,
+            "mapping": mapping,
+        }
+
+    return hoisted, collisions
+
+
 def ensure_bearer_security(spec: dict) -> bool:
     """Declare the Bearer scheme the API actually enforces.
 
@@ -199,6 +336,7 @@ def main(argv: list[str]) -> int:
 
     injected, requalified = normalize(spec)
     renamed = deduplicate_operation_ids(spec)
+    hoisted, collisions = discriminate_tagged_unions(spec)
     security_added = ensure_bearer_security(spec)
     server_added = ensure_production_server(spec)
 
@@ -229,6 +367,25 @@ def main(argv: list[str]) -> int:
         )
         for path, old_id, new_id in renamed:
             print(f"    {path}: {old_id} -> {new_id}", file=sys.stderr)
+    if hoisted:
+        unions = dict.fromkeys(parent for parent, _, _ in hoisted)
+        print(
+            f"==> named and discriminated {len(unions)} `kind`-tagged oneOf union(s) "
+            "(upstream emits them as anonymous subschemas that openapi-generator "
+            "names by position):",
+            file=sys.stderr,
+        )
+        for parent, value, name in hoisted:
+            print(f"    {parent}: kind={value} -> {name}", file=sys.stderr)
+    if collisions:
+        print(
+            f"==> WARNING: left {len(collisions)} `kind`-tagged union(s) anonymous: "
+            "hoisting would have overwritten an existing schema. Unknown `kind` "
+            "values will break these clients:",
+            file=sys.stderr,
+        )
+        for name in collisions:
+            print(f"    {name}", file=sys.stderr)
     if security_added:
         print(
             "==> declared the global bearerAuth security scheme "
@@ -241,7 +398,15 @@ def main(argv: list[str]) -> int:
             "(upstream declares none, so clients would default to localhost)",
             file=sys.stderr,
         )
-    if not injected and not requalified and not renamed and not security_added and not server_added:
+    if (
+        not injected
+        and not requalified
+        and not renamed
+        and not hoisted
+        and not collisions
+        and not security_added
+        and not server_added
+    ):
         print("==> spec already consistent; nothing to normalize", file=sys.stderr)
 
     print(f"==> wrote {destination}", file=sys.stderr)

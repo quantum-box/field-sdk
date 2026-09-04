@@ -100,6 +100,46 @@ const vendor = await api.getVendor({ id: 'vnd_123' })
 request object (`useSingleRequestParameter`), so optional query parameters stay
 named at the call site.
 
+## Tagged unions
+
+Several response and request bodies are unions tagged by a `kind` field —
+`InvoiceBillToResponse`, `InvoiceBillToRequest`, `InvoiceBillToEvidenceResponse`,
+`ReservationBillTo`, `ReservationBillToRequest`. Each variant is a type named
+after its tag (`InvoiceBillToResponseUnregistered`, never a positional
+`…OneOf2`), and both clients dispatch on `kind` rather than on which fields
+happen to be present.
+
+Branch on `kind`, and keep a fallback: tachyonfield adds variants as an
+additive change ([CERP-25](https://github.com/quantum-box/tachyonfield/blob/main/docs/adr/cerp-25-api-versioning-policy.md)),
+so a response can carry a `kind` the installed SDK was not generated from. That
+case is kept, not rejected — the payload is intact and re-serializes unchanged,
+so nothing else in the response is lost while you catch up.
+
+```rust
+match invoice.bill_to.flatten().as_deref() {
+    Some(InvoiceBillToResponse::Customer(customer)) => Some(customer.customer_id.clone()),
+    Some(InvoiceBillToResponse::Unknown(raw)) => {
+        tracing::warn!(kind = %raw["kind"], "billTo variant this SDK predates");
+        None
+    }
+    _ => None,
+}
+```
+
+```ts
+switch (invoice.billTo?.kind) {
+  case 'customer':
+    return invoice.billTo.customerId
+  default:
+    console.warn(`unknown billTo kind: ${variantKind(invoice.billTo)}`)
+    return null
+}
+```
+
+TypeScript's union type lists only the known variants, so an exhaustive `switch`
+narrows its `default` arm to `never`; `variantKind` (from the hand-written
+`field` module) reads the tag back off the value that is actually there.
+
 ## Smoke tests
 
 Both clients ship live tests against production. They cover the health and
@@ -113,6 +153,15 @@ it.
 ```bash
 cargo test --manifest-path rust/Cargo.toml --test smoke -- --ignored
 cd typescript && npm run smoke
+```
+
+Offline tests run in `ci` and need nothing but the toolchain. They pin the
+[tagged union](#tagged-unions) behaviour: a known tag deserializes into its own
+type, and one the client was not generated from is kept rather than dropped.
+
+```bash
+cargo test --manifest-path rust/Cargo.toml
+cd typescript && npm test
 ```
 
 Set `FIELD_API_TOKEN` (see [Authentication](#authentication)) to also exercise
@@ -168,6 +217,7 @@ Only one patch is live today:
 | Query parameter declared as `in: path` (`/v1/field/reports/payout?from=`) | move to `in: query`; optional when the schema is nullable | fixed upstream |
 | `operationId` reused across tags (`get_order`, `list_orders`, `list_categories`) | rename to `<tag>_<operationId>` | fixed upstream, which adopted the same `storekit_*` names — no client rename |
 | No `securitySchemes`, so clients would never send a token | declare `bearerAuth` (`http` / `bearer`) | fixed upstream |
+| `kind`-tagged `oneOf` unions are anonymous, so the generator names the variants by position and matches them structurally | hoist each variant to `<Parent><PascalKind>` and declare `discriminator: {propertyName: kind}` | applied — deliberate, see [Tagged unions](#tagged-unions) |
 
 The upstream fixes stay covered: the checks run on every generation and report
 what they touch, so a regression in the annotations shows up as a patch line
@@ -176,9 +226,20 @@ instead of a client that fails to compile.
 Not covered by normalization: the `x-operator-id` / `x-platform-id` headers are
 still absent from the contract, which is why the `field` helpers exist.
 
-Also patched after generation: openapi-generator 7.20.0's typescript-fetch
-templates import `mapValues` from `runtime.ts` without ever emitting it, so
-`generate.sh` appends the helper.
+Also patched after generation:
+
+- openapi-generator 7.20.0's typescript-fetch templates import `mapValues` from
+  `runtime.ts` without ever emitting it, so `generate.sh` appends the helper.
+- The discriminated unions come out as serde internally tagged enums, which
+  reject a tag they do not list — and the rejection is not local, it fails
+  whatever contains them. `scripts/patch-rust-unknown-variants.py` appends the
+  `Unknown(serde_json::Value)` catch-all that keeps such a payload instead. The
+  typescript templates already fall through to the raw object, so they need no
+  patch.
+- openapi-generator only ever writes files, so a schema that is renamed or
+  dropped upstream leaves its module behind — unreferenced but still committed
+  and still importable. `generate.sh` deletes anything under the generated
+  directories that the run's own `.openapi-generator/FILES` does not list.
 
 ## Versioning
 

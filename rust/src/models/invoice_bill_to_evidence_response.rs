@@ -12,26 +12,24 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(untagged)]
+#[serde(tag = "kind")]
 pub enum InvoiceBillToEvidenceResponse {
-    InvoiceBillToEvidenceResponseOneOf(Box<models::InvoiceBillToEvidenceResponseOneOf>),
-    InvoiceBillToEvidenceResponseOneOf1(Box<models::InvoiceBillToEvidenceResponseOneOf1>),
+    #[serde(rename = "reservation_affiliation")]
+    ReservationAffiliation(Box<models::InvoiceBillToEvidenceResponseReservationAffiliation>),
+    #[serde(rename = "direct")]
+    Direct(Box<models::InvoiceBillToEvidenceResponseDirect>),
+    /// A `kind` this client was not generated from.
+    ///
+    /// tachyonfield adds union variants as an additive change (CERP-25), so a
+    /// tag this SDK predates is kept as the raw object instead of failing the
+    /// deserialization of everything that contains it. The payload — `kind`
+    /// included — is intact, and re-serializing emits it unchanged.
+    #[serde(untagged)]
+    Unknown(serde_json::Value),
 }
 
 impl Default for InvoiceBillToEvidenceResponse {
     fn default() -> Self {
-        Self::InvoiceBillToEvidenceResponseOneOf(Default::default())
-    }
-}
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Kind {
-    #[serde(rename = "direct")]
-    Direct,
-}
-
-impl Default for Kind {
-    fn default() -> Kind {
-        Self::Direct
+        Self::ReservationAffiliation(Default::default())
     }
 }

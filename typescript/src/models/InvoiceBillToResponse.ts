@@ -12,41 +12,41 @@
  * Do not edit the class manually.
  */
 
-import type { InvoiceBillToResponseOneOf } from './InvoiceBillToResponseOneOf';
+import type { InvoiceBillToResponseClient } from './InvoiceBillToResponseClient';
 import {
-    instanceOfInvoiceBillToResponseOneOf,
-    InvoiceBillToResponseOneOfFromJSON,
-    InvoiceBillToResponseOneOfFromJSONTyped,
-    InvoiceBillToResponseOneOfToJSON,
-} from './InvoiceBillToResponseOneOf';
-import type { InvoiceBillToResponseOneOf1 } from './InvoiceBillToResponseOneOf1';
+    instanceOfInvoiceBillToResponseClient,
+    InvoiceBillToResponseClientFromJSON,
+    InvoiceBillToResponseClientFromJSONTyped,
+    InvoiceBillToResponseClientToJSON,
+} from './InvoiceBillToResponseClient';
+import type { InvoiceBillToResponseCustomer } from './InvoiceBillToResponseCustomer';
 import {
-    instanceOfInvoiceBillToResponseOneOf1,
-    InvoiceBillToResponseOneOf1FromJSON,
-    InvoiceBillToResponseOneOf1FromJSONTyped,
-    InvoiceBillToResponseOneOf1ToJSON,
-} from './InvoiceBillToResponseOneOf1';
-import type { InvoiceBillToResponseOneOf2 } from './InvoiceBillToResponseOneOf2';
+    instanceOfInvoiceBillToResponseCustomer,
+    InvoiceBillToResponseCustomerFromJSON,
+    InvoiceBillToResponseCustomerFromJSONTyped,
+    InvoiceBillToResponseCustomerToJSON,
+} from './InvoiceBillToResponseCustomer';
+import type { InvoiceBillToResponseLegacyUnresolved } from './InvoiceBillToResponseLegacyUnresolved';
 import {
-    instanceOfInvoiceBillToResponseOneOf2,
-    InvoiceBillToResponseOneOf2FromJSON,
-    InvoiceBillToResponseOneOf2FromJSONTyped,
-    InvoiceBillToResponseOneOf2ToJSON,
-} from './InvoiceBillToResponseOneOf2';
-import type { InvoiceBillToResponseOneOf3 } from './InvoiceBillToResponseOneOf3';
+    instanceOfInvoiceBillToResponseLegacyUnresolved,
+    InvoiceBillToResponseLegacyUnresolvedFromJSON,
+    InvoiceBillToResponseLegacyUnresolvedFromJSONTyped,
+    InvoiceBillToResponseLegacyUnresolvedToJSON,
+} from './InvoiceBillToResponseLegacyUnresolved';
+import type { InvoiceBillToResponseUnregistered } from './InvoiceBillToResponseUnregistered';
 import {
-    instanceOfInvoiceBillToResponseOneOf3,
-    InvoiceBillToResponseOneOf3FromJSON,
-    InvoiceBillToResponseOneOf3FromJSONTyped,
-    InvoiceBillToResponseOneOf3ToJSON,
-} from './InvoiceBillToResponseOneOf3';
+    instanceOfInvoiceBillToResponseUnregistered,
+    InvoiceBillToResponseUnregisteredFromJSON,
+    InvoiceBillToResponseUnregisteredFromJSONTyped,
+    InvoiceBillToResponseUnregisteredToJSON,
+} from './InvoiceBillToResponseUnregistered';
 
 /**
  * @type InvoiceBillToResponse
  * 
  * @export
  */
-export type InvoiceBillToResponse = InvoiceBillToResponseOneOf | InvoiceBillToResponseOneOf1 | InvoiceBillToResponseOneOf2 | InvoiceBillToResponseOneOf3;
+export type InvoiceBillToResponse = { kind: 'client' } & InvoiceBillToResponseClient | { kind: 'customer' } & InvoiceBillToResponseCustomer | { kind: 'legacy_unresolved' } & InvoiceBillToResponseLegacyUnresolved | { kind: 'unregistered' } & InvoiceBillToResponseUnregistered;
 
 export function InvoiceBillToResponseFromJSON(json: any): InvoiceBillToResponse {
     return InvoiceBillToResponseFromJSONTyped(json, false);
@@ -56,22 +56,18 @@ export function InvoiceBillToResponseFromJSONTyped(json: any, ignoreDiscriminato
     if (json == null) {
         return json;
     }
-    if (typeof json !== 'object') {
-        return json;
+    switch (json['kind']) {
+        case 'client':
+            return Object.assign({}, InvoiceBillToResponseClientFromJSONTyped(json, true), { kind: 'client' } as const);
+        case 'customer':
+            return Object.assign({}, InvoiceBillToResponseCustomerFromJSONTyped(json, true), { kind: 'customer' } as const);
+        case 'legacy_unresolved':
+            return Object.assign({}, InvoiceBillToResponseLegacyUnresolvedFromJSONTyped(json, true), { kind: 'legacy_unresolved' } as const);
+        case 'unregistered':
+            return Object.assign({}, InvoiceBillToResponseUnregisteredFromJSONTyped(json, true), { kind: 'unregistered' } as const);
+        default:
+            return json;
     }
-    if (instanceOfInvoiceBillToResponseOneOf(json)) {
-        return InvoiceBillToResponseOneOfFromJSONTyped(json, true);
-    }
-    if (instanceOfInvoiceBillToResponseOneOf1(json)) {
-        return InvoiceBillToResponseOneOf1FromJSONTyped(json, true);
-    }
-    if (instanceOfInvoiceBillToResponseOneOf2(json)) {
-        return InvoiceBillToResponseOneOf2FromJSONTyped(json, true);
-    }
-    if (instanceOfInvoiceBillToResponseOneOf3(json)) {
-        return InvoiceBillToResponseOneOf3FromJSONTyped(json, true);
-    }
-    return {} as any;
 }
 
 export function InvoiceBillToResponseToJSON(json: any): any {
@@ -82,21 +78,17 @@ export function InvoiceBillToResponseToJSONTyped(value?: InvoiceBillToResponse |
     if (value == null) {
         return value;
     }
-    if (typeof value !== 'object') {
-        return value;
+    switch (value['kind']) {
+        case 'client':
+            return Object.assign({}, InvoiceBillToResponseClientToJSON(value), { kind: 'client' } as const);
+        case 'customer':
+            return Object.assign({}, InvoiceBillToResponseCustomerToJSON(value), { kind: 'customer' } as const);
+        case 'legacy_unresolved':
+            return Object.assign({}, InvoiceBillToResponseLegacyUnresolvedToJSON(value), { kind: 'legacy_unresolved' } as const);
+        case 'unregistered':
+            return Object.assign({}, InvoiceBillToResponseUnregisteredToJSON(value), { kind: 'unregistered' } as const);
+        default:
+            return value;
     }
-    if (instanceOfInvoiceBillToResponseOneOf(value)) {
-        return InvoiceBillToResponseOneOfToJSON(value as InvoiceBillToResponseOneOf);
-    }
-    if (instanceOfInvoiceBillToResponseOneOf1(value)) {
-        return InvoiceBillToResponseOneOf1ToJSON(value as InvoiceBillToResponseOneOf1);
-    }
-    if (instanceOfInvoiceBillToResponseOneOf2(value)) {
-        return InvoiceBillToResponseOneOf2ToJSON(value as InvoiceBillToResponseOneOf2);
-    }
-    if (instanceOfInvoiceBillToResponseOneOf3(value)) {
-        return InvoiceBillToResponseOneOf3ToJSON(value as InvoiceBillToResponseOneOf3);
-    }
-    return {};
 }
 

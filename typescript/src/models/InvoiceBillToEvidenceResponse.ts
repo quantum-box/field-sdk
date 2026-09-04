@@ -12,27 +12,27 @@
  * Do not edit the class manually.
  */
 
-import type { InvoiceBillToEvidenceResponseOneOf } from './InvoiceBillToEvidenceResponseOneOf';
+import type { InvoiceBillToEvidenceResponseDirect } from './InvoiceBillToEvidenceResponseDirect';
 import {
-    instanceOfInvoiceBillToEvidenceResponseOneOf,
-    InvoiceBillToEvidenceResponseOneOfFromJSON,
-    InvoiceBillToEvidenceResponseOneOfFromJSONTyped,
-    InvoiceBillToEvidenceResponseOneOfToJSON,
-} from './InvoiceBillToEvidenceResponseOneOf';
-import type { InvoiceBillToEvidenceResponseOneOf1 } from './InvoiceBillToEvidenceResponseOneOf1';
+    instanceOfInvoiceBillToEvidenceResponseDirect,
+    InvoiceBillToEvidenceResponseDirectFromJSON,
+    InvoiceBillToEvidenceResponseDirectFromJSONTyped,
+    InvoiceBillToEvidenceResponseDirectToJSON,
+} from './InvoiceBillToEvidenceResponseDirect';
+import type { InvoiceBillToEvidenceResponseReservationAffiliation } from './InvoiceBillToEvidenceResponseReservationAffiliation';
 import {
-    instanceOfInvoiceBillToEvidenceResponseOneOf1,
-    InvoiceBillToEvidenceResponseOneOf1FromJSON,
-    InvoiceBillToEvidenceResponseOneOf1FromJSONTyped,
-    InvoiceBillToEvidenceResponseOneOf1ToJSON,
-} from './InvoiceBillToEvidenceResponseOneOf1';
+    instanceOfInvoiceBillToEvidenceResponseReservationAffiliation,
+    InvoiceBillToEvidenceResponseReservationAffiliationFromJSON,
+    InvoiceBillToEvidenceResponseReservationAffiliationFromJSONTyped,
+    InvoiceBillToEvidenceResponseReservationAffiliationToJSON,
+} from './InvoiceBillToEvidenceResponseReservationAffiliation';
 
 /**
  * @type InvoiceBillToEvidenceResponse
  * 
  * @export
  */
-export type InvoiceBillToEvidenceResponse = InvoiceBillToEvidenceResponseOneOf | InvoiceBillToEvidenceResponseOneOf1;
+export type InvoiceBillToEvidenceResponse = { kind: 'direct' } & InvoiceBillToEvidenceResponseDirect | { kind: 'reservation_affiliation' } & InvoiceBillToEvidenceResponseReservationAffiliation;
 
 export function InvoiceBillToEvidenceResponseFromJSON(json: any): InvoiceBillToEvidenceResponse {
     return InvoiceBillToEvidenceResponseFromJSONTyped(json, false);
@@ -42,16 +42,14 @@ export function InvoiceBillToEvidenceResponseFromJSONTyped(json: any, ignoreDisc
     if (json == null) {
         return json;
     }
-    if (typeof json !== 'object') {
-        return json;
+    switch (json['kind']) {
+        case 'direct':
+            return Object.assign({}, InvoiceBillToEvidenceResponseDirectFromJSONTyped(json, true), { kind: 'direct' } as const);
+        case 'reservation_affiliation':
+            return Object.assign({}, InvoiceBillToEvidenceResponseReservationAffiliationFromJSONTyped(json, true), { kind: 'reservation_affiliation' } as const);
+        default:
+            return json;
     }
-    if (instanceOfInvoiceBillToEvidenceResponseOneOf(json)) {
-        return InvoiceBillToEvidenceResponseOneOfFromJSONTyped(json, true);
-    }
-    if (instanceOfInvoiceBillToEvidenceResponseOneOf1(json)) {
-        return InvoiceBillToEvidenceResponseOneOf1FromJSONTyped(json, true);
-    }
-    return {} as any;
 }
 
 export function InvoiceBillToEvidenceResponseToJSON(json: any): any {
@@ -62,15 +60,13 @@ export function InvoiceBillToEvidenceResponseToJSONTyped(value?: InvoiceBillToEv
     if (value == null) {
         return value;
     }
-    if (typeof value !== 'object') {
-        return value;
+    switch (value['kind']) {
+        case 'direct':
+            return Object.assign({}, InvoiceBillToEvidenceResponseDirectToJSON(value), { kind: 'direct' } as const);
+        case 'reservation_affiliation':
+            return Object.assign({}, InvoiceBillToEvidenceResponseReservationAffiliationToJSON(value), { kind: 'reservation_affiliation' } as const);
+        default:
+            return value;
     }
-    if (instanceOfInvoiceBillToEvidenceResponseOneOf(value)) {
-        return InvoiceBillToEvidenceResponseOneOfToJSON(value as InvoiceBillToEvidenceResponseOneOf);
-    }
-    if (instanceOfInvoiceBillToEvidenceResponseOneOf1(value)) {
-        return InvoiceBillToEvidenceResponseOneOf1ToJSON(value as InvoiceBillToEvidenceResponseOneOf1);
-    }
-    return {};
 }
 

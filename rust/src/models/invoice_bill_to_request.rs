@@ -12,27 +12,26 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(untagged)]
+#[serde(tag = "kind")]
 pub enum InvoiceBillToRequest {
-    InvoiceBillToRequestOneOf(Box<models::InvoiceBillToRequestOneOf>),
-    InvoiceBillToRequestOneOf1(Box<models::InvoiceBillToRequestOneOf1>),
-    InvoiceBillToRequestOneOf2(Box<models::InvoiceBillToRequestOneOf2>),
+    #[serde(rename = "customer")]
+    Customer(Box<models::InvoiceBillToRequestCustomer>),
+    #[serde(rename = "client")]
+    Client(Box<models::InvoiceBillToRequestClient>),
+    #[serde(rename = "unregistered")]
+    Unregistered(Box<models::InvoiceBillToRequestUnregistered>),
+    /// A `kind` this client was not generated from.
+    ///
+    /// tachyonfield adds union variants as an additive change (CERP-25), so a
+    /// tag this SDK predates is kept as the raw object instead of failing the
+    /// deserialization of everything that contains it. The payload — `kind`
+    /// included — is intact, and re-serializing emits it unchanged.
+    #[serde(untagged)]
+    Unknown(serde_json::Value),
 }
 
 impl Default for InvoiceBillToRequest {
     fn default() -> Self {
-        Self::InvoiceBillToRequestOneOf(Default::default())
-    }
-}
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Kind {
-    #[serde(rename = "unregistered")]
-    Unregistered,
-}
-
-impl Default for Kind {
-    fn default() -> Kind {
-        Self::Unregistered
+        Self::Customer(Default::default())
     }
 }
