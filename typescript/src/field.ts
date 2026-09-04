@@ -41,3 +41,33 @@ export function createFieldConfiguration({
     },
   })
 }
+
+/**
+ * Read the `kind` off a discriminated union value, including a variant this
+ * SDK was not generated from.
+ *
+ * The generated `…FromJSON` helpers switch on `kind` and hand back the payload
+ * untouched for a tag they do not know: tachyonfield adds union variants as an
+ * additive change (CERP-25), so an SDK that predates one keeps the value
+ * instead of emptying the field. The declared union type lists only the known
+ * variants, which narrows the `default` arm of an exhaustive `switch` to
+ * `never` — this reads the tag back off the value that is actually there.
+ *
+ * ```ts
+ * switch (invoice.billTo?.kind) {
+ *   case 'customer':
+ *     return invoice.billTo.customerId
+ *   default:
+ *     console.warn(`unknown billTo kind: ${variantKind(invoice.billTo)}`)
+ *     return null
+ * }
+ * ```
+ */
+export function variantKind(value: unknown): string | undefined {
+  if (typeof value !== 'object' || value === null) {
+    return undefined
+  }
+
+  const kind = (value as { kind?: unknown }).kind
+  return typeof kind === 'string' ? kind : undefined
+}

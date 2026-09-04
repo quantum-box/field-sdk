@@ -12,34 +12,34 @@
  * Do not edit the class manually.
  */
 
-import type { InvoiceBillToRequestOneOf } from './InvoiceBillToRequestOneOf';
+import type { InvoiceBillToRequestClient } from './InvoiceBillToRequestClient';
 import {
-    instanceOfInvoiceBillToRequestOneOf,
-    InvoiceBillToRequestOneOfFromJSON,
-    InvoiceBillToRequestOneOfFromJSONTyped,
-    InvoiceBillToRequestOneOfToJSON,
-} from './InvoiceBillToRequestOneOf';
-import type { InvoiceBillToRequestOneOf1 } from './InvoiceBillToRequestOneOf1';
+    instanceOfInvoiceBillToRequestClient,
+    InvoiceBillToRequestClientFromJSON,
+    InvoiceBillToRequestClientFromJSONTyped,
+    InvoiceBillToRequestClientToJSON,
+} from './InvoiceBillToRequestClient';
+import type { InvoiceBillToRequestCustomer } from './InvoiceBillToRequestCustomer';
 import {
-    instanceOfInvoiceBillToRequestOneOf1,
-    InvoiceBillToRequestOneOf1FromJSON,
-    InvoiceBillToRequestOneOf1FromJSONTyped,
-    InvoiceBillToRequestOneOf1ToJSON,
-} from './InvoiceBillToRequestOneOf1';
-import type { InvoiceBillToRequestOneOf2 } from './InvoiceBillToRequestOneOf2';
+    instanceOfInvoiceBillToRequestCustomer,
+    InvoiceBillToRequestCustomerFromJSON,
+    InvoiceBillToRequestCustomerFromJSONTyped,
+    InvoiceBillToRequestCustomerToJSON,
+} from './InvoiceBillToRequestCustomer';
+import type { InvoiceBillToRequestUnregistered } from './InvoiceBillToRequestUnregistered';
 import {
-    instanceOfInvoiceBillToRequestOneOf2,
-    InvoiceBillToRequestOneOf2FromJSON,
-    InvoiceBillToRequestOneOf2FromJSONTyped,
-    InvoiceBillToRequestOneOf2ToJSON,
-} from './InvoiceBillToRequestOneOf2';
+    instanceOfInvoiceBillToRequestUnregistered,
+    InvoiceBillToRequestUnregisteredFromJSON,
+    InvoiceBillToRequestUnregisteredFromJSONTyped,
+    InvoiceBillToRequestUnregisteredToJSON,
+} from './InvoiceBillToRequestUnregistered';
 
 /**
  * @type InvoiceBillToRequest
  * 
  * @export
  */
-export type InvoiceBillToRequest = InvoiceBillToRequestOneOf | InvoiceBillToRequestOneOf1 | InvoiceBillToRequestOneOf2;
+export type InvoiceBillToRequest = { kind: 'client' } & InvoiceBillToRequestClient | { kind: 'customer' } & InvoiceBillToRequestCustomer | { kind: 'unregistered' } & InvoiceBillToRequestUnregistered;
 
 export function InvoiceBillToRequestFromJSON(json: any): InvoiceBillToRequest {
     return InvoiceBillToRequestFromJSONTyped(json, false);
@@ -49,19 +49,16 @@ export function InvoiceBillToRequestFromJSONTyped(json: any, ignoreDiscriminator
     if (json == null) {
         return json;
     }
-    if (typeof json !== 'object') {
-        return json;
+    switch (json['kind']) {
+        case 'client':
+            return Object.assign({}, InvoiceBillToRequestClientFromJSONTyped(json, true), { kind: 'client' } as const);
+        case 'customer':
+            return Object.assign({}, InvoiceBillToRequestCustomerFromJSONTyped(json, true), { kind: 'customer' } as const);
+        case 'unregistered':
+            return Object.assign({}, InvoiceBillToRequestUnregisteredFromJSONTyped(json, true), { kind: 'unregistered' } as const);
+        default:
+            return json;
     }
-    if (instanceOfInvoiceBillToRequestOneOf(json)) {
-        return InvoiceBillToRequestOneOfFromJSONTyped(json, true);
-    }
-    if (instanceOfInvoiceBillToRequestOneOf1(json)) {
-        return InvoiceBillToRequestOneOf1FromJSONTyped(json, true);
-    }
-    if (instanceOfInvoiceBillToRequestOneOf2(json)) {
-        return InvoiceBillToRequestOneOf2FromJSONTyped(json, true);
-    }
-    return {} as any;
 }
 
 export function InvoiceBillToRequestToJSON(json: any): any {
@@ -72,18 +69,15 @@ export function InvoiceBillToRequestToJSONTyped(value?: InvoiceBillToRequest | n
     if (value == null) {
         return value;
     }
-    if (typeof value !== 'object') {
-        return value;
+    switch (value['kind']) {
+        case 'client':
+            return Object.assign({}, InvoiceBillToRequestClientToJSON(value), { kind: 'client' } as const);
+        case 'customer':
+            return Object.assign({}, InvoiceBillToRequestCustomerToJSON(value), { kind: 'customer' } as const);
+        case 'unregistered':
+            return Object.assign({}, InvoiceBillToRequestUnregisteredToJSON(value), { kind: 'unregistered' } as const);
+        default:
+            return value;
     }
-    if (instanceOfInvoiceBillToRequestOneOf(value)) {
-        return InvoiceBillToRequestOneOfToJSON(value as InvoiceBillToRequestOneOf);
-    }
-    if (instanceOfInvoiceBillToRequestOneOf1(value)) {
-        return InvoiceBillToRequestOneOf1ToJSON(value as InvoiceBillToRequestOneOf1);
-    }
-    if (instanceOfInvoiceBillToRequestOneOf2(value)) {
-        return InvoiceBillToRequestOneOf2ToJSON(value as InvoiceBillToRequestOneOf2);
-    }
-    return {};
 }
 

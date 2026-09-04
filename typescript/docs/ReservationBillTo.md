@@ -7,7 +7,6 @@
 Name | Type
 ------------ | -------------
 `customerId` | string
-`kind` | string
 `selectedAt` | Date
 `selectedBy` | string
 `affiliationId` | string

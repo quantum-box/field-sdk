@@ -2,12 +2,8 @@
 
 ## Enum Variants
 
-| Name | Description |
+| Name | Value |
 |---- | -----|
-| InvoiceBillToResponseOneOf |  |
-| InvoiceBillToResponseOneOf1 |  |
-| InvoiceBillToResponseOneOf2 |  |
-| InvoiceBillToResponseOneOf3 |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -10144,129 +10144,81 @@ export interface InviteErpUserResponse {
  * 
  * @export
  */
-export type InvoiceBillToEvidenceResponse = InvoiceBillToEvidenceResponseOneOf | InvoiceBillToEvidenceResponseOneOf1;
+export type InvoiceBillToEvidenceResponse = { kind: 'direct' } & InvoiceBillToEvidenceResponseDirect | { kind: 'reservation_affiliation' } & InvoiceBillToEvidenceResponseReservationAffiliation;
 /**
  * 
  * @export
- * @interface InvoiceBillToEvidenceResponseOneOf
+ * @interface InvoiceBillToEvidenceResponseDirect
  */
-export interface InvoiceBillToEvidenceResponseOneOf {
+export interface InvoiceBillToEvidenceResponseDirect {
+    /**
+     * 
+     * @type {InvoiceBillToEvidenceResponseDirectKindEnum}
+     * @memberof InvoiceBillToEvidenceResponseDirect
+     */
+    kind?: InvoiceBillToEvidenceResponseDirectKindEnum;
+}
+
+
+/**
+ * @export
+ */
+export const InvoiceBillToEvidenceResponseDirectKindEnum = {
+    Direct: 'direct'
+} as const;
+export type InvoiceBillToEvidenceResponseDirectKindEnum = typeof InvoiceBillToEvidenceResponseDirectKindEnum[keyof typeof InvoiceBillToEvidenceResponseDirectKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToEvidenceResponseReservationAffiliation
+ */
+export interface InvoiceBillToEvidenceResponseReservationAffiliation {
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToEvidenceResponseOneOf
+     * @memberof InvoiceBillToEvidenceResponseReservationAffiliation
      */
     affiliationId: string;
-    /**
-     * 
-     * @type {InvoiceBillToEvidenceResponseOneOfKindEnum}
-     * @memberof InvoiceBillToEvidenceResponseOneOf
-     */
-    kind: InvoiceBillToEvidenceResponseOneOfKindEnum;
 }
-
-
-/**
- * @export
- */
-export const InvoiceBillToEvidenceResponseOneOfKindEnum = {
-    ReservationAffiliation: 'reservation_affiliation'
-} as const;
-export type InvoiceBillToEvidenceResponseOneOfKindEnum = typeof InvoiceBillToEvidenceResponseOneOfKindEnum[keyof typeof InvoiceBillToEvidenceResponseOneOfKindEnum];
-
-/**
- * 
- * @export
- * @interface InvoiceBillToEvidenceResponseOneOf1
- */
-export interface InvoiceBillToEvidenceResponseOneOf1 {
-    /**
-     * 
-     * @type {InvoiceBillToEvidenceResponseOneOf1KindEnum}
-     * @memberof InvoiceBillToEvidenceResponseOneOf1
-     */
-    kind: InvoiceBillToEvidenceResponseOneOf1KindEnum;
-}
-
-
-/**
- * @export
- */
-export const InvoiceBillToEvidenceResponseOneOf1KindEnum = {
-    Direct: 'direct'
-} as const;
-export type InvoiceBillToEvidenceResponseOneOf1KindEnum = typeof InvoiceBillToEvidenceResponseOneOf1KindEnum[keyof typeof InvoiceBillToEvidenceResponseOneOf1KindEnum];
-
 /**
  * @type InvoiceBillToRequest
  * 
  * @export
  */
-export type InvoiceBillToRequest = InvoiceBillToRequestOneOf | InvoiceBillToRequestOneOf1 | InvoiceBillToRequestOneOf2;
+export type InvoiceBillToRequest = { kind: 'client' } & InvoiceBillToRequestClient | { kind: 'customer' } & InvoiceBillToRequestCustomer | { kind: 'unregistered' } & InvoiceBillToRequestUnregistered;
 /**
  * 
  * @export
- * @interface InvoiceBillToRequestOneOf
+ * @interface InvoiceBillToRequestClient
  */
-export interface InvoiceBillToRequestOneOf {
+export interface InvoiceBillToRequestClient {
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToRequestOneOf
-     */
-    customerId: string;
-    /**
-     * 
-     * @type {InvoiceBillToRequestOneOfKindEnum}
-     * @memberof InvoiceBillToRequestOneOf
-     */
-    kind: InvoiceBillToRequestOneOfKindEnum;
-}
-
-
-/**
- * @export
- */
-export const InvoiceBillToRequestOneOfKindEnum = {
-    Customer: 'customer'
-} as const;
-export type InvoiceBillToRequestOneOfKindEnum = typeof InvoiceBillToRequestOneOfKindEnum[keyof typeof InvoiceBillToRequestOneOfKindEnum];
-
-/**
- * 
- * @export
- * @interface InvoiceBillToRequestOneOf1
- */
-export interface InvoiceBillToRequestOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InvoiceBillToRequestOneOf1
+     * @memberof InvoiceBillToRequestClient
      */
     affiliationId?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToRequestOneOf1
+     * @memberof InvoiceBillToRequestClient
      */
     clientId: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToRequestCustomer
+ */
+export interface InvoiceBillToRequestCustomer {
     /**
      * 
-     * @type {InvoiceBillToRequestOneOf1KindEnum}
-     * @memberof InvoiceBillToRequestOneOf1
+     * @type {string}
+     * @memberof InvoiceBillToRequestCustomer
      */
-    kind: InvoiceBillToRequestOneOf1KindEnum;
+    customerId: string;
 }
-
-
-/**
- * @export
- */
-export const InvoiceBillToRequestOneOf1KindEnum = {
-    Client: 'client'
-} as const;
-export type InvoiceBillToRequestOneOf1KindEnum = typeof InvoiceBillToRequestOneOf1KindEnum[keyof typeof InvoiceBillToRequestOneOf1KindEnum];
-
 /**
  * 顧客台帳にも取引先にも無い相手への単発請求。
  * 
@@ -10274,190 +10226,110 @@ export type InvoiceBillToRequestOneOf1KindEnum = typeof InvoiceBillToRequestOneO
  * ときは顧客を作ってから `customer` を送る — Field はここから勝手に
  * 顧客を作らない。
  * @export
- * @interface InvoiceBillToRequestOneOf2
+ * @interface InvoiceBillToRequestUnregistered
  */
-export interface InvoiceBillToRequestOneOf2 {
+export interface InvoiceBillToRequestUnregistered {
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToRequestOneOf2
+     * @memberof InvoiceBillToRequestUnregistered
      */
     email?: string | null;
     /**
      * 
-     * @type {InvoiceBillToRequestOneOf2KindEnum}
-     * @memberof InvoiceBillToRequestOneOf2
-     */
-    kind: InvoiceBillToRequestOneOf2KindEnum;
-    /**
-     * 
      * @type {string}
-     * @memberof InvoiceBillToRequestOneOf2
+     * @memberof InvoiceBillToRequestUnregistered
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToRequestOneOf2
+     * @memberof InvoiceBillToRequestUnregistered
      */
     phone?: string | null;
 }
-
-
-/**
- * @export
- */
-export const InvoiceBillToRequestOneOf2KindEnum = {
-    Unregistered: 'unregistered'
-} as const;
-export type InvoiceBillToRequestOneOf2KindEnum = typeof InvoiceBillToRequestOneOf2KindEnum[keyof typeof InvoiceBillToRequestOneOf2KindEnum];
-
 /**
  * @type InvoiceBillToResponse
  * 
  * @export
  */
-export type InvoiceBillToResponse = InvoiceBillToResponseOneOf | InvoiceBillToResponseOneOf1 | InvoiceBillToResponseOneOf2 | InvoiceBillToResponseOneOf3;
+export type InvoiceBillToResponse = { kind: 'client' } & InvoiceBillToResponseClient | { kind: 'customer' } & InvoiceBillToResponseCustomer | { kind: 'legacy_unresolved' } & InvoiceBillToResponseLegacyUnresolved | { kind: 'unregistered' } & InvoiceBillToResponseUnregistered;
 /**
  * 
  * @export
- * @interface InvoiceBillToResponseOneOf
+ * @interface InvoiceBillToResponseClient
  */
-export interface InvoiceBillToResponseOneOf {
+export interface InvoiceBillToResponseClient {
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToResponseOneOf
-     */
-    customerId: string;
-    /**
-     * 
-     * @type {InvoiceBillToResponseOneOfKindEnum}
-     * @memberof InvoiceBillToResponseOneOf
-     */
-    kind: InvoiceBillToResponseOneOfKindEnum;
-    /**
-     * 
-     * @type {any}
-     * @memberof InvoiceBillToResponseOneOf
-     */
-    snapshot: any | null;
-}
-
-
-/**
- * @export
- */
-export const InvoiceBillToResponseOneOfKindEnum = {
-    Customer: 'customer'
-} as const;
-export type InvoiceBillToResponseOneOfKindEnum = typeof InvoiceBillToResponseOneOfKindEnum[keyof typeof InvoiceBillToResponseOneOfKindEnum];
-
-/**
- * 
- * @export
- * @interface InvoiceBillToResponseOneOf1
- */
-export interface InvoiceBillToResponseOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InvoiceBillToResponseOneOf1
+     * @memberof InvoiceBillToResponseClient
      */
     clientId: string;
     /**
      * 
      * @type {InvoiceBillToEvidenceResponse}
-     * @memberof InvoiceBillToResponseOneOf1
+     * @memberof InvoiceBillToResponseClient
      */
     evidence: InvoiceBillToEvidenceResponse;
     /**
      * 
-     * @type {InvoiceBillToResponseOneOf1KindEnum}
-     * @memberof InvoiceBillToResponseOneOf1
-     */
-    kind: InvoiceBillToResponseOneOf1KindEnum;
-    /**
-     * 
      * @type {any}
-     * @memberof InvoiceBillToResponseOneOf1
+     * @memberof InvoiceBillToResponseClient
      */
     snapshot: any | null;
 }
-
-
-/**
- * @export
- */
-export const InvoiceBillToResponseOneOf1KindEnum = {
-    Client: 'client'
-} as const;
-export type InvoiceBillToResponseOneOf1KindEnum = typeof InvoiceBillToResponseOneOf1KindEnum[keyof typeof InvoiceBillToResponseOneOf1KindEnum];
-
-/**
- * 台帳に無い相手。識別子は無く、発行時の写しだけが相手を表す。
- * @export
- * @interface InvoiceBillToResponseOneOf2
- */
-export interface InvoiceBillToResponseOneOf2 {
-    /**
-     * 
-     * @type {InvoiceBillToResponseOneOf2KindEnum}
-     * @memberof InvoiceBillToResponseOneOf2
-     */
-    kind: InvoiceBillToResponseOneOf2KindEnum;
-    /**
-     * 
-     * @type {any}
-     * @memberof InvoiceBillToResponseOneOf2
-     */
-    snapshot: any | null;
-}
-
-
-/**
- * @export
- */
-export const InvoiceBillToResponseOneOf2KindEnum = {
-    Unregistered: 'unregistered'
-} as const;
-export type InvoiceBillToResponseOneOf2KindEnum = typeof InvoiceBillToResponseOneOf2KindEnum[keyof typeof InvoiceBillToResponseOneOf2KindEnum];
-
 /**
  * 
  * @export
- * @interface InvoiceBillToResponseOneOf3
+ * @interface InvoiceBillToResponseCustomer
  */
-export interface InvoiceBillToResponseOneOf3 {
-    /**
-     * 
-     * @type {InvoiceBillToResponseOneOf3KindEnum}
-     * @memberof InvoiceBillToResponseOneOf3
-     */
-    kind: InvoiceBillToResponseOneOf3KindEnum;
+export interface InvoiceBillToResponseCustomer {
     /**
      * 
      * @type {string}
-     * @memberof InvoiceBillToResponseOneOf3
+     * @memberof InvoiceBillToResponseCustomer
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof InvoiceBillToResponseCustomer
+     */
+    snapshot: any | null;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceBillToResponseLegacyUnresolved
+ */
+export interface InvoiceBillToResponseLegacyUnresolved {
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceBillToResponseLegacyUnresolved
      */
     legacyReferenceId: string;
     /**
      * 
      * @type {any}
-     * @memberof InvoiceBillToResponseOneOf3
+     * @memberof InvoiceBillToResponseLegacyUnresolved
      */
     snapshot: any | null;
 }
-
-
 /**
+ * 台帳に無い相手。識別子は無く、発行時の写しだけが相手を表す。
  * @export
+ * @interface InvoiceBillToResponseUnregistered
  */
-export const InvoiceBillToResponseOneOf3KindEnum = {
-    LegacyUnresolved: 'legacy_unresolved'
-} as const;
-export type InvoiceBillToResponseOneOf3KindEnum = typeof InvoiceBillToResponseOneOf3KindEnum[keyof typeof InvoiceBillToResponseOneOf3KindEnum];
-
+export interface InvoiceBillToResponseUnregistered {
+    /**
+     * 
+     * @type {any}
+     * @memberof InvoiceBillToResponseUnregistered
+     */
+    snapshot: any | null;
+}
 /**
  * 
  * @export
@@ -16699,136 +16571,101 @@ export interface ReservationAvailabilityRuleResponse {
  * 
  * @export
  */
-export type ReservationBillTo = ReservationBillToOneOf | ReservationBillToOneOf1;
+export type ReservationBillTo = { kind: 'client' } & ReservationBillToClient | { kind: 'customer' } & ReservationBillToCustomer;
 /**
  * 
  * @export
- * @interface ReservationBillToOneOf
+ * @interface ReservationBillToClient
  */
-export interface ReservationBillToOneOf {
+export interface ReservationBillToClient {
     /**
      * 
      * @type {string}
-     * @memberof ReservationBillToOneOf
-     */
-    customerId: string;
-    /**
-     * 
-     * @type {ReservationBillToOneOfKindEnum}
-     * @memberof ReservationBillToOneOf
-     */
-    kind: ReservationBillToOneOfKindEnum;
-    /**
-     * 
-     * @type {Date}
-     * @memberof ReservationBillToOneOf
-     */
-    selectedAt: Date;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReservationBillToOneOf
-     */
-    selectedBy: string;
-}
-
-
-/**
- * @export
- */
-export const ReservationBillToOneOfKindEnum = {
-    Customer: 'customer'
-} as const;
-export type ReservationBillToOneOfKindEnum = typeof ReservationBillToOneOfKindEnum[keyof typeof ReservationBillToOneOfKindEnum];
-
-/**
- * 
- * @export
- * @interface ReservationBillToOneOf1
- */
-export interface ReservationBillToOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof ReservationBillToOneOf1
+     * @memberof ReservationBillToClient
      */
     affiliationId: string;
     /**
      * 
      * @type {string}
-     * @memberof ReservationBillToOneOf1
+     * @memberof ReservationBillToClient
      */
     clientId: string;
     /**
      * 
-     * @type {ReservationBillToOneOf1KindEnum}
-     * @memberof ReservationBillToOneOf1
-     */
-    kind: ReservationBillToOneOf1KindEnum;
-    /**
-     * 
      * @type {Date}
-     * @memberof ReservationBillToOneOf1
+     * @memberof ReservationBillToClient
      */
     selectedAt: Date;
     /**
      * 
      * @type {string}
-     * @memberof ReservationBillToOneOf1
+     * @memberof ReservationBillToClient
      */
     selectedBy: string;
 }
-
-
 /**
+ * 
  * @export
+ * @interface ReservationBillToCustomer
  */
-export const ReservationBillToOneOf1KindEnum = {
-    Client: 'client'
-} as const;
-export type ReservationBillToOneOf1KindEnum = typeof ReservationBillToOneOf1KindEnum[keyof typeof ReservationBillToOneOf1KindEnum];
-
+export interface ReservationBillToCustomer {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToCustomer
+     */
+    customerId: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ReservationBillToCustomer
+     */
+    selectedAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReservationBillToCustomer
+     */
+    selectedBy: string;
+}
 /**
  * @type ReservationBillToRequest
  * 
  * @export
  */
-export type ReservationBillToRequest = InvoiceBillToRequestOneOf | ReservationBillToRequestOneOf;
+export type ReservationBillToRequest = { kind: 'client' } & ReservationBillToRequestClient | { kind: 'customer' } & ReservationBillToRequestCustomer;
 /**
  * 
  * @export
- * @interface ReservationBillToRequestOneOf
+ * @interface ReservationBillToRequestClient
  */
-export interface ReservationBillToRequestOneOf {
+export interface ReservationBillToRequestClient {
     /**
      * 
      * @type {string}
-     * @memberof ReservationBillToRequestOneOf
+     * @memberof ReservationBillToRequestClient
      */
     affiliationId: string;
     /**
      * 
      * @type {string}
-     * @memberof ReservationBillToRequestOneOf
+     * @memberof ReservationBillToRequestClient
      */
     clientId: string;
+}
+/**
+ * 
+ * @export
+ * @interface ReservationBillToRequestCustomer
+ */
+export interface ReservationBillToRequestCustomer {
     /**
      * 
-     * @type {ReservationBillToRequestOneOfKindEnum}
-     * @memberof ReservationBillToRequestOneOf
+     * @type {string}
+     * @memberof ReservationBillToRequestCustomer
      */
-    kind: ReservationBillToRequestOneOfKindEnum;
+    customerId: string;
 }
-
-
-/**
- * @export
- */
-export const ReservationBillToRequestOneOfKindEnum = {
-    Client: 'client'
-} as const;
-export type ReservationBillToRequestOneOfKindEnum = typeof ReservationBillToRequestOneOfKindEnum[keyof typeof ReservationBillToRequestOneOfKindEnum];
-
 /**
  * One cancellation, as it happened. Rows are never updated or deleted.
  * @export

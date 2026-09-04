@@ -7,7 +7,6 @@
 Name | Type
 ------------ | -------------
 `customerId` | string
-`kind` | string
 `affiliationId` | string
 `clientId` | string
 `email` | string

@@ -7,7 +7,6 @@
 Name | Type
 ------------ | -------------
 `customerId` | string
-`kind` | string
 `snapshot` | any
 `clientId` | string
 `evidence` | [InvoiceBillToEvidenceResponse](InvoiceBillToEvidenceResponse.md)

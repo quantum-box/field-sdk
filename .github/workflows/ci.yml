@@ -21,6 +21,10 @@ jobs:
           workspaces: rust
       - run: cargo check --all-features --manifest-path rust/Cargo.toml
       - run: cargo fmt --manifest-path rust/Cargo.toml -- --check
+      # The network smoke tests are `#[ignore]`d, so this is the offline set:
+      # tests/unions.rs, which pins the forward compatibility of the
+      # `kind`-tagged unions.
+      - run: cargo test --manifest-path rust/Cargo.toml
 
   typescript:
     name: typescript client
@@ -38,6 +42,9 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
+      # Offline tests (test/unions.test.mjs); the live smoke tests run from
+      # smoke.yml, not here.
+      - run: npm test
 
   generated-up-to-date:
     name: generated output matches openapi.yaml
@@ -53,11 +60,13 @@ jobs:
       - run: pip install pyyaml
       - name: regenerate
         run: scripts/generate.sh
+      # `git status` rather than `git diff`: a new schema — the case this is
+      # most likely to catch — arrives as untracked files, which a diff misses.
       - name: fail on drift
         run: |
-          if ! git diff --quiet; then
+          if [[ -n "$(git status --porcelain)" ]]; then
             echo "::error::rust/ or typescript/ is out of sync with openapi.yaml."
             echo "Run scripts/generate.sh and commit the result."
-            git diff --stat
+            git status --porcelain
             exit 1
           fi

@@ -94,6 +94,13 @@ generate_rust() {
     --additional-properties="packageName=$RUST_PACKAGE_NAME,packageVersion=$PACKAGE_VERSION,library=reqwest,supportAsync=true,preferUnsignedInt=false" \
     --skip-validate-spec
 
+  # The `kind`-tagged unions are generated as internally tagged enums that
+  # reject an unknown tag, which fails the whole enclosing response. Append the
+  # catch-all variant that keeps such a payload instead.
+  "$SCRIPT_DIR/patch-rust-unknown-variants.py" "$ROOT_DIR/rust/src/models"
+
+  prune_generated rust src/apis src/models docs
+
   # The generator's output is not rustfmt-clean; format it so the committed
   # tree stays stable and `cargo fmt --check` passes in CI.
   if command -v cargo >/dev/null 2>&1; then
@@ -113,7 +120,37 @@ generate_typescript() {
     --additional-properties="npmName=$TS_NPM_NAME,npmVersion=$PACKAGE_VERSION,supportsES6=true,typescriptThreePlus=true,useSingleRequestParameter=true,withoutRuntimeChecks=false" \
     --skip-validate-spec
 
+  prune_generated typescript src/apis src/models docs
   patch_runtime_map_values
+}
+
+# openapi-generator only writes files; it never deletes output it no longer
+# produces. A schema that is renamed or dropped upstream leaves its module
+# behind, unreferenced by the regenerated `mod.rs` / `index.ts` but still
+# committed and still importable — which is how `CustomFieldType` and the
+# positional `…OneOf2` modules outlived the schemas they were generated from.
+# Each run's own FILES manifest lists what it wrote, so drop everything else
+# under the generated directories. Hand-maintained files (listed in
+# .openapi-generator-ignore) live outside them and are never considered.
+prune_generated() {
+  local root="$1"
+  shift
+  local manifest="$ROOT_DIR/$root/.openapi-generator/FILES"
+  local -a removed=()
+  local file relative
+
+  while IFS= read -r file; do
+    relative="${file#"$ROOT_DIR/$root/"}"
+    if ! grep -Fxq "$relative" "$manifest"; then
+      rm "$file"
+      removed+=("$relative")
+    fi
+  done < <(find "${@/#/$ROOT_DIR/$root/}" -type f | sort)
+
+  if [[ ${#removed[@]} -gt 0 ]]; then
+    echo "==> Pruning ${#removed[@]} stale file(s) from $root/ (no longer generated)"
+    printf '    %s\n' "${removed[@]}"
+  fi
 }
 
 # openapi-generator 7.20.0's typescript-fetch templates make every model import

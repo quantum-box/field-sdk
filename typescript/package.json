@@ -39,7 +39,8 @@
   "scripts": {
     "build": "tsc && tsc -p tsconfig.esm.json",
     "typecheck": "tsc --noEmit",
-    "smoke": "npm run build && node --test \"test/*.test.mjs\"",
+    "test": "npm run build && node --test test/unions.test.mjs",
+    "smoke": "npm run build && node --test test/smoke.test.mjs",
     "prepare": "npm run build"
   },
   "devDependencies": {

@@ -12,27 +12,27 @@
  * Do not edit the class manually.
  */
 
-import type { ReservationBillToOneOf } from './ReservationBillToOneOf';
+import type { ReservationBillToClient } from './ReservationBillToClient';
 import {
-    instanceOfReservationBillToOneOf,
-    ReservationBillToOneOfFromJSON,
-    ReservationBillToOneOfFromJSONTyped,
-    ReservationBillToOneOfToJSON,
-} from './ReservationBillToOneOf';
-import type { ReservationBillToOneOf1 } from './ReservationBillToOneOf1';
+    instanceOfReservationBillToClient,
+    ReservationBillToClientFromJSON,
+    ReservationBillToClientFromJSONTyped,
+    ReservationBillToClientToJSON,
+} from './ReservationBillToClient';
+import type { ReservationBillToCustomer } from './ReservationBillToCustomer';
 import {
-    instanceOfReservationBillToOneOf1,
-    ReservationBillToOneOf1FromJSON,
-    ReservationBillToOneOf1FromJSONTyped,
-    ReservationBillToOneOf1ToJSON,
-} from './ReservationBillToOneOf1';
+    instanceOfReservationBillToCustomer,
+    ReservationBillToCustomerFromJSON,
+    ReservationBillToCustomerFromJSONTyped,
+    ReservationBillToCustomerToJSON,
+} from './ReservationBillToCustomer';
 
 /**
  * @type ReservationBillTo
  * 
  * @export
  */
-export type ReservationBillTo = ReservationBillToOneOf | ReservationBillToOneOf1;
+export type ReservationBillTo = { kind: 'client' } & ReservationBillToClient | { kind: 'customer' } & ReservationBillToCustomer;
 
 export function ReservationBillToFromJSON(json: any): ReservationBillTo {
     return ReservationBillToFromJSONTyped(json, false);
@@ -42,16 +42,14 @@ export function ReservationBillToFromJSONTyped(json: any, ignoreDiscriminator: b
     if (json == null) {
         return json;
     }
-    if (typeof json !== 'object') {
-        return json;
+    switch (json['kind']) {
+        case 'client':
+            return Object.assign({}, ReservationBillToClientFromJSONTyped(json, true), { kind: 'client' } as const);
+        case 'customer':
+            return Object.assign({}, ReservationBillToCustomerFromJSONTyped(json, true), { kind: 'customer' } as const);
+        default:
+            return json;
     }
-    if (instanceOfReservationBillToOneOf(json)) {
-        return ReservationBillToOneOfFromJSONTyped(json, true);
-    }
-    if (instanceOfReservationBillToOneOf1(json)) {
-        return ReservationBillToOneOf1FromJSONTyped(json, true);
-    }
-    return {} as any;
 }
 
 export function ReservationBillToToJSON(json: any): any {
@@ -62,15 +60,13 @@ export function ReservationBillToToJSONTyped(value?: ReservationBillTo | null, i
     if (value == null) {
         return value;
     }
-    if (typeof value !== 'object') {
-        return value;
+    switch (value['kind']) {
+        case 'client':
+            return Object.assign({}, ReservationBillToClientToJSON(value), { kind: 'client' } as const);
+        case 'customer':
+            return Object.assign({}, ReservationBillToCustomerToJSON(value), { kind: 'customer' } as const);
+        default:
+            return value;
     }
-    if (instanceOfReservationBillToOneOf(value)) {
-        return ReservationBillToOneOfToJSON(value as ReservationBillToOneOf);
-    }
-    if (instanceOfReservationBillToOneOf1(value)) {
-        return ReservationBillToOneOf1ToJSON(value as ReservationBillToOneOf1);
-    }
-    return {};
 }
 
